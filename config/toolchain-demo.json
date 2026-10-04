@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "purpose": "工具验证示例：矩形电路板和开口盒，不是真实飞鼠设计，不可据此下单生产。",
+  "coordinates": {
+    "units": "mm",
+    "origin": "board_center_bottom",
+    "description": "所有尺寸为毫米。电路板中心为 X/Y 原点，板底面为 Z=0，X 为板宽方向，Y 为板深方向，Z 向上。电路板工具中的二维原点也须位于板形中心。"
+  },
+  "board": {
+    "width_mm": 40,
+    "depth_mm": 24,
+    "thickness_mm": 1.6,
+    "mounting_holes": [
+      { "x_mm": -16, "y_mm": -8, "diameter_mm": 2.4 },
+      { "x_mm": 16, "y_mm": -8, "diameter_mm": 2.4 },
+      { "x_mm": 16, "y_mm": 8, "diameter_mm": 2.4 },
+      { "x_mm": -16, "y_mm": 8, "diameter_mm": 2.4 }
+    ]
+  },
+  "enclosure": {
+    "wall_thickness_mm": 2,
+    "floor_thickness_mm": 2,
+    "side_clearance_mm": 0.6,
+    "below_board_clearance_mm": 3,
+    "above_board_clearance_mm": 10,
+    "mounting_post_diameter_mm": 5,
+    "mounting_post_hole_diameter_mm": 1.8
+  }
+}

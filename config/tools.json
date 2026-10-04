@@ -1,0 +1,8 @@
+{
+  "eda_executable": "E:\\各种软件\\嘉立创专业版4\\lceda-pro.exe",
+  "cadquery_python": "E:\\GunMouseCAD\\CadQuery\\python.exe",
+  "miniforge_python": "E:\\GunMouseCAD\\Miniforge3\\python.exe",
+  "software_physical_root": "E:\\各种软件\\枪型飞鼠设计工具",
+  "software_call_root": "E:\\GunMouseCAD",
+  "software_call_root_note": "永久目录联接，指向 software_physical_root；用于兼容 Miniforge 安装器的英文路径要求。"
+}
