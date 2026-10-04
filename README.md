@@ -7,11 +7,36 @@
 | 嘉立创专业版 | 4.1.66 | 原理图、电路板、布线与设计规则接口；`E:\各种软件\嘉立创专业版4\lceda-pro.exe` |
 | Miniforge | 26.7.2-0 | 管理独立运行环境；`E:\GunMouseCAD\Miniforge3` |
 | CadQuery | 2.8.0 | 通过代码生成实体外壳与装配；`E:\GunMouseCAD\CadQuery\python.exe` |
+| CQ-editor | 0.8.dev0，固定官方提交 | CadQuery 配套图形查看器；独立环境 `E:\GunMouseCAD\CQEditor` |
 | CadQuery 环境内的 Python | 3.12.14 | 运行建模脚本，与原有 Python 分开 |
 
 项目和版本库位于 `F:\项目\枪型飞鼠`。工作树（同一版本库的独立工作目录）位于 `F:\项目\枪型飞鼠\.worktrees\toolchain`，分支为 `codex/toolchain`。
 
 `E:\GunMouseCAD` 是永久目录联接（另一个路径入口），指向 `E:\各种软件\枪型飞鼠设计工具`。Miniforge 不接受中文安装路径，所以程序用英文入口调用，文件实际仍在原先指定的软件文件夹。按用户后续指示保留现状，不额外搬移软件。
+
+## 长期三维查看入口
+
+项目根目录中的 `查看板和外壳.lnk` 可双击打开实际模型。快捷方式由 `scripts/setup_preview_shortcut.ps1` 创建，不纳入版本库；查看代码、显示参数和启动配置均纳入 Git（版本控制系统）。
+
+- 左键拖动旋转，滚轮缩放；右侧两个中文对象可分别取消勾选，隐藏板或外壳。
+- 默认绿色裸板、半透明外壳，直接读取实际生成的实体文件，保持原始装配位置。
+- 工具联动脚本完成模型导出并写入 `geometry-report.json` 后，窗口自动刷新；窗口关闭时，下次双击直接读取最新文件。
+- `刷新模型` 可手动刷新；查看脚本保存后的变化由 CQ-editor 原生自动重载处理。
+- 以后不必重新制作展示界面。模型更新仍需运行生成脚本；展示窗口本身不会代替建模、布线和验证。
+
+嘉立创自己的板预览位于 **视图 → 3D预览**，可查看板和已经绑定模型的器件。它另有自身外壳预览，但官方资料没有说明能把外部 CadQuery 枪形外壳直接作为完整装配导入，因此完整板壳装配采用 CQ-editor 查看。依据：[嘉立创三维预览](https://prodocs.lceda.cn/cn/pcb/view-preview-3d/)、[外壳预览](https://prodocs.lceda.cn/cn/pcb/view-preview-3d-shell/)、[CadQuery 官方图形界面建议](https://cadquery.readthedocs.io/en/stable/installation.html)、[CQ-editor 显示与自动重载](https://github.com/CadQuery/CQ-editor/wiki/Usage)。
+
+直接启动或检查显示入口：
+
+```powershell
+& 'E:\GunMouseCAD\CQEditor\pythonw.exe' 'F:\项目\枪型飞鼠\scripts\open_preview.py'
+```
+
+查看开发工作树或其他生成目录时，可传入 `--output '完整模型目录'`。当前查看脚本读取该目录的 `eda-board-export.step` 和 `outer-shell.step`；自动刷新以最后写入的几何报告为完成信号。直接在外部改实体文件时可按 `刷新模型`。
+
+静态图可按需运行 `scripts/render_preview.py`，生成 `outputs/toolchain-demo/assembly-preview.png`，用于聊天或分享。日常旋转查看使用原生窗口。
+
+查看器固定官方源码提交为 `fd215727b25424df9b69987ece94767b8b327f0f`，源文件保留在 `E:\GunMouseCAD\CQEditorSource`。界面依赖精确版本见 `config/cq-editor-gui-requirements.txt`。查看环境复制已验证的核心后单独补充界面依赖，原建模环境保留 Python 3.12.14、CadQuery 2.8.0 和几何内核 7.9.3.1。
 
 ## 自动联动验证
 

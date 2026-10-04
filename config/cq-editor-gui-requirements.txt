@@ -1,0 +1,23 @@
+# 在复制的 CadQuery 2.8.0 环境中补充界面依赖。
+# 查看器源码固定提交见 tools.json；安装源码时禁用再次解析核心依赖。
+QtAwesome==1.4.0
+qtconsole==5.6.1
+PyQt5==5.15.11
+PyQt5-Qt5==5.15.2
+PyQt5_sip==12.20.0
+pyqtgraph==0.14.0
+Logbook==1.10.1
+ipykernel==7.4.0
+comm==0.2.3
+debugpy==1.8.22
+jupyter_client==8.10.0
+jupyter_core==5.9.1
+nest-asyncio2==1.7.3
+platformdirs==4.12.3
+pyzmq==27.2.0
+QtPy==2.4.3
+tornado==6.5.10
+requests==2.34.2
+charset-normalizer==3.5.2
+certifi==2026.7.22
+urllib3==2.8.0
