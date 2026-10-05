@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "value": {
+    "project": "gun-mouse-formal-route",
+    "status": "returned",
+    "command": "autoRouting(ALL_NETS)",
+    "caveat": "菜单启动只表示兼容入口响应，算法完成与实际保存另行检查"
+  },
+  "logs": [],
+  "durationMs": 76,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 1227
+  }
+}

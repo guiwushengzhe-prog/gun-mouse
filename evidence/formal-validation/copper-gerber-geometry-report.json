@@ -1,0 +1,86 @@
+{
+  "scope": "仅核对独立覆铜副本新增光绘铜面与连接线；不替换交付设计或实物验收",
+  "arcSagittaToleranceMm": 1e-05,
+  "units": "mm",
+  "sourceHashes": {
+    "baseline-gerber.zip": "0151816c98313e2ebacc572652addcdd183ee99c64044b9b5a30fc5e157defc0",
+    "copper-gerber.zip": "aa68b7048516c10afc53224d87aac4734409a1f374da2ddb9cd5d379f7ec7ef0"
+  },
+  "layers": {
+    "Gerber_TopLayer.GTL": {
+      "newCopperAreaMm2": 4867.17447226774,
+      "newCopperBoundsUvMm": [
+        -52.0,
+        -94.24345000000001,
+        58.54346998083978,
+        39.543459999999996
+      ],
+      "newCopperG36Regions": 21,
+      "circularArcCommandsParsed": 474,
+      "newCopperPrimitiveCount": 1150,
+      "newCopperAntennaOverlapAreaMm2": 0.0,
+      "newCopperAntennaClearanceMm": 0.0,
+      "newCopperTouchesAntennaBoundary": true,
+      "newCopperBoundaryIntersectionLengthMm": 22.783749999999998,
+      "strictClosedAntennaRegionDisjoint": false,
+      "cutouts": [
+        {
+          "name": "电池线过线槽",
+          "overlapAreaMm2": 0.0,
+          "clearanceMm": 1.3964968318670903
+        }
+      ],
+      "existingPadViaTrackRecordsUnchanged": true,
+      "missingExistingRecords": 0,
+      "addedNonPourRecords": 0,
+      "existingGerberObjectsInAntennaZoneBySection": {
+        "Pad": 10,
+        "Track": 11
+      },
+      "passed": true
+    },
+    "Gerber_BottomLayer.GBL": {
+      "newCopperAreaMm2": 6493.823144998175,
+      "newCopperBoundsUvMm": [
+        -52.0,
+        -94.24345000000001,
+        58.54346998083978,
+        39.543459999999996
+      ],
+      "newCopperG36Regions": 1,
+      "circularArcCommandsParsed": 322,
+      "newCopperPrimitiveCount": 600,
+      "newCopperAntennaOverlapAreaMm2": 0.0,
+      "newCopperAntennaClearanceMm": 0.0,
+      "newCopperTouchesAntennaBoundary": true,
+      "newCopperBoundaryIntersectionLengthMm": 27.344719999999995,
+      "strictClosedAntennaRegionDisjoint": false,
+      "cutouts": [
+        {
+          "name": "电池线过线槽",
+          "overlapAreaMm2": 0.0,
+          "clearanceMm": 0.25652024356757164
+        }
+      ],
+      "existingPadViaTrackRecordsUnchanged": true,
+      "missingExistingRecords": 0,
+      "addedNonPourRecords": 0,
+      "existingGerberObjectsInAntennaZoneBySection": {
+        "Pad": 6
+      },
+      "passed": true
+    }
+  },
+  "physicalOutline": {
+    "pathCount": 2,
+    "matchesLayoutIncludingCutout": true,
+    "matchesBaseline": true
+  },
+  "passed": true,
+  "limitations": [
+    "已有 C5/C6 焊盘及部分原导线进入当前 X≥52 mm 限制区，保留并单列，未重新设计",
+    "passed 只指面积和原文件保持检查：新增铜接触 X=52 边界，零间距，不满足严格闭集 X≥52 完全无铜的数学条件",
+    "圆弧与圆形光圈离散化用于面积核对，边界有约0.00005 mm量级的数值近似；不能代替制造商光绘验收",
+    "软件与光绘检查不能证明天线射频表现、电池和外壳装配或真实打印质量"
+  ]
+}

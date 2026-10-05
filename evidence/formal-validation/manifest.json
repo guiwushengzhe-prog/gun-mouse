@@ -1,0 +1,170 @@
+{
+  "files": [
+    {
+      "file": "assembly-interface-report.json",
+      "bytes": 28702,
+      "sha256": "3a1e643b0dea5548d0ddd8dd5a0a844ab7e292b3d1ab3fc25978632ea6591949"
+    },
+    {
+      "file": "baseline-gerber.zip",
+      "bytes": 103041,
+      "sha256": "0151816c98313e2ebacc572652addcdd183ee99c64044b9b5a30fc5e157defc0"
+    },
+    {
+      "file": "baseline-inspect.json",
+      "bytes": 278482,
+      "sha256": "e9b133840862da5e68f2d8c8ad5c8e0ce02a8a1e828a424dfdf690ca5424dd7a"
+    },
+    {
+      "file": "baseline-netlist.enet",
+      "bytes": 115123,
+      "sha256": "b64fe213420adc1fa827af51f484caba32388af2a76e84c2ab610ddce0c6bd3b"
+    },
+    {
+      "file": "baseline-pcb-with-parts-file.json",
+      "bytes": 485,
+      "sha256": "dcf1cfad3734cfc586f1d940185d72ec751e31fe7e5b5a3f9b384a1a514ad658"
+    },
+    {
+      "file": "baseline-routes.json",
+      "bytes": 586113,
+      "sha256": "354ccec5af72dd2cff706baf8ed6d264cf5ac6968e562541fed5bb2b81972023"
+    },
+    {
+      "file": "baseline-sch-netlist.enet",
+      "bytes": 166224,
+      "sha256": "bd71987abb304fa8add5b3234f9f4bede819d9d1f6ffb2771bdd52cc120274ba"
+    },
+    {
+      "file": "copper-build-retry.json",
+      "bytes": 220929,
+      "sha256": "7c048ac2083dda87d9e09ab572939096806d9abaf0472cb7c5a75e5038e5b58a"
+    },
+    {
+      "file": "copper-gerber-geometry-report.json",
+      "bytes": 3016,
+      "sha256": "6cb200bb1236e6c7772a1d689c15465093f37a24f5e02d8df8aff283f25af8c8"
+    },
+    {
+      "file": "copper-gerber-geometry.png",
+      "bytes": 143592,
+      "sha256": "e472d2e278c9d1cd103c4fb0f810efffcd67a923252d44265cefa16d6838d1a5"
+    },
+    {
+      "file": "copper-gerber.zip",
+      "bytes": 169038,
+      "sha256": "aa68b7048516c10afc53224d87aac4734409a1f374da2ddb9cd5d379f7ec7ef0"
+    },
+    {
+      "file": "copper-reopened-gerber.zip",
+      "bytes": 169070,
+      "sha256": "b7402e5be422ebd27e487f07571c6140307e4a918f1182394f95b5881d52fa66"
+    },
+    {
+      "file": "copper-reopened-inspect.json",
+      "bytes": 286035,
+      "sha256": "9c22cca4cf169995060a25fc552162c1da6b09d766c6dab5e7ef6ef418538c80"
+    },
+    {
+      "file": "formal-electrical-summary.json",
+      "bytes": 4811,
+      "sha256": "308762cdd2f902c23411db42e6e1467d3d430afed75d2f873416893bce1555cf"
+    },
+    {
+      "file": "gun-mouse-formal-baseline-saved-validation.json",
+      "bytes": 279293,
+      "sha256": "85bf297552eff993da9730b0aeda78c16e68614bb806bd1beecc035e1364e368"
+    },
+    {
+      "file": "gun-mouse-formal-roundtrip-saved-validation.json",
+      "bytes": 279293,
+      "sha256": "c1df128d2a75b53c0860d6f80deaf62740b8f8f432419d6c84976e63f41e6069"
+    },
+    {
+      "file": "native-after-write-unsaved.json",
+      "bytes": 281645,
+      "sha256": "26fadb0ff0b088e46cc6f3b2f95f20d48186efd3b3d0a77a95ecf940957ec35a"
+    },
+    {
+      "file": "native-apply.json",
+      "bytes": 595,
+      "sha256": "b9c3d3175064697114a84201059bca8481b07f6de4b4d04ec29993a225f5f591"
+    },
+    {
+      "file": "native-route-preview.json",
+      "bytes": 282541,
+      "sha256": "acc1fb78d2f2c818fd4981f496eee5b411eafe737595bc3b1bf30e57cfc03958"
+    },
+    {
+      "file": "native-routes.json",
+      "bytes": 571894,
+      "sha256": "1331bb8f63e629abf1f88b21025fad221632a7d44e3fca618ba9bd2cde74a3d8"
+    },
+    {
+      "file": "pcb-shell-current-export-report.json",
+      "bytes": 17986,
+      "sha256": "4fa0ff12e8d47101f36d0a9ca039ea3e6227ef42e1d53157dde116f82f880473"
+    },
+    {
+      "file": "prepared-projects.json",
+      "bytes": 1795,
+      "sha256": "3f75a00d057f856cfed1f906b07a095e0383288f83c5f1f6ed81d5f22a102112"
+    },
+    {
+      "file": "roundtrip-apply-retry.json",
+      "bytes": 103747,
+      "sha256": "749f7856eb5a3e5cee30f675fad8bd59eb3d44de4bf5af74f487edbe429f0a43"
+    },
+    {
+      "file": "roundtrip-reopened-inspect.json",
+      "bytes": 279293,
+      "sha256": "55966e99dced4c072d08c243e77d92d4accafb61138e6efb7de314169d1c411e"
+    },
+    {
+      "file": "roundtrip-reopened-routes.json",
+      "bytes": 586114,
+      "sha256": "61b7e73bd9a4d1f6ebab1520eeb5723f9467eff3c19031263ec70ce85aa5a24f"
+    },
+    {
+      "file": "route-rules.json",
+      "bytes": 18146,
+      "sha256": "1071b6f2c516106e54ef853c028d56ba00f0df5339be3f32e3140cdf2dbb6883"
+    },
+    {
+      "file": "route-start.json",
+      "bytes": 362,
+      "sha256": "ff726c99cb8d1ba26be8a9830b8b3bcee2682bc7ce716a189417cbd61265444e"
+    },
+    {
+      "file": "关系图/01-正式PCB与外壳关系.png",
+      "bytes": 196449,
+      "sha256": "4df2ff0a3367e3861eae45d5444e82dc7184ffbd4db52e35a74df586cd0160c7"
+    },
+    {
+      "file": "关系图/02-正式PCB内部布局.png",
+      "bytes": 82799,
+      "sha256": "cfc1f1e2733719a7c3182f79e358afce84724dcbbf868bb5b3b22a1fd40381f4"
+    },
+    {
+      "file": "关系图/03-接口与天线区域.png",
+      "bytes": 80262,
+      "sha256": "203adaece4662a29bdbc8f26a57694df5da482c36a68a4af253e9d276ed97509"
+    },
+    {
+      "file": "关系图/04-电池与背面空间.png",
+      "bytes": 73263,
+      "sha256": "5b517bff79a92fbb0aadf1b53a7abf352c483d108590cf0887c7b65ff07c1d8f"
+    },
+    {
+      "file": "查看结果.html",
+      "bytes": 3676,
+      "sha256": "bc0cff1135585007be1f23b9ab9513781971a31ccf4c10ca71c1d089e284f071"
+    },
+    {
+      "file": "验证说明.md",
+      "bytes": 7040,
+      "sha256": "f1c4a6a9318d5bfd8a161873a7e470d8537097e7a3f7e4cb6c4ef3de86f47ebf"
+    }
+  ],
+  "scope": "正式工程独立程序验证；原交付不变"
+}

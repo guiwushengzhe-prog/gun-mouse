@@ -1,0 +1,1131 @@
+{
+  "checked_at_utc": "2026-10-05T14:08:57.808330+00:00",
+  "scope": "正式保存 PCB 与当前交付装配的文件/模型核对；不改配置、器件位置或设计；不代表打印或实物验收",
+  "config_sha256": "3182081703fd54178d1efdbb17852110be8e754309c833cdd395efb206215773",
+  "geometry_sha256": "68eef13f2e0565452a7f5501419544a84462694704475a6c1a5aa992f4a3112b",
+  "pcb_source_sha256": "8d538cc85073aae0a9ad1b6faade6a6fb19591e9a2f63300c848f39ded3f4faa",
+  "saved_pcb_layout": {
+    "component_count": 48,
+    "components": [
+      {
+        "ref": "J1",
+        "position_error_mm": 3.298484498542537e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "J2",
+        "position_error_mm": 3.298484497680877e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "U1",
+        "position_error_mm": 1.1840608093742542e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R12",
+        "position_error_mm": 1.250279968626855e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C7",
+        "position_error_mm": 1.2963024340162177e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C8",
+        "position_error_mm": 1.2433824830590488e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R10",
+        "position_error_mm": 5.531726675245282e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R11",
+        "position_error_mm": 1.2649110636824252e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "SW1",
+        "position_error_mm": 5.824087908724874e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C10",
+        "position_error_mm": 6.6272166092766455e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C11",
+        "position_error_mm": 8.655633998935544e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R15",
+        "position_error_mm": 1.2657013863859335e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C15",
+        "position_error_mm": 1.65951800232311e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C5",
+        "position_error_mm": 1.4543727172542927e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C6",
+        "position_error_mm": 1.072007462965865e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R14",
+        "position_error_mm": 7.93221280215353e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C14",
+        "position_error_mm": 1.3346160496268936e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R13",
+        "position_error_mm": 6.6272166092766455e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C13",
+        "position_error_mm": 1.2614277626554497e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R6",
+        "position_error_mm": 8.94427191919348e-07,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R7",
+        "position_error_mm": 7.641989273209771e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C9",
+        "position_error_mm": 9.560334725163683e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R8",
+        "position_error_mm": 1.2720062896617466e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R9",
+        "position_error_mm": 9.208691549716083e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "SW2",
+        "position_error_mm": 1.0956276738399826e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "J5",
+        "position_error_mm": 1.1180339888664509e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "J4",
+        "position_error_mm": 6.9079664192001175e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "J3",
+        "position_error_mm": 9.402127420488813e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "USB1",
+        "position_error_mm": 9.264987848607822e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R1",
+        "position_error_mm": 1.1759251673865325e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R2",
+        "position_error_mm": 1.4480331486816666e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "U4",
+        "position_error_mm": 1.2790621568848801e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C12",
+        "position_error_mm": 1.1933147109640976e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "U2",
+        "position_error_mm": 1.7117242772645583e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C1",
+        "position_error_mm": 1.1806777717565886e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C2",
+        "position_error_mm": 1.1842297077739273e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R3",
+        "position_error_mm": 1.2912009915786384e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "LED1",
+        "position_error_mm": 1.3630847368787829e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R4",
+        "position_error_mm": 1.2601587199686887e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "D1",
+        "position_error_mm": 1.019803902247968e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "Q1",
+        "position_error_mm": 1.2870120436667824e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "R5",
+        "position_error_mm": 9.07964757634659e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "U3",
+        "position_error_mm": 1.1560276809111468e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C3",
+        "position_error_mm": 1.0781465577934896e-05,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "C4",
+        "position_error_mm": 7.102112358981811e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "SW3",
+        "position_error_mm": 7.488658093522721e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "SW4",
+        "position_error_mm": 5.199999999116168e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      },
+      {
+        "ref": "J6",
+        "position_error_mm": 3.1240998676095075e-06,
+        "angle_error_deg": 0,
+        "matches_config_within_serialization_precision": true
+      }
+    ],
+    "mount_hole_records": [
+      {
+        "id": "H1",
+        "actual_global_xz_mm": [
+          -13.9999974,
+          15.999993400000001
+        ],
+        "actual_hole_d_mm": 2.3999951999999998,
+        "expected": {
+          "id": "H1",
+          "xz": [
+            -14,
+            16
+          ],
+          "d": 2.4
+        }
+      },
+      {
+        "id": "H2",
+        "actual_global_xz_mm": [
+          -51.99999759999999,
+          36.0000042
+        ],
+        "actual_hole_d_mm": 2.3999951999999998,
+        "expected": {
+          "id": "H2",
+          "xz": [
+            -52,
+            36
+          ],
+          "d": 2.4
+        }
+      },
+      {
+        "id": "H3",
+        "actual_global_xz_mm": [
+          -51.99999759999999,
+          0.0
+        ],
+        "actual_hole_d_mm": 2.3999951999999998,
+        "expected": {
+          "id": "H3",
+          "xz": [
+            -52,
+            0
+          ],
+          "d": 2.4
+        }
+      },
+      {
+        "id": "H4",
+        "actual_global_xz_mm": [
+          -49.500002599999995,
+          -88.00000179999999
+        ],
+        "actual_hole_d_mm": 2.3999951999999998,
+        "expected": {
+          "id": "H4",
+          "xz": [
+            -49.5,
+            -88.0
+          ],
+          "d": 2.4
+        }
+      },
+      {
+        "id": "H5",
+        "actual_global_xz_mm": [
+          -16.9999914,
+          -85.00000779999999
+        ],
+        "actual_hole_d_mm": 2.3999951999999998,
+        "expected": {
+          "id": "H5",
+          "xz": [
+            -17,
+            -85
+          ],
+          "d": 2.4
+        }
+      }
+    ],
+    "copper_lines_with_endpoint_forward_of_keepout_parameter": 11,
+    "antenna_nearby_original_components": [
+      {
+        "ref": "C5",
+        "actual_global_xz_mm": [
+          56.9999876,
+          16.4999924
+        ],
+        "config_xz_mm": [
+          57.0,
+          16.5
+        ]
+      },
+      {
+        "ref": "C6",
+        "actual_global_xz_mm": [
+          53.999993599999996,
+          16.9999914
+        ],
+        "config_xz_mm": [
+          54.0,
+          17.0
+        ]
+      }
+    ],
+    "keepout_note": "此参数用于原脚本铺铜轮廓；不是所有线路的强制禁布区。计数只描述几何，不能推断射频是否合格。"
+  },
+  "assembly_source": {
+    "archive_sha256": "4d3caabae70c7366cfd689e6b48ffe612b6d3e4111e12902ec7fd57cf89c46fb",
+    "entry": "枪型飞鼠整机装配.step",
+    "step_sha256": "89018ed8992b56d4875e46f437189fee29607f9d73d07dde1306daca9f867513",
+    "children": 10
+  },
+  "printed_parts": {
+    "左半壳": {
+      "assembly_matches_independent_properties": true,
+      "step_sha256": "71dd5609ba958a47387e166e7b5aee38da16f0a5dca938127d2be6f1487183ec",
+      "stl_sha256": "e68f0f2afeb8db18d7eff5f0e746461a61302875177c4ddf912f3901cb6d1647",
+      "step_valid": true,
+      "stl": {
+        "triangles": 34050,
+        "bounds": [
+          -90.0,
+          90.0,
+          -69.5,
+          69.5,
+          0.0,
+          21.6299991607666
+        ],
+        "connected_regions": 1,
+        "boundary": {
+          "count": 0,
+          "points": []
+        },
+        "non_manifold": {
+          "count": 0,
+          "points": []
+        },
+        "zero_area_triangles": []
+      }
+    },
+    "右半壳": {
+      "assembly_matches_independent_properties": true,
+      "step_sha256": "f4470f7dfd858739a4a82975767e801b8a5b862583c8a93349cf39e51ddaebc7",
+      "stl_sha256": "1a07a5676d16578e5b9393aba34f91a20e23ca36aa59e60d02440350ae148c7d",
+      "step_valid": true,
+      "stl": {
+        "triangles": 37380,
+        "bounds": [
+          -90.0,
+          90.0,
+          -69.5,
+          69.5,
+          1.0000000116860974e-07,
+          18.3700008392334
+        ],
+        "connected_regions": 1,
+        "boundary": {
+          "count": 0,
+          "points": []
+        },
+        "non_manifold": {
+          "count": 0,
+          "points": []
+        },
+        "zero_area_triangles": []
+      }
+    },
+    "扳机": {
+      "assembly_matches_independent_properties": true,
+      "step_sha256": "c12703f63801c1df7f687906c29ca84865702905ea117053107e6c78dbb90ed8",
+      "stl_sha256": "17da708fab369971925602173f25c7a1deaa85842b9f64201bcf94d10e002812",
+      "step_valid": true,
+      "stl": {
+        "triangles": 1308,
+        "bounds": [
+          -10.695469856262207,
+          10.69534683227539,
+          -14.601590156555176,
+          14.601675987243652,
+          0.0,
+          10.0
+        ],
+        "connected_regions": 1,
+        "boundary": {
+          "count": 0,
+          "points": []
+        },
+        "non_manifold": {
+          "count": 0,
+          "points": []
+        },
+        "zero_area_triangles": []
+      }
+    },
+    "扳机触摸面盖": {
+      "assembly_matches_independent_properties": true,
+      "step_sha256": "d619f36d4692a1cc35296bb1f2c1ffbdeebbbb4f6155f192ce2f6736fdddba94",
+      "stl_sha256": "d035601cfe68733ead99f859cbd0a82cc2daf7aeb2f6868f9e3960ddd441d0c2",
+      "step_valid": true,
+      "stl": {
+        "triangles": 12,
+        "bounds": [
+          -12.213300704956055,
+          12.213300704956055,
+          -3.6500000953674316,
+          3.6500000953674316,
+          0.0,
+          0.8800221681594849
+        ],
+        "connected_regions": 1,
+        "boundary": {
+          "count": 0,
+          "points": []
+        },
+        "non_manifold": {
+          "count": 0,
+          "points": []
+        },
+        "zero_area_triangles": []
+      }
+    },
+    "右键帽": {
+      "assembly_matches_independent_properties": true,
+      "step_sha256": "9669aeb86005adf0234337fdaa527ed2f5068e239fb54f1189e7a528fd4a5413",
+      "stl_sha256": "f0826372959ded67f8ec884bc6cc78d862ea2929834934e87b5c88be2a279a6a",
+      "step_valid": true,
+      "stl": {
+        "triangles": 354,
+        "bounds": [
+          -8.399999618530273,
+          8.399999618530273,
+          -5.900000095367432,
+          5.900000095367432,
+          0.0,
+          16.15999984741211
+        ],
+        "connected_regions": 1,
+        "boundary": {
+          "count": 0,
+          "points": []
+        },
+        "non_manifold": {
+          "count": 0,
+          "points": []
+        },
+        "zero_area_triangles": []
+      }
+    },
+    "摇杆帽": {
+      "assembly_matches_independent_properties": true,
+      "step_sha256": "e11465357b799630657149c7cb5499544d39445d8b5ca88b6eafc59e655902a5",
+      "stl_sha256": "f912a0431ffc4311ffceaedd5a0ee268fce8222d62b2c23be6613788b2edca7b",
+      "step_valid": true,
+      "stl": {
+        "triangles": 9356,
+        "bounds": [
+          -7.997513294219971,
+          7.997513294219971,
+          -8.0,
+          8.0,
+          -7.771561172376096e-16,
+          14.579999923706055
+        ],
+        "connected_regions": 1,
+        "boundary": {
+          "count": 0,
+          "points": []
+        },
+        "non_manifold": {
+          "count": 0,
+          "points": []
+        },
+        "zero_area_triangles": []
+      }
+    }
+  },
+  "model_properties": {
+    "左半壳": {
+      "valid": true,
+      "bounds": [
+        -62.0,
+        118.0,
+        -1.6300001,
+        20.000000099999998,
+        -96.0,
+        43.0
+      ],
+      "volume_mm3": 57359.5066379465,
+      "geometric_center_mm": [
+        2.703789489206307,
+        12.902661935363373,
+        -6.547010339770212
+      ]
+    },
+    "右半壳": {
+      "valid": true,
+      "bounds": [
+        -62.0000001,
+        118.0,
+        -20.0000001,
+        -1.629999999999999,
+        -96.0,
+        43.0000001
+      ],
+      "volume_mm3": 56787.59612056919,
+      "geometric_center_mm": [
+        -0.5224536892162024,
+        -14.059947891326265,
+        -9.726775648107873
+      ]
+    },
+    "扳机": {
+      "valid": true,
+      "bounds": [
+        -2.0,
+        19.390938795809,
+        -5.0,
+        5.0,
+        -33.5080627738,
+        -4.304215393358
+      ],
+      "volume_mm3": 3153.8464593408553,
+      "geometric_center_mm": [
+        8.863031519189073,
+        -1.4418817046074747e-16,
+        -18.908467253893214
+      ]
+    },
+    "扳机触摸面盖": {
+      "valid": true,
+      "bounds": [
+        13.046428571429,
+        19.025,
+        -3.65,
+        3.65,
+        -30.85,
+        -7.15
+      ],
+      "volume_mm3": 155.7089999996587,
+      "geometric_center_mm": [
+        16.03571428571762,
+        0.0,
+        -19.0
+      ]
+    },
+    "右键帽": {
+      "valid": true,
+      "bounds": [
+        -41.4,
+        -24.6,
+        5.84,
+        22.0,
+        -7.9,
+        3.9000000000000004
+      ],
+      "volume_mm3": 1116.08258292244,
+      "geometric_center_mm": [
+        -32.89076077176943,
+        17.389244820688393,
+        -2.0000000000000053
+      ]
+    },
+    "摇杆帽": {
+      "valid": true,
+      "bounds": [
+        -41.0,
+        -25.0,
+        13.02,
+        27.6,
+        15.0,
+        31.0000001
+      ],
+      "volume_mm3": 910.5790235922564,
+      "geometric_center_mm": [
+        -33.00000000000009,
+        23.33243062615538,
+        23.000000000000064
+      ]
+    },
+    "电池": {
+      "valid": true,
+      "bounds": [
+        -53.2,
+        -22.2,
+        -11.73,
+        -3.73,
+        -84.25,
+        -31.75
+      ],
+      "volume_mm3": 13020.000000000002,
+      "geometric_center_mm": [
+        -37.69999999999999,
+        -7.73,
+        -58.0
+      ]
+    },
+    "主板": {
+      "valid": true,
+      "bounds": [
+        -58.787636413534,
+        60.48742697485,
+        -5.429972154832,
+        18.020028201530003,
+        -95.80019062713001,
+        39.787585613436
+      ],
+      "volume_mm3": 17314.43457676347,
+      "geometric_center_mm": [
+        -14.721062554295596,
+        -0.812267630934315,
+        -4.119573319194718
+      ]
+    },
+    "开发板": {
+      "valid": true,
+      "bounds": [
+        2.85,
+        66.24,
+        6.87,
+        14.47,
+        11.03,
+        38.97
+      ],
+      "volume_mm3": 8011.978099999997,
+      "geometric_center_mm": [
+        31.779855740307152,
+        11.475900633328001,
+        25.000000000000018
+      ]
+    },
+    "扳机小板": {
+      "valid": true,
+      "bounds": [
+        -22.49997176259,
+        -0.499971762595,
+        -6.9872999746,
+        7.600000000000077,
+        -34.98727457454,
+        2.4874015748
+      ],
+      "volume_mm3": 2100.354481111707,
+      "geometric_center_mm": [
+        -16.42937479779792,
+        0.07929412489743944,
+        -13.44055192444638
+      ]
+    }
+  },
+  "mount_bore_checks": {
+    "rows": [
+      {
+        "id": "H1",
+        "PCB_bore_overlap_mm3": 0.0,
+        "right_clearance_overlap_mm3": 0.0,
+        "left_pilot_overlap_mm3": 0.0
+      },
+      {
+        "id": "H2",
+        "PCB_bore_overlap_mm3": 0.0,
+        "right_clearance_overlap_mm3": 0.0,
+        "left_pilot_overlap_mm3": 0.0
+      },
+      {
+        "id": "H3",
+        "PCB_bore_overlap_mm3": 0.0,
+        "right_clearance_overlap_mm3": 0.0,
+        "left_pilot_overlap_mm3": 0.0
+      },
+      {
+        "id": "H4",
+        "PCB_bore_overlap_mm3": 0.0,
+        "right_clearance_overlap_mm3": 0.0,
+        "left_pilot_overlap_mm3": 0.0
+      },
+      {
+        "id": "H5",
+        "PCB_bore_overlap_mm3": 0.0,
+        "right_clearance_overlap_mm3": 0.0,
+        "left_pilot_overlap_mm3": 0.0
+      }
+    ],
+    "probe_radial_margin_mm": 0.01,
+    "note": "缩小试探圆柱避免数值边界；不是打印公差。左侧1.7孔为自攻底孔，未模拟螺纹、扭矩和材料强度。"
+  },
+  "header_pin_alignment": {
+    "pins": 44,
+    "maximum_error_mm": 3.2984845019891755e-06,
+    "details": [
+      {
+        "ref": "J1",
+        "pin": 1,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 2,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 3,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 4,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 5,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 6,
+        "error_mm": 3.2984845019891755e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 7,
+        "error_mm": 3.2984845019891755e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 8,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 9,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 10,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 11,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 12,
+        "error_mm": 3.298484498542537e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 13,
+        "error_mm": 3.298484498542537e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 14,
+        "error_mm": 3.2984845019891755e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 15,
+        "error_mm": 3.298484498542537e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 16,
+        "error_mm": 3.298484498542537e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 17,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 18,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 19,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 20,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 21,
+        "error_mm": 3.2984844950958986e-06
+      },
+      {
+        "ref": "J1",
+        "pin": 22,
+        "error_mm": 3.298484498542537e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 1,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 2,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 3,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 4,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 5,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 6,
+        "error_mm": 3.298484501127516e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 7,
+        "error_mm": 3.298484501127516e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 8,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 9,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 10,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 11,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 12,
+        "error_mm": 3.298484497680877e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 13,
+        "error_mm": 3.298484497680877e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 14,
+        "error_mm": 3.298484501127516e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 15,
+        "error_mm": 3.298484497680877e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 16,
+        "error_mm": 3.298484497680877e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 17,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 18,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 19,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 20,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 21,
+        "error_mm": 3.2984844942342386e-06
+      },
+      {
+        "ref": "J2",
+        "pin": 22,
+        "error_mm": 3.298484497680877e-06
+      }
+    ],
+    "note": "匹配开发板参考孔列，不验证用户实物板版本、针长、针径或插接保持力。"
+  },
+  "usb_interface": {
+    "nominal_opening_mm": [
+      9.4,
+      3.7
+    ],
+    "outer_recess_mm": [
+      12.6,
+      7.0,
+      1.0
+    ],
+    "left_portal_overlap_mm3": 0.0,
+    "right_portal_overlap_mm3": 0.0,
+    "socket_front_slice_bounds": [
+      -41.47007620015,
+      -32.53007620015,
+      -1.579984441588,
+      1.620015558412,
+      -95.78,
+      -95.76
+    ],
+    "note": "仅核对库模型前端及通道；实际USB插头包胶、线尾和插拔路径未提供，不能保证所有线材可插。"
+  },
+  "trigger": {
+    "travel_mm": 4.1,
+    "pressed_shell_overlap_mm3": {
+      "left": 0.0,
+      "right": 0.0
+    },
+    "pressed_daughter_contacts": [
+      {
+        "solid_index": 4,
+        "overlap_mm3": 8.266682052432387,
+        "overlap_bounds": [
+          -5.6,
+          -0.499971762595,
+          -1.8000000000000003,
+          1.8000000000000003,
+          -20.24042931931046,
+          -10.5
+        ],
+        "other_bounds": [
+          -10.09997176259,
+          -0.499971762595,
+          -1.8,
+          1.8,
+          -20.24042931931046,
+          -2.099448021293
+        ]
+      }
+    ],
+    "full_tolerance_trigger_margin_mm": -0.09999999999999964,
+    "note": "与静态杠杆的驱动接触不证明实物触发/不过压；全公差余量为负，需要实际微动校核，可能局部调整限位。"
+  },
+  "joystick": {
+    "tilt_shell_contacts_mm3": {
+      "18.95/X/-1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "18.95/X/1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "18.95/Z/-1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "18.95/Z/1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "19.65/X/-1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "19.65/X/1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "19.65/Z/-1": {
+        "left": 0.0,
+        "right": 0.0
+      },
+      "19.65/Z/1": {
+        "left": 0.0,
+        "right": 0.0
+      }
+    },
+    "pivot_height_assumed_mm": 7.0,
+    "double_flat_hole_d_mm": 4.2,
+    "double_flat_hole_flat_mm": 3.2,
+    "note": "未验证实际摆动中心、按下行程、打印孔收缩和帽子保持力。"
+  },
+  "antenna_space": {
+    "reference_bounds": [
+      60.0,
+      66.24,
+      10.97,
+      11.77,
+      16.0,
+      34.0
+    ],
+    "battery_distance_mm": 96.19247631701765,
+    "nearest_M2_shaft_distance_mm": 17.48137580398065,
+    "note": "天线参考体与螺丝杆空间距离，不是射频仿真；未包括线束、手部、金属螺丝头和实际天线场分布。"
+  },
+  "remaining_unknowns": {
+    "battery_padding_space_at_max_thickness_mm": 0.40000000000000036,
+    "touch_electrode_and_adhesive_stack_space_mm": 0.15,
+    "dev_board_thickness_assumed_mm": 1.6,
+    "dev_board_component_height_assumed_mm": 3.5,
+    "balance": "只记录几何体积中心；真实器件、电池、线束和打印件质量未知，不输出实际重心或握持平衡结论。",
+    "physical_acceptance": "打印公差、弹簧、摩擦、线束、连接器、充电温升、触摸和无线均需实物核对。"
+  },
+  "pcb_source_unchanged_during_audit": true,
+  "manufacturing_finalized": false,
+  "layout_refreshed_at_utc": "2026-10-05T14:20:14.051647+00:00",
+  "pcb_source_matches_initial_check": true
+}

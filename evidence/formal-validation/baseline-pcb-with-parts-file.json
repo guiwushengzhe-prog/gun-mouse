@@ -1,0 +1,15 @@
+{
+  "project": "gun-mouse-formal-baseline",
+  "kind": "step",
+  "target": "F:/项目/枪型飞鼠/.worktrees/formal-validation/outputs/formal-validation/baseline-pcb-with-parts.step",
+  "bytes": 29558435,
+  "name": "gun-mouse-formal-baseline",
+  "saved": false,
+  "directWriteResult": {
+    "error": "路径不允许"
+  },
+  "transfer": "base64-chunks",
+  "base64Length": 39411248,
+  "localSaved": true,
+  "sha256": "32f1c17ce42f627991ed1dd63ff8bdd7291a04da056506165f18ca9021318158"
+}

@@ -1,0 +1,204 @@
+{
+  "roundtrip": {
+    "sourceCounts": {
+      "components": 48,
+      "pads": 433,
+      "lines": 575,
+      "vias": 95,
+      "arcs": 0,
+      "polylines": 0
+    },
+    "reopenedCounts": {
+      "components": 48,
+      "pads": 433,
+      "lines": 575,
+      "vias": 95,
+      "arcs": 0,
+      "polylines": 0
+    },
+    "lineGeometryAndAttributesEqual": true,
+    "viaGeometryAndAttributesEqual": true,
+    "saved": true,
+    "mappedLibraryFields": 96,
+    "reopenedDrc": {
+      "passed": true,
+      "count": 0,
+      "items": []
+    },
+    "passed": true
+  },
+  "compiledNetlists": {
+    "componentCount": 48,
+    "connectedPinCount": 160,
+    "schematicMatchesConfig": true,
+    "pcbMatchesConfig": true,
+    "schematicMatchesPcb": true,
+    "identityDifferences": [],
+    "passed": true
+  },
+  "baseline": {
+    "counts": {
+      "componentCount": 48,
+      "configuredComponentCount": 48,
+      "connectedPinCount": 160,
+      "configuredPinCount": 160,
+      "lineCount": 575,
+      "arcCount": 0,
+      "copperPolylineCount": 0,
+      "viaCount": 95,
+      "originalViaCount": 95,
+      "matchesOriginalViaCount": true,
+      "pourCount": 0,
+      "actualFillCount": 0
+    },
+    "pinComparison": {
+      "passed": true,
+      "differences": []
+    },
+    "drc": {
+      "passed": true,
+      "count": 0,
+      "items": []
+    }
+  },
+  "copperReopened": {
+    "counts": {
+      "componentCount": 48,
+      "configuredComponentCount": 48,
+      "connectedPinCount": 160,
+      "configuredPinCount": 160,
+      "lineCount": 575,
+      "arcCount": 0,
+      "copperPolylineCount": 0,
+      "viaCount": 95,
+      "originalViaCount": 95,
+      "matchesOriginalViaCount": true,
+      "pourCount": 2,
+      "actualFillCount": 186
+    },
+    "drc": {
+      "passed": true,
+      "count": 0,
+      "items": []
+    },
+    "pinComparison": {
+      "passed": true,
+      "differences": []
+    }
+  },
+  "nativeRouterDiagnostic": {
+    "algorithm": "本机嘉立创原生自动布线；菜单兼容入口",
+    "capturedCounts": {
+      "components": 48,
+      "pads": 433,
+      "lines": 500,
+      "vias": 37,
+      "arcs": 0,
+      "polylines": 0
+    },
+    "widthRulesObserved": true,
+    "nativeUnconnectedErrors": [
+      {
+        "errorType": "Connection Error",
+        "net": "3V3",
+        "obj1": {
+          "typeName": "SMD Pad",
+          "suffix": "(3V3): U1_8"
+        },
+        "pos": {
+          "x": 26.889900000000004,
+          "y": 117.1267
+        }
+      },
+      {
+        "errorType": "Connection Error",
+        "net": "3V3",
+        "obj1": {
+          "typeName": "SMD Pad",
+          "suffix": "(3V3): U1_5"
+        },
+        "pos": {
+          "x": 33.4637,
+          "y": 117.7953
+        }
+      },
+      {
+        "errorType": "Connection Error",
+        "net": "GND",
+        "obj1": {
+          "typeName": "SMD Pad",
+          "suffix": "(GND): U1_2"
+        },
+        "pos": {
+          "x": 36.1023,
+          "y": 113.18969999999999
+        }
+      },
+      {
+        "errorType": "Connection Error",
+        "net": "GND",
+        "obj1": {
+          "typeName": "SMD Pad",
+          "suffix": "(GND): U1_3"
+        },
+        "pos": {
+          "x": 36.1023,
+          "y": 115.15769999999999
+        }
+      },
+      {
+        "errorType": "Connection Error",
+        "net": "GND",
+        "obj1": {
+          "typeName": "SMD Pad",
+          "suffix": "(GND): U1_1"
+        },
+        "pos": {
+          "x": 36.1023,
+          "y": 111.2207
+        }
+      },
+      {
+        "errorType": "Connection Error",
+        "net": "GND",
+        "obj1": {
+          "typeName": "SMD Pad",
+          "suffix": "(GND): U1_6"
+        },
+        "pos": {
+          "x": 31.4957,
+          "y": 117.7953
+        }
+      }
+    ],
+    "publicWritebackReadLineCount": 497,
+    "missingShortSegments": [
+      {
+        "sourceId": "b8e1b582df638428",
+        "net": "3V3",
+        "lengthMm": 0.00017960466622729762
+      },
+      {
+        "sourceId": "d6f1dc55545d694b",
+        "net": "SCL",
+        "lengthMm": 0.0021552559946959224
+      },
+      {
+        "sourceId": "eadbbf6197d78f7a",
+        "net": "SCL",
+        "lengthMm": 0.0021552559946979646
+      }
+    ],
+    "saveCalledByApply": false,
+    "acceptedAsEquivalent": false,
+    "manufacturingAccepted": false,
+    "note": "专用启动接口未修；正式板原生结果不完整，写回还丢失三条极短段。失败副本不能替代原交付。",
+    "diskAfterOwnedSessionClosed": {
+      "copperLines": 497,
+      "vias": 37,
+      "sha256": "700897c1f3fb49459af95fa25b3a1d2cf7fc2d719724983fda122bf03d85efd1"
+    }
+  },
+  "sourceBoardSha256": "8d538cc85073aae0a9ad1b6faade6a6fb19591e9a2f63300c848f39ded3f4faa",
+  "scope": "正式PCB的接口与文件检查，原设计保持；实物制造验收未完成"
+}

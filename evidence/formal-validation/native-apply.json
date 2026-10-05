@@ -1,0 +1,16 @@
+{
+  "ok": false,
+  "error": {
+    "code": "EXECUTION_ERROR",
+    "message": "写回路线数量不符，未保存"
+  },
+  "_local_transport": {
+    "mode": "file",
+    "command_line_utf16_units": 604,
+    "inline_command_line_utf16_units": 430852,
+    "payload_file": "F:\\项目\\枪型飞鼠\\.worktrees\\formal-validation\\.logs\\eda-cli-payload\\f4c273f2cd3040f88355fe568bcba55a.json",
+    "payload_bytes": 391406,
+    "payload_sha256": "d0e9c9115fbc698391b01eae469f6cc3434945500e00786aa91b6301b04244ea",
+    "requires": "官方 SYS_FileSystem 项目目录访问及外部交互权限"
+  }
+}
