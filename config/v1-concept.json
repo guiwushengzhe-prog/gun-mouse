@@ -1,0 +1,185 @@
+{
+  "spec_version": "V1-Concept-01",
+  "recorded_date": "2026-10-05",
+  "stage": "概念探索，器件清单与制造尺寸未冻结",
+  "unit": "mm",
+  "hand": "右手单手",
+  "coordinate_system": {
+    "status": "待用户确认，不用于正式装配",
+    "requested_directions": {"x": "向前", "y": "向右", "z": "向上"},
+    "requested_actual_handedness": "左手",
+    "recommended_directions": {"x": "向前", "y": "向左", "z": "向上"},
+    "recommended_handedness": "右手",
+    "selected_directions": null,
+    "origin": null
+  },
+  "exploration_envelope": {
+    "manufacturing_approved": false,
+    "initial_length": 180,
+    "initial_max_thickness": 40,
+    "initial_height": 135,
+    "length_range": [160, 200],
+    "max_thickness_range": [35, 50],
+    "height_range": [120, 150],
+    "ordinary_wall_thickness_range": [2.0, 2.4],
+    "touch_surface_thickness": null,
+    "print_tolerance": null
+  },
+  "controls": {
+    "touch_location": "食指扳机表面",
+    "touch_gates": "仅惯性鼠标移动输出",
+    "touch_and_click_independent": true,
+    "left_click": "扳机独立微动开关",
+    "right_click": "拇指区独立按键，位置待握持测试",
+    "right_click_and_joystick_simultaneous_required": false,
+    "joystick_motion": "连续大角度转向",
+    "joystick_press": "鼠标中键",
+    "drop_pending_inertial_motion_when_disabled": true,
+    "disabled_inertial_motion_accumulation": false,
+    "grip_touch": false,
+    "trackball": false,
+    "touch_sliding": false,
+    "extra_function_buttons": false,
+    "required_physical_scroll_wheel": false,
+    "touch_release_latency_measured_ms": null
+  },
+  "components": [
+    {
+      "id": "main_controller_existing",
+      "name": "优信 ESP32-S3-N16R8 焊排针开发板",
+      "state": "已有，正式主控候选之一",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "official_module_reference": {
+        "name": "ESP32-S3-WROOM-1",
+        "not_whole_board": true,
+        "envelope_mm": [18, 25.5, 3.1],
+        "supply_v": [3.0, 3.6],
+        "flash_mb": 16,
+        "psram_mb": 8,
+        "source": "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf"
+      }
+    },
+    {
+      "id": "main_controller_alternative",
+      "name": "nRF52840",
+      "state": "候选，未选定模块或开发板，未标记采购",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "official_chip_reference": {
+        "flash_kb": 1024,
+        "ram_kb": 256,
+        "source": "https://www.nordicsemi.com/products/nrf52840"
+      }
+    },
+    {
+      "id": "imu",
+      "name": "广运 GY-601N1-LSM6DSV16X 模块",
+      "state": "已有，优先保留",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "official_chip_reference": {
+        "not_whole_board": true,
+        "envelope_mm": [2.5, 3.0, 0.83],
+        "supply_v": [1.71, 3.6],
+        "io_supply_v": [1.08, 3.6],
+        "source": "https://www.st.com/resource/en/datasheet/lsm6dsv16x.pdf"
+      }
+    },
+    {
+      "id": "joystick",
+      "name": "DZYJ 普通 PS2 五针黑板电位器摇杆",
+      "state": "已购，本版采用，排除 PS4/PS5 与磁阻摇杆",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "full_swing_envelope_mm": null,
+      "pin_order_verified": false,
+      "mount": "独立局部安装座",
+      "other_manufacturer_reference": {
+        "name": "Joy-IT COM-KY023JM",
+        "not_user_part": true,
+        "envelope_mm": [34, 39, 26],
+        "source": "https://www.joy-it.net/en/products/COM-KY023JM"
+      }
+    },
+    {
+      "id": "trigger_switch_order",
+      "name": "SS-01GL",
+      "state": "订单仅标短柄型号，截图为打包中，完整后缀及到货待核对",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "official_model_reference": {
+        "body_max_mm": [19.8, 6.4, 10.2],
+        "body_excludes_lever_and_terminals": true,
+        "lever_length_mm": 14.5,
+        "operating_force_max_n": 0.49,
+        "source": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-ss.pdf"
+      }
+    },
+    {
+      "id": "trigger_switch_candidate",
+      "name": "SS-01GL111",
+      "state": "规范中的长柄候选，不能视为订单已购完整型号",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "official_model_reference": {
+        "body_max_mm": [19.8, 6.4, 10.2],
+        "body_excludes_lever_and_terminals": true,
+        "lever_length_mm": 22.6,
+        "operating_force_max_n": 0.39,
+        "source": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-ss.pdf"
+      }
+    },
+    {
+      "id": "touch_detector_existing",
+      "name": "TTP223 蓝色三针触摸模块",
+      "state": "已有，用于实验，完整芯片后缀及模块焊桥未核对",
+      "prototype_supply_v": 3.3,
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "external_electrode_connection_verified": false,
+      "official_chip_reference": {
+        "name": "TTP223-BA6",
+        "exact_user_suffix_verified": false,
+        "supply_v": [2.0, 5.5],
+        "direct_follow_mode_required": true,
+        "response_at_3v_ms": {"fast": 60, "low_power": 220},
+        "response_not_release_guarantee": true,
+        "source": "https://www.tontek.com.tw/uploads/product/243/TTP223-BA6_V2.1_EN.pdf"
+      }
+    },
+    {
+      "id": "touch_detector_candidate",
+      "name": "AT42QT1011",
+      "state": "正式版候选，未采购，封装未选定",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "official_chip_reference": {
+        "supply_v": [1.8, 5.5],
+        "continuous_touch_timeout": false,
+        "source": "https://ww1.microchip.com/downloads/en/DeviceDoc/40001947A.pdf"
+      }
+    },
+    {
+      "id": "battery",
+      "name": "现有锂电池",
+      "state": "已有，原型对象，实体尺寸待测",
+      "nominal_voltage_v": 3.7,
+      "nominal_capacity_mah": 700,
+      "calculated_nominal_energy_wh": 2.59,
+      "assembly_envelope_mm": null,
+      "connector": null,
+      "charge_specification_verified": false,
+      "mount": "独立绝缘安装，避免直接焊死于电路板"
+    },
+    {
+      "id": "power",
+      "name": "现有 Type-C 充放电与 5V 升压模块",
+      "state": "原型资源，完整型号和最终电源架构待验证",
+      "assembly_envelope_mm": null,
+      "mounting_holes_mm": null,
+      "usb_plug_envelope_mm": null
+    }
+  ],
+  "manufacturing_outputs_ready": false
+}
