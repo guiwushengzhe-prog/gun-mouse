@@ -1,0 +1,135 @@
+{
+  "files": [
+    {
+      "path": "evidence/route-writeback-fix/native-repair-05-report.json",
+      "bytes": 12353,
+      "sha256": "317d1e958cee35f554e7e12326b8c49dd373f679edb08dbb4fc65d2ca6fb7b2f"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-05-write.json",
+      "bytes": 120532,
+      "sha256": "1d94f0bcf15441f43e7c678e7569eae9e7f301e8bd3adb3fec2f7314639820c7"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-05-reopened.json",
+      "bytes": 572838,
+      "sha256": "cab2974a6b49724be3cf83691f6742111874fa883a539b759d46fe2de94584bc"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-05-inspect.json",
+      "bytes": 268707,
+      "sha256": "9dc26ea976cad687ea3049e55390572e6a5d8b9c0d3720709c13d38e71f55007"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-05-gerber-audit.json",
+      "bytes": 1607,
+      "sha256": "a6629806c58b130166e64450e13a2fa561db55952360c064d3e23baf5da5af51"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-05-gerber.zip",
+      "bytes": 104059,
+      "sha256": "a1d4970c1c02b1ecda5d939171a38d9ee37b2f4af24cdd60f3b1873245cd8fea"
+    },
+    {
+      "path": "evidence/route-writeback-fix/baseline-regression-01-report.json",
+      "bytes": 1957,
+      "sha256": "9ea7816c49dda4e51e03f5aa8dbcfacddc457532ffee991b54a7beb052d3dd3b"
+    },
+    {
+      "path": "evidence/route-writeback-fix/baseline-regression-01-write.json",
+      "bytes": 124583,
+      "sha256": "a73a4f47caf1c7451f0ea8cd8c839bb217e051fcd77e2302e3cff203dbe109ed"
+    },
+    {
+      "path": "evidence/route-writeback-fix/baseline-regression-01-reopened.json",
+      "bytes": 610412,
+      "sha256": "7d7ea10ffd6bc84aa7bada69f687703bf644f8902c9fbb26e665d96c07de2678"
+    },
+    {
+      "path": "evidence/route-writeback-fix/baseline-regression-01-inspect.json",
+      "bytes": 290774,
+      "sha256": "2c4fc35d619803f0c25b10e1426b7dd6feba9df75205c98884787386a5bffaed"
+    },
+    {
+      "path": "evidence/route-writeback-fix/baseline-regression-01-gerber-audit.json",
+      "bytes": 369,
+      "sha256": "ae118faedec7488571be4846c921b5ca002e795a5ac65dd507bd18c04c14edea"
+    },
+    {
+      "path": "evidence/route-writeback-fix/baseline-regression-01-gerber.zip",
+      "bytes": 104981,
+      "sha256": "5b293e4f9b49440613d3c8a048d85ae96482ca5724f3e9ec076cc5b58f4cedea"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-v2-roundtrip-01-report.json",
+      "bytes": 14099,
+      "sha256": "35b973b8e61be5b754a6ae5a7e91da145b497aea0adc8b480a857d4f49055449"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-v2-roundtrip-01-write.json",
+      "bytes": 120336,
+      "sha256": "81007c750346300a1dedbe48a1177a1e8bc4c03ca0749c44bcced23c553953c4"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-v2-roundtrip-01-reopened.json",
+      "bytes": 572838,
+      "sha256": "ae2f40f5f3c9806aba216634c7489c0db89c83386355a983c617342fb6438859"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-v2-roundtrip-01-inspect.json",
+      "bytes": 268705,
+      "sha256": "202eb3f88c5e35a79b12589161a7ad0b14e547f6a3a422b3aa5b0ad1ee3a14be"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-v2-roundtrip-01-gerber-audit.json",
+      "bytes": 1574,
+      "sha256": "a29b002ec9c0ebd243fe51d51fee0ddf7e3c5385ef75da91cca82d9e4ed8ea54"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-v2-roundtrip-01-gerber.zip",
+      "bytes": 104109,
+      "sha256": "749619828d619267e229354ae2bf0d2c9a38f9d5fdf2ff698d6890790b937576"
+    },
+    {
+      "path": "evidence/route-writeback-fix/probe-short-results.json",
+      "bytes": 4740,
+      "sha256": "54448b4ac5b7e39b8bc7b0e550a3521414312f936ff765e5b44bdbfa873eab23"
+    },
+    {
+      "path": "evidence/route-writeback-fix/probe-polyline-results.json",
+      "bytes": 4345,
+      "sha256": "7212d478a2f3e9ac71e8f3273c15f783a28dd24fe3467043af5ba91e1c3b5d7a"
+    },
+    {
+      "path": "evidence/route-writeback-fix/probe_short_lines.js",
+      "bytes": 2024,
+      "sha256": "5eddcc8e6254418168159a1332b79a32bc50f5c19df222b563ef0bec2fbc2811"
+    },
+    {
+      "path": "evidence/route-writeback-fix/probe_polyline.js",
+      "bytes": 1250,
+      "sha256": "322329a621379e0e76ee57947bfb3b7d231cdd2b2388434732eca65d81f2849a"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-01-failed-write.json",
+      "bytes": 617,
+      "sha256": "3be6205b11fd7c22a657ac8249ba0f4652367e7c1d6f25be264a1bb9f6642e6e"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-02-failed-write.json",
+      "bytes": 595,
+      "sha256": "5968037898f3e9388446711b12d4812c5e61dddbb622b89682e082a2e8511dcf"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-03-failed-write.json",
+      "bytes": 2180,
+      "sha256": "e42ab26f3336b507ff25f5819cbc6b23caaeb940322a602ebac8e4318d5352d1"
+    },
+    {
+      "path": "evidence/route-writeback-fix/native-repair-04-failed-write.json",
+      "bytes": 626,
+      "sha256": "a24c71739d7f9f91a43aba52e9dc6c1a37d01c19903a658517bcbbb4571760da"
+    }
+  ],
+  "scope": "本轮原生调用实际证据，含失败记录；不作为制造定稿"
+}

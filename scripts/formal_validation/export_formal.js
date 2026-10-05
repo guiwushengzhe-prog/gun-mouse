@@ -7,9 +7,11 @@ if (!allowed.includes(a.projectName) || project?.friendlyName !== a.projectName)
 const board = project.data.find(x => x.itemType === 'Board');
 const current = await eda.dmt_SelectControl.getCurrentDocumentInfo();
 if (current?.uuid !== board?.pcb?.uuid || current.parentProjectUuid !== project.uuid) throw new Error('活动验证板归属错误');
-const prefix = 'f:/项目/枪型飞鼠/.worktrees/formal-validation/outputs/formal-validation/';
 const target = String(a.target).replaceAll('\\', '/');
-if (!target.toLowerCase().startsWith(prefix) || target.slice(prefix.length).includes('/') || target.includes('..')) {
+const prefixes = ['f:/项目/枪型飞鼠/.worktrees/formal-validation/outputs/formal-validation/',
+  'f:/项目/枪型飞鼠/.worktrees/route-writeback-fix/outputs/formal-validation/'];
+const prefix = prefixes.find(p => target.toLowerCase().startsWith(p));
+if (!prefix || target.slice(prefix.length).includes('/') || target.includes('..')) {
   throw new Error('导出目标必须在当前验证输出目录');
 }
 const m = eda.pcb_ManufactureData;

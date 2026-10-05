@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "sourceSegments": 500,
+  "manufacturingSegments": 500,
+  "matchedSegments": 500,
+  "coordinateToleranceMm": 7e-06,
+  "widthToleranceMm": 1e-05,
+  "errors": [],
+  "unexpectedSegments": [],
+  "shortSegments": [
+    {
+      "sourceId": "b8e1b582df638428",
+      "lengthMm": 0.00017960466622729762,
+      "sourceWidthMm": 0.30022723742129176,
+      "actual": {
+        "layer": 1,
+        "x1": 5.10653,
+        "y1": 28.99339,
+        "x2": 5.1064,
+        "y2": 28.99326,
+        "width": 0.30023,
+        "section": "PolygonModel"
+      },
+      "maximumCoordinateDeviationMm": 4.356961241569479e-06
+    },
+    {
+      "sourceId": "d6f1dc55545d694b",
+      "lengthMm": 0.0021552559946959224,
+      "sourceWidthMm": 0.14985961935580555,
+      "actual": {
+        "layer": 1,
+        "x1": 7.99844,
+        "y1": 24.61558,
+        "x2": 7.99996,
+        "y2": 24.61406,
+        "width": 0.14986,
+        "section": "PolygonModel"
+      },
+      "maximumCoordinateDeviationMm": 5.476287839201177e-06
+    },
+    {
+      "sourceId": "eadbbf6197d78f7a",
+      "lengthMm": 0.0021552559946979646,
+      "sourceWidthMm": 0.14985961935580555,
+      "actual": {
+        "layer": 1,
+        "x1": 7.99996,
+        "y1": 27.54902,
+        "x2": 7.99844,
+        "y2": 27.5475,
+        "width": 0.14986,
+        "section": "PolygonModel"
+      },
+      "maximumCoordinateDeviationMm": 4.025339027435848e-06
+    }
+  ],
+  "scope": "核对全部铜层路线绘图；网络、锁定和过孔属性由重开快照核对；不代表制造验收"
+}

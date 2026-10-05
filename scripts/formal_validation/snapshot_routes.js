@@ -41,17 +41,31 @@ const componentState = c => plain({
   supplier: c.getState_Supplier(), supplierId: c.getState_SupplierId(), other: c.getState_OtherProperty()
 });
 const lines = [], arcs = [], polylines = [];
+// 本机折线getAll按图层过滤后路径索引错配；先无参数读取，再本地筛层。
+const allLines = await eda.pcb_PrimitiveLine.getAll();
+const allPolylines = await eda.pcb_PrimitivePolyline.getAll();
 for (const layer of [1, 2]) {
-  for (const p of await eda.pcb_PrimitiveLine.getAll(undefined, layer)) {
+  for (const p of allLines.filter(p => p.getState_Layer() === layer)) {
     lines.push({id: p.getState_PrimitiveId(), net: p.getState_Net(), layer: p.getState_Layer(),
       x1: p.getState_StartX(), y1: p.getState_StartY(), x2: p.getState_EndX(), y2: p.getState_EndY(),
       width: p.getState_LineWidth(), lock: p.getState_PrimitiveLock()});
   }
   arcs.push(...await eda.pcb_PrimitiveArc.getAllPrimitiveId(undefined, layer));
-  polylines.push(...await eda.pcb_PrimitivePolyline.getAllPrimitiveId(undefined, layer));
+  for (const p of allPolylines.filter(p => p.getState_Layer() === layer)) {
+    const polygon = p.getState_Polygon().getSource();
+    // 仅展开单段直折线；圆弧、闭合区域、多段路径必须明确拒绝，不能漏读。
+    if (!Array.isArray(polygon) || polygon.length !== 5 || polygon[2] !== 'L' ||
+        [polygon[0], polygon[1], polygon[3], polygon[4]].some(v => !Number.isFinite(v))) {
+      throw new Error('存在未支持的铜层折线：' + p.getState_PrimitiveId());
+    }
+    const common = {id: p.getState_PrimitiveId(), net: p.getState_Net(), layer: p.getState_Layer(),
+      width: p.getState_LineWidth(), lock: p.getState_PrimitiveLock()};
+    polylines.push({...common, polygon});
+    lines.push({...common, x1: polygon[0], y1: polygon[1], x2: polygon[3], y2: polygon[4]});
+  }
 }
-if (arcs.length || polylines.length) {
-  throw new Error(`存在未支持的铜层圆弧／折线，拒绝不完整快照：圆弧${arcs.length}，折线${polylines.length}`);
+if (arcs.length) {
+  throw new Error(`存在未支持的铜层圆弧，拒绝不完整快照：圆弧${arcs.length}`);
 }
 const vias = (await eda.pcb_PrimitiveVia.getAll()).map(p => ({
   id: p.getState_PrimitiveId(), net: p.getState_Net(), x: p.getState_X(), y: p.getState_Y(),
@@ -110,11 +124,12 @@ const padDiagnostics = {identity: '(parentId,id)', deduplicatedPads,
   sharedLocalIdExamples: sharedLocalIds.slice(0, 10).map(([id, parents]) => ({id, parents}))};
 const expected = __CLI__.args?.expectedCounts;
 const counts = {components: components.length, pads: pads.length, lines: lines.length,
-  vias: vias.length, arcs: 0, polylines: 0};
+  vias: vias.length, arcs: 0, polylines: polylines.length, directLines: lines.length - polylines.length};
 if (expected) for (const [key, value] of Object.entries(expected)) {
   if (counts[key] !== value) throw new Error(`快照数量不符：${key}期望${value}，实际${counts[key]}`);
 }
-return plain({schema: 'gun-mouse-routes-v1', capturedAt: new Date().toISOString(), units: 'mil', copperLayers,
+return plain({schema: polylines.length ? 'gun-mouse-routes-v2' : 'gun-mouse-routes-v1',
+  capturedAt: new Date().toISOString(), units: 'mil', copperLayers,
   project: {uuid: project.uuid, friendlyName: project.friendlyName},
   board: {uuid: board.pcb.uuid, name: board.pcb.name}, counts,
-  components, pads, padDiagnostics, lines, vias, arcs: [], polylines: []});
+  components, pads, padDiagnostics, lines, vias, arcs: [], polylines});

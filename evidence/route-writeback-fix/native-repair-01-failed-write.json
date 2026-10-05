@@ -1,0 +1,16 @@
+{
+  "ok": false,
+  "error": {
+    "code": "EXECUTION_ERROR",
+    "message": "路线刷新后丢失：01f2b58d97894589"
+  },
+  "_local_transport": {
+    "mode": "file",
+    "command_line_utf16_units": 606,
+    "inline_command_line_utf16_units": 435968,
+    "payload_file": "F:\\项目\\枪型飞鼠\\.worktrees\\route-writeback-fix\\.logs\\eda-cli-payload\\e3147d15658143759f20b92bb3f8b220.json",
+    "payload_bytes": 397049,
+    "payload_sha256": "ceda693401455a8f98d202fe75ded7b910a49735706ea29db6b5f33a87f992b9",
+    "requires": "官方 SYS_FileSystem 项目目录访问及外部交互权限"
+  }
+}

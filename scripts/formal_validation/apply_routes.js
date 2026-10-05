@@ -5,14 +5,15 @@ const supplied = args?.snapshot ?? args;
 const snapshot = supplied?.value ?? supplied;
 const allowed = ['gun-mouse-formal-roundtrip', 'gun-mouse-formal-route'];
 const sources = ['gun-mouse-formal-baseline', ...allowed];
-if (snapshot?.schema !== 'gun-mouse-routes-v1' || snapshot.units !== 'mil' ||
+if (!['gun-mouse-routes-v1', 'gun-mouse-routes-v2'].includes(snapshot?.schema) || snapshot.units !== 'mil' ||
     snapshot.copperLayers !== 2 || !sources.includes(snapshot.project?.friendlyName)) {
   throw new Error('路线快照格式、单位、铜层数或来源工程不符');
 }
 for (const key of ['components', 'pads', 'lines', 'vias', 'arcs', 'polylines']) {
   if (!Array.isArray(snapshot[key])) throw new Error('快照缺少数组：' + key);
 }
-if (snapshot.arcs.length || snapshot.polylines.length) throw new Error('不支持铜层圆弧／折线，拒绝写回');
+if (snapshot.arcs.length) throw new Error('不支持铜层圆弧，拒绝写回');
+if (snapshot.polylines.length && snapshot.schema !== 'gun-mouse-routes-v2') throw new Error('折线快照必须使用v2格式');
 const project = await eda.dmt_Project.getCurrentProjectInfo();
 const current = await eda.dmt_SelectControl.getCurrentDocumentInfo();
 if (!allowed.includes(project?.friendlyName)) throw new Error('只允许正式路线验证副本');
@@ -177,6 +178,25 @@ if (snapshot.counts?.lines !== snapshot.lines.length || snapshot.counts?.vias !=
 }
 
 const created = {vias: [], lines: []};
+// 本机4.1.66会清除小于0.1密耳的独立导线；以同端点单段折线保留铜几何。
+// 折线路径及原生存盘按0.0001密耳取整；刷新也可把邻线端点对齐到量化后的折线。
+// 几何和线宽容许半个量化单位，网络、层、锁定等属性仍严格比较。
+const SHORT_LINE_LIMIT_MIL = 0.1;
+const POLYLINE_COORDINATE_TOLERANCE_MIL = 0.000051;
+for (const p of snapshot.polylines) {
+  const s = p.polygon;
+  if (!Array.isArray(s) || s.length !== 5 || s[2] !== 'L') throw new Error('不支持多段或曲线折线');
+  const line = snapshot.lines.find(q => q.id === p.id);
+  if (!line) throw new Error('折线缺少展开线段');
+  compare(line, {id: p.id, net: p.net, layer: p.layer, x1: s[0], y1: s[1], x2: s[3], y2: s[4],
+    width: p.width, lock: p.lock}, 'sourcePolyline.' + p.id);
+}
+unique(snapshot.polylines, 'snapshot.polylines');
+if (snapshot.schema === 'gun-mouse-routes-v2' &&
+    (snapshot.counts.polylines !== snapshot.polylines.length ||
+     snapshot.counts.directLines !== snapshot.lines.length - snapshot.polylines.length)) {
+  throw new Error('v2快照的实际图元与展开线段数量不符');
+}
 for (const p of snapshot.vias) {
   const q = await eda.pcb_PrimitiveVia.create(p.net, p.x, p.y, p.holeDiameter, p.diameter,
     p.viaType, p.blindRuleName, p.mask, p.lock);
@@ -188,23 +208,109 @@ for (const p of snapshot.vias) {
   created.vias.push({sourceId: p.id, id: q.getState_PrimitiveId()});
 }
 for (const p of snapshot.lines) {
-  const q = await eda.pcb_PrimitiveLine.create(p.net, p.layer, p.x1, p.y1, p.x2, p.y2, p.width, p.lock);
+  const isPolyline = Math.hypot(p.x2 - p.x1, p.y2 - p.y1) < SHORT_LINE_LIMIT_MIL;
+  const q = isPolyline ? await eda.pcb_PrimitivePolyline.create(p.net, p.layer,
+    eda.pcb_MathPolygon.createPolygon([p.x1, p.y1, 'L', p.x2, p.y2]), p.width, p.lock) :
+    await eda.pcb_PrimitiveLine.create(p.net, p.layer, p.x1, p.y1, p.x2, p.y2, p.width, p.lock);
   if (!q) throw new Error(`创建导线失败：${p.id}；已创建${created.vias.length}过孔、${created.lines.length}线，未请求显式保存`);
-  compare(p, {id: p.id, net: q.getState_Net(), layer: q.getState_Layer(),
-    x1: q.getState_StartX(), y1: q.getState_StartY(), x2: q.getState_EndX(), y2: q.getState_EndY(),
-    width: q.getState_LineWidth(), lock: q.getState_PrimitiveLock()}, 'createdLine.' + p.id);
-  created.lines.push({sourceId: p.id, id: q.getState_PrimitiveId()});
+  const s = isPolyline ? q.getState_Polygon().getSource() : null;
+  if (isPolyline && (!Array.isArray(s) || s.length !== 5 || s[2] !== 'L')) throw new Error('创建后的折线形状不符');
+  const immediate = {id: p.id, net: q.getState_Net(), layer: q.getState_Layer(),
+    x1: isPolyline ? s[0] : q.getState_StartX(), y1: isPolyline ? s[1] : q.getState_StartY(),
+    x2: isPolyline ? s[3] : q.getState_EndX(), y2: isPolyline ? s[4] : q.getState_EndY(),
+    width: q.getState_LineWidth(), lock: q.getState_PrimitiveLock()};
+  compare({id:p.id,net:p.net,layer:p.layer,width:p.width,lock:p.lock},
+    {id:immediate.id,net:immediate.net,layer:immediate.layer,width:immediate.width,lock:immediate.lock}, 'createdProperties.'+p.id);
+  compare({x1:p.x1,y1:p.y1,x2:p.x2,y2:p.y2},
+    {x1:immediate.x1,y1:immediate.y1,x2:immediate.x2,y2:immediate.y2}, 'createdCoordinates.'+p.id,
+    isPolyline ? POLYLINE_COORDINATE_TOLERANCE_MIL : 1e-6);
+  created.lines.push({sourceId: p.id, id: q.getState_PrimitiveId(), kind: isPolyline ? 'polyline' : 'line'});
 }
 const afterLines = (await eda.pcb_PrimitiveLine.getAllPrimitiveId(undefined, 1)).length +
   (await eda.pcb_PrimitiveLine.getAllPrimitiveId(undefined, 2)).length;
+const afterPolylines = (await eda.pcb_PrimitivePolyline.getAllPrimitiveId(undefined, 1)).length +
+  (await eda.pcb_PrimitivePolyline.getAllPrimitiveId(undefined, 2)).length;
 const afterVias = (await eda.pcb_PrimitiveVia.getAllPrimitiveId()).length;
-if (afterLines !== snapshot.lines.length || afterVias !== snapshot.vias.length) {
-  throw new Error(`写回数量不符：源${snapshot.lines.length}线/${snapshot.vias.length}过孔，实际${afterLines}线/${afterVias}过孔；未请求显式保存，副本可能已自动存盘`);
+if (afterLines + afterPolylines !== snapshot.lines.length || afterVias !== snapshot.vias.length) {
+  throw new Error(`写回数量不符：源${snapshot.lines.length}线/${snapshot.vias.length}过孔，实际${afterLines}直线+${afterPolylines}单段折线/${afterVias}过孔；副本可能已自动存盘`);
 }
+async function verifyGeometry() {
+  let maximumPolylineCoordinateDeviationMil = 0;
+  const actualSegments = [];
+  const allLines = await eda.pcb_PrimitiveLine.getAll();
+  const allPolylines = await eda.pcb_PrimitivePolyline.getAll();
+  for (const layer of [1,2]) {
+    for (const q of allLines.filter(q => q.getState_Layer() === layer)) {
+      actualSegments.push({id:q.getState_PrimitiveId(),kind:'line',net:q.getState_Net(),layer:q.getState_Layer(),
+        x1:q.getState_StartX(),y1:q.getState_StartY(),x2:q.getState_EndX(),y2:q.getState_EndY(),
+        width:q.getState_LineWidth(),lock:q.getState_PrimitiveLock()});
+    }
+    // 厂商按层过滤后会错配折线路径；无参数读全部再筛层，保留正确元数据和路径。
+    for (const q of allPolylines.filter(q => q.getState_Layer() === layer)) {
+      const s = q.getState_Polygon().getSource();
+      if (!Array.isArray(s) || s.length !== 5 || s[2] !== 'L') throw new Error('折线路径改变：'+JSON.stringify({id:q.getState_PrimitiveId(),layer:q.getState_Layer(),path:s}));
+      actualSegments.push({id:q.getState_PrimitiveId(),kind:'polyline',net:q.getState_Net(),layer:q.getState_Layer(),
+        x1:s[0],y1:s[1],x2:s[3],y2:s[4],width:q.getState_LineWidth(),lock:q.getState_PrimitiveLock()});
+    }
+  }
+  if (actualSegments.length !== snapshot.lines.length) throw new Error('刷新后线段数量改变');
+  const usedIds = new Set(), reassignedIds = [];
+  for (const mapping of created.lines) {
+    const p = snapshot.lines.find(line => line.id === mapping.sourceId);
+    const isPolyline = mapping.kind === 'polyline';
+    const tolerance = POLYLINE_COORDINATE_TOLERANCE_MIL;
+    const candidates = actualSegments.filter(q => !usedIds.has(q.id) && q.kind === mapping.kind &&
+      q.net === p.net && q.layer === p.layer && q.lock === p.lock && Math.abs(q.width-p.width) <= tolerance &&
+      (Math.max(Math.abs(p.x1-q.x1),Math.abs(p.y1-q.y1),Math.abs(p.x2-q.x2),Math.abs(p.y2-q.y2)) <= tolerance ||
+       Math.max(Math.abs(p.x1-q.x2),Math.abs(p.y1-q.y2),Math.abs(p.x2-q.x1),Math.abs(p.y2-q.y1)) <= tolerance));
+    if (candidates.length !== 1) throw new Error('路线几何缺失或不唯一：' + JSON.stringify({source:p,
+      candidateCount:candidates.length,nearest:actualSegments.filter(q=>q.net===p.net&&q.layer===p.layer).map(q=>({q,
+        distance:Math.min(Math.max(Math.abs(p.x1-q.x1),Math.abs(p.y1-q.y1),Math.abs(p.x2-q.x2),Math.abs(p.y2-q.y2)),
+          Math.max(Math.abs(p.x1-q.x2),Math.abs(p.y1-q.y2),Math.abs(p.x2-q.x1),Math.abs(p.y2-q.y1)))}))
+        .sort((a,b)=>a.distance-b.distance).slice(0,2)}));
+    const matched = candidates[0];
+    usedIds.add(matched.id);
+    // 连接刷新可能重编图元编号；必须先逐段证明几何、网络及属性相同，才能更新编号映射。
+    if (mapping.id !== matched.id) {
+      reassignedIds.push({sourceId:p.id,before:mapping.id,after:matched.id});
+      mapping.id = matched.id;
+    }
+    const actual = {...matched,id:p.id};
+    // 软件可交换直线起终点；只容许整段反向，不合并、挪动或补长。
+    const reverseDeviation = Math.max(Math.abs(p.x1-actual.x2), Math.abs(p.y1-actual.y2),
+      Math.abs(p.x2-actual.x1), Math.abs(p.y2-actual.y1));
+    const forwardDeviation = Math.max(...['x1','y1','x2','y2'].map(key => Math.abs(p[key]-actual[key])));
+    if (reverseDeviation < forwardDeviation) {
+      [actual.x1, actual.x2] = [actual.x2, actual.x1];
+      [actual.y1, actual.y2] = [actual.y2, actual.y1];
+    }
+    compare({id:p.id,net:p.net,layer:p.layer,width:p.width,lock:p.lock},
+      {id:actual.id,net:actual.net,layer:actual.layer,width:actual.width,lock:actual.lock}, 'writtenProperties.'+p.id,tolerance);
+    compare({x1:p.x1,y1:p.y1,x2:p.x2,y2:p.y2},
+      {x1:actual.x1,y1:actual.y1,x2:actual.x2,y2:actual.y2}, 'writtenCoordinates.'+p.id, tolerance);
+    if (isPolyline) maximumPolylineCoordinateDeviationMil = Math.max(maximumPolylineCoordinateDeviationMil,
+      Math.min(forwardDeviation, reverseDeviation));
+  }
+  for (const mapping of created.vias) {
+    const p = snapshot.vias.find(via => via.id === mapping.sourceId);
+    const q = await eda.pcb_PrimitiveVia.get(mapping.id);
+    if (!q) throw new Error('过孔刷新后丢失：' + mapping.sourceId);
+    compare(p, {id:p.id,net:q.getState_Net(),x:q.getState_X(),y:q.getState_Y(),
+      holeDiameter:q.getState_HoleDiameter(),diameter:q.getState_Diameter(),viaType:q.getState_ViaType(),
+      blindRuleName:q.getState_DesignRuleBlindViaName(),mask:q.getState_SolderMaskExpansion(),
+      lock:q.getState_PrimitiveLock()}, 'writtenVia.'+p.id);
+  }
+  return {passed:true, verifiedSegments:created.lines.length, verifiedVias:created.vias.length,
+    shortSegmentsAsPolylines:afterPolylines, maximumPolylineCoordinateDeviationMil,
+    polylineCoordinateToleranceMil:POLYLINE_COORDINATE_TOLERANCE_MIL,reassignedIds};
+}
+const beforeSave = await verifyGeometry();
 const saved = await eda.pcb_Document.save();
 if (saved !== true) throw new Error('路线已创建但保存失败；不能据此声称已持久化');
 const drc = await eda.pcb_Drc.check(true, false, true);
+const afterSave = await verifyGeometry();
 return {project: {uuid: project.uuid, friendlyName: project.friendlyName}, board: board.pcb.uuid,
   source: snapshot.project, units: 'mil', counts: {components: components.length, pads: pads.length,
-    lines: afterLines, vias: afterVias}, mappedLibraryFieldCount: mappedLibraryFields.length,
-  mappedLibraryFields, created, saved, drc};
+    lines: afterLines + afterPolylines, directLines:afterLines, polylines:afterPolylines, vias: afterVias},
+  mappedLibraryFieldCount: mappedLibraryFields.length, mappedLibraryFields, created, saved, drc,
+  geometryChecks:{beforeSave,afterSave}, caveat:'写回核对不代表布线或电气设计合格，需重开及独立制造文件验证'};

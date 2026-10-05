@@ -1,0 +1,16 @@
+{
+  "ok": false,
+  "error": {
+    "code": "EXECUTION_ERROR",
+    "message": "路线几何缺失或不唯一：13db73e35cdfea4a"
+  },
+  "_local_transport": {
+    "mode": "file",
+    "command_line_utf16_units": 606,
+    "inline_command_line_utf16_units": 437380,
+    "payload_file": "F:\\项目\\枪型飞鼠\\.worktrees\\route-writeback-fix\\.logs\\eda-cli-payload\\c57cf1f403d64e3e8d81570fe432fdee.json",
+    "payload_bytes": 398663,
+    "payload_sha256": "8c8d8bc89abad368c4bbdcb9b23a6792829e31a43469efa0ffa7b5b538a058a7",
+    "requires": "官方 SYS_FileSystem 项目目录访问及外部交互权限"
+  }
+}
