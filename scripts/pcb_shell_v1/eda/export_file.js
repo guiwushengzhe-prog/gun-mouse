@@ -2,11 +2,12 @@
 const a = __CLI__.args;
 const project = await eda.dmt_Project.getCurrentProjectInfo();
 const board = project.data.find(x => x.itemType === 'Board');
-await eda.dmt_EditorControl.openDocument(board.pcb.uuid);
+await eda.dmt_EditorControl.openDocument(a.kind === 'sch-netlist' ? board.schematic.page[0].uuid : board.pcb.uuid);
 await new Promise(r => setTimeout(r, 1000));
 const m = eda.pcb_ManufactureData;
 let file;
-if (a.kind === 'gerber') file = await m.getGerberFile(a.name);
+if (a.kind === 'sch-netlist') file = await eda.sch_ManufactureData.getNetlistFile(a.name, a.netlistType || 'Protel2');
+else if (a.kind === 'gerber') file = await m.getGerberFile(a.name);
 else if (a.kind === 'bom') file = await m.getBomFile(a.name, 'csv');
 else if (a.kind === 'pnp') file = await m.getPickAndPlaceFile(a.name, 'csv', 'mm');
 else if (a.kind === 'step') file = await m.get3DFile(a.name, 'step', ['Component Model'], 'Parts', false);

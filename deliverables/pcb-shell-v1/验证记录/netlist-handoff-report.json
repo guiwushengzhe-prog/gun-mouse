@@ -1,0 +1,14 @@
+{
+  "scope": "离线只读；不代替软件网表编译、设计规则检查或电气性能验收",
+  "configured_components": 48,
+  "configured_connected_pins": 160,
+  "config_vs_exported_pcb": [],
+  "config_vs_saved_pcb": [],
+  "pcb_vs_schematic_unique_ids": [],
+  "exported_unique_ids_stale": [],
+  "schematic_source": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\pcb\\gun-mouse-v1\\sch\\Schematic1\\P1.esch2",
+  "schematic_pin_differences": [],
+  "wire_groups_with_conflicting_net_labels": [],
+  "unsupported_mirrored_components": [],
+  "passed": true
+}

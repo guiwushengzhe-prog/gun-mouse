@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "value": {
+    "changed": 48,
+    "scope": "补齐原理图的型号、阻容值、采购说明与板层偏好，保持 PCB 不变"
+  },
+  "logs": [],
+  "durationMs": 5253,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 1784
+  }
+}

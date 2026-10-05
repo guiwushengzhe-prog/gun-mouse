@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "value": {
+    "checked": 48,
+    "changed": 47,
+    "physicalPropertiesUnchanged": true
+  },
+  "logs": [],
+  "durationMs": 5171,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 2197
+  }
+}

@@ -1,8 +1,8 @@
 {
   "version": "2.0.0",
-  "projectId": "a4889f1334ed58a458d65358cbe67656eb612980c946ab5b07e9f955c3c7d872",
+  "projectId": "d04d13debf14664743f8033b75d6d03743bcc74c23176f3fe56c803deb2363fa",
   "components": {
-    "UNIQUEJ1": {
+    "gge1": {
       "props": {
         "Footprint": "d8684f27858d381b",
         "Designator": "J1",
@@ -33,10 +33,10 @@
         "PIN Length": "3.2mm",
         "Name": "XY-PM254-1-22P-Z-8.5",
         "Description": "插孔结构:1x22P;间距:2.54mm;圆孔/方孔:方孔;安装方式:直插;排数:单排;总孔位数:22P;额定电流:3A;插孔方向:顶部;塑高:8.5mm;触头材质:黄铜;触头镀层:金;工作温度:-40℃~+105℃;",
-        "Unique ID": "",
+        "Unique ID": "gge1",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I49",
         "DeviceName": "XY-PM254-1-22P-Z-8.5",
         "FootprintName": "HDR-TH_22P-P2.54-V-F",
         "Device": "64296d28ca3daaca",
@@ -205,7 +205,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEJ2": {
+    "gge2": {
       "props": {
         "Footprint": "d8684f27858d381b",
         "Designator": "J2",
@@ -236,10 +236,10 @@
         "PIN Length": "3.2mm",
         "Name": "XY-PM254-1-22P-Z-8.5",
         "Description": "插孔结构:1x22P;间距:2.54mm;圆孔/方孔:方孔;安装方式:直插;排数:单排;总孔位数:22P;额定电流:3A;插孔方向:顶部;塑高:8.5mm;触头材质:黄铜;触头镀层:金;工作温度:-40℃~+105℃;",
-        "Unique ID": "",
+        "Unique ID": "gge2",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I50",
         "DeviceName": "XY-PM254-1-22P-Z-8.5",
         "FootprintName": "HDR-TH_22P-P2.54-V-F",
         "Device": "64296d28ca3daaca",
@@ -408,7 +408,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEU1": {
+    "gge3": {
       "props": {
         "Footprint": "f16e230138f6e1e9",
         "Designator": "U1",
@@ -438,10 +438,10 @@
         "Features": "运动事件检测；同步与时间戳",
         "Name": "LSM6DSV16XTR",
         "Description": "传感器类型:IMU(加速度计+陀螺仪);接口类型:I2C；SPI;",
-        "Unique ID": "",
+        "Unique ID": "gge3",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I51",
         "DeviceName": "LSM6DSV16XTR",
         "FootprintName": "LGA-14_L3.0-W2.5-P0.50-BR",
         "Device": "96f2b1145effbd67",
@@ -554,7 +554,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER12": {
+    "gge4": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R12",
@@ -579,10 +579,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "10kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:10kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge4",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I52",
         "DeviceName": "0402WGF1002TCE",
         "FootprintName": "R0402",
         "Device": "a4c8ac32583427db",
@@ -611,7 +611,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC7": {
+    "gge5": {
       "props": {
         "Name": "100nF",
         "Designator": "C7",
@@ -633,10 +633,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge5",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I53",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -665,7 +665,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC8": {
+    "gge6": {
       "props": {
         "Name": "100nF",
         "Designator": "C8",
@@ -687,10 +687,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge6",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I54",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -719,7 +719,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER10": {
+    "gge7": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R10",
@@ -744,10 +744,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "4.7kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:4.7kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge7",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I55",
         "DeviceName": "0402WGF4701TCE",
         "FootprintName": "R0402",
         "Device": "c25cbf7d377a6b8b",
@@ -776,7 +776,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER11": {
+    "gge8": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R11",
@@ -801,10 +801,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "4.7kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:4.7kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge8",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I56",
         "DeviceName": "0402WGF4701TCE",
         "FootprintName": "R0402",
         "Device": "c25cbf7d377a6b8b",
@@ -833,7 +833,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUESW1": {
+    "gge9": {
       "props": {
         "Footprint": "b4da2decf74031e6",
         "Designator": "SW1",
@@ -853,10 +853,10 @@
         "Operating Temperature": "-10℃~+70℃",
         "Name": "RKJXV1224005",
         "Description": "操纵杆复位 中央按动开关 适用于航模玩具遥控器电位器、3D摇杆PS4手柄游戏机、无人机摇杆电位器、工业控制器",
-        "Unique ID": "",
+        "Unique ID": "gge9",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I57",
         "DeviceName": "RKJXV1224005",
         "FootprintName": "SW-TH_RKJXV1224005",
         "Device": "48190965af20d4e5",
@@ -969,7 +969,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC10": {
+    "gge10": {
       "props": {
         "Name": "100nF",
         "Designator": "C10",
@@ -991,10 +991,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge10",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I58",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1023,7 +1023,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC11": {
+    "gge11": {
       "props": {
         "Name": "100nF",
         "Designator": "C11",
@@ -1045,10 +1045,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge11",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I59",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1077,7 +1077,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER15": {
+    "gge12": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R15",
@@ -1102,10 +1102,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "10kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:10kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge12",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I60",
         "DeviceName": "0402WGF1002TCE",
         "FootprintName": "R0402",
         "Device": "a4c8ac32583427db",
@@ -1134,7 +1134,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC15": {
+    "gge13": {
       "props": {
         "Name": "100nF",
         "Designator": "C15",
@@ -1156,10 +1156,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge13",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I61",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1188,7 +1188,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC5": {
+    "gge14": {
       "props": {
         "Name": "100nF",
         "Designator": "C5",
@@ -1210,10 +1210,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge14",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I62",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1242,7 +1242,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC6": {
+    "gge15": {
       "props": {
         "Footprint": "ebf67a1eeb08efd1",
         "Designator": "C6",
@@ -1264,10 +1264,10 @@
         "Temperature Coefficient": "X5R",
         "Name": "10uF",
         "Description": "容值:10uF;精度:±10%;额定电压:10V;温度系数:X5R;",
-        "Unique ID": "",
+        "Unique ID": "gge15",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I63",
         "DeviceName": "CL10A106KP8NNNC",
         "FootprintName": "C0603",
         "Device": "44cad26706250dce",
@@ -1296,7 +1296,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER14": {
+    "gge16": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R14",
@@ -1321,10 +1321,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "3.3kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:3.3kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge16",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I64",
         "DeviceName": "0402WGF3301TCE",
         "FootprintName": "R0402",
         "Device": "af39de1eec119c1d",
@@ -1353,7 +1353,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC14": {
+    "gge17": {
       "props": {
         "Name": "100nF",
         "Designator": "C14",
@@ -1375,10 +1375,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge17",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I65",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1407,7 +1407,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER13": {
+    "gge18": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R13",
@@ -1432,10 +1432,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "2.2kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:2.2kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge18",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I66",
         "DeviceName": "0402WGF2201TCE",
         "FootprintName": "R0402",
         "Device": "0767422bf9e50344",
@@ -1464,7 +1464,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC13": {
+    "gge19": {
       "props": {
         "Name": "100nF",
         "Designator": "C13",
@@ -1486,10 +1486,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge19",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I67",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1518,7 +1518,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER6": {
+    "gge20": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R6",
@@ -1543,10 +1543,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "1MΩ",
         "Description": "电阻类型:厚膜电阻;阻值:1MΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge20",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I68",
         "DeviceName": "0402WGF1004TCE",
         "FootprintName": "R0402",
         "Device": "534b60acc0084fc1",
@@ -1575,7 +1575,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER7": {
+    "gge21": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R7",
@@ -1600,10 +1600,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "1MΩ",
         "Description": "电阻类型:厚膜电阻;阻值:1MΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge21",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I69",
         "DeviceName": "0402WGF1004TCE",
         "FootprintName": "R0402",
         "Device": "534b60acc0084fc1",
@@ -1632,7 +1632,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC9": {
+    "gge22": {
       "props": {
         "Name": "100nF",
         "Designator": "C9",
@@ -1654,10 +1654,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge22",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I70",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -1686,7 +1686,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER8": {
+    "gge23": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R8",
@@ -1711,10 +1711,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "100kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:100kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge23",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I71",
         "DeviceName": "0402WGF1003TCE",
         "FootprintName": "R0402",
         "Device": "0f2ea40a596ca6f4",
@@ -1743,7 +1743,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER9": {
+    "gge24": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R9",
@@ -1768,10 +1768,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "100kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:100kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge24",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I72",
         "DeviceName": "0402WGF1003TCE",
         "FootprintName": "R0402",
         "Device": "0f2ea40a596ca6f4",
@@ -1800,7 +1800,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUESW2": {
+    "gge25": {
       "props": {
         "Footprint": "f7a818b5558545c4",
         "Designator": "SW2",
@@ -1818,10 +1818,10 @@
         "3D Model Transform": "503.936,228.7397,0,0,0,0,0,0,-149.606",
         "Name": "D2FC-F-7N(20M)",
         "Description": "",
-        "Unique ID": "",
+        "Unique ID": "gge25",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I73",
         "DeviceName": "D2FC-F-7N(20M)",
         "FootprintName": "SW-TH_3P-L12.8-W5.8-P5.08_DM3CQF1004L04",
         "Device": "543119444838a3d9",
@@ -1857,7 +1857,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEJ5": {
+    "gge26": {
       "props": {
         "Footprint": "7d16e413416fe747",
         "Designator": "J5",
@@ -1895,10 +1895,10 @@
         "Y-Width of Bottom Edge on Board": "8.6mm",
         "Name": "S2B-PH-SM4-TB(LF)(SN)",
         "Description": "插针结构:1x2P;间距:2mm;安装方式:卧贴;参考系列:PH;总PIN数:2P;排数:1;每排PIN数:2;行距:-;额定电流:2A;触头材质:铜合金;触头镀层:锡;工作温度:-25℃~+85℃;",
-        "Unique ID": "",
+        "Unique ID": "gge26",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I74",
         "DeviceName": "S2B-PH-SM4-TB(LF)(SN)",
         "FootprintName": "CONN-SMD_P2.00_S2B-PH-SM4-TB-LF-SN",
         "Device": "6749806ea9118015",
@@ -1941,7 +1941,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEJ4": {
+    "gge27": {
       "props": {
         "Footprint": "7d16e413416fe747",
         "Designator": "J4",
@@ -1979,10 +1979,10 @@
         "Y-Width of Bottom Edge on Board": "8.6mm",
         "Name": "S2B-PH-SM4-TB(LF)(SN)",
         "Description": "插针结构:1x2P;间距:2mm;安装方式:卧贴;参考系列:PH;总PIN数:2P;排数:1;每排PIN数:2;行距:-;额定电流:2A;触头材质:铜合金;触头镀层:锡;工作温度:-25℃~+85℃;",
-        "Unique ID": "",
+        "Unique ID": "gge27",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I75",
         "DeviceName": "S2B-PH-SM4-TB(LF)(SN)",
         "FootprintName": "CONN-SMD_P2.00_S2B-PH-SM4-TB-LF-SN",
         "Device": "6749806ea9118015",
@@ -2025,7 +2025,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEJ3": {
+    "gge28": {
       "props": {
         "Footprint": "7d16e413416fe747",
         "Designator": "J3",
@@ -2063,10 +2063,10 @@
         "Y-Width of Bottom Edge on Board": "8.6mm",
         "Name": "S2B-PH-SM4-TB(LF)(SN)",
         "Description": "插针结构:1x2P;间距:2mm;安装方式:卧贴;参考系列:PH;总PIN数:2P;排数:1;每排PIN数:2;行距:-;额定电流:2A;触头材质:铜合金;触头镀层:锡;工作温度:-25℃~+85℃;",
-        "Unique ID": "",
+        "Unique ID": "gge28",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I76",
         "DeviceName": "S2B-PH-SM4-TB(LF)(SN)",
         "FootprintName": "CONN-SMD_P2.00_S2B-PH-SM4-TB-LF-SN",
         "Device": "6749806ea9118015",
@@ -2109,7 +2109,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEUSB1": {
+    "gge29": {
       "props": {
         "Name": "TYPE-C-31-M-12",
         "Designator": "USB1",
@@ -2138,10 +2138,10 @@
         "Length": "7.35mm",
         "Operating Temperature": "-30℃~+80℃",
         "Description": "连接器类型:Type-C;协议标准:-;公母:母;安装方式:卧贴;触点数量:16P;端口数量:1;额定电流 - 电源:5A;工作温度:-30℃~+80℃;",
-        "Unique ID": "",
+        "Unique ID": "gge29",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I77",
         "DeviceName": "TYPE-C-31-M-12",
         "FootprintName": "USB-C_SMD-TYPE-C-31-M-12_1",
         "Device": "dc3d109d3e06496b",
@@ -2268,7 +2268,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER1": {
+    "gge30": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R1",
@@ -2293,10 +2293,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "5.1kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:5.1kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge30",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I78",
         "DeviceName": "0402WGF5101TCE",
         "FootprintName": "R0402",
         "Device": "7da1bf5ff6c4bb64",
@@ -2325,7 +2325,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER2": {
+    "gge31": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R2",
@@ -2350,10 +2350,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "5.1kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:5.1kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge31",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I79",
         "DeviceName": "0402WGF5101TCE",
         "FootprintName": "R0402",
         "Device": "7da1bf5ff6c4bb64",
@@ -2382,7 +2382,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEU4": {
+    "gge32": {
       "props": {
         "Footprint": "f002f85fdaa1a85a",
         "Designator": "U4",
@@ -2411,10 +2411,10 @@
         "Junction Capacitance": "3.5pF",
         "Name": "USBLC6-2SC6",
         "Description": "极性:单向;反向截止电压(Vrwm):5.25V;钳位电压:17V;峰值脉冲电流(Ipp):5A;击穿电压(VBR):6V;",
-        "Unique ID": "",
+        "Unique ID": "gge32",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I80",
         "DeviceName": "USBLC6-2SC6_C7519",
         "FootprintName": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL",
         "Device": "1d5e06c8b72f175a",
@@ -2471,7 +2471,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC12": {
+    "gge33": {
       "props": {
         "Name": "100nF",
         "Designator": "C12",
@@ -2493,10 +2493,10 @@
         "Voltage Rating": "16V",
         "Temperature Coefficient": "X7R",
         "Description": "容值:100nF;精度:±10%;额定电压:16V;温度系数:X7R;",
-        "Unique ID": "",
+        "Unique ID": "gge33",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I81",
         "DeviceName": "CL05B104KO5NNNC",
         "FootprintName": "C0402",
         "Device": "05840ef0ddc4224f",
@@ -2525,7 +2525,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEU2": {
+    "gge34": {
       "props": {
         "Footprint": "5fad378c35d35868",
         "Designator": "U2",
@@ -2557,10 +2557,10 @@
         "Features": "恒压充电；恒流充电；自动再充电；充电终止；软启动；可编程充电电流；欠压锁定；涓流充电",
         "Name": "TP4056-42-ESOP8",
         "Description": "工作电压:4V~8V;最大充电电流:1A;电池类型:锂电池;电池节数:1;",
-        "Unique ID": "",
+        "Unique ID": "gge34",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I82",
         "DeviceName": "TP4056-42-ESOP8",
         "FootprintName": "ESOP-8_L4.9-W3.9-P1.27-LS6.0-BL-EP",
         "Device": "199b53cb5d194b29",
@@ -2638,7 +2638,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC1": {
+    "gge35": {
       "props": {
         "Footprint": "ebf67a1eeb08efd1",
         "Designator": "C1",
@@ -2660,10 +2660,10 @@
         "Temperature Coefficient": "X5R",
         "Name": "10uF",
         "Description": "容值:10uF;精度:±10%;额定电压:10V;温度系数:X5R;",
-        "Unique ID": "",
+        "Unique ID": "gge35",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I83",
         "DeviceName": "CL10A106KP8NNNC",
         "FootprintName": "C0603",
         "Device": "44cad26706250dce",
@@ -2692,7 +2692,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC2": {
+    "gge36": {
       "props": {
         "Footprint": "ebf67a1eeb08efd1",
         "Designator": "C2",
@@ -2714,10 +2714,10 @@
         "Temperature Coefficient": "X5R",
         "Name": "10uF",
         "Description": "容值:10uF;精度:±10%;额定电压:10V;温度系数:X5R;",
-        "Unique ID": "",
+        "Unique ID": "gge36",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I84",
         "DeviceName": "CL10A106KP8NNNC",
         "FootprintName": "C0603",
         "Device": "44cad26706250dce",
@@ -2746,7 +2746,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER3": {
+    "gge37": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R3",
@@ -2771,10 +2771,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "3.3kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:3.3kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge37",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I85",
         "DeviceName": "0402WGF3301TCE",
         "FootprintName": "R0402",
         "Device": "af39de1eec119c1d",
@@ -2803,7 +2803,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUELED1": {
+    "gge38": {
       "props": {
         "Name": "KT-0603R",
         "Designator": "LED1",
@@ -2835,10 +2835,10 @@
         "Mounting Style": "-",
         "Operating Temperature": "-40℃~+85℃",
         "Description": "灯头类型:1.6mmx0.8mm方形灯头;发光颜色:红色;正向压降(Vf):1.8V~2.4V;功率:40mW;正向电流:20mA;波长:615nm~630nm;二极管配置:独立二极管;透镜颜色:无色透明透镜;色温:-;发光强度:300mcd;发光角度:120°;载带方式:-;工作温度:-40℃~+85℃;",
-        "Unique ID": "",
+        "Unique ID": "gge38",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I86",
         "DeviceName": "KT-0603R",
         "FootprintName": "LED-SMD_L1.6-W0.8-R-RD",
         "Device": "8a066d8cce69725a",
@@ -2869,7 +2869,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER4": {
+    "gge39": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R4",
@@ -2894,10 +2894,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "1kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:1kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge39",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I87",
         "DeviceName": "0402WGF1001TCE",
         "FootprintName": "R0402",
         "Device": "c1df3cf66fcee8db",
@@ -2926,7 +2926,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUED1": {
+    "gge40": {
       "props": {
         "Footprint": "0c31e05f7d5820b6",
         "Designator": "D1",
@@ -2948,10 +2948,10 @@
         "Non-Repetitive Peak Forward Surge Current": "9A",
         "Name": "B5819W SL",
         "Description": "正向压降(Vf):600mV@1A;直流反向耐压(Vr):40V;整流电流:1A;",
-        "Unique ID": "",
+        "Unique ID": "gge40",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I88",
         "DeviceName": "B5819W SL",
         "FootprintName": "SOD-123_L2.7-W1.6-LS3.7-RD-1",
         "Device": "f2089a681e66aa63",
@@ -2980,7 +2980,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEQ1": {
+    "gge41": {
       "props": {
         "Footprint": "e16350dfc2cec99a",
         "Designator": "Q1",
@@ -3010,10 +3010,10 @@
         "Output Capacitance(Coss)": "80pF",
         "Name": "AO3401A",
         "Description": "数量:1个P沟道;漏源电压(Vdss):30V;连续漏极电流(Id):4A;导通电阻(RDS(on)):47mΩ@10V；85mΩ@2.5V；60mΩ@4.5V;耗散功率(Pd):-;阈值电压(Vgs(th)):900mV;",
-        "Unique ID": "",
+        "Unique ID": "gge41",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I89",
         "DeviceName": "AO3401A_C15127",
         "FootprintName": "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR",
         "Device": "d45d793b535d6c09",
@@ -3049,7 +3049,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUER5": {
+    "gge42": {
       "props": {
         "Footprint": "495ae6f8a45283f0",
         "Designator": "R5",
@@ -3074,10 +3074,10 @@
         "Operating Temperature": "-55℃~+155℃",
         "Name": "100kΩ",
         "Description": "电阻类型:厚膜电阻;阻值:100kΩ;精度:±1%;功率:62.5mW;工作电压:50V;温度系数:±100ppm/℃;",
-        "Unique ID": "",
+        "Unique ID": "gge42",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I90",
         "DeviceName": "0402WGF1003TCE",
         "FootprintName": "R0402",
         "Device": "0f2ea40a596ca6f4",
@@ -3106,7 +3106,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEU3": {
+    "gge43": {
       "props": {
         "Footprint": "455552b3c1399c9b",
         "Designator": "U3",
@@ -3136,10 +3136,10 @@
         "Number of Outputs": "1",
         "Name": "RT9080-33GJ5",
         "Description": "输出极性:正极;工作电压:5.5V;输出电压:3.3V;输出电流:600mA;电源纹波抑制比(PSRR):75dB@(1kHz);输出类型:固定;",
-        "Unique ID": "",
+        "Unique ID": "gge43",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I91",
         "DeviceName": "RT9080-33GJ5",
         "FootprintName": "TSOT-23-5_L2.9-W1.6-P0.95-LS2.8-BL",
         "Device": "de4820e5f6378396",
@@ -3189,7 +3189,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC3": {
+    "gge44": {
       "props": {
         "Footprint": "ebf67a1eeb08efd1",
         "Designator": "C3",
@@ -3211,10 +3211,10 @@
         "Temperature Coefficient": "X5R",
         "Name": "10uF",
         "Description": "容值:10uF;精度:±10%;额定电压:10V;温度系数:X5R;",
-        "Unique ID": "",
+        "Unique ID": "gge44",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I92",
         "DeviceName": "CL10A106KP8NNNC",
         "FootprintName": "C0603",
         "Device": "44cad26706250dce",
@@ -3243,7 +3243,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEC4": {
+    "gge45": {
       "props": {
         "Footprint": "ebf67a1eeb08efd1",
         "Designator": "C4",
@@ -3265,10 +3265,10 @@
         "Temperature Coefficient": "X5R",
         "Name": "10uF",
         "Description": "容值:10uF;精度:±10%;额定电压:10V;温度系数:X5R;",
-        "Unique ID": "",
+        "Unique ID": "gge45",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I93",
         "DeviceName": "CL10A106KP8NNNC",
         "FootprintName": "C0603",
         "Device": "44cad26706250dce",
@@ -3297,7 +3297,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUESW3": {
+    "gge46": {
       "props": {
         "Footprint": "e28a76784683349e",
         "Designator": "SW3",
@@ -3327,10 +3327,10 @@
         "Operating Temperature": "-25℃~+70℃",
         "Name": "MSK12C02-HB",
         "Description": "电路结构:单刀双掷;安装方式:卧贴;开关颜色:黑色;额定电流:50mA;额定电压:12V;工作寿命:1万次;",
-        "Unique ID": "",
+        "Unique ID": "gge46",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I94",
         "DeviceName": "MSK12C02-HB",
         "FootprintName": "SW-TH_MSK12C02-HB-1",
         "Device": "38b8fc3397d00708",
@@ -3373,7 +3373,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUESW4": {
+    "gge47": {
       "props": {
         "Footprint": "79e2cae05278aba5",
         "Designator": "SW4",
@@ -3399,10 +3399,10 @@
         "Operating Temperature": "-25℃~+85℃",
         "Name": "SS-01GL13",
         "Description": "电路结构:单刀双掷;额定电流(DC):100mA;额定电压(DC):30V;额定电流(AC):100mA;额定电压(AC):125V;工作寿命:3000万次;",
-        "Unique ID": "",
+        "Unique ID": "gge47",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I95",
         "DeviceName": "SS-01GL13",
         "FootprintName": "SW-TH_SS-01GL13",
         "Device": "b9d8694cb4eddf40",
@@ -3438,7 +3438,7 @@
       },
       "altLibs": {}
     },
-    "UNIQUEJ6": {
+    "gge48": {
       "props": {
         "Footprint": "7d16e413416fe747",
         "Designator": "J6",
@@ -3476,10 +3476,10 @@
         "Y-Width of Bottom Edge on Board": "8.6mm",
         "Name": "S2B-PH-SM4-TB(LF)(SN)",
         "Description": "插针结构:1x2P;间距:2mm;安装方式:卧贴;参考系列:PH;总PIN数:2P;排数:1;每排PIN数:2;行距:-;额定电流:2A;触头材质:铜合金;触头镀层:锡;工作温度:-25℃~+85℃;",
-        "Unique ID": "",
+        "Unique ID": "gge48",
         "Reuse Block": "",
         "Group ID": "",
-        "Channel ID": "",
+        "Channel ID": "$1I96",
         "DeviceName": "S2B-PH-SM4-TB(LF)(SN)",
         "FootprintName": "CONN-SMD_P2.00_S2B-PH-SM4-TB-LF-SN",
         "Device": "6749806ea9118015",

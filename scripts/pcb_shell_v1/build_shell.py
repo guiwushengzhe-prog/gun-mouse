@@ -20,6 +20,7 @@ from OCP.gp import gp_Trsf
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import OUTPUT, ROOT, fillet_segments, load_config, write_json  # noqa: E402
+from clean_stl_zero_area import clean as clean_stl  # noqa: E402
 
 V = cq.Vector
 DELIVER = ROOT / "deliverables" / "pcb-shell-v1"
@@ -255,7 +256,8 @@ def build_shell(cfg):
     sw_cut = box(sw3_x - ss["w"] / 2, sw3_x + ss["w"] / 2, top_y - 0.3, top_y - 0.3 + ss["h"], zb_out - 1,
                  pocket_floor + 0.1)
     led = next(p for p in cfg["parts"] if p["ref"] == "LED1")["xz"]
-    led_cut = cq.Solid.makeCylinder(s["led_window_d"] / 2, 6, V(led[0], top_y + 0.8, zb_out - 1), V(0, 0, 1))
+    # 径向增加 0.01 毫米布尔切削余量，消除灯孔与分壳面的零厚度相切；名义孔轴和配置不变。
+    led_cut = cq.Solid.makeCylinder(s["led_window_d"] / 2 + 0.01, 6, V(led[0], top_y + 0.8, zb_out - 1), V(0, 0, 1))
     for cuts in (cut_l, cut_r):
         cuts.extend([pocket, usb_cut, usb_recess, sw_cut, led_cut])
 
@@ -449,9 +451,10 @@ def export_part(shape, name, print_rot=None):
     bb = s.BoundingBox()
     s = s.translate(V(-(bb.xmin + bb.xmax) / 2, -(bb.ymin + bb.ymax) / 2, -bb.zmin))
     cq.exporters.export(cq.Workplane().add(s), str(stl_dir / f"{name}.stl"), tolerance=0.02, angularTolerance=0.1)
+    mesh_cleanup = clean_stl(stl_dir / f"{name}.stl")
     bb = s.BoundingBox()
     return {"name": name, "print_size_mm": [round(bb.xlen, 1), round(bb.ylen, 1), round(bb.zlen, 1)],
-            "volume_cm3": round(shape.Volume() / 1000, 2)}
+            "volume_cm3": round(shape.Volume() / 1000, 2), "mesh_cleanup": mesh_cleanup}
 
 
 def main():

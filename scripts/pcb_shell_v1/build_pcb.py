@@ -195,8 +195,10 @@ def main():
             raise RuntimeError(f"编辑器未载入焊盘网络：{missing[:10]}")
         report["pad_nets_loaded_check_attempts"] = attempt + 1
         report["schematic"] = invoke(session, "schematic.js", "schematic.json", schematic_args(layout), 900000)
-        # 后台无法从原理图导入；把 PCB 器件唯一编号对齐到原理图，界面中再导入时可按编号对应
+        # 补齐唯一编号、型号/阻容值和关联属性；保持器件位置及网络不变。
         report["schematic_link"] = invoke(session, "link_ids.js", "link-ids.json", None, 300000)
+        report["schematic_properties"] = invoke(session, "sync_schematic_props.js", "sync-sch-props.json", None, 60000)
+        report["channel_association"] = invoke(session, "sync_channel_ids.js", "sync-channel-ids.json", None, 60000)
         # 嘉立创自动布线在后台会话中不会启动，改用本地网格布线器（route_grid.py），再交给嘉立创做规则检查
         pads = invoke(session, "pads.js", "pads.json", None, 120000)
         write_json(OUTPUT / "pads.json", pads)

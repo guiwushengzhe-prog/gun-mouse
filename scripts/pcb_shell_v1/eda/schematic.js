@@ -25,7 +25,10 @@ for (const p of a.parts) {
     const net = p.nets[q.getState_PinNumber()];
     if (!net) continue;
     const x = q.getState_X(), y = q.getState_Y(), rot = q.getState_Rotation();
-    const d = {0: [-1, 0], 90: [0, -1], 180: [1, 0], 270: [0, 1]}[((rot % 360) + 360) % 360] || [-1, 0];
+    // API返回的是装配后引脚朝外方向；与库文件中原始PIN的朝向语义不同。
+    // 例如R12右侧pin2=(1320,0), rotation=0，应向右引出，不能跨过电阻两端。
+    const d = {0: [1, 0], 90: [0, 1], 180: [-1, 0], 270: [0, -1]}[((rot % 360) + 360) % 360];
+    if (!d) throw new Error('未知引脚朝向 ' + p.ref + '.' + q.getState_PinNumber() + ': ' + rot);
     const w = await eda.sch_PrimitiveWire.create([x, y, x + d[0] * 20, y + d[1] * 20], net);
     if (!w) throw new Error('导线创建失败 ' + p.ref + '.' + q.getState_PinNumber());
     wired++;

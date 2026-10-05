@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "value": {
+    "parts": 48,
+    "wired": 160
+  },
+  "logs": [],
+  "durationMs": 33264,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 8723
+  }
+}

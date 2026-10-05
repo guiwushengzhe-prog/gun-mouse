@@ -1,0 +1,63 @@
+{
+  "method": "只删除面积严格为零的三角形；不修改任何非零面积面或 STEP 实体",
+  "files": [
+    {
+      "file": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\deliverables\\pcb-shell-v1\\打印文件\\STL\\右半壳.stl",
+      "removed_triangle_indices": [
+        10128,
+        11075,
+        27525,
+        28537
+      ],
+      "triangles_before": 37384,
+      "triangles_after": 37380,
+      "sha256_before": "307ca43973774fb665690ad3f9dda24b7ec1341d890da482d0d361cda501f613",
+      "sha256_after": "1a07a5676d16578e5b9393aba34f91a20e23ca36aa59e60d02440350ae148c7d"
+    },
+    {
+      "file": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\deliverables\\pcb-shell-v1\\打印文件\\STL\\右键帽.stl",
+      "removed_triangle_indices": [],
+      "triangles_before": 354,
+      "triangles_after": 354,
+      "sha256_before": "f0826372959ded67f8ec884bc6cc78d862ea2929834934e87b5c88be2a279a6a",
+      "sha256_after": "f0826372959ded67f8ec884bc6cc78d862ea2929834934e87b5c88be2a279a6a"
+    },
+    {
+      "file": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\deliverables\\pcb-shell-v1\\打印文件\\STL\\左半壳.stl",
+      "removed_triangle_indices": [
+        7803,
+        8751,
+        23718,
+        24729
+      ],
+      "triangles_before": 34054,
+      "triangles_after": 34050,
+      "sha256_before": "c832a3802ec099cd8562cb72a1546410ff643a3a8c680f80787c264e3f8c795d",
+      "sha256_after": "e68f0f2afeb8db18d7eff5f0e746461a61302875177c4ddf912f3901cb6d1647"
+    },
+    {
+      "file": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\deliverables\\pcb-shell-v1\\打印文件\\STL\\扳机.stl",
+      "removed_triangle_indices": [],
+      "triangles_before": 1308,
+      "triangles_after": 1308,
+      "sha256_before": "17da708fab369971925602173f25c7a1deaa85842b9f64201bcf94d10e002812",
+      "sha256_after": "17da708fab369971925602173f25c7a1deaa85842b9f64201bcf94d10e002812"
+    },
+    {
+      "file": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\deliverables\\pcb-shell-v1\\打印文件\\STL\\扳机触摸面盖.stl",
+      "removed_triangle_indices": [],
+      "triangles_before": 12,
+      "triangles_after": 12,
+      "sha256_before": "d035601cfe68733ead99f859cbd0a82cc2daf7aeb2f6868f9e3960ddd441d0c2",
+      "sha256_after": "d035601cfe68733ead99f859cbd0a82cc2daf7aeb2f6868f9e3960ddd441d0c2"
+    },
+    {
+      "file": "F:\\项目\\枪型飞鼠\\.worktrees\\pcb-shell-finish\\deliverables\\pcb-shell-v1\\打印文件\\STL\\摇杆帽.stl",
+      "removed_triangle_indices": [],
+      "triangles_before": 9356,
+      "triangles_after": 9356,
+      "sha256_before": "f912a0431ffc4311ffceaedd5a0ee268fce8222d62b2c23be6613788b2edca7b",
+      "sha256_after": "f912a0431ffc4311ffceaedd5a0ee268fce8222d62b2c23be6613788b2edca7b"
+    }
+  ]
+}

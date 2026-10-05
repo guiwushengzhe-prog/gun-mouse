@@ -1,0 +1,235 @@
+{
+  "baseline_commit": "dff2043",
+  "branch": "codex/pcb-shell-finish",
+  "zip_checks": {
+    "制板文件/gun-mouse-v1-Gerber.zip": {
+      "valid": true
+    },
+    "整机装配/枪型飞鼠整机装配.step.zip": {
+      "valid": true
+    }
+  },
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 11025,
+      "sha256": "c910daa9de1e008d1b426804aa5b4e70f55c94e034b7492d2ce309197613e87b"
+    },
+    {
+      "file": "制板文件/gun-mouse-v1-BOM.csv",
+      "bytes": 4124,
+      "sha256": "c868210f1ea83002a37fdeb752aab4dfb3919983b66d7dfd4ace513d8ecbd856"
+    },
+    {
+      "file": "制板文件/gun-mouse-v1-Gerber.zip",
+      "bytes": 103032,
+      "sha256": "9b7b8f5c869aa374b3863cac7eda0633c30185e3ce005cb56dfb697d77c9188f"
+    },
+    {
+      "file": "制板文件/gun-mouse-v1-坐标文件.csv",
+      "bytes": 19732,
+      "sha256": "231b88c558c9ce0a593e810f6b4215ea20cc2a691154eb469157158b22eb96d8"
+    },
+    {
+      "file": "制板文件/gun-mouse-v1-网表.enet",
+      "bytes": 115123,
+      "sha256": "19a182f2054efe3e6c2d3908385ff6960c4b69358d9d8e76340a911381a4b467"
+    },
+    {
+      "file": "打印文件/STEP/右半壳.step",
+      "bytes": 943807,
+      "sha256": "f4470f7dfd858739a4a82975767e801b8a5b862583c8a93349cf39e51ddaebc7"
+    },
+    {
+      "file": "打印文件/STEP/右键帽.step",
+      "bytes": 72839,
+      "sha256": "9669aeb86005adf0234337fdaa527ed2f5068e239fb54f1189e7a528fd4a5413"
+    },
+    {
+      "file": "打印文件/STEP/左半壳.step",
+      "bytes": 730243,
+      "sha256": "71dd5609ba958a47387e166e7b5aee38da16f0a5dca938127d2be6f1487183ec"
+    },
+    {
+      "file": "打印文件/STEP/扳机.step",
+      "bytes": 160195,
+      "sha256": "c12703f63801c1df7f687906c29ca84865702905ea117053107e6c78dbb90ed8"
+    },
+    {
+      "file": "打印文件/STEP/扳机触摸面盖.step",
+      "bytes": 16225,
+      "sha256": "d619f36d4692a1cc35296bb1f2c1ffbdeebbbb4f6155f192ce2f6736fdddba94"
+    },
+    {
+      "file": "打印文件/STEP/摇杆帽.step",
+      "bytes": 28231,
+      "sha256": "e11465357b799630657149c7cb5499544d39445d8b5ca88b6eafc59e655902a5"
+    },
+    {
+      "file": "打印文件/STL/右半壳.stl",
+      "bytes": 1869084,
+      "sha256": "1a07a5676d16578e5b9393aba34f91a20e23ca36aa59e60d02440350ae148c7d"
+    },
+    {
+      "file": "打印文件/STL/右键帽.stl",
+      "bytes": 17784,
+      "sha256": "f0826372959ded67f8ec884bc6cc78d862ea2929834934e87b5c88be2a279a6a"
+    },
+    {
+      "file": "打印文件/STL/左半壳.stl",
+      "bytes": 1702584,
+      "sha256": "e68f0f2afeb8db18d7eff5f0e746461a61302875177c4ddf912f3901cb6d1647"
+    },
+    {
+      "file": "打印文件/STL/扳机.stl",
+      "bytes": 65484,
+      "sha256": "17da708fab369971925602173f25c7a1deaa85842b9f64201bcf94d10e002812"
+    },
+    {
+      "file": "打印文件/STL/扳机触摸面盖.stl",
+      "bytes": 684,
+      "sha256": "d035601cfe68733ead99f859cbd0a82cc2daf7aeb2f6868f9e3960ddd441d0c2"
+    },
+    {
+      "file": "打印文件/STL/摇杆帽.stl",
+      "bytes": 467884,
+      "sha256": "f912a0431ffc4311ffceaedd5a0ee268fce8222d62b2c23be6613788b2edca7b"
+    },
+    {
+      "file": "整机装配/枪型飞鼠整机装配.step",
+      "bytes": 103159652,
+      "sha256": "89018ed8992b56d4875e46f437189fee29607f9d73d07dde1306daca9f867513"
+    },
+    {
+      "file": "整机装配/枪型飞鼠整机装配.step.zip",
+      "bytes": 17319271,
+      "sha256": "4d3caabae70c7366cfd689e6b48ffe612b6d3e4111e12902ec7fd57cf89c46fb"
+    },
+    {
+      "file": "检查报告.md",
+      "bytes": 10062,
+      "sha256": "5d6c9d0aec0bb4ba9bc016ac4a2b80f4a9619eb5c4b75c4e07d48821c3a803a7"
+    },
+    {
+      "file": "预览图/01-整机左前视.png",
+      "bytes": 124261,
+      "sha256": "6ef04c6a287b074310f92360a7da3428b76460886a1fd9b334747db2e92b1447"
+    },
+    {
+      "file": "预览图/02-右半壳内部.png",
+      "bytes": 41480,
+      "sha256": "40c673044edebea9a5add091d502b78be1295973d601b1c626cbe03257850552"
+    },
+    {
+      "file": "预览图/03-右半壳空壳.png",
+      "bytes": 47080,
+      "sha256": "0182f389c4ce7c025551abfe0a96cf5a03c03a68922314a0cd3fe2d8ae2fbc27"
+    },
+    {
+      "file": "预览图/04-左半壳空壳.png",
+      "bytes": 45925,
+      "sha256": "4497038634a88acc56722f09caf99fbec46e161761938284650830a63a23455e"
+    },
+    {
+      "file": "预览图/05-内部器件.png",
+      "bytes": 37128,
+      "sha256": "1b705331a438b33a2040d2147a499f8b0117e23faed6991fb7dcd31eddb06829"
+    },
+    {
+      "file": "预览图/06-主板布局侧视.png",
+      "bytes": 104571,
+      "sha256": "9442887fb27569eed0483c44de70682864253d4d04d8237ad0611f1e28b881a2"
+    },
+    {
+      "file": "预览图/07-布线检查（元件面视角，红顶层蓝底层）.png",
+      "bytes": 44932,
+      "sha256": "9f8c65c8717793a2901e69cb10ca665dab2f53693bfa91d29835ba0621d83a4c"
+    },
+    {
+      "file": "验证记录/design-baseline-report.json",
+      "bytes": 1140,
+      "sha256": "a27c7dd843738048d599b2b40c815154206fd3e9dc567215301a4d767b01b2a1"
+    },
+    {
+      "file": "验证记录/drc-report.json",
+      "bytes": 30,
+      "sha256": "bf9391edb8e4168bec55387caa9b00f62228200cc2e9f622c2053f85a7277fae"
+    },
+    {
+      "file": "验证记录/handoff-channel-repeat.json",
+      "bytes": 236,
+      "sha256": "65be13248ae355c5f5c419a1037d6f26a285954b09cbbe81eed050560608cdb9"
+    },
+    {
+      "file": "验证记录/handoff-channel-sync.json",
+      "bytes": 237,
+      "sha256": "4821cf6c390d3040d5d3bed734d4a18da158549c6ce1619326ec0b3a6ffdff45"
+    },
+    {
+      "file": "验证记录/handoff-drc-final.json",
+      "bytes": 190,
+      "sha256": "72ff33f5d8d814697aaea099c595c8d21508408889d52c3a2e48aec837c4e041"
+    },
+    {
+      "file": "验证记录/handoff-link-ids.json",
+      "bytes": 251,
+      "sha256": "7064accde78ef5cad4a258e99e5cde42b46c89bfb3c7867d9a18af8169e099e6"
+    },
+    {
+      "file": "验证记录/handoff-schematic.json",
+      "bytes": 194,
+      "sha256": "e1f05ff562fa01b52651771648088b7b8b58bfe9e5267e97908d9b5510b57825"
+    },
+    {
+      "file": "验证记录/handoff-sync-sch-auto.json",
+      "bytes": 280,
+      "sha256": "05eb1180b573a702c347252653a8bc559d1a4553105b00a6c79da0f5e68a1d51"
+    },
+    {
+      "file": "验证记录/layout.json",
+      "bytes": 26307,
+      "sha256": "83d5ab1418fa6f1ecb335965cde696ade705a60667347fdb629a6e303ab3cd16"
+    },
+    {
+      "file": "验证记录/mechanical-handoff-report.json",
+      "bytes": 17533,
+      "sha256": "633edbf7457fb54e27404e19184bdf889ee732f70bbcf3a97a4dc120d9ff30a9"
+    },
+    {
+      "file": "验证记录/netlist-handoff-report.json",
+      "bytes": 571,
+      "sha256": "12ee4d46e4904f35e4a43be5ca77f0b0a2fc0d31cc636a121b481c32e2f3e1c9"
+    },
+    {
+      "file": "验证记录/pcb-build-report.json",
+      "bytes": 1517,
+      "sha256": "e67421de34b24fde293c7a315358c99b1acdbfcac1072fe192f9958a00afd35a"
+    },
+    {
+      "file": "验证记录/schematic-netlist-handoff-report.json",
+      "bytes": 6697,
+      "sha256": "9cfc1b48940b2fbba70c8c2fc3a4fd7a28cac18626baafa9b28cabe37996bd2c"
+    },
+    {
+      "file": "验证记录/schematic-netlist.enet",
+      "bytes": 166224,
+      "sha256": "756455ed9866d7df6d5ce87c44710774ff4aab5781a5274beb704fdc1f414027"
+    },
+    {
+      "file": "验证记录/shell-report.json",
+      "bytes": 2365,
+      "sha256": "cae1ba3d4ca7d14761cc9521fb07d119e89e204a8888153f37e540e5866b800a"
+    },
+    {
+      "file": "验证记录/stl-zero-area-cleanup.json",
+      "bytes": 2825,
+      "sha256": "624a4838e99a3951c8d0047ca96d259a33184b68592d0a98d153842430ae75d6"
+    },
+    {
+      "file": "验证记录/transport-probe-result.json",
+      "bytes": 644,
+      "sha256": "7a7f48213deabd58df70d747198954b5cf30fad95662381e39198f7acc9ff07c"
+    }
+  ],
+  "scope": "交付文件校验记录；不代表实物制造、装配或电气验收"
+}
