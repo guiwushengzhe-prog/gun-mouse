@@ -1,1 +1,3 @@
 * text=auto eol=lf
+# 自动导出的三维交换文件按原字节保存；修改应来自配置与生成脚本。
+*.step binary

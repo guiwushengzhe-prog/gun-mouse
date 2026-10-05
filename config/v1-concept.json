@@ -33,17 +33,17 @@
     "touch_and_click_independent": true,
     "left_click": "扳机独立微动开关",
     "prototype_trigger_switch": "现有订单 SS-01GL，完整后缀及实物状态待核对",
-    "prototype_touch_circuit": "铜箔感应电极连接现有 TTP223，触摸与微动两路独立",
-    "lower_part_count_touch_alternative": {
+    "prototype_touch_circuit": "铜箔感应电极直连 ESP32-S3 专用电容触摸通道，省掉 TTP223，触摸与微动两路独立",
+    "prototype_touch_detection": {
       "name": "ESP32-S3 内置电容触摸",
-      "state": "可对比的原型路线，未实现或实测，不冻结为正式选型",
+      "state": "用户已选定本轮原型采用，固件与触摸阈值未实现或实测",
       "requires_controller": "ESP32-S3",
       "electrode_connection": "专用电容触摸通道，不能用普通数字按钮读取替代",
       "selected_pin": null,
-      "replaces_external_detector_module_if_validated": true,
+      "external_detector_module_in_this_prototype": false,
       "source": "https://docs.espressif.com/projects/esp-idf/zh_CN/stable/esp32s3/api-reference/peripherals/cap_touch_sens.html"
     },
-    "electrode_placement_choice": "待选择：金属柄上隔绝缘层贴铜箔，或小打印扳机帽内贴铜箔",
+    "electrode_placement_choice": "本轮图按小打印扳机帽内贴铜箔探索；金属柄隔绝缘贴铜箔仍可作为试验，未冻结制造结构",
     "right_click": "拇指区独立按键，位置待握持测试",
     "right_click_and_joystick_simultaneous_required": false,
     "joystick_motion": "连续大角度转向",
@@ -61,7 +61,8 @@
     {
       "id": "main_controller_existing",
       "name": "优信 ESP32-S3-N16R8 焊排针开发板",
-      "state": "已有，正式主控候选之一",
+      "state": "已有，本轮原型采用，与内置触摸方案配合",
+      "included_in_current_prototype": true,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "supplier_board_reference": {
@@ -99,7 +100,8 @@
     {
       "id": "main_controller_alternative",
       "name": "nRF52840",
-      "state": "候选，未选定模块或开发板，未标记采购",
+      "state": "未来候选，未选定模块或开发板，未标记采购；本轮原型不装",
+      "included_in_current_prototype": false,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_chip_reference": {
@@ -111,7 +113,8 @@
     {
       "id": "imu",
       "name": "广运 GY-601N1-LSM6DSV16X 模块",
-      "state": "已有，优先保留",
+      "state": "已有，本轮原型保留",
+      "included_in_current_prototype": true,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "supplier_module_reference": {
@@ -142,6 +145,7 @@
       "id": "joystick",
       "name": "DZYJ 普通 PS2 五针黑板电位器摇杆",
       "state": "已购，本版采用，排除 PS4/PS5 与磁阻摇杆",
+      "included_in_current_prototype": true,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "full_swing_envelope_mm": null,
@@ -158,6 +162,7 @@
       "id": "trigger_switch_order",
       "name": "SS-01GL",
       "state": "用户当前低成本扳机原型采用 SS-01GL；订单截图为打包中，完整后缀及到货待核对",
+      "included_in_current_prototype": true,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_model_reference": {
@@ -175,6 +180,7 @@
       "id": "trigger_switch_candidate",
       "name": "SS-01GL111",
       "state": "保留的长柄备选；当前低成本原型优先 SS-01GL，未标记已购",
+      "included_in_current_prototype": false,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_model_reference": {
@@ -188,7 +194,8 @@
     {
       "id": "touch_detector_existing",
       "name": "TTP223 蓝色三针触摸模块",
-      "state": "已有，用于实验，完整芯片后缀及模块焊桥未核对",
+      "state": "已有库存，本轮原型省去，完整芯片后缀及模块焊桥未核对",
+      "included_in_current_prototype": false,
       "prototype_supply_v": 3.3,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
@@ -206,7 +213,8 @@
     {
       "id": "touch_detector_candidate",
       "name": "AT42QT1011",
-      "state": "正式版备选，未采购，封装未选定；本次原型复用现有 TTP223",
+      "state": "历史备选，未采购，封装未选定；本轮使用 S3 内置触摸，不装此芯片",
+      "included_in_current_prototype": false,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_chip_reference": {
@@ -219,6 +227,7 @@
       "id": "battery",
       "name": "现有锂电池",
       "state": "已有，原型对象，实体尺寸待测",
+      "included_in_current_prototype": true,
       "nominal_voltage_v": 3.7,
       "nominal_capacity_mah": 700,
       "calculated_nominal_energy_wh": 2.59,
@@ -231,6 +240,7 @@
       "id": "power",
       "name": "现有 Type-C 充放电与 5V 升压模块",
       "state": "原型资源，完整型号和最终电源架构待验证",
+      "included_in_current_prototype": true,
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "usb_plug_envelope_mm": null
