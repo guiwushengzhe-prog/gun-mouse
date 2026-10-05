@@ -1,0 +1,19 @@
+{
+  "status": "局部几何候选，未冻结制造尺寸，不替换正式打印包",
+  "base_config": "config/pcb-shell-v1.json",
+  "joystick_support": {
+    "xz_mm": [-32.5, 26.0],
+    "radius_mm": 2.5,
+    "nominal_board_gap_mm": 0.1,
+    "bottom_y_mm": -19.1,
+    "note": "依据正式底层铜、通孔、过孔与定位孔避让；真实板厚和打印柱高还需测量。不是预压柱。"
+  },
+  "touch_joint_relief": {
+    "half_width_y_mm": 1.6,
+    "z_min_mm": -9.5,
+    "z_max_mm": -5.0,
+    "total_depth_behind_cover_mm": 1.0,
+    "maximum_joint_stack_mm_candidate": 0.8,
+    "note": "接头放在电极上沿局部腔内，沿原导线槽引出；有效感应面其余区域仍只允许0.15毫米铜箔与胶层。预制电极和绝缘固定待实样。"
+  }
+}
