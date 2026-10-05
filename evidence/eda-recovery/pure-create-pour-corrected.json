@@ -1,0 +1,758 @@
+{
+  "ok": true,
+  "value": {
+    "project": "eda-recovery-probe",
+    "board": "856049bfbe0d44c4",
+    "inspectOnly": false,
+    "units": "mil",
+    "currentDocument": {
+      "documentType": 3,
+      "uuid": "856049bfbe0d44c4",
+      "tabId": "856049bfbe0d44c4@a537e84d03058cc35e0f8bb3faf72dbc36c3ddd71e4b15909af9092066a32de8",
+      "parentProjectUuid": "a537e84d03058cc35e0f8bb3faf72dbc36c3ddd71e4b15909af9092066a32de8"
+    },
+    "name": "RECOVERY_GND_TOP",
+    "net": "GND",
+    "layer": 1,
+    "rectangle": [
+      20,
+      20,
+      980,
+      780
+    ],
+    "before": {
+      "ids": [],
+      "countByIds": 0,
+      "countByObjects": 0,
+      "regions": [],
+      "readsSucceeded": true
+    },
+    "created": true,
+    "pourId": "855639accdf90feb",
+    "rebuild": {
+      "ok": true,
+      "returnedRegion": {
+        "id": "855639accdf90feb",
+        "pourId": "855639accdf90feb",
+        "fills": [
+          {
+            "id": "7605c43690a1be25",
+            "fill": true,
+            "lineWidth": 0,
+            "path": [
+              [
+                97.6,
+                77.6,
+                "L",
+                97.6,
+                2.4000000000000057,
+                2.4000000000000057,
+                2.4,
+                2.4,
+                77.6,
+                97.6,
+                77.6
+              ],
+              [
+                10.59,
+                20,
+                "ARC",
+                180,
+                19.41,
+                20,
+                "ARC",
+                180,
+                10.59,
+                20
+              ],
+              [
+                10.59,
+                50,
+                "ARC",
+                180,
+                19.41,
+                50,
+                "ARC",
+                180,
+                10.59,
+                50
+              ],
+              [
+                60.59,
+                20,
+                "ARC",
+                180,
+                69.41,
+                20,
+                "ARC",
+                180,
+                60.59,
+                20
+              ],
+              [
+                60.59,
+                50,
+                "ARC",
+                180,
+                69.41,
+                50,
+                "ARC",
+                180,
+                60.59,
+                50
+              ]
+            ]
+          },
+          {
+            "id": "58bdc5ecb2cab5bc",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              10.99,
+              20
+            ]
+          },
+          {
+            "id": "690196751b263b31",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              19.009999999999998,
+              20
+            ]
+          },
+          {
+            "id": "ba210feaddb1ea1f",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              15,
+              24.009999999999998
+            ]
+          },
+          {
+            "id": "ec9086fb045e1790",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              15,
+              15.99
+            ]
+          },
+          {
+            "id": "a7888c5869cfb73e",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              60.99,
+              20
+            ]
+          },
+          {
+            "id": "fe437a59893efad8",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              69.01,
+              20
+            ]
+          },
+          {
+            "id": "8d0c0879411cac41",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              65,
+              24.009999999999998
+            ]
+          },
+          {
+            "id": "4af18f4874788684",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              65,
+              15.99
+            ]
+          }
+        ]
+      }
+    },
+    "observationWaitMs": 3000,
+    "pourSource": [
+      20,
+      20,
+      "L",
+      980,
+      20,
+      980,
+      780,
+      20,
+      780,
+      20,
+      20
+    ],
+    "getCopperRegion": {
+      "ok": true,
+      "returnedRegion": {
+        "id": "855639accdf90feb",
+        "pourId": "855639accdf90feb",
+        "fills": [
+          {
+            "id": "7605c43690a1be25",
+            "fill": true,
+            "lineWidth": 0,
+            "path": [
+              [
+                97.6,
+                77.6,
+                "L",
+                97.6,
+                2.4000000000000057,
+                2.4000000000000057,
+                2.4,
+                2.4,
+                77.6,
+                97.6,
+                77.6
+              ],
+              [
+                10.59,
+                20,
+                "ARC",
+                180,
+                19.41,
+                20,
+                "ARC",
+                180,
+                10.59,
+                20
+              ],
+              [
+                10.59,
+                50,
+                "ARC",
+                180,
+                19.41,
+                50,
+                "ARC",
+                180,
+                10.59,
+                50
+              ],
+              [
+                60.59,
+                20,
+                "ARC",
+                180,
+                69.41,
+                20,
+                "ARC",
+                180,
+                60.59,
+                20
+              ],
+              [
+                60.59,
+                50,
+                "ARC",
+                180,
+                69.41,
+                50,
+                "ARC",
+                180,
+                60.59,
+                50
+              ]
+            ]
+          },
+          {
+            "id": "58bdc5ecb2cab5bc",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              10.99,
+              20
+            ]
+          },
+          {
+            "id": "690196751b263b31",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              19.009999999999998,
+              20
+            ]
+          },
+          {
+            "id": "ba210feaddb1ea1f",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              15,
+              24.009999999999998
+            ]
+          },
+          {
+            "id": "ec9086fb045e1790",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              15,
+              15.99
+            ]
+          },
+          {
+            "id": "a7888c5869cfb73e",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              60.99,
+              20
+            ]
+          },
+          {
+            "id": "fe437a59893efad8",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              69.01,
+              20
+            ]
+          },
+          {
+            "id": "8d0c0879411cac41",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              65,
+              24.009999999999998
+            ]
+          },
+          {
+            "id": "4af18f4874788684",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              65,
+              15.99
+            ]
+          }
+        ]
+      }
+    },
+    "after": {
+      "ids": [
+        "855639accdf90feb"
+      ],
+      "countByIds": 1,
+      "countByObjects": 1,
+      "regions": [
+        {
+          "id": "855639accdf90feb",
+          "pourId": "855639accdf90feb",
+          "fills": [
+            {
+              "id": "7605c43690a1be25",
+              "fill": true,
+              "lineWidth": 0,
+              "path": [
+                [
+                  97.6,
+                  77.6,
+                  "L",
+                  97.6,
+                  2.4000000000000057,
+                  2.4000000000000057,
+                  2.4,
+                  2.4,
+                  77.6,
+                  97.6,
+                  77.6
+                ],
+                [
+                  10.59,
+                  20,
+                  "ARC",
+                  180,
+                  19.41,
+                  20,
+                  "ARC",
+                  180,
+                  10.59,
+                  20
+                ],
+                [
+                  10.59,
+                  50,
+                  "ARC",
+                  180,
+                  19.41,
+                  50,
+                  "ARC",
+                  180,
+                  10.59,
+                  50
+                ],
+                [
+                  60.59,
+                  20,
+                  "ARC",
+                  180,
+                  69.41,
+                  20,
+                  "ARC",
+                  180,
+                  60.59,
+                  20
+                ],
+                [
+                  60.59,
+                  50,
+                  "ARC",
+                  180,
+                  69.41,
+                  50,
+                  "ARC",
+                  180,
+                  60.59,
+                  50
+                ]
+              ]
+            },
+            {
+              "id": "58bdc5ecb2cab5bc",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                15,
+                20,
+                "L",
+                10.99,
+                20
+              ]
+            },
+            {
+              "id": "690196751b263b31",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                15,
+                20,
+                "L",
+                19.009999999999998,
+                20
+              ]
+            },
+            {
+              "id": "ba210feaddb1ea1f",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                15,
+                20,
+                "L",
+                15,
+                24.009999999999998
+              ]
+            },
+            {
+              "id": "ec9086fb045e1790",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                15,
+                20,
+                "L",
+                15,
+                15.99
+              ]
+            },
+            {
+              "id": "a7888c5869cfb73e",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                65,
+                20,
+                "L",
+                60.99,
+                20
+              ]
+            },
+            {
+              "id": "fe437a59893efad8",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                65,
+                20,
+                "L",
+                69.01,
+                20
+              ]
+            },
+            {
+              "id": "8d0c0879411cac41",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                65,
+                20,
+                "L",
+                65,
+                24.009999999999998
+              ]
+            },
+            {
+              "id": "4af18f4874788684",
+              "fill": false,
+              "lineWidth": 1,
+              "path": [
+                65,
+                20,
+                "L",
+                65,
+                15.99
+              ]
+            }
+          ]
+        }
+      ],
+      "readsSucceeded": true
+    },
+    "matchingRegions": [
+      {
+        "id": "855639accdf90feb",
+        "pourId": "855639accdf90feb",
+        "fills": [
+          {
+            "id": "7605c43690a1be25",
+            "fill": true,
+            "lineWidth": 0,
+            "path": [
+              [
+                97.6,
+                77.6,
+                "L",
+                97.6,
+                2.4000000000000057,
+                2.4000000000000057,
+                2.4,
+                2.4,
+                77.6,
+                97.6,
+                77.6
+              ],
+              [
+                10.59,
+                20,
+                "ARC",
+                180,
+                19.41,
+                20,
+                "ARC",
+                180,
+                10.59,
+                20
+              ],
+              [
+                10.59,
+                50,
+                "ARC",
+                180,
+                19.41,
+                50,
+                "ARC",
+                180,
+                10.59,
+                50
+              ],
+              [
+                60.59,
+                20,
+                "ARC",
+                180,
+                69.41,
+                20,
+                "ARC",
+                180,
+                60.59,
+                20
+              ],
+              [
+                60.59,
+                50,
+                "ARC",
+                180,
+                69.41,
+                50,
+                "ARC",
+                180,
+                60.59,
+                50
+              ]
+            ]
+          },
+          {
+            "id": "58bdc5ecb2cab5bc",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              10.99,
+              20
+            ]
+          },
+          {
+            "id": "690196751b263b31",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              19.009999999999998,
+              20
+            ]
+          },
+          {
+            "id": "ba210feaddb1ea1f",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              15,
+              24.009999999999998
+            ]
+          },
+          {
+            "id": "ec9086fb045e1790",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              15,
+              20,
+              "L",
+              15,
+              15.99
+            ]
+          },
+          {
+            "id": "a7888c5869cfb73e",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              60.99,
+              20
+            ]
+          },
+          {
+            "id": "fe437a59893efad8",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              69.01,
+              20
+            ]
+          },
+          {
+            "id": "8d0c0879411cac41",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              65,
+              24.009999999999998
+            ]
+          },
+          {
+            "id": "4af18f4874788684",
+            "fill": false,
+            "lineWidth": 1,
+            "path": [
+              65,
+              20,
+              "L",
+              65,
+              15.99
+            ]
+          }
+        ]
+      }
+    ],
+    "fillCount": 9,
+    "hasFillData": true,
+    "save": {
+      "ok": true,
+      "value": true
+    },
+    "errors": []
+  },
+  "logs": [],
+  "durationMs": 3925,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 3900
+  }
+}

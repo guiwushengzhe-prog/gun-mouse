@@ -1,0 +1,26 @@
+{
+  "file": "F:\\项目\\枪型飞鼠\\.worktrees\\eda-recovery\\evidence\\eda-recovery\\headless-corrected-gerber.zip",
+  "size": 14368,
+  "sha256": "3884337c97d30bbd280c4f6d5503e723486eedfa6d80dc911e0dc5d04ae0dfa4",
+  "copper": [
+    {
+      "name": "Gerber_TopLayer.GTL",
+      "bytes": 5188,
+      "regionStartCount": 1,
+      "regionEndCount": 1,
+      "linearInterpolationCount": 181,
+      "drawCommandCount": 170,
+      "flashCount": 4
+    },
+    {
+      "name": "Gerber_BottomLayer.GBL",
+      "bytes": 741,
+      "regionStartCount": 0,
+      "regionEndCount": 0,
+      "linearInterpolationCount": 4,
+      "drawCommandCount": 0,
+      "flashCount": 4
+    }
+  ],
+  "note": "独立试验板；区域命令数量不能代替电气与制造验收"
+}

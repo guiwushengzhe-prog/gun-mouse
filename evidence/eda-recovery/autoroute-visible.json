@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "value": {
+    "projectName": "eda-recovery-probe",
+    "pcbUuid": "960891b43069ec99",
+    "version": "4.1.66",
+    "input": {
+      "RoutingNets": [
+        "GND"
+      ],
+      "existingPrimitiveMode": "keep",
+      "optimization": 0,
+      "cornerStyle": 0,
+      "layers": [
+        1,
+        2
+      ],
+      "ignoreNets": []
+    },
+    "waitLimitMs": 12000,
+    "status": "pending",
+    "before": {
+      "traces": 0,
+      "topTraces": 0,
+      "bottomTraces": 0,
+      "vias": 0
+    },
+    "startedAt": "2026-10-05T12:55:19.338Z",
+    "events": [
+      {
+        "event": "before-autRouting",
+        "elapsedMs": 0
+      },
+      {
+        "event": "wait-expired",
+        "elapsedMs": 12001
+      }
+    ],
+    "after": {
+      "traces": 0,
+      "topTraces": 0,
+      "bottomTraces": 0,
+      "vias": 0
+    },
+    "outcome": "wait-expired",
+    "waitedMs": 12001,
+    "finishedAt": "2026-10-05T12:55:31.340Z",
+    "routingStillPending": true,
+    "delta": {
+      "traces": 0,
+      "vias": 0
+    },
+    "cancelled": false,
+    "note": "超时只停止脚本等待，不取消原生任务；仅在此独立测试工程继续观察。未自动保存。"
+  },
+  "logs": [],
+  "durationMs": 12008,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 2912
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "path": "F:\\项目\\枪型飞鼠\\.worktrees\\eda-recovery\\pcb\\eda-recovery-probe-headless\\pcb\\PCB1.epcb2",
+  "sha256": "b5d5f06bb98165e0bfc4b7cbc440cdf81a3147720e31f25dbc29ebbbe322280d",
+  "counts": {
+    "DOCHEAD": 1,
+    "META": 1,
+    "PRIMITIVE": 53,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "D3_ATTRIBUTE": 1,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "POLY": 1,
+    "NET": 2,
+    "PAD": 4,
+    "LINE": 2
+  },
+  "padCount": 4,
+  "copperLines": [
+    {
+      "id": "8b560c24c395e61b",
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "SIGNAL",
+      "layerId": 1,
+      "startX": 149.9996,
+      "startY": 499.9987,
+      "endX": 649.9983,
+      "endY": 499.9987,
+      "width": 10,
+      "locked": false,
+      "zIndex": -1
+    },
+    {
+      "id": "009f95bfabd85914",
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "GND",
+      "layerId": 1,
+      "startX": 149.9996,
+      "startY": 199.9995,
+      "endX": 649.9983,
+      "endY": 199.9995,
+      "width": 10,
+      "locked": false,
+      "zIndex": -1
+    }
+  ],
+  "pours": [],
+  "filled": [],
+  "note": "仅统计磁盘记录；真实电气连接另由软件检查和铜层文件核对"
+}

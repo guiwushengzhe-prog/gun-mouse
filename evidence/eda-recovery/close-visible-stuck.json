@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "value": {
+    "sessionId": "71cdf63e-574a-4b4f-bef8-fb8d5484cad0",
+    "status": "closed",
+    "headless": false
+  },
+  "logs": [],
+  "durationMs": 38,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 101
+  }
+}

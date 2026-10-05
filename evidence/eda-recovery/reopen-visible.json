@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "value": {
+    "sessionId": "b7c759aa-d888-4f8b-983b-acf832159ea6",
+    "renderId": 6,
+    "path": "F:\\项目\\枪型飞鼠\\.worktrees\\eda-recovery\\pcb\\eda-recovery-probe\\eda-recovery-probe.eprj3",
+    "headless": false
+  },
+  "logs": [],
+  "durationMs": 625,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 142
+  }
+}

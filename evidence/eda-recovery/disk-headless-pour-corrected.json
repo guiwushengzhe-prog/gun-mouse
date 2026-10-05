@@ -1,0 +1,281 @@
+{
+  "path": "F:\\项目\\枪型飞鼠\\.worktrees\\eda-recovery\\pcb\\eda-recovery-probe-headless\\pcb\\PCB1.epcb2",
+  "sha256": "61d64ee5a9ea7bf9353150bfee255ea0faddcb3277c0655c6ea26bbd535b566a",
+  "counts": {
+    "DOCHEAD": 1,
+    "META": 1,
+    "PRIMITIVE": 53,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "D3_ATTRIBUTE": 1,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "POLY": 1,
+    "NET": 2,
+    "PAD": 4,
+    "LINE": 2,
+    "POUR": 1,
+    "POURED": 1
+  },
+  "padCount": 4,
+  "copperLines": [
+    {
+      "id": "8b560c24c395e61b",
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "SIGNAL",
+      "layerId": 1,
+      "startX": 149.9996,
+      "startY": 499.9987,
+      "endX": 649.9983,
+      "endY": 499.9987,
+      "width": 10,
+      "locked": false,
+      "zIndex": -1
+    },
+    {
+      "id": "009f95bfabd85914",
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "GND",
+      "layerId": 1,
+      "startX": 149.9996,
+      "startY": 199.9995,
+      "endX": 649.9983,
+      "endY": 199.9995,
+      "width": 10,
+      "locked": false,
+      "zIndex": -1
+    }
+  ],
+  "pours": [
+    {
+      "id": "3c0350e834d9853a",
+      "partitionId": "",
+      "groupId": 0,
+      "netName": "GND",
+      "layerId": 1,
+      "width": 0.2,
+      "name": "RECOVERY_GND_TOP",
+      "order": 1,
+      "path": [
+        [
+          20,
+          20,
+          "L",
+          20,
+          780,
+          980,
+          780,
+          980,
+          20,
+          20,
+          20
+        ]
+      ],
+      "pourType": {
+        "pourType": "SOLID",
+        "fineness": 8
+      },
+      "keepIsland": false,
+      "locked": false,
+      "zIndex": -1
+    }
+  ],
+  "filled": [
+    {
+      "id": "[\"POURED\",\"3c0350e834d9853a\"]",
+      "pourFill": [
+        {
+          "strokeWidth": 0,
+          "fill": true,
+          "path": [
+            [
+              97.6,
+              77.6,
+              "L",
+              97.6,
+              2.4000000000000057,
+              2.4000000000000057,
+              2.4,
+              2.4,
+              77.6,
+              97.6,
+              77.6
+            ],
+            [
+              10.59,
+              20,
+              "ARC",
+              180,
+              19.41,
+              20,
+              "ARC",
+              180,
+              10.59,
+              20
+            ],
+            [
+              10.590000002358511,
+              50.00014422926767,
+              "ARC",
+              154.33512655498853,
+              18.97485891360939,
+              48.089870000000005,
+              "L",
+              61.02514108639061,
+              48.089870000000005,
+              "ARC",
+              154.33512655498848,
+              69.40999999764149,
+              50.00014422926766,
+              "ARC",
+              154.3351265549885,
+              61.025016153102,
+              51.90987,
+              "L",
+              18.974983846898,
+              51.90987,
+              "ARC",
+              154.33512655498842,
+              10.590000002358511,
+              50.00014422926767
+            ],
+            [
+              60.59,
+              20,
+              "ARC",
+              180,
+              69.41,
+              20,
+              "ARC",
+              180,
+              60.59,
+              20
+            ]
+          ],
+          "id": "d5c21dcf4e047f81"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              15,
+              20,
+              "L",
+              10.99,
+              20
+            ]
+          ],
+          "id": "4d68c7c6c7f4f256"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              15,
+              20,
+              "L",
+              19.009999999999998,
+              20
+            ]
+          ],
+          "id": "fba8f72abcef6ab4"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              15,
+              20,
+              "L",
+              15,
+              24.009999999999998
+            ]
+          ],
+          "id": "d19c88d2a6250ca0"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              15,
+              20,
+              "L",
+              15,
+              15.99
+            ]
+          ],
+          "id": "49ba01f9705210c4"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              65,
+              20,
+              "L",
+              60.99,
+              20
+            ]
+          ],
+          "id": "9f1e33cb94869ad3"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              65,
+              20,
+              "L",
+              69.01,
+              20
+            ]
+          ],
+          "id": "40cd9f9726626a0a"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              65,
+              20,
+              "L",
+              65,
+              24.009999999999998
+            ]
+          ],
+          "id": "be519f4d158352a4"
+        },
+        {
+          "strokeWidth": 1,
+          "fill": false,
+          "path": [
+            [
+              65,
+              20,
+              "L",
+              65,
+              15.99
+            ]
+          ],
+          "id": "9c96e8611693617f"
+        }
+      ]
+    }
+  ],
+  "fillPathCount": 9,
+  "note": "仅统计磁盘记录；真实电气连接另由软件检查和铜层文件核对"
+}

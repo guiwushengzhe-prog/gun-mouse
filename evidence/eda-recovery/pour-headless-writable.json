@@ -1,0 +1,63 @@
+{
+  "ok": true,
+  "value": {
+    "project": "eda-recovery-probe",
+    "board": "222e51557d773b24",
+    "inspectOnly": false,
+    "units": "mil",
+    "currentDocument": {
+      "documentType": 3,
+      "uuid": "222e51557d773b24",
+      "tabId": "222e51557d773b24@eb45fcc4325cacfa50825999b93569be0d5ebfba07627ab07884f59624606649",
+      "parentProjectUuid": "eb45fcc4325cacfa50825999b93569be0d5ebfba07627ab07884f59624606649"
+    },
+    "name": "RECOVERY_GND_TOP",
+    "net": "GND",
+    "layer": 1,
+    "rectangle": [
+      20,
+      20,
+      980,
+      780
+    ],
+    "before": {
+      "ids": [],
+      "countByIds": 0,
+      "countByObjects": 0,
+      "regions": [],
+      "readsSucceeded": true
+    },
+    "created": true,
+    "pourId": "3c0350e834d9853a",
+    "rebuild": {
+      "ok": true,
+      "returnedRegion": null
+    },
+    "observationWaitMs": 3000,
+    "getCopperRegion": {
+      "ok": true,
+      "returnedRegion": null
+    },
+    "after": {
+      "ids": [],
+      "countByIds": 0,
+      "countByObjects": 0,
+      "regions": [],
+      "readsSucceeded": true
+    },
+    "matchingRegions": [],
+    "fillCount": 0,
+    "hasFillData": false,
+    "save": {
+      "ok": true,
+      "value": true
+    },
+    "errors": []
+  },
+  "logs": [],
+  "durationMs": 3976,
+  "_local_transport": {
+    "mode": "inline",
+    "command_line_utf16_units": 3817
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "purpose": "独立接口试验，不改正式飞鼠成果",
+  "files": [
+    {
+      "name": "apply-headless-snapshot.json",
+      "bytes": 695,
+      "sha256": "322d5e76bf558372e039b052195fa958c83ea91d8d1e7145f7809a4a0a6cd9dd"
+    },
+    {
+      "name": "apply-visible-snapshot.json",
+      "bytes": 695,
+      "sha256": "b31991b942ec56bb65ee333fb9cc0251fe346f3cc157ee1656477b1b9ec8440f"
+    },
+    {
+      "name": "autoroute-menu-headless.json",
+      "bytes": 463,
+      "sha256": "3e2a0be26f25bbb7a2e9f0d8e6f56883184cf0ca2b0ff47fb1d2935f622d2036"
+    },
+    {
+      "name": "autoroute-menu-visible.json",
+      "bytes": 463,
+      "sha256": "7b8cc00e173d8c6a0f87c244e201d7fb8b330f268122b2cd297e83b684458f1e"
+    },
+    {
+      "name": "autoroute-visible.json",
+      "bytes": 1313,
+      "sha256": "1c71fdb03df53bc9080745311ed53e168126e8c044596b0f7b57ef62990789fc"
+    },
+    {
+      "name": "close-visible-stuck.json",
+      "bytes": 259,
+      "sha256": "8f9ba2f78af21edbaec0e34a65691bc4d277da8969f35676860f7f2c147ff4c6"
+    },
+    {
+      "name": "disk-direct-pour.json",
+      "bytes": 4837,
+      "sha256": "b7ec8bb0fb5aabdfe0d529d37615a97f7402b86993b76e942585509d63e087f3"
+    },
+    {
+      "name": "disk-headless-applied.json",
+      "bytes": 1288,
+      "sha256": "4cd8231809c1a383698162c3d346abfa704d8a286122652d8379a6ce7833bacb"
+    },
+    {
+      "name": "disk-headless-pour-corrected.json",
+      "bytes": 5728,
+      "sha256": "8b156824e959bdf37ce05d56cf9afbdaa6c1b58d6172b6e93527363b8993da72"
+    },
+    {
+      "name": "disk-headless-preview.json",
+      "bytes": 678,
+      "sha256": "08d6e54fec1e45fd205c29502c874b3217fb38bc8b94c2452ddcc277517c5f47"
+    },
+    {
+      "name": "headless-api-gerber.json",
+      "bytes": 745,
+      "sha256": "b7b9582eaaebaee79bf3122cc7b917235951683b1c45debf8edf172f5f581bfd"
+    },
+    {
+      "name": "headless-api-gerber.zip",
+      "bytes": 13290,
+      "sha256": "a1ea06bfa46cd652edc26e665f1d691906840466e20a165ae45331570e1e4876"
+    },
+    {
+      "name": "headless-corrected-gerber.json",
+      "bytes": 756,
+      "sha256": "20ad54b1ffc1167797739e4e457b7d8eb663c6889b91c940b4575a1f004fb009"
+    },
+    {
+      "name": "headless-corrected-gerber.zip",
+      "bytes": 14368,
+      "sha256": "3884337c97d30bbd280c4f6d5503e723486eedfa6d80dc911e0dc5d04ae0dfa4"
+    },
+    {
+      "name": "pour-headless-writable.json",
+      "bytes": 1357,
+      "sha256": "ed9585af1eb855d6eb4315e2622a29c60f259aba371d63fe66c23d91544862e9"
+    },
+    {
+      "name": "pour-headless.json",
+      "bytes": 1628,
+      "sha256": "c5b30c29829c3554c5bba95f78a3044409292fceae7f0c2c28705f4475c768f5"
+    },
+    {
+      "name": "pour-visible.json",
+      "bytes": 2000,
+      "sha256": "32c8fd1459cc47d40ed70dfbba7688e088a1e8529273b2aa256bab318c9daa60"
+    },
+    {
+      "name": "pure-create-pour-corrected.json",
+      "bytes": 16173,
+      "sha256": "c4cc0aa571d5f5e51d37cb617655f6f8c8ea22b06898ea5702d03bc765897dfe"
+    },
+    {
+      "name": "reopen-visible.json",
+      "bytes": 372,
+      "sha256": "22b72ef0f788824696b21e6df785920461d03867ffddd45bc9bb00374b7276f9"
+    },
+    {
+      "name": "repair-pour-headless.json",
+      "bytes": 4507,
+      "sha256": "912b2c1bdccaf90c3b813c8fe36cdb38f863ec9a92f83020f774ff016e9dce74"
+    },
+    {
+      "name": "repair-pour-visible.json",
+      "bytes": 4530,
+      "sha256": "28afbb5c3f6b33fc4ff0a22da4c8c8469fe9ff42b1257b92ac79e27a13659b92"
+    },
+    {
+      "name": "verify-headless-final.json",
+      "bytes": 5589,
+      "sha256": "478357591d1f6b0f3db5cb7e8efcff26ad48973d90e878a0b3c2380c953707f3"
+    },
+    {
+      "name": "verify-headless-routing.json",
+      "bytes": 1826,
+      "sha256": "225232f9acb42e3b7eab646f9581e1f18fedd64cd6782be83b658790f5de5985"
+    },
+    {
+      "name": "verify-visible-routing.json",
+      "bytes": 1826,
+      "sha256": "f4b938c9577069a398c92a748acdaddade972dbc3a082c6c1ff7084e8706d1d0"
+    }
+  ],
+  "note": "磁盘快照中的SHA记录当时的原始软件文件；此清单校验保存的证据和导出压缩包"
+}

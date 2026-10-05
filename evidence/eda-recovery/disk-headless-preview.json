@@ -1,0 +1,27 @@
+{
+  "path": "F:\\项目\\枪型飞鼠\\.worktrees\\eda-recovery\\pcb\\eda-recovery-probe-headless\\pcb\\PCB1.epcb2",
+  "sha256": "b98d7019ee6c4ec6d5b564b38439c0cf33eec720a486b21f7f0666961c66a44a",
+  "counts": {
+    "DOCHEAD": 1,
+    "META": 1,
+    "PRIMITIVE": 53,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "D3_ATTRIBUTE": 1,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "POLY": 1,
+    "NET": 2,
+    "PAD": 4
+  },
+  "padCount": 4,
+  "copperLines": [],
+  "pours": [],
+  "filled": [],
+  "note": "仅统计磁盘记录；真实电气连接另由软件检查和铜层文件核对"
+}
