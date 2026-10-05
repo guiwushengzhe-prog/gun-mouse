@@ -1,0 +1,84 @@
+{
+  "recorded_date": "2026-10-05",
+  "project": "枪型飞鼠",
+  "extraction_tool": "本机 7-Zip",
+  "archives": [
+    {
+      "original_file": "ESP32-S3资料.rar",
+      "sha256": "38226F9F4F27366D8241E13148C7487B30E2226B3CBA3DEC0E143A8ABD7AC9B7",
+      "size_bytes": 55197539,
+      "extracted_folder": "器件资料/原始资料/YD-ESP32-S3资料"
+    },
+    {
+      "original_file": "GY-601N1_1.rar",
+      "sha256": "FBC57582E5FC8C014DE0D66D418F77B28C2399B6B5700F9B9AC4698B04026FC2",
+      "size_bytes": 23046069,
+      "extracted_folder": "器件资料/原始资料/GY-601N1"
+    }
+  ],
+  "extraction_file_count": 564,
+  "extraction_total_file_bytes": 118525141,
+  "copied_references": [
+    {
+      "extracted_source": "器件资料/原始资料/YD-ESP32-S3资料/ESP32-S3-Metric.pdf",
+      "reference_copy": "器件资料/参考图纸/ESP32-S3/ESP32-S3-公制尺寸图.pdf",
+      "sha256": "23098CC8E1195BFF1F6040CCA85C4E2536A6A7EAE21D3BDA1C2C2962EC3CBD19",
+      "size_bytes": 116018
+    },
+    {
+      "extracted_source": "器件资料/原始资料/YD-ESP32-S3资料/ESP32-S3-inch.pdf",
+      "reference_copy": "器件资料/参考图纸/ESP32-S3/ESP32-S3-英制尺寸图.pdf",
+      "sha256": "8F76F90A5A1A1E201C90101228CA14FCC26D391AB7AD92266FD1393A797A4A18",
+      "size_bytes": 116871
+    },
+    {
+      "extracted_source": "器件资料/原始资料/YD-ESP32-S3资料/YD-ESP32-S3-SCH-V1.4.pdf",
+      "reference_copy": "器件资料/参考图纸/ESP32-S3/YD-ESP32-S3-电路图-V1.4.pdf",
+      "sha256": "6280255018B5748550EE41DF2276EDADA7157A269F058640189053C5A7C4CF01",
+      "size_bytes": 461421
+    },
+    {
+      "extracted_source": "器件资料/原始资料/YD-ESP32-S3资料/ESP32-S3-0702 (9).PNG",
+      "reference_copy": "器件资料/参考图纸/ESP32-S3/厂家板卡介绍-0702.PNG",
+      "sha256": "2B92607D308ED58FE53248DC35D02A65B07290D2E49D0C12AD4D4B78CD738D98",
+      "size_bytes": 2935606
+    },
+    {
+      "extracted_source": "器件资料/原始资料/YD-ESP32-S3资料/S3-V1.2 (14).PNG",
+      "reference_copy": "器件资料/参考图纸/ESP32-S3/厂家板卡介绍-V1.2.PNG",
+      "sha256": "FF9A2D8FC268C0983E5151396D34EBB2AFCDFFFA33DFE03E9F6DAD76629C6D87",
+      "size_bytes": 2758437
+    },
+    {
+      "extracted_source": "器件资料/原始资料/YD-ESP32-S3资料/YD-ESP32-S3.PNG",
+      "reference_copy": "器件资料/参考图纸/ESP32-S3/厂家板卡照片.PNG",
+      "sha256": "6AAC8261031C377CCC4CEC417ADC65D05714D0D777E63584F56831F55DA29A44",
+      "size_bytes": 1705630
+    },
+    {
+      "extracted_source": "器件资料/原始资料/GY-601N1/MCU模式相关资料/GY-601N1模块说明书.pdf",
+      "reference_copy": "器件资料/参考图纸/GY-601N1/GY-601N1-模块说明书.pdf",
+      "sha256": "398A5067053ADC4761610472E8F25773E96FFAE208A38A7BEE6CC58E8BAE1951",
+      "size_bytes": 903959
+    },
+    {
+      "extracted_source": "器件资料/原始资料/GY-601N1/模块原理图/GY-601N1原理图.png",
+      "reference_copy": "器件资料/参考图纸/GY-601N1/GY-601N1-电路图.png",
+      "sha256": "54FCC08F3516B1112E4DAC6235B37923361FE15B1A4097C16E00823C4C3BFB02",
+      "size_bytes": 221127
+    },
+    {
+      "extracted_source": "器件资料/原始资料/GY-601N1/传感器芯片手册/LSM6DSV16X.pdf",
+      "reference_copy": "器件资料/参考图纸/GY-601N1/LSM6DSV16X-芯片手册.pdf",
+      "sha256": "EC53C0E5952FC0C9587ED32B56D066016C2954BC6E9D18355B13A1C4CDA17894",
+      "size_bytes": 5112242
+    }
+  ],
+  "version_control_policy": "原始压缩包和全部解压资料保留本机；常用参考图纸、来源清单、尺寸配置及工作记录纳入版本控制",
+  "notes": [
+    "只读取原始资料，未执行包中烧录程序、示例或设备写入",
+    "PDF 尺寸直接读原文并检查页面图，未由截图比例计算板尺寸",
+    "ESP32-S3 旧尺寸图的局部器件位置不能假定与 V1.4 电路一致",
+    "厂家尺寸为名义资料，实物版本、完整高度与孔位未测量"
+  ]
+}

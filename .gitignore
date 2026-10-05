@@ -6,3 +6,6 @@ __pycache__/
 *.pyc
 .venv/
 *.lnk
+/器件资料/原始资料/
+/ESP32-S3资料.rar
+/GY-601N1_1.rar

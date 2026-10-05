@@ -5,12 +5,14 @@
   "unit": "mm",
   "hand": "右手单手",
   "coordinate_system": {
-    "status": "待用户确认，不用于正式装配",
-    "requested_directions": {"x": "向前", "y": "向右", "z": "向上"},
-    "requested_actual_handedness": "左手",
+    "status": "用户已确认轴方向，装配原点待建模确定",
+    "previous_requested_directions": {"x": "向前", "y": "向右", "z": "向上"},
+    "previous_actual_handedness": "左手",
     "recommended_directions": {"x": "向前", "y": "向左", "z": "向上"},
     "recommended_handedness": "右手",
-    "selected_directions": null,
+    "selected_directions": {"x": "向前", "y": "向左", "z": "向上"},
+    "selected_handedness": "右手",
+    "confirmed_date": "2026-10-05",
     "origin": null
   },
   "exploration_envelope": {
@@ -30,6 +32,18 @@
     "touch_gates": "仅惯性鼠标移动输出",
     "touch_and_click_independent": true,
     "left_click": "扳机独立微动开关",
+    "prototype_trigger_switch": "现有订单 SS-01GL，完整后缀及实物状态待核对",
+    "prototype_touch_circuit": "铜箔感应电极连接现有 TTP223，触摸与微动两路独立",
+    "lower_part_count_touch_alternative": {
+      "name": "ESP32-S3 内置电容触摸",
+      "state": "可对比的原型路线，未实现或实测，不冻结为正式选型",
+      "requires_controller": "ESP32-S3",
+      "electrode_connection": "专用电容触摸通道，不能用普通数字按钮读取替代",
+      "selected_pin": null,
+      "replaces_external_detector_module_if_validated": true,
+      "source": "https://docs.espressif.com/projects/esp-idf/zh_CN/stable/esp32s3/api-reference/peripherals/cap_touch_sens.html"
+    },
+    "electrode_placement_choice": "待选择：金属柄上隔绝缘层贴铜箔，或小打印扳机帽内贴铜箔",
     "right_click": "拇指区独立按键，位置待握持测试",
     "right_click_and_joystick_simultaneous_required": false,
     "joystick_motion": "连续大角度转向",
@@ -50,6 +64,28 @@
       "state": "已有，正式主控候选之一",
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
+      "supplier_board_reference": {
+        "name": "用户资料中的 YD-ESP32-S3 开发板家族",
+        "source": "器件资料/参考图纸/ESP32-S3/ESP32-S3-公制尺寸图.pdf",
+        "source_page": 1,
+        "source_board_revision": null,
+        "physical_board_version_verified": false,
+        "main_board_long_side_mm": 57.15,
+        "main_board_short_side_mm": 27.94,
+        "overall_planar_long_side_mm": 63.39,
+        "overall_length_includes_protruding_antenna": true,
+        "header_row_center_distance_mm": 25.4,
+        "header_pins_per_row": 22,
+        "header_first_to_last_center_mm": 53.34,
+        "header_pitch_mm": 2.54,
+        "header_pitch_derived_from_drawing": true,
+        "board_thickness_mm": null,
+        "assembled_height_mm": null,
+        "dedicated_mounting_holes_mm": null,
+        "local_component_positions_verified_for_v1_4": false,
+        "use_scope": "采用资料平面名义尺寸进行布局，天线伸出区域分开表示，不据此定稿孔位或高度",
+        "schematic_source": "器件资料/参考图纸/ESP32-S3/YD-ESP32-S3-电路图-V1.4.pdf"
+      },
       "official_module_reference": {
         "name": "ESP32-S3-WROOM-1",
         "not_whole_board": true,
@@ -78,6 +114,22 @@
       "state": "已有，优先保留",
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
+      "supplier_module_reference": {
+        "source": "器件资料/参考图纸/GY-601N1/GY-601N1-模块说明书.pdf",
+        "source_page": 1,
+        "source_version": "V1.0，2025.03.01",
+        "documented_size_mm": [17.8, 20.6, 2.8],
+        "size_axis_mapping_selected": false,
+        "document_does_not_define_header_height": true,
+        "supply_v": [3.0, 5.0],
+        "default_mode": "直接读取传感器芯片，PS 悬空",
+        "mcu_mode_max_update_hz": 200,
+        "mcu_rate_is_not_chip_sampling_rate": true,
+        "mounting_holes_mm": null,
+        "assembled_height_with_headers_mm": null,
+        "physical_version_and_height_verified": false,
+        "schematic_source": "器件资料/参考图纸/GY-601N1/GY-601N1-电路图.png"
+      },
       "official_chip_reference": {
         "not_whole_board": true,
         "envelope_mm": [2.5, 3.0, 0.83],
@@ -105,7 +157,7 @@
     {
       "id": "trigger_switch_order",
       "name": "SS-01GL",
-      "state": "订单仅标短柄型号，截图为打包中，完整后缀及到货待核对",
+      "state": "用户当前低成本扳机原型采用 SS-01GL；订单截图为打包中，完整后缀及到货待核对",
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_model_reference": {
@@ -113,13 +165,16 @@
         "body_excludes_lever_and_terminals": true,
         "lever_length_mm": 14.5,
         "operating_force_max_n": 0.49,
+        "mounting_center_distance_mm": 9.5,
+        "mounting_center_distance_tolerance_mm": 0.1,
+        "not_complete_assembled_envelope": true,
         "source": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-ss.pdf"
       }
     },
     {
       "id": "trigger_switch_candidate",
       "name": "SS-01GL111",
-      "state": "规范中的长柄候选，不能视为订单已购完整型号",
+      "state": "保留的长柄备选；当前低成本原型优先 SS-01GL，未标记已购",
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_model_reference": {
@@ -151,7 +206,7 @@
     {
       "id": "touch_detector_candidate",
       "name": "AT42QT1011",
-      "state": "正式版候选，未采购，封装未选定",
+      "state": "正式版备选，未采购，封装未选定；本次原型复用现有 TTP223",
       "assembly_envelope_mm": null,
       "mounting_holes_mm": null,
       "official_chip_reference": {
