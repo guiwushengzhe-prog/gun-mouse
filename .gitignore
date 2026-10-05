@@ -9,3 +9,7 @@ __pycache__/
 /器件资料/原始资料/
 /ESP32-S3资料.rar
 /GY-601N1_1.rar
+# 整机装配原始 STEP 约 100MB，只提交压缩包
+/deliverables/pcb-shell-v1/整机装配/*.step
+# 嘉立创在当前目录生成的系统库缓存（SQLite）
+/0819f05c4eef4c71ace90d822a990e87

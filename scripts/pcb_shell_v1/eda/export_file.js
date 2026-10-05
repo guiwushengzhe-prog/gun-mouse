@@ -1,0 +1,21 @@
+// 生成一个制造文件并缓存在编辑器内存中，由调用方分块取回。
+const a = __CLI__.args;
+const project = await eda.dmt_Project.getCurrentProjectInfo();
+const board = project.data.find(x => x.itemType === 'Board');
+await eda.dmt_EditorControl.openDocument(board.pcb.uuid);
+await new Promise(r => setTimeout(r, 1000));
+const m = eda.pcb_ManufactureData;
+let file;
+if (a.kind === 'gerber') file = await m.getGerberFile(a.name);
+else if (a.kind === 'bom') file = await m.getBomFile(a.name, 'csv');
+else if (a.kind === 'pnp') file = await m.getPickAndPlaceFile(a.name, 'csv', 'mm');
+else if (a.kind === 'step') file = await m.get3DFile(a.name, 'step', ['Component Model'], 'Parts', false);
+else if (a.kind === 'stepbare') file = await m.get3DFile(a.name, 'step', [], 'Parts', false);
+else if (a.kind === 'netlist') file = await m.getNetlistFile(a.name);
+else if (a.kind === 'pdf') file = await m.getPdfFile(a.name);
+else if (a.kind === 'ibom') file = await m.getInteractiveBomFile(a.name);
+else throw new Error('未知类型 ' + a.kind);
+if (!file) throw new Error('未取得文件 ' + a.kind);
+const base64 = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = () => rej(new Error('读取失败')); r.readAsDataURL(file); });
+globalThis.__gm_blob = base64;
+return {name: file.name, size: file.size, b64len: base64.length};

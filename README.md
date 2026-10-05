@@ -1,5 +1,9 @@
 # 枪型飞鼠：电路板与外壳
 
+**PCB 与外壳 V1（分支 `claude/pcb-shell-v1`）**：已生成首轮可下单的主板（含可掰下的扳机小板）和 6 个打印件。交付件、购买清单、装配顺序见 `deliverables/pcb-shell-v1/README.md`；设计决定与理由见 `docs/PCB与外壳-V1.md`；全部参数在 `config/pcb-shell-v1.json`。本版按"能买到、有原厂图"的原则把 DZYJ 摇杆模块、GY-601N1 模块和未知充电板分别换成主板直焊的 Alps 摇杆、LSM6DSV16X 芯片和板载充电稳压电路。重新生成：依次运行 `scripts/pcb_shell_v1/layout.py`、`build_pcb.py`、`build_shell.py`、`render_views.py`（命令见各脚本开头）。
+
+以下为此前阶段的说明。
+
 已安装并实际验证嘉立创专业版与 CadQuery 的程序联动。当前飞鼠采用 ESP32-S3 内置电容触摸连接铜箔，省掉 TTP223；普通 PS2 五针摇杆及独立机械扳机保持。外形方向已基本接受，当前重点是内部布局。正式制造尺寸尚未冻结，仓库中的矩形板和开口盒仍只是工具验证示例。
 
 历史外观图位于 `concepts/v2`，包括两种外观方向和已取消独立检测板的触摸扳机原理图。设计输入见 `docs/V1-Concept-01-设计输入.md`，官方参数及待测尺寸见 `docs/器件参数与待实测清单.md`，可供后续建模读取的配置见 `config/v1-concept.json`。`concepts/v1` 为保留的旧握把触摸方案，不用于当前设计。
