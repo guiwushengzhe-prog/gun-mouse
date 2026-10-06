@@ -47,12 +47,15 @@
     "board_gap": 0.1
   },
   "right_cap": {
-    "note": "D2FC 按鼠标做法以开关自身到底为终点：帽杆静止端面低于原厂 FP 上限，帽沿行程使帽杆到底处低于 OP 下限 0.3",
+    "note": "帽沿落到壳面是独立硬限位：帽杆到底停在开关外壳顶面之上，按压力经帽沿传给外壳，不压到开关外壳；到底处仍低于 OP 下限，所有个体都能触发。推杆内部总行程较短的个体仍可能先到底，首件实测核对",
     "tip_rest_above_pcb": 7.30,
-    "travel": 0.90,
+    "travel": 0.80,
     "d2fc_fp_max": 7.35,
     "d2fc_op": [6.7, 7.1],
-    "d2fc_ot_min": 0.2
+    "d2fc_ot_min": 0.2,
+    "d2fc_housing_top_above_pcb_model": 6.45,
+    "min_clearance_to_housing": 0.05,
+    "fallback": "首件若实测推杆到底高度高于帽杆到底高度，再改用带金属弹簧的限力帽"
   },
   "setting_fork": {
     "note": "夹在滑杆后端面与弹簧座之间，开口跨过弹簧；平放打印，厚度为层高整数倍",

@@ -29,7 +29,7 @@ def main():
             mapping[net] = gpio
     if set(mapping) != EXPECTED:
         raise ValueError("固件接口有缺项")
-    target = ROOT / "firmware" / "reference" / "board_pins.h"
+    target = ROOT / "firmware" / "gun_mouse" / "board_pins.h"
     text = ["#pragma once", "", "// 由 generate_board_pins.py 从正式主板配置生成，禁止手工改引脚。",
             "// 排针编号依据厂家 YD-ESP32-S3 电路图 V1.4。",
             "// 配置SHA256: " + hashlib.sha256(SOURCE.read_bytes()).hexdigest(),

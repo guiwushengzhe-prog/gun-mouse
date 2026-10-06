@@ -3,16 +3,21 @@
 #include <cmath>
 #include <cstdint>
 
-// 硬件无关的交互核心；尚未接入触摸采样、传感器驱动和蓝牙发送。
-// 触摸检测/按键去抖由采样层完成。latest_imu_sequence 必须是传感器队列
-// 当前尾部序号；重新允许体感时，从此序号之后的样本开始。
+// 硬件无关的交互核心。触摸检测/按键去抖由采样层完成。latest_imu_sequence 必须是
+// 传感器队列当前尾部序号；重新允许体感时，从此序号之后的样本开始。
 namespace GunMouse {
 
 struct Report {
   bool connected;
   uint8_t buttons;  // 位0左键、位1右键、位2中键。
-  float x;
+  float x;          // 体感与摇杆合计。
   float y;
+  float gyro_x;     // 分量：发送层分别保留小数余量，松开触摸只清体感部分。
+  float gyro_y;
+  float joy_x;
+  float joy_y;
+  bool imu_gate;    // 当前是否允许体感。
+  bool neutral;     // 连接后的首帧全释放。
 };
 
 class ControlCore {
@@ -56,14 +61,15 @@ class ControlCore {
   Report takeReport() {
     if (!connected_) {
       clearAllMotion();
-      return {false, 0, 0, 0};
+      return {false, 0, 0, 0, 0, 0, 0, 0, false, false};
     }
     if (neutral_pending_) {
       neutral_pending_ = false;
       clearAllMotion();
-      return {true, 0, 0, 0};  // 每次连接先发全释放，清除前连接状态。
+      return {true, 0, 0, 0, 0, 0, 0, 0, false, true};  // 每次连接先发全释放，清除前连接状态。
     }
-    Report result{true, buttons_, joy_x_ + gyro_x_, joy_y_ + gyro_y_};
+    Report result{true, buttons_, joy_x_ + gyro_x_, joy_y_ + gyro_y_,
+                  gyro_x_, gyro_y_, joy_x_, joy_y_, imu_gate_, false};
     clearAllMotion();
     return result;
   }

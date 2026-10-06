@@ -1,4 +1,4 @@
-#include "control_core.h"
+#include "../gun_mouse/control_core.h"
 #include <cassert>
 #include <iostream>
 #include <limits>

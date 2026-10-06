@@ -197,6 +197,17 @@ def main():
         raise ValueError(f"右键帽限位检查失败：{cap_checks}")
     top = cfg["board"]["top_face_y"]
     stem_tip_pressed = rc["tip_rest_above_pcb"] - rc["travel"]
+    # 帽沿限位必须先于开关外壳：帽杆到底仍高出外壳顶面，且低于 OP 下限。
+    housing_top = rc["d2fc_housing_top_above_pcb_model"]
+    if stem_tip_pressed < housing_top + rc["min_clearance_to_housing"] - 1e-9 or stem_tip_pressed >= rc["d2fc_op"][0]:
+        raise ValueError(f"右键帽到底高度 {stem_tip_pressed} 不在外壳顶面与 OP 下限之间")
+    rx, rz = cfg["right_button"]["xz"]
+    housing_slab = box(rx - 7, rx + 7, top + 0.05, top + housing_top, rz - 4, rz + 4)
+    sw2 = [s for s in pcb.Solids() if volume_overlap(s, housing_slab) > 1.0]
+    cap_on_housing = r3(sum(volume_overlap(cap.translate(V(0, -rc["travel"], 0)), s.intersect(housing_slab)) for s in sw2))
+    if cap_on_housing > 1e-3:
+        raise ValueError(f"右键帽按到底压到开关外壳：{cap_on_housing}")
+    cap_checks["按到底_开关外壳(应=0)"] = cap_on_housing
 
     halves = r3(volume_overlap(left, right))
     if halves > 1e-3:
@@ -250,8 +261,9 @@ def main():
                                  "螺栓头取代原触点后同类重叠属预期，不代表实物干涉",
         "sw2_posts": {"xz_r": sp["xz_r"], "end_y": r3(board_back - sp["board_gap"]), "pcb_contacts": post_contacts},
         "right_cap_mm3": cap_checks,
-        "right_cap_note": f"帽杆静止端面距板 {rc['tip_rest_above_pcb']}（原厂 FP≤{rc['d2fc_fp_max']}），按到底 {stem_tip_pressed:.2f}，"
-                          f"低于 OP 下限 {rc['d2fc_op'][0]}；主板模型推杆顶取三维模型 7.45，故静止重叠属预期",
+        "right_cap_note": f"帽杆静止端面距板 {rc['tip_rest_above_pcb']}（原厂 FP≤{rc['d2fc_fp_max']}），帽沿限位处 {stem_tip_pressed:.2f}，"
+                          f"高于模型开关外壳顶面 {rc['d2fc_housing_top_above_pcb_model']}、低于 OP 下限 {rc['d2fc_op'][0]}；"
+                          "与主板模型的重叠来自推杆（模型推杆顶 7.45），不含外壳",
         "halves_overlap_mm3": halves,
         "setting_fork_mm3": fork_checks,
         "parts": parts,

@@ -90,15 +90,16 @@
     "按到底": {
       "左半壳": 0.0,
       "右半壳": 0.0,
-      "主板模型": 3.455
+      "主板模型": 2.317
     },
     "多压0.3": {
       "左半壳": 7.56,
       "右半壳": 0.0,
-      "主板模型": 9.455
-    }
+      "主板模型": 7.455
+    },
+    "按到底_开关外壳(应=0)": 0.0
   },
-  "right_cap_note": "帽杆静止端面距板 7.3（原厂 FP≤7.35），按到底 6.40，低于 OP 下限 6.7；主板模型推杆顶取三维模型 7.45，故静止重叠属预期",
+  "right_cap_note": "帽杆静止端面距板 7.3（原厂 FP≤7.35），帽沿限位处 6.50，高于模型开关外壳顶面 6.45、低于 OP 下限 6.7；与主板模型的重叠来自推杆（模型推杆顶 7.45），不含外壳",
   "halves_overlap_mm3": 0.0,
   "setting_fork_mm3": {
     "0.8": {
@@ -125,7 +126,7 @@
         139.04,
         21.65
       ],
-      "step_sha256": "9e26462f9e7a3af7d9e00a3cd502e54202ee6affa2a666fac4ba7da104909433",
+      "step_sha256": "5557fe678324029607d431e9b4106c15fa6c9b909368889aaa1e4f446b1cab16",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
@@ -137,7 +138,7 @@
         139.04,
         25.52
       ],
-      "step_sha256": "93dca7246ca5b7fd6f8334d25e3c891b9c6b9a4993c3229c7f55728169e80cd7",
+      "step_sha256": "71cf09191a33fa115a92cb58679407332b83a1c11e7690773d27be85c70f3937",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
@@ -149,19 +150,19 @@
         29.2,
         10.0
       ],
-      "step_sha256": "6aa65d496929e16205f79954d7d774f44b09d64b90b671f279b4c8a7742d1367",
+      "step_sha256": "7d9def5e534b3d61e1bdfde079b01307014024a9a3fd77550fcd6c03313758b7",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
     },
     "右键帽-EVT-A": {
-      "volume_mm3": 1125.783,
+      "volume_mm3": 1113.183,
       "print_size_mm": [
         16.8,
         11.8,
-        16.38
+        16.28
       ],
-      "step_sha256": "7648389b833c95d6537385e5d0dc41a8b4b98322aafd8a3162cb4950b56605ed",
+      "step_sha256": "4fef5b66c244222be5f8516f475590263ef73e0b0cffeef14d2d965ae05a7f1f",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
@@ -173,7 +174,7 @@
         27.6,
         0.8
       ],
-      "step_sha256": "f827467b0245387c9dc13a4b24297430798747639fdd09125b6132301405b4dd",
+      "step_sha256": "057e417e3c443c4e85c87d91f739735fcaf291344f58871f8791d9e80c5d9b9e",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
@@ -185,7 +186,7 @@
         27.6,
         1.0
       ],
-      "step_sha256": "10095146f0b798c6c3e0be4db3f8bbe2d40bc4e1e99278eab0752e92281c751f",
+      "step_sha256": "a0b46649ff2a78afccf9de40d12a7e0b425bedd42addb0c9cd6ae2d39388c921",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
@@ -197,7 +198,7 @@
         27.6,
         1.2
       ],
-      "step_sha256": "998e78cc762c5fe1df2398da1db7fffacb8b7174b2ce17d23ef0122a7c31740d",
+      "step_sha256": "f107031e3f60c5bba28936517a14187b3730c92c5e4e73ecd52cd4e2dde2c89d",
       "mesh_connected_regions": 1,
       "mesh_open_edges": 0,
       "mesh_non_manifold": 0
