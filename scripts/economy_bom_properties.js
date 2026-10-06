@@ -1,7 +1,7 @@
 // 经济型副本的采购属性与实际下单清单一致；保留所有器件坐标和电气连接。
 const project = await eda.dmt_Project.getCurrentProjectInfo();
 const intended = __CLI__.args.projectName || 'gun-mouse-economy-v2';
-if (!['gun-mouse-economy-v2','gun-mouse-economy-factory-v3'].includes(intended) || project.friendlyName !== intended) throw new Error('只允许修改指定经济型副本');
+if (!['gun-mouse-economy-v2','gun-mouse-economy-factory-v3','gun-mouse-economy-single-v4'].includes(intended) || project.friendlyName !== intended) throw new Error('只允许修改指定经济型副本');
 const board = project.data.find(x => x.itemType === 'Board');
 const parts = __CLI__.args.parts;
 const changed = [];

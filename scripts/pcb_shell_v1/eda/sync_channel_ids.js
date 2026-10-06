@@ -1,7 +1,7 @@
 // 使用官方接口补齐通道关联属性；不传位置、旋转、板层、封装或网络。
 const project = await eda.dmt_Project.getCurrentProjectInfo();
 const intended = __CLI__.args?.projectName || 'gun-mouse-v1';
-if (!['gun-mouse-v1', 'gun-mouse-economy-factory-v3'].includes(intended)
+if (!['gun-mouse-v1', 'gun-mouse-economy-factory-v3', 'gun-mouse-economy-single-v4'].includes(intended)
     || !project || project.friendlyName !== intended) throw new Error('工程不符');
 const board = project.data.find(x => x.itemType === 'Board');
 await eda.dmt_EditorControl.openDocument(board.schematic.page[0].uuid);

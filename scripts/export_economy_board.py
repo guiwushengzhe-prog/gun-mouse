@@ -32,13 +32,18 @@ def invoke(session, code, evidence, args=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--session", required=True)
-    parser.add_argument("--factory", action="store_true", help="导出保留工厂焊接扳机小板的推荐版")
+    parser.add_argument("--factory", action="store_true", help="导出保留工厂焊接扳机小板的版本")
+    parser.add_argument("--single", action="store_true", help="导出取消扳机小板、开关自焊的单板推荐版")
     args = parser.parse_args()
     global OUT, DELIVER
     project_name = "gun-mouse-economy-factory-v3" if args.factory else "gun-mouse-economy-v2"
     if args.factory:
         OUT = ROOT / "outputs" / "economy-factory-eda"
         DELIVER = ROOT / "deliverables" / "经济型工厂代焊版" / "制板文件"
+    if args.single:
+        project_name = "gun-mouse-economy-single-v4"
+        OUT = ROOT / "outputs" / "economy-single-eda"
+        DELIVER = ROOT / "deliverables" / "经济型单板自焊版" / "制板文件"
     OUT.mkdir(parents=True, exist_ok=True)
     DELIVER.mkdir(parents=True, exist_ok=True)
     rules = invoke(args.session, EDA / "drc.js", "drc.json")

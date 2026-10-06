@@ -1,0 +1,198 @@
+{
+  "GY模块适配说明\\GY模块压框与左壳.png": {
+    "bytes": 59998,
+    "sha256": "a58d628ae43408a8204d720199f510fd7ae9f0cac0ba13311f66bfb4fa330565"
+  },
+  "GY模块适配说明\\GY模块安装核对.txt": {
+    "bytes": 2835,
+    "sha256": "83068968ac6b6498e9fbf519707e6355f783dc00201a48bcb2b903e89427d86a"
+  },
+  "GY模块适配说明\\GY模块局部装配.png": {
+    "bytes": 342311,
+    "sha256": "c1d80dd04b279adc674d4622acdf4d2ef8479d733ba481e174e47c0b27636207"
+  },
+  "GY模块适配说明\\GY模块朝向与接线.png": {
+    "bytes": 136137,
+    "sha256": "2db032746c9c4381203ef1ace320d6ea2f797d4065fb072bd0e57d4bef019c83"
+  },
+  "GY模块适配说明\\几何检查.json": {
+    "bytes": 6989,
+    "sha256": "d80badb73f6bc67c56cd5ddfc293fca691a60f437dbddaed7d32f76dbae65277"
+  },
+  "README.md": {
+    "bytes": 10932,
+    "sha256": "1fdcc4b0725c0a162e21985aea888dd3b67ed37f1272859c5ceb5800b7e2fba9"
+  },
+  "制板文件\\gun-mouse-economy-single-v4-BOM.csv": {
+    "bytes": 3628,
+    "sha256": "50e186d857b68c2989ae4b3fb32fd2ed6c4b4138f8660a08a9fc361a432056e8"
+  },
+  "制板文件\\gun-mouse-economy-single-v4-Gerber.zip": {
+    "bytes": 93100,
+    "sha256": "87bbb90d342d35ba0748d5f4baad5bc29d9b84b8c7fd58a7a0025ee19726c1bd"
+  },
+  "制板文件\\gun-mouse-economy-single-v4-坐标文件.csv": {
+    "bytes": 16604,
+    "sha256": "005657f632a4899065b6995e050674a0a49ba9a840c3094b5a0fba9c1636e33b"
+  },
+  "固件\\gun_mouse.ino.bin": {
+    "bytes": 681824,
+    "sha256": "3bacf3c03f762bb13dfed8532c85f53039c2ee9211a2b01f24c78a2bfaca4935"
+  },
+  "固件\\gun_mouse.ino.bootloader.bin": {
+    "bytes": 19968,
+    "sha256": "84bb365666003b051f564d04380d0cf5d9d85c420ddafe9fc863071b49e49bfc"
+  },
+  "固件\\gun_mouse.ino.merged.bin": {
+    "bytes": 16777216,
+    "sha256": "116ea83461edec9abff92b1482431d29494994d17fab224fc4d34b621306f992"
+  },
+  "固件\\gun_mouse.ino.partitions.bin": {
+    "bytes": 3072,
+    "sha256": "1d9cca96de0fe07ad7fc0648b9878ddecd9ce565e38b589ad20fea698ed4c80c"
+  },
+  "固件\\固件文件校验.json": {
+    "bytes": 1526,
+    "sha256": "e3f774d0ff6f3f6304a73369761c7776a1f8f094474ad29a704d9d15fbe452d2"
+  },
+  "打印文件\\GY模块压框.step": {
+    "bytes": 121581,
+    "sha256": "8fa6ef145cc94d205b79cffb59053d3facdfa9c54946944cc73b14b3639ecfe3"
+  },
+  "打印文件\\GY模块压框.stl": {
+    "bytes": 97284,
+    "sha256": "47476e199a970aacc96d2a1cca85579e3f8753c5dd8898289adbceea68f977af"
+  },
+  "打印文件\\右半壳-单板自焊.step": {
+    "bytes": 965150,
+    "sha256": "3707236e827ed2e1857a317416df25b230da655dc3a2c937f01ffa517f7c59a2"
+  },
+  "打印文件\\右半壳-单板自焊.stl": {
+    "bytes": 1824484,
+    "sha256": "cd12f57d2f543b19f611aed211d5e12dfcb3c50eec3f44772a36ee0e7fb83a32"
+  },
+  "打印文件\\右键帽-EVT-A.step": {
+    "bytes": 72842,
+    "sha256": "4fef5b66c244222be5f8516f475590263ef73e0b0cffeef14d2d965ae05a7f1f"
+  },
+  "打印文件\\右键帽-EVT-A.stl": {
+    "bytes": 17784,
+    "sha256": "3b62195f9e5c0e8ecc9e8009af8f1d6566993e37f1deedd0cfa772135ffe324e"
+  },
+  "打印文件\\左半壳-单板自焊.step": {
+    "bytes": 853896,
+    "sha256": "1c963dddbc6b6e40a079862fab7e96a3c53b79943512b34a6494f0ddcf37c1a1"
+  },
+  "打印文件\\左半壳-单板自焊.stl": {
+    "bytes": 1620084,
+    "sha256": "626eca0252aa2954c75c01f2672803ba870e9f7b641298a9c5b775d80c44afd4"
+  },
+  "打印文件\\扳机-经济型.step": {
+    "bytes": 203829,
+    "sha256": "715eb4e50618f3b9553eb649caa2ce6147f4270b7144e585f1c6458c19c8fb6e"
+  },
+  "打印文件\\扳机-经济型.stl": {
+    "bytes": 98084,
+    "sha256": "d95bcd751926753e3fde96e4926fb9dd584cd86a3de615fc464916ecc2d48473"
+  },
+  "打印文件\\扳机开关支架-SS01GL.step": {
+    "bytes": 159455,
+    "sha256": "9dde17c797a4d47952114b65e813d31cd5e520ba4a6d46de17e8a7e6ffd82518"
+  },
+  "打印文件\\扳机开关支架-SS01GL.stl": {
+    "bytes": 209284,
+    "sha256": "4a3345317391a61e0aead9c70490ffb026d4d70a09d58ae1ca6a0412d6cd4f31"
+  },
+  "打印文件\\扳机触摸面盖.step": {
+    "bytes": 16225,
+    "sha256": "d619f36d4692a1cc35296bb1f2c1ffbdeebbbb4f6155f192ce2f6736fdddba94"
+  },
+  "打印文件\\扳机触摸面盖.stl": {
+    "bytes": 684,
+    "sha256": "d035601cfe68733ead99f859cbd0a82cc2daf7aeb2f6868f9e3960ddd441d0c2"
+  },
+  "打印文件\\扳机设定片-经济型-0.8mm.step": {
+    "bytes": 72489,
+    "sha256": "4d6e9d463693ff022e76a38c6cdffec89a378ed6a27fd409cce5df67004426e7"
+  },
+  "打印文件\\扳机设定片-经济型-0.8mm.stl": {
+    "bytes": 3884,
+    "sha256": "fbc9f3383be03dcdf2d7e8464444304b4b740c1954ad4cbb36950f670fb85dd6"
+  },
+  "打印文件\\扳机设定片-经济型-1.0mm.step": {
+    "bytes": 87311,
+    "sha256": "c6d089704d1b9cd0c125eabdf40d029d133592163a1b2121ff00ad1fc26f1704"
+  },
+  "打印文件\\扳机设定片-经济型-1.0mm.stl": {
+    "bytes": 4684,
+    "sha256": "62f56b59a85c14cd8e76093b61212ae322eb5b0f4b4f4995fdb3747e22fc9f89"
+  },
+  "打印文件\\扳机设定片-经济型-1.2mm.step": {
+    "bytes": 102157,
+    "sha256": "0fc9c1b8b5deb7204e7419b42a15afc60605967477ac58220f9be557730e496d"
+  },
+  "打印文件\\扳机设定片-经济型-1.2mm.stl": {
+    "bytes": 5484,
+    "sha256": "0ba58fb83cd07a17cfb090e29f453ffb7d83e6530c143b30345e4f243c3f87da"
+  },
+  "打印文件\\摇杆帽.step": {
+    "bytes": 28231,
+    "sha256": "e11465357b799630657149c7cb5499544d39445d8b5ca88b6eafc59e655902a5"
+  },
+  "打印文件\\摇杆帽.stl": {
+    "bytes": 467884,
+    "sha256": "f912a0431ffc4311ffceaedd5a0ee268fce8222d62b2c23be6613788b2edca7b"
+  },
+  "扳机装配与调整.md": {
+    "bytes": 8212,
+    "sha256": "9e5bee3df7863e8ac784090c93cee602368a63cf547ea57d684c8d744599409f"
+  },
+  "检查报告\\原生导出\\原生坐标.csv": {
+    "bytes": 18876,
+    "sha256": "d8c3f888c1da5dc9c9a423cc8efa1a5802d48374c011bf35338e6b8735b10176"
+  },
+  "检查报告\\原生导出\\原生物料.csv": {
+    "bytes": 3628,
+    "sha256": "50e186d857b68c2989ae4b3fb32fd2ed6c4b4138f8660a08a9fc361a432056e8"
+  },
+  "检查报告\\原生导出\\新主板网表.enet": {
+    "bytes": 109834,
+    "sha256": "81fcb31258518ccab796e67e7553f536fc5172929fa3c94eab1a7630ddd36717"
+  },
+  "检查报告\\原生导出\\新原理图网表.enet": {
+    "bytes": 158916,
+    "sha256": "8327d3fbda67570a0d256d454978b4722e58deec3382c3b2229bacfa16ae4428"
+  },
+  "检查报告\\固件与操作逻辑保持检查.json": {
+    "bytes": 1085,
+    "sha256": "e8897401e4e75705fde1a7b686ab838ad118f232429072651bea0e7fd31cee0b"
+  },
+  "检查报告\\左壳与GY适配核对.json": {
+    "bytes": 791,
+    "sha256": "4dd50e5a4b1c43b88deb20f26c89ab2735225ee2c6328173d222c5e547f470fb"
+  },
+  "检查报告\\扳机与外壳核对.json": {
+    "bytes": 17837,
+    "sha256": "8666cb957b86f9b5d47d57d980601577a0bec86a94b8e30ce5916994deaf6aba"
+  },
+  "检查报告\\电路核对.json": {
+    "bytes": 8025,
+    "sha256": "5abc0a7bc6168dd042d2f731ab23e6a95433f0f930b0ca2e7ec58a1efd841adb"
+  },
+  "检查报告\\电路规则检查.json": {
+    "bytes": 203,
+    "sha256": "fda4956a41fff6c73422b36ee30b1ce157a66361a0332816427c26598ae320ad"
+  },
+  "检查报告\\费用推算-单板自焊.json": {
+    "bytes": 2086,
+    "sha256": "109ee5509c0f85f8ed2d6534c9e7a3aea9bdc35c216671de2a16990df1b3bdf3"
+  },
+  "预览图\\开关支架装配.png": {
+    "bytes": 65737,
+    "sha256": "4080e643934e448fe3b0d152dc480031d62e6b8dedc159395e1d04cc7d397445"
+  },
+  "预览图\\扳机设定局部.png": {
+    "bytes": 98880,
+    "sha256": "f8f8979e5baab99410ef319b25985ec17b7c1697037588f6669e8e7d03e49a34"
+  }
+}
