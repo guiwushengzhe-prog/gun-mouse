@@ -58,6 +58,7 @@ def main():
 
     shutil.copy2(HOLDER / "几何检查.json", REPORT / "扳机与外壳核对.json")
     shutil.copy2(HOLDER / "左壳与GY适配核对.json", REPORT / "左壳与GY适配核对.json")
+    shutil.copy2(HOLDER / "支架螺钉头核对.json", REPORT / "支架螺钉头核对.json")
     trigger = json.loads((REPORT / "扳机与外壳核对.json").read_text(encoding="utf-8"))
     assert trigger["same_switch_position_as_factory_daughter"]
     assert sha(ROOT / "config" / "economy-trigger.json") == trigger["config_sha256"]

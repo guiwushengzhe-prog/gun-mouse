@@ -20,8 +20,8 @@
     "sha256": "d80badb73f6bc67c56cd5ddfc293fca691a60f437dbddaed7d32f76dbae65277"
   },
   "README.md": {
-    "bytes": 10932,
-    "sha256": "1fdcc4b0725c0a162e21985aea888dd3b67ed37f1272859c5ceb5800b7e2fba9"
+    "bytes": 11009,
+    "sha256": "3c9a4d52b3c071d813c931603851be39c80d68b34e559dca18778bb6334d7d6d"
   },
   "制板文件\\gun-mouse-economy-single-v4-BOM.csv": {
     "bytes": 3628,
@@ -144,8 +144,8 @@
     "sha256": "f912a0431ffc4311ffceaedd5a0ee268fce8222d62b2c23be6613788b2edca7b"
   },
   "扳机装配与调整.md": {
-    "bytes": 8212,
-    "sha256": "9e5bee3df7863e8ac784090c93cee602368a63cf547ea57d684c8d744599409f"
+    "bytes": 8438,
+    "sha256": "5cbf96a20811d02e7d35fb803202a390d67c2dad79831972f992975d55228589"
   },
   "检查报告\\原生导出\\原生坐标.csv": {
     "bytes": 18876,
@@ -174,6 +174,10 @@
   "检查报告\\扳机与外壳核对.json": {
     "bytes": 17837,
     "sha256": "8666cb957b86f9b5d47d57d980601577a0bec86a94b8e30ce5916994deaf6aba"
+  },
+  "检查报告\\支架螺钉头核对.json": {
+    "bytes": 812,
+    "sha256": "29ab0b2df8cc026a99dcd82b1796ce7f4070569e86b0f498663bfa9832a0f455"
   },
   "检查报告\\电路核对.json": {
     "bytes": 8025,
