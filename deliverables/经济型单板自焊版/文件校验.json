@@ -20,20 +20,20 @@
     "sha256": "d80badb73f6bc67c56cd5ddfc293fca691a60f437dbddaed7d32f76dbae65277"
   },
   "README.md": {
-    "bytes": 13670,
-    "sha256": "e4f91e30273f4b44ef459342aafce4155a9e7ca03b41a2395c97807b59c206dc"
+    "bytes": 14182,
+    "sha256": "ee385136ff71eeef917f72bb971f0df0883d4102d4bd1595d0c47390de9aa8ec"
   },
   "制板文件\\gun-mouse-economy-single-v4-BOM.csv": {
-    "bytes": 3406,
-    "sha256": "d5f387a4420e67ebfb2d1beefe661dbb68b6371cd1f6d64fc12ff31c691606f2"
+    "bytes": 3242,
+    "sha256": "dd6d1a3a2b30c723f3f58e74b3ab94ab59d07dad1f2621b1c0358b608c3d3b49"
   },
   "制板文件\\gun-mouse-economy-single-v4-Gerber.zip": {
-    "bytes": 93102,
-    "sha256": "c1bdbb17e7fd721891e386d69c8be0eecf11c593680a4fd0866e8cba5b0d482e"
+    "bytes": 93098,
+    "sha256": "2983929c7f8193c9d98ae494c3787121232134890b3b801111682ccf35d6cd0b"
   },
   "制板文件\\gun-mouse-economy-single-v4-坐标文件.csv": {
-    "bytes": 15158,
-    "sha256": "2ae4edbe2de7fddd424cc67343b173fc210b667988517d00aee8d3d00125c8f5"
+    "bytes": 14694,
+    "sha256": "2225f42a575eb38b99718c7b27cbacd64b246a1857d159a51e7c3fdee1ad8864"
   },
   "固件\\gun_mouse.ino.bin": {
     "bytes": 681824,
@@ -148,20 +148,20 @@
     "sha256": "9db7a44d620abb721ad046984105bbe5b935777780c85245852de163acf0897d"
   },
   "检查报告\\原生导出\\原生坐标.csv": {
-    "bytes": 18876,
-    "sha256": "063194d9afba5e156fc10ae1b1239d8c7a145801460323be7968fd1c237955f0"
+    "bytes": 18840,
+    "sha256": "9f7beab976c1847cb22d754f2e96ef478822c8147bff9b0272874d0db0a6287e"
   },
   "检查报告\\原生导出\\原生物料.csv": {
-    "bytes": 3406,
-    "sha256": "d5f387a4420e67ebfb2d1beefe661dbb68b6371cd1f6d64fc12ff31c691606f2"
+    "bytes": 3242,
+    "sha256": "dd6d1a3a2b30c723f3f58e74b3ab94ab59d07dad1f2621b1c0358b608c3d3b49"
   },
   "检查报告\\原生导出\\新主板网表.enet": {
-    "bytes": 109831,
-    "sha256": "90758b33a9f3a26a7a9c4dfc5deda48f9c0fedeb961dc7b61804708a2543be68"
+    "bytes": 109803,
+    "sha256": "00142bc314d379ecfa5fca3fbbee6d0bd3b859282579bd06b0d8128575990c36"
   },
   "检查报告\\原生导出\\新原理图网表.enet": {
-    "bytes": 158913,
-    "sha256": "5c5354f9bb3671fd50126f600648768e8745d2803be70150467380925c7ec92d"
+    "bytes": 158885,
+    "sha256": "3268c78cfa2c2cbe5abc47a216ccfbe004071ebe0c824acf0764fdb3448e5514"
   },
   "检查报告\\固件与操作逻辑保持检查.json": {
     "bytes": 1085,
@@ -180,20 +180,20 @@
     "sha256": "39ebeeb8a10075ee1ce21693a9cfd80f6ed97e433ac8ff840ab99a778b00e4d8"
   },
   "检查报告\\电路核对.json": {
-    "bytes": 8444,
-    "sha256": "97d69e4ffb182525986d31107846e4a9f66c95b9bd983c050a5b1f071d5e08ab"
+    "bytes": 7894,
+    "sha256": "4f45c7e1117959f9641bc7a87d7584ea4928d666442e280e0b0de7bc1ad122d8"
   },
   "检查报告\\电路规则检查.json": {
     "bytes": 203,
-    "sha256": "b459d7ac7eadf22741e72c7f42c3c1e16bed56784319d3841547587bcddbd7b9"
+    "sha256": "4cf543f818b0cc43c15fa09682d29586f008603adbb60043b583aca633d8eb5a"
   },
   "检查报告\\螺丝统一核对.json": {
     "bytes": 2493,
     "sha256": "1008ab26ed210945158a31523bb89dcf113a48928c8e86b6b32bb5d317cc6ed6"
   },
   "检查报告\\费用推算-单板自焊.json": {
-    "bytes": 2206,
-    "sha256": "b3dd5d05f8cc681011b3f71e545f8541f994af3438dcac0e3bbe0dca433b68ce"
+    "bytes": 2321,
+    "sha256": "5280e4e778987163f0f736e0f8f75075e07685aeae715ae0b7a57e66886c4363"
   },
   "预览图\\开关支架装配.png": {
     "bytes": 67255,

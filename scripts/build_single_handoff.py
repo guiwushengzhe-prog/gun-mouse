@@ -62,10 +62,12 @@ def main():
         "摇杆": "偏转移动光标，与体感位移相加", "充电插拔": "不自动暂停控制",
     }, ensure_ascii=False, indent=2).encode("utf-8"))
 
-    shutil.copy2(HOLDER / "几何检查.json", REPORT / "扳机与外壳核对.json")
-    shutil.copy2(HOLDER / "左壳与GY适配核对.json", REPORT / "左壳与GY适配核对.json")
-    shutil.copy2(HOLDER / "支架螺钉头核对.json", REPORT / "支架螺钉头核对.json")
-    shutil.copy2(HOLDER / "螺丝统一核对.json", REPORT / "螺丝统一核对.json")
+    # 机构检查输出不进版本库；本次机构未改时沿用已提交的核对报告，下方仍逐件核对打印件校验值。
+    for source, target in (("几何检查.json", "扳机与外壳核对.json"), ("左壳与GY适配核对.json", "左壳与GY适配核对.json"),
+                           ("支架螺钉头核对.json", "支架螺钉头核对.json"), ("螺丝统一核对.json", "螺丝统一核对.json")):
+        if (HOLDER / source).is_file():
+            shutil.copy2(HOLDER / source, REPORT / target)
+        assert (REPORT / target).is_file(), "缺机构核对报告 " + target
     unified = json.loads((REPORT / "螺丝统一核对.json").read_text(encoding="utf-8"))
     assert unified["结论"].startswith("统一为M2×10与M2×20")
     trigger = json.loads((REPORT / "扳机与外壳核对.json").read_text(encoding="utf-8"))
@@ -89,8 +91,8 @@ def main():
     assert sorted(p.stem for p in PRINT.glob("*.stl")) == sorted(required), "打印目录有多余或缺少的零件"
 
     board = json.loads((REPORT / "电路核对.json").read_text(encoding="utf-8"))
-    assert board["工厂物料组数"] == 20 and board["每套工厂器件数"] == 37 and board["制板款数"] == 1
-    assert board["采购修正"]["U4"]["Supplier Part"] == "C7420376"
+    assert board["工厂物料组数"] == 19 and board["每套工厂器件数"] == 36 and board["制板款数"] == 1
+    assert "U4" in board["不装"]
     assert board["采购修正"]["R3"]["Supplier Part"] == "C25905"
     assert json.loads((REPORT / "电路规则检查.json").read_text(encoding="utf-8"))["value"]["count"] == 0
     native_key = "pcb\\" + NAME + "\\pcb\\PCB1.epcb2"

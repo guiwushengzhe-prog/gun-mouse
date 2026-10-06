@@ -1,8 +1,8 @@
 {
   "状态": "单板自焊开关版重新审核资料；不是已获批准或已下单的成品",
   "接单条件": "经济型；不能经济型接单则不付款生产，先查明具体器件或工艺原因",
-  "工厂物料组数": 20,
-  "每套工厂器件数": 37,
+  "工厂物料组数": 19,
+  "每套工厂器件数": 36,
   "贴装面": "仅顶层",
   "制板款数": 1,
   "原生器件总数": 46,
@@ -19,7 +19,8 @@
     "R10",
     "R11",
     "R12",
-    "U1"
+    "U1",
+    "U4"
   ],
   "不装依据": {
     "U1": "改用已有GY-601N1-LSM6DSV16X模块",
@@ -46,37 +47,17 @@
       "Manufacturer Part": "0402WGF1002TCE",
       "Supplier Part": "C25744",
       "Footprint": "R0402"
-    },
-    "U4": {
-      "Value": "",
-      "Manufacturer Part": "SRV05-4",
-      "Supplier Part": "C7420376",
-      "Footprint": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL"
     }
   },
   "R3依据": "TP4056充电电流≈1200/R：5.1k约235mA（6.8k约176mA）；与R1/R2同料，少一种物料。首件按说明测充电温度",
-  "U4依据": {
-    "替换": "USBLC6-2SC6(C7519)→SRV05-4(C7420376, R+O宏嘉诚)",
-    "引脚": "1/3/4/6为I/O、2为GND、5为VCC；本板1、6脚同为USB_DP且有铜线直连，3、4脚同为USB_DN且有铜线直连",
-    "参数": "VRWM 5V、VBR≥6V、I/O对地1pF；与USBLC6同为导向二极管加VCC齐纳结构",
-    "封装": "SOT-23-6L，0.95毫米脚距、2.30毫米行距，与板上焊盘一致"
+  "U4不装依据": {
+    "原因": "免换料的SRV05-4（C7420376/C20615829/C85364）国内库存不足，C558418无库存；用户选择不装而不多付20元换料费",
+    "电路": "本板U4的1、6脚同为USB_DP且有铜线直连，3、4脚同为USB_DN且有铜线直连；不装时USB数据线与VBUS仍连通，充电和下载正常",
+    "代价": "USB口无静电保护；插线前先放掉身上静电",
+    "以后要装": "原设计USBLC6-2SC6/C7519可直接焊回同一焊盘"
   },
   "原生采购与订单清单逐项一致": true,
   "坐标采购元数据修正": {
-    "U4": {
-      "原库元数据": {
-        "Device": "USBLC6-2SC6_C7519",
-        "Comment": "SRV05-4",
-        "Value": "",
-        "Datasheet": "https://datasheet.lcsc.com/datasheet/pdf/c94a8eedc13753364c00c764db36d52a.pdf"
-      },
-      "本订单采购元数据": {
-        "Device": "SRV05-4",
-        "Comment": "SRV05-4",
-        "Value": "",
-        "Datasheet": "https://datasheet.lcsc.com/datasheet/pdf/c94a8eedc13753364c00c764db36d52a.pdf"
-      }
-    },
     "R3": {
       "原库元数据": {
         "Device": "0402WGF3301TCE",
@@ -106,7 +87,7 @@
       }
     }
   },
-  "最终40坐标与新原生几何逐字段一致": true,
+  "最终36坐标与新原生几何逐字段一致": true,
   "几何核对字段": [
     "Footprint",
     "Mid X",
@@ -155,7 +136,8 @@
     "R10": "no",
     "R11": "no",
     "R12": "no",
-    "U1": "no"
+    "U1": "no",
+    "U4": "no"
   },
   "直接焊线焊盘": {
     "J3": "1脚VBAT(+)、2脚GND(-)；与USB口金属外壳导通的是负极",
@@ -191,16 +173,16 @@
     "deliverables\\evt-a\\制板文件\\gun-mouse-v1-坐标文件.csv": "411d356b4d826881978414fd0294feecec86f27049418a2ba50ed2250008f15c"
   },
   "本次导出SHA256": {
-    "pcb\\gun-mouse-economy-single-v4\\pcb\\PCB1.epcb2": "9ee21d669de4b14181f28c79029e242cfd790db60232f0eac5e808c453ae7e83",
-    "outputs\\economy-single-eda\\drc.json": "b459d7ac7eadf22741e72c7f42c3c1e16bed56784319d3841547587bcddbd7b9",
-    "outputs\\economy-single-eda\\原生物料.csv": "d5f387a4420e67ebfb2d1beefe661dbb68b6371cd1f6d64fc12ff31c691606f2",
-    "outputs\\economy-single-eda\\原生坐标.csv": "063194d9afba5e156fc10ae1b1239d8c7a145801460323be7968fd1c237955f0",
-    "outputs\\economy-single-eda\\新主板网表.enet": "90758b33a9f3a26a7a9c4dfc5deda48f9c0fedeb961dc7b61804708a2543be68",
-    "outputs\\economy-single-eda\\新原理图网表.enet": "5c5354f9bb3671fd50126f600648768e8745d2803be70150467380925c7ec92d",
-    "deliverables\\经济型单板自焊版\\制板文件\\gun-mouse-economy-single-v4-Gerber.zip": "c1bdbb17e7fd721891e386d69c8be0eecf11c593680a4fd0866e8cba5b0d482e"
+    "pcb\\gun-mouse-economy-single-v4\\pcb\\PCB1.epcb2": "7460827200f82599378b6a60d10a8cc8cfc6a908c6f3b5cb1eda89ef288ea2e4",
+    "outputs\\economy-single-eda\\drc.json": "4cf543f818b0cc43c15fa09682d29586f008603adbb60043b583aca633d8eb5a",
+    "outputs\\economy-single-eda\\原生物料.csv": "dd6d1a3a2b30c723f3f58e74b3ab94ab59d07dad1f2621b1c0358b608c3d3b49",
+    "outputs\\economy-single-eda\\原生坐标.csv": "9f7beab976c1847cb22d754f2e96ef478822c8147bff9b0272874d0db0a6287e",
+    "outputs\\economy-single-eda\\新主板网表.enet": "00142bc314d379ecfa5fca3fbbee6d0bd3b859282579bd06b0d8128575990c36",
+    "outputs\\economy-single-eda\\新原理图网表.enet": "3268c78cfa2c2cbe5abc47a216ccfbe004071ebe0c824acf0764fdb3448e5514",
+    "deliverables\\经济型单板自焊版\\制板文件\\gun-mouse-economy-single-v4-Gerber.zip": "2983929c7f8193c9d98ae494c3787121232134890b3b801111682ccf35d6cd0b"
   },
   "订单清单SHA256": {
-    "gun-mouse-economy-single-v4-BOM.csv": "d5f387a4420e67ebfb2d1beefe661dbb68b6371cd1f6d64fc12ff31c691606f2",
-    "gun-mouse-economy-single-v4-坐标文件.csv": "2ae4edbe2de7fddd424cc67343b173fc210b667988517d00aee8d3d00125c8f5"
+    "gun-mouse-economy-single-v4-BOM.csv": "dd6d1a3a2b30c723f3f58e74b3ab94ab59d07dad1f2621b1c0358b608c3d3b49",
+    "gun-mouse-economy-single-v4-坐标文件.csv": "2225f42a575eb38b99718c7b27cbacd64b246a1857d159a51e7c3fdee1ad8864"
   }
 }

@@ -1,6 +1,6 @@
 # 枪型飞鼠：电路板与外壳
 
-**当前推荐下单版：单板经济型，扳机开关自焊（分支 `claude/economy-single-board`）**：取消扳机小板只做一款主板，SS-01GL 由用户焊两根线后装在打印支架上；恢复充电灯，R3 改 5.1k（约235mA），U4 改为免换料候选 SRV05-4；扳机调节触点改用市售 M2×10 内六角圆柱头螺钉；全机螺丝统一为 M2×10、M2×20 两种杯头内六角加 M2 螺母。J3/J4/J5 三个 PH2.0 座不装，电池、扳机开关和触摸线直接焊在焊盘上。下单文件、费用推算、装配与充电温度首件检查见 `deliverables/经济型单板自焊版/README.md`；重新生成依次运行 `scripts/prepare_single_board.py`、`single_board_eda.py`、`package_single_board.py`、`economy_holder.py`、`render_holder.py`、`check_left_equivalence.py`、`build_single_handoff.py`。`deliverables/经济型工厂代焊版` 与 `deliverables/经济型改版` 保留为历史方案，不再用于下单。
+**当前推荐下单版：单板经济型，扳机开关自焊（main 分支）**：取消扳机小板只做一款主板，SS-01GL 由用户焊两根线后装在打印支架上；恢复充电灯，R3 改 5.1k（约235mA），U4 不装（国内库存不足）；扳机调节触点改用市售 M2×10 内六角圆柱头螺钉；全机螺丝统一为 M2×10、M2×20 两种杯头内六角加 M2 螺母。J3/J4/J5 三个 PH2.0 座不装，电池、扳机开关和触摸线直接焊在焊盘上。下单文件、费用推算、装配与充电温度首件检查见 `deliverables/经济型单板自焊版/README.md`；重新生成依次运行 `scripts/prepare_single_board.py`、`single_board_eda.py`、`package_single_board.py`、`economy_holder.py`、`render_holder.py`、`check_left_equivalence.py`、`check_holder_screw_heads.py`、`check_unified_screws.py`、`build_single_handoff.py`。`deliverables/经济型工厂代焊版` 与 `deliverables/经济型改版` 保留为历史方案，不再用于下单。
 
 **PCB 与外壳 V1（分支 `claude/pcb-shell-v1`）**：已生成首轮可下单的主板（含可掰下的扳机小板）和 6 个打印件。交付件、购买清单、装配顺序见 `deliverables/pcb-shell-v1/README.md`；设计决定与理由见 `docs/PCB与外壳-V1.md`；全部参数在 `config/pcb-shell-v1.json`。本版按"能买到、有原厂图"的原则把 DZYJ 摇杆模块、GY-601N1 模块和未知充电板分别换成主板直焊的 Alps 摇杆、LSM6DSV16X 芯片和板载充电稳压电路。重新生成：依次运行 `scripts/pcb_shell_v1/layout.py`、`build_pcb.py`、`build_shell.py`、`render_views.py`（命令见各脚本开头）。
 
