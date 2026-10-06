@@ -4,7 +4,9 @@
 - R12/C7/C8 与 U1/R10/R11 一样不装（只服务于未安装的原裸传感器）；
 - R3 改用与 R1/R2 相同的 5.1k 物料，充电电流约 235mA，同时少一种物料；
 - U4 改为同封装、同引脚功能的 SRV05-4（C7420376），板上 1-6、3-4 脚已有铜线直连；
-- LED1/R4 充电灯保留。
+- LED1/R4 充电灯保留；
+- J3/J4/J5 三个 PH2.0 座不装（同一扩展料，三个都不装才免一种换料费）：电池、扳机开关、触摸电极的线
+  由用户直接焊到原焊盘上；网购电池多为两根裸线，直接焊还避免 PH 插头正负极与板子相反。
 """
 import argparse
 import json
@@ -17,7 +19,7 @@ NAME = "gun-mouse-economy-single-v4"
 SOURCE = ROOT / "pcb" / "gun-mouse-economy-v2"
 TARGET = ROOT / "pcb" / NAME
 OUT = ROOT / "outputs" / "economy-single-eda"
-OMIT = ("U1", "R10", "R11", "R12", "C7", "C8")
+OMIT = ("U1", "R10", "R11", "R12", "C7", "C8", "J3", "J4", "J5")
 RESERVED = {"Unique ID", "Footprint", "Device", "Symbol", "3D Model", "3D Model Transform", "Reuse Block",
             "Group ID", "Channel ID", "Convert to PCB", "Footprint Name", "Device Name", "Designator",
             "DeviceName", "FootprintName", "3D Model Title"}

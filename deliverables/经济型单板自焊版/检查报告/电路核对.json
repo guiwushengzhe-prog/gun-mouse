@@ -1,8 +1,8 @@
 {
   "状态": "单板自焊开关版重新审核资料；不是已获批准或已下单的成品",
   "接单条件": "经济型；不能经济型接单则不付款生产，先查明具体器件或工艺原因",
-  "工厂物料组数": 21,
-  "每套工厂器件数": 40,
+  "工厂物料组数": 20,
+  "每套工厂器件数": 37,
   "贴装面": "仅顶层",
   "制板款数": 1,
   "原生器件总数": 46,
@@ -13,6 +13,9 @@
   "不装": [
     "C7",
     "C8",
+    "J3",
+    "J4",
+    "J5",
     "R10",
     "R11",
     "R12",
@@ -23,7 +26,8 @@
     "R10_R11": "模块自带2.2k总线上拉",
     "R12": "3V3到IMU_CS的上拉只服务U1-12；模块已有CS上拉",
     "C7_C8": "U1局部去耦；主板C4/C5/C6及模块本地去耦保留",
-    "无需替代焊接或跳线": true
+    "无需替代焊接或跳线": true,
+    "J3_J4_J5": "三个PH2.0座同为C295747扩展料，全部不装免一种换料费；电池、扳机开关、触摸电极线由用户直接焊到原1.0×3.8毫米焊盘"
   },
   "保留充电灯": {
     "LED1": "C2286",
@@ -145,19 +149,24 @@
   "原生不装标志": {
     "C7": "no",
     "C8": "no",
+    "J3": "no",
+    "J4": "no",
+    "J5": "no",
     "R10": "no",
     "R11": "no",
     "R12": "no",
     "U1": "no"
   },
-  "扳机接口": {
+  "直接焊线焊盘": {
+    "J3": "1脚VBAT(+)、2脚GND(-)；与USB口金属外壳导通的是负极",
     "J4": {
       "1": "TRIG",
       "2": "GND",
       "3": "",
       "4": ""
     },
-    "接法": "PH2.0单头成品线插J4，裸端焊SS-01GL的COM与NO；两线对调不影响，NC不接"
+    "J4接法": "SS-01GL的COM与NO两根线直接焊到J4的1、2脚焊盘，两线对调不影响，NC不接",
+    "J5": "1、2脚同为TOUCH，触摸电极线焊任一焊盘"
   },
   "V割软件标志关闭": true,
   "生产板框闭合轮廓数": 2,
@@ -182,16 +191,16 @@
     "deliverables\\evt-a\\制板文件\\gun-mouse-v1-坐标文件.csv": "411d356b4d826881978414fd0294feecec86f27049418a2ba50ed2250008f15c"
   },
   "本次导出SHA256": {
-    "pcb\\gun-mouse-economy-single-v4\\pcb\\PCB1.epcb2": "5381aee84ea7c369013c4d0ff44b34b8c3944e8cd46954cbb5e481d14fd6f7bb",
-    "outputs\\economy-single-eda\\drc.json": "fda4956a41fff6c73422b36ee30b1ce157a66361a0332816427c26598ae320ad",
-    "outputs\\economy-single-eda\\原生物料.csv": "50e186d857b68c2989ae4b3fb32fd2ed6c4b4138f8660a08a9fc361a432056e8",
-    "outputs\\economy-single-eda\\原生坐标.csv": "d8c3f888c1da5dc9c9a423cc8efa1a5802d48374c011bf35338e6b8735b10176",
-    "outputs\\economy-single-eda\\新主板网表.enet": "81fcb31258518ccab796e67e7553f536fc5172929fa3c94eab1a7630ddd36717",
-    "outputs\\economy-single-eda\\新原理图网表.enet": "8327d3fbda67570a0d256d454978b4722e58deec3382c3b2229bacfa16ae4428",
-    "deliverables\\经济型单板自焊版\\制板文件\\gun-mouse-economy-single-v4-Gerber.zip": "87bbb90d342d35ba0748d5f4baad5bc29d9b84b8c7fd58a7a0025ee19726c1bd"
+    "pcb\\gun-mouse-economy-single-v4\\pcb\\PCB1.epcb2": "9ee21d669de4b14181f28c79029e242cfd790db60232f0eac5e808c453ae7e83",
+    "outputs\\economy-single-eda\\drc.json": "b459d7ac7eadf22741e72c7f42c3c1e16bed56784319d3841547587bcddbd7b9",
+    "outputs\\economy-single-eda\\原生物料.csv": "d5f387a4420e67ebfb2d1beefe661dbb68b6371cd1f6d64fc12ff31c691606f2",
+    "outputs\\economy-single-eda\\原生坐标.csv": "063194d9afba5e156fc10ae1b1239d8c7a145801460323be7968fd1c237955f0",
+    "outputs\\economy-single-eda\\新主板网表.enet": "90758b33a9f3a26a7a9c4dfc5deda48f9c0fedeb961dc7b61804708a2543be68",
+    "outputs\\economy-single-eda\\新原理图网表.enet": "5c5354f9bb3671fd50126f600648768e8745d2803be70150467380925c7ec92d",
+    "deliverables\\经济型单板自焊版\\制板文件\\gun-mouse-economy-single-v4-Gerber.zip": "c1bdbb17e7fd721891e386d69c8be0eecf11c593680a4fd0866e8cba5b0d482e"
   },
   "订单清单SHA256": {
-    "gun-mouse-economy-single-v4-BOM.csv": "50e186d857b68c2989ae4b3fb32fd2ed6c4b4138f8660a08a9fc361a432056e8",
-    "gun-mouse-economy-single-v4-坐标文件.csv": "005657f632a4899065b6995e050674a0a49ba9a840c3094b5a0fba9c1636e33b"
+    "gun-mouse-economy-single-v4-BOM.csv": "d5f387a4420e67ebfb2d1beefe661dbb68b6371cd1f6d64fc12ff31c691606f2",
+    "gun-mouse-economy-single-v4-坐标文件.csv": "2ae4edbe2de7fddd424cc67343b173fc210b667988517d00aee8d3d00125c8f5"
   }
 }

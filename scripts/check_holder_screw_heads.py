@@ -1,4 +1,4 @@
-"""核对开关支架两颗 M2×16 用盘头或杯头内六角（ISO 4762）时，头部与壳体、支架、扳机全行程均不干涉。
+"""核对开关支架两颗螺钉（现为 M2×20）用盘头或杯头内六角（ISO 4762）时，头部与壳体、支架、扳机全行程均不干涉。
 
 先运行 economy_holder.py（读取其 outputs/economy-holder 下的实体）。
 """
@@ -41,7 +41,7 @@ def main():
                 et.zero(name + key, value)
         report[name] = result
     out = MODELS / "支架螺钉头核对.json"
-    out.write_text(json.dumps({"范围": "支架两颗M2×16螺钉头部包络；螺母侧与螺杆沿用economy_holder.py检查",
+    out.write_text(json.dumps({"范围": "支架两颗螺钉头部包络（现用M2×20杯头）；螺母侧与螺杆沿用economy_holder.py检查",
                                "结果": report}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False))
 

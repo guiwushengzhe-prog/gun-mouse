@@ -37,6 +37,12 @@ def main():
     for path in gy_src.iterdir():
         if path.name != "SS移槽与GY局部复核.json":
             shutil.copy2(path, gy_dst / path.name)
+    # 全机螺丝统一为 M2 杯头内六角：压框两颗由 PA2×10 自攻改 M2×10 杯头（头部已复查）。
+    note = gy_dst / "GY模块安装核对.txt"
+    text = note.read_text(encoding="utf-8")
+    old = "用两颗PA2×10盘头自攻螺丝；头径不大于4毫米。"
+    assert text.count(old) == 1
+    note.write_bytes(text.replace(old, "用两颗M2×10杯头内六角螺丝（与扳机调节螺钉同款），用1.5毫米内六角扳手拧；头径不大于4毫米。").encode("utf-8"))
 
     check = json.loads((source / "固件" / "固件文件校验.json").read_text(encoding="utf-8"))
     actual_sources = {name: sha(ROOT / "firmware" / "gun_mouse" / name) for name in check["sources"]}
@@ -59,6 +65,9 @@ def main():
     shutil.copy2(HOLDER / "几何检查.json", REPORT / "扳机与外壳核对.json")
     shutil.copy2(HOLDER / "左壳与GY适配核对.json", REPORT / "左壳与GY适配核对.json")
     shutil.copy2(HOLDER / "支架螺钉头核对.json", REPORT / "支架螺钉头核对.json")
+    shutil.copy2(HOLDER / "螺丝统一核对.json", REPORT / "螺丝统一核对.json")
+    unified = json.loads((REPORT / "螺丝统一核对.json").read_text(encoding="utf-8"))
+    assert unified["结论"].startswith("统一为M2×10与M2×20")
     trigger = json.loads((REPORT / "扳机与外壳核对.json").read_text(encoding="utf-8"))
     assert trigger["same_switch_position_as_factory_daughter"]
     assert sha(ROOT / "config" / "economy-trigger.json") == trigger["config_sha256"]
@@ -80,7 +89,7 @@ def main():
     assert sorted(p.stem for p in PRINT.glob("*.stl")) == sorted(required), "打印目录有多余或缺少的零件"
 
     board = json.loads((REPORT / "电路核对.json").read_text(encoding="utf-8"))
-    assert board["工厂物料组数"] == 21 and board["每套工厂器件数"] == 40 and board["制板款数"] == 1
+    assert board["工厂物料组数"] == 20 and board["每套工厂器件数"] == 37 and board["制板款数"] == 1
     assert board["采购修正"]["U4"]["Supplier Part"] == "C7420376"
     assert board["采购修正"]["R3"]["Supplier Part"] == "C25905"
     assert json.loads((REPORT / "电路规则检查.json").read_text(encoding="utf-8"))["value"]["count"] == 0

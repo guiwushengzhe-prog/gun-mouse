@@ -65,6 +65,22 @@
     "terminal_port_y_half": {
       "原值": 1.9,
       "本版": 2.3
+    },
+    "screw": {
+      "原值": "M2×16 盘头机螺钉，两枚；M2 六角螺母，两枚",
+      "本版": "M2×20 杯头内六角（GB70.1/DIN912）两枚；M2 六角螺母两枚"
+    },
+    "screw_length": {
+      "原值": 16.0,
+      "本版": 20.0
+    },
+    "head_d": {
+      "原值": 4.0,
+      "本版": 4.0
+    },
+    "head_height": {
+      "原值": 1.6,
+      "本版": 2.1
     }
   },
   "wire_envelope_boundary": "两根外径1.0毫米尾线从最低焊片以下沿卡板中面下行并穿出支架底部；焊片区内贴焊片走线不单独建模",
@@ -435,7 +451,7 @@
         -35.0,
         2.5
       ],
-      "step_sha256": "9dde17c797a4d47952114b65e813d31cd5e520ba4a6d46de17e8a7e6ffd82518",
+      "step_sha256": "ec6d2a43fbe3139eccaac475a1121f177ed5b65470e490122939895f39e202c9",
       "stl_sha256": "4a3345317391a61e0aead9c70490ffb026d4d70a09d58ae1ca6a0412d6cd4f31",
       "mesh_regions": 1,
       "mesh_open_edges": 0,
@@ -459,7 +475,7 @@
         -33.5081,
         -4.3042
       ],
-      "step_sha256": "715eb4e50618f3b9553eb649caa2ce6147f4270b7144e585f1c6458c19c8fb6e",
+      "step_sha256": "5c12272c8b8dec6b979306733ddd35120473bf3c90437779dd6f9056e7fe35f4",
       "stl_sha256": "d95bcd751926753e3fde96e4926fb9dd584cd86a3de615fc464916ecc2d48473",
       "mesh_regions": 1,
       "mesh_open_edges": 0,
@@ -483,7 +499,7 @@
         -96.0,
         43.0
       ],
-      "step_sha256": "1c963dddbc6b6e40a079862fab7e96a3c53b79943512b34a6494f0ddcf37c1a1",
+      "step_sha256": "f6bc657ae4a8265db16590d904d47cdf3f4e11eda347839dad706801d1f4dea5",
       "stl_sha256": "626eca0252aa2954c75c01f2672803ba870e9f7b641298a9c5b775d80c44afd4",
       "mesh_regions": 1,
       "mesh_open_edges": 0,
@@ -507,7 +523,7 @@
         -96.0,
         43.0
       ],
-      "step_sha256": "3707236e827ed2e1857a317416df25b230da655dc3a2c937f01ffa517f7c59a2",
+      "step_sha256": "05403c4eb8b709312553ec08a05382e43a45b8b54ebd4e1b50bfa08302f82302",
       "stl_sha256": "cd12f57d2f543b19f611aed211d5e12dfcb3c50eec3f44772a36ee0e7fb83a32",
       "mesh_regions": 1,
       "mesh_open_edges": 0,
@@ -531,7 +547,7 @@
         -30.0,
         -19.5
       ],
-      "step_sha256": "4d6e9d463693ff022e76a38c6cdffec89a378ed6a27fd409cce5df67004426e7",
+      "step_sha256": "e7dbe8b73c27c95c3a7cd7358f3e7e580467dcec057d1c1a09b59b4c1302895d",
       "stl_sha256": "fbc9f3383be03dcdf2d7e8464444304b4b740c1954ad4cbb36950f670fb85dd6",
       "mesh_regions": 1,
       "mesh_open_edges": 0,
@@ -555,7 +571,7 @@
         -30.0,
         -19.5
       ],
-      "step_sha256": "c6d089704d1b9cd0c125eabdf40d029d133592163a1b2121ff00ad1fc26f1704",
+      "step_sha256": "094dd01b555d34eef0b4e610f414eb039ee62f8012dfb03116f36255fcd991c1",
       "stl_sha256": "62f56b59a85c14cd8e76093b61212ae322eb5b0f4b4f4995fdb3747e22fc9f89",
       "mesh_regions": 1,
       "mesh_open_edges": 0,
@@ -579,7 +595,7 @@
         -30.0,
         -19.5
       ],
-      "step_sha256": "0fc9c1b8b5deb7204e7419b42a15afc60605967477ac58220f9be557730e496d",
+      "step_sha256": "8c0d0b9ff8a1cc6131fd0343b9292d43244623cd405960c2dd4d11f6281c85e7",
       "stl_sha256": "0ba58fb83cd07a17cfb090e29f453ffb7d83e6530c143b30345e4f243c3f87da",
       "mesh_regions": 1,
       "mesh_open_edges": 0,

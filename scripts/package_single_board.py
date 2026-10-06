@@ -26,7 +26,7 @@ V1_NATIVE = ROOT / "pcb" / "gun-mouse-v1" / "pcb" / "PCB1.epcb2"
 V2_NATIVE = ROOT / "pcb" / "gun-mouse-economy-v2" / "pcb" / "PCB1.epcb2"
 V2_GERBER = ROOT / "deliverables" / "经济型改版" / "制板文件" / "gun-mouse-economy-v2-Gerber.zip"
 NEW_NATIVE = ROOT / "pcb" / NAME / "pcb" / "PCB1.epcb2"
-OMIT = {"U1", "R10", "R11", "R12", "C7", "C8"}
+OMIT = {"U1", "R10", "R11", "R12", "C7", "C8", "J3", "J4", "J5"}
 REMOVED = {"SW4", "J6"}
 CHANGED = {"R3", "U4"}
 
@@ -88,7 +88,7 @@ def main():
     native_by_ref = {row["Designator"]: row for row in native_coords}
     assert len(native_coords) == len(native_by_ref) == 46
     assert set(native_by_ref) == set(original_coords) - REMOVED
-    assert len(bom) == 21 and len(bom_refs) == 40
+    assert len(bom) == 20 and len(bom_refs) == 37
     assert set(bom_refs) == set(native_by_ref) - OMIT
     for ref, row in bom_refs.items():
         if ref in CHANGED:
@@ -146,7 +146,7 @@ def main():
         for field in GEOMETRY_FIELDS:
             assert row[field] == native_by_ref[ref][field], (ref, field)
         assert row["Layer"] == "T"
-    assert len(coords) == 40
+    assert len(coords) == 37
 
     v2, native = board_records(V2_NATIVE), board_records(NEW_NATIVE)
     v2_refs, new_refs = component_refs(v2), component_refs(native)
@@ -197,11 +197,12 @@ def main():
     dump(REPORTS / "电路核对.json", {
         "状态": "单板自焊开关版重新审核资料；不是已获批准或已下单的成品",
         "接单条件": "经济型；不能经济型接单则不付款生产，先查明具体器件或工艺原因",
-        "工厂物料组数": 21, "每套工厂器件数": 40, "贴装面": "仅顶层", "制板款数": 1,
+        "工厂物料组数": 20, "每套工厂器件数": 37, "贴装面": "仅顶层", "制板款数": 1,
         "原生器件总数": 46, "已从电路删除": sorted(REMOVED), "不装": sorted(OMIT),
         "不装依据": {"U1": "改用已有GY-601N1-LSM6DSV16X模块", "R10_R11": "模块自带2.2k总线上拉",
                    "R12": "3V3到IMU_CS的上拉只服务U1-12；模块已有CS上拉",
-                   "C7_C8": "U1局部去耦；主板C4/C5/C6及模块本地去耦保留", "无需替代焊接或跳线": True},
+                   "C7_C8": "U1局部去耦；主板C4/C5/C6及模块本地去耦保留", "无需替代焊接或跳线": True,
+                   "J3_J4_J5": "三个PH2.0座同为C295747扩展料，全部不装免一种换料费；电池、扳机开关、触摸电极线由用户直接焊到原1.0×3.8毫米焊盘"},
         "保留充电灯": {"LED1": "C2286", "R4": "C11702", "原因": "CHRG只接LED1，主控读不到充电状态；两套仅约1.2元"},
         "采购修正": {ref: {field: bom_refs[ref][field] for field in [
             "Value", "Manufacturer Part", "Supplier Part", "Footprint"]} for ref in ["R3", "R5", "U4"]},
@@ -218,7 +219,9 @@ def main():
         "原理图与电路板全部46器件身份_通道关联_不装属性_采购料号_引脚网络一致": True,
         "46器件引脚网络与正式板v1逐脚一致": True,
         "原生不装标志": {ref: components[ref]["props"]["Add into BOM"] for ref in sorted(OMIT)},
-        "扳机接口": {"J4": j4, "接法": "PH2.0单头成品线插J4，裸端焊SS-01GL的COM与NO；两线对调不影响，NC不接"},
+        "直接焊线焊盘": {"J3": "1脚VBAT(+)、2脚GND(-)；与USB口金属外壳导通的是负极", "J4": j4,
+                     "J4接法": "SS-01GL的COM与NO两根线直接焊到J4的1、2脚焊盘，两线对调不影响，NC不接",
+                     "J5": "1、2脚同为TOUCH，触摸电极线焊任一焊盘"},
         "V割软件标志关闭": True, "生产板框闭合轮廓数": len(paths), "闭合轮廓边数": [len(path) - 1 for path in paths],
         "未装器件锡膏": "嘉立创答复只对贴装器件开钢网上锡，未贴位置不上锡：https://m.jlc.com/portal/server_guide_4026.html",
         "尚待确认": ["国内本次全部待装器件获批经济型，包括潮敏及温度适配审查",
@@ -230,22 +233,23 @@ def main():
         "订单清单SHA256": {path.name: digest(path) for path in [bom_path, coord_path]},
     })
     write_cost()
-    print(json.dumps({"BOM": str(bom_path), "坐标": str(coord_path), "物料组": 21, "器件": 40}, ensure_ascii=False))
+    print(json.dumps({"BOM": str(bom_path), "坐标": str(coord_path), "物料组": 20, "器件": 37}, ensure_ascii=False))
 
 
 def write_cost():
     d = Decimal
-    # 原用户截图两套器件172.54元；扣不代焊U1、原SW4、R10/R11组及小板J6。R3/U4/R12/C7/C8差额很小，不再扣。
-    material = d("172.54") - sum(map(d, ["41.86", "62.60", ".326", "2.908"]))
-    processing = {"工程费": d("50"), "普通扩展贴片料上料_USB1_U3_SW3_J3至J5": d("80"), "插件工程费": d("20"),
-                  "每套61个插件焊点_两套": d("12.20"), "每套112个贴片焊点_两套": d("2.24"), "确认可制造性": d("3")}
+    # 原用户截图两套器件172.54元；扣不代焊U1、原SW4、R10/R11组、小板J6及J3～J5（按J6单价1.454元/只）。
+    # R3/U4/R12/C7/C8差额很小，不再扣。
+    material = d("172.54") - sum(map(d, ["41.86", "62.60", ".326", "2.908", "8.724"]))
+    processing = {"工程费": d("50"), "普通扩展贴片料上料_USB1_U3_SW3": d("60"), "插件工程费": d("20"),
+                  "每套61个插件焊点_两套": d("12.20"), "每套100个贴片焊点_两套": d("2.00"), "确认可制造性": d("3")}
     fixed = sum(processing.values())
     low, high = material + fixed, material + fixed + d("20")
     factory_v3 = {"低": d("313.13") + d("1.224"), "高": d("363.13") + d("1.224")}
     dump(REPORTS / "费用推算-单板自焊.json", {
         "状态": "条件费用示例，未取得本订单报价",
         "数量条件": "工厂焊两块主板；用户只有1个旧GY模块，先装1套完整样机，另1块主板备用",
-        "器件估算来源": "原截图两套器件172.54元，扣U1两件41.86、原SW4两件62.60、R10/R11采购组0.326、J6两件2.908",
+        "器件估算来源": "原截图两套器件172.54元，扣U1两件41.86、原SW4两件62.60、R10/R11采购组0.326、J6两件2.908、J3～J5六件8.724",
         "器件估算元": str(material),
         "加工条件估算元": {k: str(v) for k, v in processing.items()},
         "加工小计元": str(fixed),
@@ -253,9 +257,10 @@ def write_cost():
         "多款板费": "单款主板，不再有扳机小板的第二款费用（公开表经济型50元/款）",
         "两块部分装配主板条件合计元": {"U4免换料": str(low.quantize(d(".01"))), "U4收20元": str(high.quantize(d(".01")))},
         "用户自购": {"SS-01GL两只": "约5～9元（零售约2.35～4.24元/只，含运费看渠道）",
-                   "M2×16螺钉与M2螺母各2": "约1～2元", "PH2.0 2P单头成品线": "约1元，代替原双头线"},
+                   "M2杯头内六角与螺母": "约10～20元（M2×10与M2×20两种，含合壳与压框）",
+                   "PH2.0线": "不需要；电池、开关、触摸线直接焊在主板焊盘上"},
         "对比工厂代焊小板版": {"原推算区间元_恢复充电灯后": {k: str(v) for k, v in factory_v3.items()},
-                         "本版约少": "约50～125元：多款板费50～100元为主，另含开关代焊约9.1元、J6约3.0元、U4换料0～20元，扣自购开关与螺钉约7～12元"},
+                         "本版约少": "约80～155元：多款板费50～100元，J3～J5不装省换料费20元和座子约8.7元，另含开关代焊约9.1元、J6约3.0元、U4换料0～20元，扣自购开关约5～9元"},
         "未计或未知费用": ["光板制板费、运费、打印费", "工艺边、夹具、X射线检查",
                        "新订单元件价格、最低购买量、库存、免换料资格变化"],
         "公开规则查阅日期": "2026-10-07",
