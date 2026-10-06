@@ -1,0 +1,28 @@
+{
+  "scope": "EVT-A 下单文件：仅 R3、R5 阻值与料号变化",
+  "gerber_identical_to_formal": true,
+  "gerber_sha256": "9b7b8f5c869aa374b3863cac7eda0633c30185e3ce005cb56dfb697d77c9188f",
+  "bom_sha256": "f3964aef28c742349490ad8c19654dff18ee5121f33a3be63cd7fd3a3f53cbfc",
+  "cpl_sha256": "411d356b4d826881978414fd0294feecec86f27049418a2ba50ed2250008f15c",
+  "formal_sources": {
+    "gun-mouse-v1-BOM.csv": "c868210f1ea83002a37fdeb752aab4dfb3919983b66d7dfd4ace513d8ecbd856",
+    "gun-mouse-v1-坐标文件.csv": "231b88c558c9ce0a593e810f6b4215ea20cc2a691154eb469157158b22eb96d8",
+    "gun-mouse-v1-Gerber.zip": "9b7b8f5c869aa374b3863cac7eda0633c30185e3ce005cb56dfb697d77c9188f"
+  },
+  "changes": {
+    "R3": {
+      "from": "3.3kΩ C25890",
+      "to_value": "6.8kΩ",
+      "lcsc": "C25917",
+      "mpn": "0402WGF6801TCE",
+      "reason": "TP4056 充电电流 1200/R：约 360mA → 约 176mA，芯片功耗约减半；电池规格或实测温度确认后再提高"
+    },
+    "R5": {
+      "from": "100kΩ C25741",
+      "to_value": "10kΩ",
+      "lcsc": "C25744",
+      "mpn": "0402WGF1002TCE",
+      "reason": "Q1 栅极下拉加快，拔 USB 后经体二极管供电的时间从约 0.1–0.2 秒缩到几十毫秒（估算）"
+    }
+  }
+}

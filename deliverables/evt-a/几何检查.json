@@ -1,0 +1,215 @@
+{
+  "manufacturing_finalized": false,
+  "scope": "工程样打印件几何自检；不证明打印配合、强度、寿命或开关实际动作位",
+  "source_sha256": {
+    "deliverables\\pcb-shell-v1\\打印文件\\STEP\\左半壳.step": "71dd5609ba958a47387e166e7b5aee38da16f0a5dca938127d2be6f1487183ec",
+    "deliverables\\design-precheck\\局部打印候选\\右半壳-摇杆支撑候选.step": "39afab1164017f191787d467888f2f318d37b22e83ab4959d96c8d9cd802727f",
+    "deliverables\\design-precheck\\局部打印候选\\扳机-端接避让候选.step": "3d4ae2f49bee34298d8de59f097785d632cf17c41b90ec30b2827c073e9fd166"
+  },
+  "board_models": {
+    "pcb": "ce6324781fb291ddba48f354bfc38403adaa384328fbd63f34233bc0cd13f0b4",
+    "daughter": "e500df7aca4761bc0c01eb0ae0f591cb1f09012d85d86aaf0ed3a7122fbab25d"
+  },
+  "volume_change_mm3": {
+    "右半壳": 435.487,
+    "左半壳": -211.473,
+    "扳机": -104.289
+  },
+  "trigger_with_screw_mm3": {
+    "扳机+螺栓 delta=-1.5 静止": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "扳机小板模型": 0.0
+    },
+    "扳机+螺栓 delta=-1.5 按到底": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "扳机小板模型": 7.73
+    },
+    "扳机+螺栓 delta=+0.0 静止": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "扳机小板模型": 1.645
+    },
+    "扳机+螺栓 delta=+0.0 按到底": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "扳机小板模型": 6.672
+    },
+    "扳机+螺栓 delta=+2.0 静止": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "扳机小板模型": 1.798
+    },
+    "扳机+螺栓 delta=+2.0 按到底": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "扳机小板模型": 6.653
+    }
+  },
+  "trigger_stop_owner_mm3": {
+    "扳机多压0.5_右半壳(应>0)": 25.69,
+    "扳机多压0.5_左半壳(应=0，硬限位只在右半壳)": 0.0
+  },
+  "trigger_screw_adjust_range_mm": [
+    -1.5,
+    2.0
+  ],
+  "trigger_baseline_note": "原设计扳机与小板模型的重叠为静止 1.486、按到底 8.267 mm³，来自杠杆按自由位置建模；螺栓头取代原触点后同类重叠属预期，不代表实物干涉",
+  "sw2_posts": {
+    "xz_r": [
+      [
+        -32.3,
+        -5.6,
+        1.3
+      ],
+      [
+        -29.0,
+        1.0,
+        1.3
+      ],
+      [
+        -36.5,
+        3.2,
+        1.3
+      ]
+    ],
+    "end_y": -3.33,
+    "pcb_contacts": [
+      [],
+      [],
+      []
+    ]
+  },
+  "right_cap_mm3": {
+    "静止": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "主板模型": 0.203
+    },
+    "按到底": {
+      "左半壳": 0.0,
+      "右半壳": 0.0,
+      "主板模型": 3.455
+    },
+    "多压0.3": {
+      "左半壳": 7.56,
+      "右半壳": 0.0,
+      "主板模型": 9.455
+    }
+  },
+  "right_cap_note": "帽杆静止端面距板 7.3（原厂 FP≤7.35），按到底 6.40，低于 OP 下限 6.7；主板模型推杆顶取三维模型 7.45，故静止重叠属预期",
+  "halves_overlap_mm3": 0.0,
+  "setting_fork_mm3": {
+    "0.8": {
+      "扳机": 0.0,
+      "右半壳": 0.0,
+      "弹簧模型": 0.0
+    },
+    "1.0": {
+      "扳机": 0.0,
+      "右半壳": 0.0,
+      "弹簧模型": 0.0
+    },
+    "1.2": {
+      "扳机": 0.0,
+      "右半壳": 0.0,
+      "弹簧模型": 0.0
+    }
+  },
+  "parts": {
+    "左半壳-EVT-A": {
+      "volume_mm3": 57148.034,
+      "print_size_mm": [
+        180.03,
+        139.04,
+        21.65
+      ],
+      "step_sha256": "9e26462f9e7a3af7d9e00a3cd502e54202ee6affa2a666fac4ba7da104909433",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "右半壳-EVT-A": {
+      "volume_mm3": 57503.274,
+      "print_size_mm": [
+        180.02,
+        139.04,
+        25.52
+      ],
+      "step_sha256": "93dca7246ca5b7fd6f8334d25e3c891b9c6b9a4993c3229c7f55728169e80cd7",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "扳机-EVT-A": {
+      "volume_mm3": 3032.261,
+      "print_size_mm": [
+        20.89,
+        29.2,
+        10.0
+      ],
+      "step_sha256": "6aa65d496929e16205f79954d7d774f44b09d64b90b671f279b4c8a7742d1367",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "右键帽-EVT-A": {
+      "volume_mm3": 1125.783,
+      "print_size_mm": [
+        16.8,
+        11.8,
+        16.38
+      ],
+      "step_sha256": "7648389b833c95d6537385e5d0dc41a8b4b98322aafd8a3162cb4950b56605ed",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "扳机设定片-0.8mm": {
+      "volume_mm3": 155.52,
+      "print_size_mm": [
+        10.5,
+        27.6,
+        0.8
+      ],
+      "step_sha256": "f827467b0245387c9dc13a4b24297430798747639fdd09125b6132301405b4dd",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "扳机设定片-1.0mm": {
+      "volume_mm3": 192.96,
+      "print_size_mm": [
+        10.5,
+        27.6,
+        1.0
+      ],
+      "step_sha256": "10095146f0b798c6c3e0be4db3f8bbe2d40bc4e1e99278eab0752e92281c751f",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "扳机设定片-1.2mm": {
+      "volume_mm3": 229.824,
+      "print_size_mm": [
+        10.5,
+        27.6,
+        1.2
+      ],
+      "step_sha256": "998e78cc762c5fe1df2398da1db7fffacb8b7174b2ce17d23ef0122a7c31740d",
+      "mesh_connected_regions": 1,
+      "mesh_open_edges": 0,
+      "mesh_non_manifold": 0
+    },
+    "扳机触摸面盖": {
+      "unchanged_copy_of": "deliverables/pcb-shell-v1/打印文件/*/扳机触摸面盖.*",
+      "step_sha256": "d619f36d4692a1cc35296bb1f2c1ffbdeebbbb4f6155f192ce2f6736fdddba94"
+    },
+    "摇杆帽": {
+      "unchanged_copy_of": "deliverables/pcb-shell-v1/打印文件/*/摇杆帽.*",
+      "step_sha256": "e11465357b799630657149c7cb5499544d39445d8b5ca88b6eafc59e655902a5"
+    }
+  },
+  "source_unchanged": true
+}
