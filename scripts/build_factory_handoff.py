@@ -54,11 +54,11 @@ def main():
     for name in ("gun-mouse-economy-factory-v3-Gerber.zip", "gun-mouse-economy-factory-v3-BOM.csv", "gun-mouse-economy-factory-v3-坐标文件.csv"):
         assert (DELIVER / "制板文件" / name).is_file(), "缺下单文件 " + name
     board_report = json.loads((REPORT / "电路核对.json").read_text(encoding="utf-8"))
-    assert board_report["工厂物料组数"] == 23 and board_report["每套工厂器件数"] == 45
+    assert board_report["工厂物料组数"] == 21 and board_report["每套工厂器件数"] == 40
     assert board_report["采购修正"]["SW4"]["Manufacturer Part"] == "SS-01GL"
     assert board_report["采购修正"]["SW4"]["Supplier Part"] == "C2896769"
     assert board_report["原生采购与订单清单逐项一致"]
-    assert board_report["最终45坐标与新原生几何逐字段一致"]
+    assert board_report["最终40坐标与新原生几何逐字段一致"]
     assert (REPORT / "扳机与外壳核对.json").is_file()
     assert (DELIVER / "GY模块适配说明" / "SS移槽与GY局部复核.json").is_file()
     assert sha(ROOT / "pcb" / "gun-mouse-economy-factory-v3" / "pcb" / "PCB1.epcb2") == board_report["本次导出SHA256"]["pcb\\gun-mouse-economy-factory-v3\\pcb\\PCB1.epcb2"]
@@ -75,7 +75,7 @@ def main():
     # 保存本轮原生导出，方便脱离临时输出目录核查采购和全部引脚网络。
     raw = REPORT / "原生导出"
     raw.mkdir(exist_ok=True)
-    for name in ("原生物料.csv", "原生坐标.csv", "新主板网表.enet"):
+    for name in ("原生物料.csv", "原生坐标.csv", "新主板网表.enet", "新原理图网表.enet"):
         source_file = ROOT / "outputs" / "economy-factory-eda" / name
         assert sha(source_file) == board_report["本次导出SHA256"]["outputs\\economy-factory-eda\\" + name]
         shutil.copy2(source_file, raw / name)

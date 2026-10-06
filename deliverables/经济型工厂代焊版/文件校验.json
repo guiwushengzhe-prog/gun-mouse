@@ -4,8 +4,8 @@
     "sha256": "a58d628ae43408a8204d720199f510fd7ae9f0cac0ba13311f66bfb4fa330565"
   },
   "GY模块适配说明\\GY模块安装核对.txt": {
-    "bytes": 2740,
-    "sha256": "3992818a7a3b0c327be8d8024b40a03365f895fc813474382f22a8c3b31ea1a3"
+    "bytes": 2835,
+    "sha256": "83068968ac6b6498e9fbf519707e6355f783dc00201a48bcb2b903e89427d86a"
   },
   "GY模块适配说明\\GY模块局部装配.png": {
     "bytes": 342311,
@@ -24,20 +24,20 @@
     "sha256": "d80badb73f6bc67c56cd5ddfc293fca691a60f437dbddaed7d32f76dbae65277"
   },
   "README.md": {
-    "bytes": 10868,
-    "sha256": "a14ca278c20c12b8ebd1b9cc2c6106de962e6a5f7e8622567437a49f34782350"
+    "bytes": 13973,
+    "sha256": "4e3d2eb07a8ade8c7e0c48cdca974d464aef43c23e775ed111d9b1ca27158e3e"
   },
   "制板文件\\gun-mouse-economy-factory-v3-BOM.csv": {
-    "bytes": 3930,
-    "sha256": "5dd238e2c3dad3fcd938cebf980e12280d617a22ba1b0ae5bd223a25f7c0eadc"
+    "bytes": 3644,
+    "sha256": "de75cccb876b0d1ffd01683bfdc72c1099ced613ed96ff9d400038d2c1c4ad0b"
   },
   "制板文件\\gun-mouse-economy-factory-v3-Gerber.zip": {
-    "bytes": 103025,
-    "sha256": "f9517a363d33b4302635e2069929e4a89b40c2effa6baf79fb5b405f131f4420"
+    "bytes": 102945,
+    "sha256": "1b65e9a925ee234ce730940979c4f1082a5ad7abda80e4207d5ac4fbbfede058"
   },
   "制板文件\\gun-mouse-economy-factory-v3-坐标文件.csv": {
-    "bytes": 18514,
-    "sha256": "b80994857a786469faa05f7f578c177f1016dc97cddebcb304680dabb7a3dd24"
+    "bytes": 16602,
+    "sha256": "a98768d6c9487ed7712ca1bd112c8301529741bb4db5ccdc0d14bfb2bb4e1fbd"
   },
   "固件\\gun_mouse.ino.bin": {
     "bytes": 681824,
@@ -145,15 +145,19 @@
   },
   "检查报告\\原生导出\\原生坐标.csv": {
     "bytes": 19636,
-    "sha256": "96b51697c39131994599f65ec1e4099de364332f6d3bac8d6f8fa43edd989be0"
+    "sha256": "06f9e4832157f40fb4d9374d130ea25415c2618abbab118696b045f4947a5b53"
   },
   "检查报告\\原生导出\\原生物料.csv": {
-    "bytes": 3930,
-    "sha256": "5dd238e2c3dad3fcd938cebf980e12280d617a22ba1b0ae5bd223a25f7c0eadc"
+    "bytes": 3644,
+    "sha256": "de75cccb876b0d1ffd01683bfdc72c1099ced613ed96ff9d400038d2c1c4ad0b"
   },
   "检查报告\\原生导出\\新主板网表.enet": {
-    "bytes": 115003,
-    "sha256": "d7de03a955dab989f26e4b785c68bc3b0d6531cf28bfd8b4ce097c3de6c39fc0"
+    "bytes": 114998,
+    "sha256": "d3577a688254a3ed367982753a2fd81255280b21f39f9025a9e1b4bf021b7172"
+  },
+  "检查报告\\原生导出\\新原理图网表.enet": {
+    "bytes": 166099,
+    "sha256": "adf30b4ea1af5054e37a0c7738e728a1eb7f30d5d24b5eca0512c78ec5d6749e"
   },
   "检查报告\\固件与操作逻辑保持检查.json": {
     "bytes": 903,
@@ -164,16 +168,16 @@
     "sha256": "dfe9cfabbf2ac36371c6d09c75fec0048c1e83d21d7d167f88546c2b50f73018"
   },
   "检查报告\\电路核对.json": {
-    "bytes": 6560,
-    "sha256": "a4bb4e4826085b603774aef61af9bb9755b0c4d8835a06cfe52c2ac2060261b5"
+    "bytes": 7770,
+    "sha256": "ec4397ed5796e8f4e1afabb94d5af8e7102465dbd185f9dda0a8a977e062842f"
   },
   "检查报告\\电路规则检查.json": {
     "bytes": 203,
-    "sha256": "7751e862c773d8ce3f903107ca84e461af24f407ee3f519bcc9459c07c74d8af"
+    "sha256": "c4da5864dc9904e97a1a1728e0ea7dd5ab86afc7b3e0fad6b7e3338109ac467d"
   },
   "检查报告\\费用推算-工厂代焊.json": {
-    "bytes": 2579,
-    "sha256": "89a8db98b4df15c19c7333c3b24394ff2bfdb00eb49288eda9d44ab77c788bf0"
+    "bytes": 3554,
+    "sha256": "b6b9d71ac48b7a44c024c2a36ccd5b1044f922f33c6c32f04b3fb6815b71923c"
   },
   "预览图\\扳机设定局部.png": {
     "bytes": 96918,

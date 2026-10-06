@@ -1,14 +1,33 @@
 {
   "状态": "工厂采购并代焊SS-01GL的重新审核资料；不是已获批准或已下单的成品",
-  "工厂物料组数": 23,
-  "每套工厂器件数": 45,
+  "接单硬条件": "仅经济型；不能经济型接单则不生产，不转标准型",
+  "工厂物料组数": 21,
+  "每套工厂器件数": 40,
   "贴装面": "仅顶层",
   "原生器件总数": 48,
   "不装": [
+    "C7",
+    "C8",
+    "LED1",
     "R10",
     "R11",
+    "R12",
+    "R4",
     "U1"
   ],
+  "额外三件直接留空依据": {
+    "R12": "3V3到IMU_CS的上拉仅服务U1-12；GY模块已有CS上拉",
+    "C7_C8": "原U1局部3V3/GND并联去耦；GY模块已有本地去耦，仍保留主板C4/C5/C6",
+    "无需替代焊接或跳线": true
+  },
+  "充电灯留空依据": {
+    "不装": [
+      "LED1",
+      "R4"
+    ],
+    "支路": "VBUS到R4到LED1到U2-7充电状态输出；不在充电功率通路内",
+    "结果": "无需补焊或跳线，保留充电与鼠标操作，取消充电灯提示"
+  },
   "保留": [
     "主板",
     "扳机小板",
@@ -84,7 +103,7 @@
     }
   },
   "保留全部48原生器件几何与原板一致": true,
-  "最终45坐标与新原生几何逐字段一致": true,
+  "最终40坐标与新原生几何逐字段一致": true,
   "几何核对字段": [
     "Footprint",
     "Mid X",
@@ -124,9 +143,15 @@
   },
   "全部铜线_过孔_焊盘_板框_引脚网络与原版体完全一致": true,
   "导出网表与原生全部204引脚网络一致": true,
+  "原理图与电路板全部48器件身份_通道关联_不装属性_采购料号_引脚网络一致": true,
   "原生不装标志": {
+    "C7": "no",
+    "C8": "no",
+    "LED1": "no",
     "R10": "no",
     "R11": "no",
+    "R12": "no",
+    "R4": "no",
     "U1": "no"
   },
   "扳机引脚网络": {
@@ -160,16 +185,21 @@
     "原始顶层锡膏层仍含": {
       "U1": 14,
       "R10": 2,
-      "R11": 2
+      "R11": 2,
+      "R12": 2,
+      "C7": 2,
+      "C8": 2,
+      "LED1": 2,
+      "R4": 2
     },
-    "工厂要求": "U1/R10/R11不装，不给相应焊盘开钢网口，不涂锡膏；保留铜焊盘与阻焊层",
-    "未声称": "原始GTP已删除这18个图形",
+    "工厂要求": "U1/R10/R11/R12/C7/C8/LED1/R4不装，不给相应焊盘开钢网口，不涂锡膏；保留铜焊盘与阻焊层",
+    "未声称": "原始GTP已删除这28个图形",
     "官方依据": "https://m.jlc.com/portal/server_guide_4026.html"
   },
   "开关焊盘适配边界": "本报告验证原焊盘位置和网络未变；SS-01GL焊片端子及动作位置的尺寸适配由机械报告核对，不能只凭旧封装名SS-01GL13判断型号相同",
   "尚待确认": [
     "C2896769在国内SMT的实际库存、供货方式和代焊价格",
-    "剩余全部器件与邮票孔异形两款拼板获批经济型",
+    "国内本次全部待装器件与邮票孔异形两款拼板获批经济型，包括潮敏及温度适配审查；不以海外平台标签替代国内资格",
     "工厂混拼、工艺边、夹具、锡膏开口、X射线检查等实际费用",
     "实物装配、扳机手感、模块固定、固件和游戏验收"
   ],
@@ -181,15 +211,16 @@
     "deliverables\\evt-a\\制板文件\\gun-mouse-v1-坐标文件.csv": "411d356b4d826881978414fd0294feecec86f27049418a2ba50ed2250008f15c"
   },
   "本次导出SHA256": {
-    "pcb\\gun-mouse-economy-factory-v3\\pcb\\PCB1.epcb2": "9aedfff116ac8adce7ce422a52026c41e763108672bd39eeb54b4e42392cc506",
-    "outputs\\economy-factory-eda\\drc.json": "7751e862c773d8ce3f903107ca84e461af24f407ee3f519bcc9459c07c74d8af",
-    "outputs\\economy-factory-eda\\原生物料.csv": "5dd238e2c3dad3fcd938cebf980e12280d617a22ba1b0ae5bd223a25f7c0eadc",
-    "outputs\\economy-factory-eda\\原生坐标.csv": "96b51697c39131994599f65ec1e4099de364332f6d3bac8d6f8fa43edd989be0",
-    "outputs\\economy-factory-eda\\新主板网表.enet": "d7de03a955dab989f26e4b785c68bc3b0d6531cf28bfd8b4ce097c3de6c39fc0",
-    "deliverables\\经济型工厂代焊版\\制板文件\\gun-mouse-economy-factory-v3-Gerber.zip": "f9517a363d33b4302635e2069929e4a89b40c2effa6baf79fb5b405f131f4420"
+    "pcb\\gun-mouse-economy-factory-v3\\pcb\\PCB1.epcb2": "e34e4912f5951bfcf6651fe7311b435ce22d792623d7cc02224f2a9a4ba7d3b4",
+    "outputs\\economy-factory-eda\\drc.json": "c4da5864dc9904e97a1a1728e0ea7dd5ab86afc7b3e0fad6b7e3338109ac467d",
+    "outputs\\economy-factory-eda\\原生物料.csv": "de75cccb876b0d1ffd01683bfdc72c1099ced613ed96ff9d400038d2c1c4ad0b",
+    "outputs\\economy-factory-eda\\原生坐标.csv": "06f9e4832157f40fb4d9374d130ea25415c2618abbab118696b045f4947a5b53",
+    "outputs\\economy-factory-eda\\新主板网表.enet": "d3577a688254a3ed367982753a2fd81255280b21f39f9025a9e1b4bf021b7172",
+    "outputs\\economy-factory-eda\\新原理图网表.enet": "adf30b4ea1af5054e37a0c7738e728a1eb7f30d5d24b5eca0512c78ec5d6749e",
+    "deliverables\\经济型工厂代焊版\\制板文件\\gun-mouse-economy-factory-v3-Gerber.zip": "1b65e9a925ee234ce730940979c4f1082a5ad7abda80e4207d5ac4fbbfede058"
   },
   "订单清单SHA256": {
-    "gun-mouse-economy-factory-v3-BOM.csv": "5dd238e2c3dad3fcd938cebf980e12280d617a22ba1b0ae5bd223a25f7c0eadc",
-    "gun-mouse-economy-factory-v3-坐标文件.csv": "b80994857a786469faa05f7f578c177f1016dc97cddebcb304680dabb7a3dd24"
+    "gun-mouse-economy-factory-v3-BOM.csv": "de75cccb876b0d1ffd01683bfdc72c1099ced613ed96ff9d400038d2c1c4ad0b",
+    "gun-mouse-economy-factory-v3-坐标文件.csv": "a98768d6c9487ed7712ca1bd112c8301529741bb4db5ccdc0d14bfb2bb4e1fbd"
   }
 }

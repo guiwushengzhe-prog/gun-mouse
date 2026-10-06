@@ -1,6 +1,8 @@
 // 使用官方接口补齐通道关联属性；不传位置、旋转、板层、封装或网络。
 const project = await eda.dmt_Project.getCurrentProjectInfo();
-if (!project || project.friendlyName !== 'gun-mouse-v1') throw new Error('工程不符');
+const intended = __CLI__.args?.projectName || 'gun-mouse-v1';
+if (!['gun-mouse-v1', 'gun-mouse-economy-factory-v3'].includes(intended)
+    || !project || project.friendlyName !== intended) throw new Error('工程不符');
 const board = project.data.find(x => x.itemType === 'Board');
 await eda.dmt_EditorControl.openDocument(board.schematic.page[0].uuid);
 await new Promise(r => setTimeout(r, 1500));
@@ -26,11 +28,19 @@ for (const c of await eda.pcb_PrimitiveComponent.getAll()) {
   if (c.getState_OtherProperty()?.['Channel ID'] === match.channel) continue;
   const before = physical(c);
   const id = c.getState_PrimitiveId();
-  if (!await eda.pcb_PrimitiveComponent.modify(id, {otherProperty: {'Channel ID': match.channel}})) {
+  const supplier = c.getState_Supplier(), supplierId = c.getState_SupplierId();
+  const otherProperty = {...c.getState_OtherProperty(), 'Channel ID': match.channel};
+  if (!await eda.pcb_PrimitiveComponent.modify(id, {otherProperty})) {
     throw new Error('无法更新通道关联 ' + ref);
   }
+  // 4.1.66 在修改其他属性时会清空独立采购字段，随后单独恢复。
+  if (!await eda.pcb_PrimitiveComponent.modify(id, {supplier, supplierId})) {
+    throw new Error('无法恢复采购字段 ' + ref);
+  }
   const updated = await eda.pcb_PrimitiveComponent.get(id);
-  if (physical(updated) !== before || updated.getState_OtherProperty()?.['Channel ID'] !== match.channel) {
+  if (physical(updated) !== before || updated.getState_UniqueId() !== match.uid
+      || updated.getState_OtherProperty()?.['Channel ID'] !== match.channel
+      || updated.getState_Supplier() !== supplier || updated.getState_SupplierId() !== supplierId) {
     throw new Error('通道属性未正确更新，或器件实体属性出现变化 ' + ref);
   }
   changed++;

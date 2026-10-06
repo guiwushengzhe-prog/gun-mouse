@@ -10,6 +10,7 @@ NAME = "gun-mouse-economy-factory-v3"
 SOURCE = ROOT / "pcb" / "gun-mouse-v1"
 TARGET = ROOT / "pcb" / NAME
 OUT = ROOT / "outputs" / "economy-factory-eda"
+OMIT = ("U1", "R10", "R11", "R12", "C7", "C8", "LED1", "R4")
 RESERVED = {"Unique ID", "Footprint", "Device", "Symbol", "3D Model", "3D Model Transform", "Reuse Block", "Group ID", "Channel ID", "Convert to PCB", "Footprint Name", "Device Name", "Designator"}
 
 
@@ -17,8 +18,8 @@ def write_arguments():
     compiled = json.loads((ROOT / "deliverables" / "pcb-shell-v1" / "制板文件" / "gun-mouse-v1-网表.enet").read_text(encoding="utf-8"))
     by_ref = {c["props"]["Designator"]:c["props"] for c in compiled["components"].values()}
     parts = {ref:{key:value for key,value in by_ref[ref].items() if key not in RESERVED}
-             for ref in ("U1", "R10", "R11", "R3", "R5", "SW4")}
-    for ref in ("U1", "R10", "R11"):
+             for ref in (*OMIT, "R3", "R5", "SW4")}
+    for ref in OMIT:
         parts[ref]["Add into BOM"] = "no"
     changes = json.loads((ROOT / "config" / "evt-a.json").read_text(encoding="utf-8"))["bom_changes"]
     for ref in ("R3", "R5"):

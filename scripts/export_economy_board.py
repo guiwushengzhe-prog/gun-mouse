@@ -45,8 +45,8 @@ def main():
     print(json.dumps({"规则检查": rules}, ensure_ascii=False), flush=True)
     if rules["count"] != 0:
         raise RuntimeError("新主板规则检查有问题，先解决后导出")
-    for kind, target in [("gerber", project_name + "-Gerber.zip"), ("netlist", "新主板网表.enet"), ("pnp", "原生坐标.csv"), ("bom", "原生物料.csv")]:
-        metadata = invoke(args.session, EDA / "export_file.js", f"export-{kind}.json", {"kind": kind, "name": project_name})
+    for kind, target in [("gerber", project_name + "-Gerber.zip"), ("netlist", "新主板网表.enet"), ("sch-netlist", "新原理图网表.enet"), ("pnp", "原生坐标.csv"), ("bom", "原生物料.csv")]:
+        metadata = invoke(args.session, EDA / "export_file.js", f"export-{kind}.json", {"kind": kind, "name": project_name, "netlistType": "JLCEDA"})
         chunks = []
         for n in range(1000):
             data = invoke(args.session, EDA / "fetch_chunk.js", "chunk.json", {"n": n})
