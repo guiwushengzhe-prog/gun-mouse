@@ -1,0 +1,125 @@
+{
+  "状态": "单主板、自行安装扳机开关的备选；不满足工厂采购并焊好扳机的最终要求",
+  "禁止误用": "不能把本备选清单与恢复扳机小板后的生产文件混用",
+  "工厂物料组数": 22,
+  "每板工厂器件数": 43,
+  "贴装面": "仅顶层",
+  "源工程器件数": 46,
+  "不装": [
+    "R10",
+    "R11",
+    "U1"
+  ],
+  "已删除小板器件": [
+    "J6",
+    "SW4"
+  ],
+  "采购核对": {
+    "R3": {
+      "Value": "6.8kΩ",
+      "Manufacturer Part": "0402WGF6801TCE",
+      "Supplier Part": "C25917",
+      "Footprint": "R0402"
+    },
+    "R5": {
+      "Value": "10kΩ",
+      "Manufacturer Part": "0402WGF1002TCE",
+      "Supplier Part": "C25744",
+      "Footprint": "R0402"
+    }
+  },
+  "几何核对字段": [
+    "Footprint",
+    "Mid X",
+    "Mid Y",
+    "Ref X",
+    "Ref Y",
+    "Pad X",
+    "Pad Y",
+    "Pins",
+    "Layer",
+    "Rotation",
+    "SMD"
+  ],
+  "保留46器件几何与原板一致": true,
+  "最终43坐标与新原生几何一致": true,
+  "坐标采购元数据修正": "R3/R5 的 Device 改为本订单制造商型号；位置、角度、封装未变",
+  "实际PCB图元计数_不含封装库及空体删除标记": {
+    "DOCHEAD": 1,
+    "META": 1,
+    "PRIMITIVE": 53,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "D3_ATTRIBUTE": 1,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "POLY": 2,
+    "NET": 27,
+    "PAD": 5,
+    "COMPONENT": 46,
+    "PAD_NET": 197,
+    "ATTR": 150,
+    "STRING": 8,
+    "VIA": 95,
+    "LINE": 567
+  },
+  "原实际铜线数": 575,
+  "保留铜线数": 567,
+  "仅删除8小板铜线": true,
+  "保留铜线和95过孔体完全一致": true,
+  "保留器件焊盘网络完全一致": true,
+  "原生与导出网表引脚网络一致": true,
+  "扳机接口J4": {
+    "1": "TRIG",
+    "2": "GND",
+    "3和4": "机械固定焊脚，无电气网络"
+  },
+  "原生不装标志": {
+    "R10": "no",
+    "R11": "no",
+    "U1": "no"
+  },
+  "原生拼板与V割标志均关闭": true,
+  "生产板框": {
+    "独立外框数": 1,
+    "外框边数": 76,
+    "内槽数": 1,
+    "内槽边数": 4,
+    "备注": "仍是原主板外形，边界范围约119.3×134.3毫米；不因去小板宣称光板面积费用下降"
+  },
+  "锡膏层必须交工厂处理": {
+    "当前原始顶层锡膏层仍含留空位置": {
+      "U1": 14,
+      "R10": 2,
+      "R11": 2
+    },
+    "开钢网和上锡要求": "U1/R10/R11 不装，不给相应焊盘开钢网口，不涂锡膏；铜焊盘和阻焊层保留",
+    "证据": "https://m.jlc.com/portal/server_guide_4026.html",
+    "依据": "官方回复表示仅给贴装器件开钢网口上锡，未贴位置不上锡；需随本订单不装清单确认",
+    "没有声称": "原生GTP已移除这18个图形"
+  },
+  "验证边界": "规则检查0项问题和静态一致性通过；尚未取得工厂经济型审核、实际报价和实物功能验收",
+  "规则证据文件": "电路规则检查-备选单主板.json",
+  "源只读文件SHA256": {
+    "pcb\\gun-mouse-v1\\pcb\\PCB1.epcb2": "8d538cc85073aae0a9ad1b6faade6a6fb19591e9a2f63300c848f39ded3f4faa",
+    "deliverables\\evt-a\\制板文件\\gun-mouse-v1-BOM.csv": "f3964aef28c742349490ad8c19654dff18ee5121f33a3be63cd7fd3a3f53cbfc",
+    "deliverables\\evt-a\\制板文件\\gun-mouse-v1-坐标文件.csv": "411d356b4d826881978414fd0294feecec86f27049418a2ba50ed2250008f15c"
+  },
+  "本次导出SHA256": {
+    "pcb\\gun-mouse-economy-v2\\pcb\\PCB1.epcb2": "b47ed09258dc0e7016b8e9d1a27a045ea67494badd707adfc2fd65a397c3d394",
+    "outputs\\economy-eda\\原生物料.csv": "d36e4c7f09c80b563ef46a443f19907caf2dd8b1ffd66585a571b9df4c3ea229",
+    "outputs\\economy-eda\\原生坐标.csv": "dda534c561acfbe58e209ac555f8429ac7d4282527339f002d011eddbec15653",
+    "outputs\\economy-eda\\新主板网表.enet": "ab0dc3e583fab0c2c77f6a5d02eae183afcaea03ecd3b0cb70a2cb156dc20cfe",
+    "outputs\\economy-eda\\drc.json": "073cc05ef9dfb5b8f94d29c81dbc8c511bbcbb7b18169c619fc675536c7417c9",
+    "deliverables\\经济型改版\\制板文件\\gun-mouse-economy-v2-Gerber.zip": "9787932c15f3c533dcb37eef8184dcd5eeb4d99c31dbb14dfe8916cb3a5a0ff0"
+  },
+  "订单清单SHA256": {
+    "gun-mouse-economy-v2-备选单主板-BOM.csv": "d36e4c7f09c80b563ef46a443f19907caf2dd8b1ffd66585a571b9df4c3ea229",
+    "gun-mouse-economy-v2-备选单主板-坐标文件.csv": "0be5bea1312f6b68859e4552925bc86ab2a105e3cba4a4a4ac9b2cb68624f680"
+  }
+}

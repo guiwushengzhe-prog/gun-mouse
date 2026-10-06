@@ -1,0 +1,27 @@
+{
+  "scope": "只核对 SS 搬槽区域与既有 GY 结构及规定线束包络，非整机实物验收",
+  "allowed_ss_mutation_bounds": [
+    -22.0,
+    -15.5,
+    5.6,
+    17.61,
+    -36.0,
+    4.0
+  ],
+  "planned_zone_overlap_mm3": {
+    "GY新增支撑": 0.0,
+    "GY模块包络": 0.0,
+    "GY压框": 0.0,
+    "规定四线包络": 0.0
+  },
+  "printed_shell_actual_checked": true,
+  "candidate_path": "F:\\项目\\枪型飞鼠\\.worktrees\\economy-assembly-20261006\\deliverables\\经济型工厂代焊版\\打印文件\\左半壳-经济型.step",
+  "candidate_sha256": "b1777bae00b38e1d942bda92595e9d8435ce2b185d8925b5dbd49c7e36b0e7f5",
+  "candidate_valid_solid": true,
+  "candidate_solid_count": 1,
+  "removed_shell_vs_gy_support_mm3": 0.0,
+  "added_shell_vs_gy_module_mm3": 0.0,
+  "added_shell_vs_gy_clamp_mm3": 0.0,
+  "added_shell_vs_gy_wires_mm3": 0.0,
+  "gy_new_support_missing_mm3": 0.0
+}

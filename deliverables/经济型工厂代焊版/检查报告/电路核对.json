@@ -1,0 +1,195 @@
+{
+  "状态": "工厂采购并代焊SS-01GL的重新审核资料；不是已获批准或已下单的成品",
+  "工厂物料组数": 23,
+  "每套工厂器件数": 45,
+  "贴装面": "仅顶层",
+  "原生器件总数": 48,
+  "不装": [
+    "R10",
+    "R11",
+    "U1"
+  ],
+  "保留": [
+    "主板",
+    "扳机小板",
+    "两板连接器",
+    "20邮票孔",
+    "575铜线",
+    "95过孔",
+    "原电气网络和操作逻辑"
+  ],
+  "采购修正": {
+    "R3": {
+      "Value": "6.8kΩ",
+      "Manufacturer Part": "0402WGF6801TCE",
+      "Supplier Part": "C25917",
+      "Footprint": "R0402"
+    },
+    "R5": {
+      "Value": "10kΩ",
+      "Manufacturer Part": "0402WGF1002TCE",
+      "Supplier Part": "C25744",
+      "Footprint": "R0402"
+    },
+    "SW4": {
+      "Value": "",
+      "Manufacturer Part": "SS-01GL",
+      "Supplier Part": "C2896769",
+      "Footprint": "SW-TH_SS-01GL13"
+    }
+  },
+  "原生采购与订单清单逐项一致": true,
+  "坐标采购元数据修正": {
+    "R3": {
+      "原库元数据": {
+        "Device": "0402WGF3301TCE",
+        "Comment": "6.8kΩ",
+        "Value": "6.8kΩ",
+        "Datasheet": "https://www.lcsc.com/product-detail/C25917.html"
+      },
+      "本订单采购元数据": {
+        "Device": "0402WGF6801TCE",
+        "Comment": "6.8kΩ",
+        "Value": "6.8kΩ",
+        "Datasheet": "https://www.lcsc.com/product-detail/C25917.html"
+      }
+    },
+    "R5": {
+      "原库元数据": {
+        "Device": "0402WGF1003TCE",
+        "Comment": "10kΩ",
+        "Value": "10kΩ",
+        "Datasheet": "https://www.lcsc.com/product-detail/C25744.html"
+      },
+      "本订单采购元数据": {
+        "Device": "0402WGF1002TCE",
+        "Comment": "10kΩ",
+        "Value": "10kΩ",
+        "Datasheet": "https://www.lcsc.com/product-detail/C25744.html"
+      }
+    },
+    "SW4": {
+      "原库元数据": {
+        "Device": "SS-01GL13",
+        "Comment": "SS-01GL",
+        "Value": "",
+        "Datasheet": "https://item.szlcsc.com/3139927.html"
+      },
+      "本订单采购元数据": {
+        "Device": "SS-01GL",
+        "Comment": "SS-01GL",
+        "Value": "",
+        "Datasheet": "https://item.szlcsc.com/3139927.html"
+      }
+    }
+  },
+  "保留全部48原生器件几何与原板一致": true,
+  "最终45坐标与新原生几何逐字段一致": true,
+  "几何核对字段": [
+    "Footprint",
+    "Mid X",
+    "Mid Y",
+    "Ref X",
+    "Ref Y",
+    "Pad X",
+    "Pad Y",
+    "Pins",
+    "Layer",
+    "Rotation",
+    "SMD"
+  ],
+  "实际PCB图元计数_不含封装库和空体删除标记": {
+    "DOCHEAD": 1,
+    "META": 1,
+    "PRIMITIVE": 53,
+    "CANVAS": 1,
+    "LAYER": 60,
+    "LAYER_PHYS": 9,
+    "ACTIVE_LAYER": 1,
+    "RULE_TEMPLATE": 1,
+    "RULE": 16,
+    "SILK_OPTS": 2,
+    "D3_ATTRIBUTE": 1,
+    "PREFERENCE": 1,
+    "PANELIZE": 1,
+    "POLY": 2,
+    "NET": 29,
+    "PAD": 25,
+    "COMPONENT": 48,
+    "PAD_NET": 204,
+    "ATTR": 156,
+    "STRING": 9,
+    "VIA": 95,
+    "LINE": 575
+  },
+  "全部铜线_过孔_焊盘_板框_引脚网络与原版体完全一致": true,
+  "导出网表与原生全部204引脚网络一致": true,
+  "原生不装标志": {
+    "R10": "no",
+    "R11": "no",
+    "U1": "no"
+  },
+  "扳机引脚网络": {
+    "J4": {
+      "1": "TRIG",
+      "2": "GND",
+      "3": "",
+      "4": ""
+    },
+    "J6": {
+      "1": "D_NO",
+      "2": "D_COM",
+      "3": "",
+      "4": ""
+    },
+    "SW4": {
+      "1": "D_COM",
+      "2": "D_NO",
+      "3": ""
+    }
+  },
+  "连接说明": "默认直通成品双头线对应J4的TRIG/GND与J6的D_NO/D_COM；机械COM/NO两根线对调仍按下导通，不能接到未使用的常闭脚",
+  "V割软件标志关闭": true,
+  "实际分板方式": "保留原有邮票孔，包含主板和扳机小板两种电路；并非单款单板",
+  "生产板框闭合轮廓数": 2,
+  "闭合轮廓边数": [
+    84,
+    4
+  ],
+  "锡膏层留空要求": {
+    "原始顶层锡膏层仍含": {
+      "U1": 14,
+      "R10": 2,
+      "R11": 2
+    },
+    "工厂要求": "U1/R10/R11不装，不给相应焊盘开钢网口，不涂锡膏；保留铜焊盘与阻焊层",
+    "未声称": "原始GTP已删除这18个图形",
+    "官方依据": "https://m.jlc.com/portal/server_guide_4026.html"
+  },
+  "开关焊盘适配边界": "本报告验证原焊盘位置和网络未变；SS-01GL焊片端子及动作位置的尺寸适配由机械报告核对，不能只凭旧封装名SS-01GL13判断型号相同",
+  "尚待确认": [
+    "C2896769在国内SMT的实际库存、供货方式和代焊价格",
+    "剩余全部器件与邮票孔异形两款拼板获批经济型",
+    "工厂混拼、工艺边、夹具、锡膏开口、X射线检查等实际费用",
+    "实物装配、扳机手感、模块固定、固件和游戏验收"
+  ],
+  "设计规则检查错误数": 0,
+  "规则证据文件": "电路规则检查.json",
+  "源只读文件SHA256": {
+    "pcb\\gun-mouse-v1\\pcb\\PCB1.epcb2": "8d538cc85073aae0a9ad1b6faade6a6fb19591e9a2f63300c848f39ded3f4faa",
+    "deliverables\\evt-a\\制板文件\\gun-mouse-v1-BOM.csv": "f3964aef28c742349490ad8c19654dff18ee5121f33a3be63cd7fd3a3f53cbfc",
+    "deliverables\\evt-a\\制板文件\\gun-mouse-v1-坐标文件.csv": "411d356b4d826881978414fd0294feecec86f27049418a2ba50ed2250008f15c"
+  },
+  "本次导出SHA256": {
+    "pcb\\gun-mouse-economy-factory-v3\\pcb\\PCB1.epcb2": "9aedfff116ac8adce7ce422a52026c41e763108672bd39eeb54b4e42392cc506",
+    "outputs\\economy-factory-eda\\drc.json": "7751e862c773d8ce3f903107ca84e461af24f407ee3f519bcc9459c07c74d8af",
+    "outputs\\economy-factory-eda\\原生物料.csv": "5dd238e2c3dad3fcd938cebf980e12280d617a22ba1b0ae5bd223a25f7c0eadc",
+    "outputs\\economy-factory-eda\\原生坐标.csv": "96b51697c39131994599f65ec1e4099de364332f6d3bac8d6f8fa43edd989be0",
+    "outputs\\economy-factory-eda\\新主板网表.enet": "d7de03a955dab989f26e4b785c68bc3b0d6531cf28bfd8b4ce097c3de6c39fc0",
+    "deliverables\\经济型工厂代焊版\\制板文件\\gun-mouse-economy-factory-v3-Gerber.zip": "f9517a363d33b4302635e2069929e4a89b40c2effa6baf79fb5b405f131f4420"
+  },
+  "订单清单SHA256": {
+    "gun-mouse-economy-factory-v3-BOM.csv": "5dd238e2c3dad3fcd938cebf980e12280d617a22ba1b0ae5bd223a25f7c0eadc",
+    "gun-mouse-economy-factory-v3-坐标文件.csv": "b80994857a786469faa05f7f578c177f1016dc97cddebcb304680dabb7a3dd24"
+  }
+}
