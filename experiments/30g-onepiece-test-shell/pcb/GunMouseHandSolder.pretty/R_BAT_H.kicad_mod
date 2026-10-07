@@ -1,0 +1,112 @@
+(footprint "R_BAT_H"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "R_BAT_H"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "3fe8799e-6aad-4249-b86c-1bcf4a893e32")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "100k"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5dc7c7ea-70ae-4599-9f4c-3530cba4adb3")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "531ad1a4-04e7-456c-8eb7-a6aad8f54558")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6a795c9d-a795-4e10-a680-92f1a9b7d1a9")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -3.45 -1.55)
+		(end 3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "59ca59d0-2841-42ab-985d-75ecf5b0a3cd")
+	)
+	(fp_line
+		(start -3.45 1.55)
+		(end -3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "4908156f-04b2-4cc0-8a63-53bed2cb55d4")
+	)
+	(fp_line
+		(start 3.45 -1.55)
+		(end 3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "5b70db64-fca1-4004-9cc4-7df0d12a8795")
+	)
+	(fp_line
+		(start 3.45 1.55)
+		(end -3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "829108bc-3806-4aa6-a395-a997fb31b656")
+	)
+	(pad "1" thru_hole circle
+		(at 3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "f5588853-0603-4653-b33b-b4d6f0f9f2ca")
+	)
+	(pad "2" thru_hole circle
+		(at -3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d9e78b2c-4818-483a-9c70-98caaf2da49d")
+	)
+	(embedded_fonts no)
+)

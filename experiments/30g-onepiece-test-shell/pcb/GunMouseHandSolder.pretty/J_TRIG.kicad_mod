@@ -1,0 +1,112 @@
+(footprint "J_TRIG"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "J_TRIG"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "01216744-f248-422f-9084-115bf826efc4")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Labelled solder wires"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "557c8f50-e741-415d-afa9-0765f046c4a5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "091e6c5f-5347-4683-9b57-2c70b87b383a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "44080a33-2c17-4c88-aed6-524b02f0f168")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -1.25 -1.25)
+		(end 1.25 -1.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "0d9a88ea-8923-4438-9583-8a0d09250462")
+	)
+	(fp_line
+		(start -1.25 3.79)
+		(end -1.25 -1.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "e2dbae5b-1e36-451b-b272-904de44fc476")
+	)
+	(fp_line
+		(start 1.25 -1.25)
+		(end 1.25 3.79)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "cdcb511e-c894-49d8-80d1-09b5ea82b0c2")
+	)
+	(fp_line
+		(start 1.25 3.79)
+		(end -1.25 3.79)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "a9a77c95-743c-4536-abe6-24bd2b5a6537")
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e5c28d2d-fa4a-4925-b0f1-b61a56923d19")
+	)
+	(pad "2" thru_hole circle
+		(at 0 2.54)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "481e1297-4f9e-4742-ac82-8bb0d67a199c")
+	)
+	(embedded_fonts no)
+)

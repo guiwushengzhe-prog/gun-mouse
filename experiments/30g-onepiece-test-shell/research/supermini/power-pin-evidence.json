@@ -1,0 +1,19 @@
+{
+  "board_identity": "ESP32-S3FH4R2,23.5x18,two9pinrails,B+/B-/BOOST",
+  "evidence_date": "2026-10-07",
+  "sources_sha256": {
+    "nologo-supermini.html": "2bd8dc9e06c5940bb0193b8a94f64ad55ccab74a87767ecf2b1035356a205889",
+    "nologo-s3-schematic.png": "9bc7256b41384fde1007402fd187477b499f2ae2f265ead181a3a765e6b40201",
+    "tenstar-s3-pin-dim.png": "9be0b2c98c44954e1929beeafa1c00063e7f1c343bb6f0ff15afbb1d49ca80c1",
+    "TP4054-TopPower-datasheet.pdf": "89bb8e97428a70bc38908bdc1d761ab90c92fdbef8072b96556a6f77ebc1692a",
+    "power-and-pin-review.md": "625264598205c8a927dcc9c9b3034c057791eb67ab7ef4ddcb18cbfd9d3a4c86"
+  },
+  "schematic_match": "NOLOGO common-family circuit matches physical pin/layout features; electrical continuity confirmation required for purchased TENSTAR variant",
+  "default_charge_current_ma": 100,
+  "boost_bridge_populate": false,
+  "protected_battery_required": true,
+  "battery_switch": "BAT_RAW -> mechanical SPST -> BAT_SW/B+",
+  "usb_backfeed_boundary": "Battery OFF before connecting PC; charge only from already-powered USB source; battery OFF before USB source loses power",
+  "vbus_measurement": "shared5V rail,ADC GPIO10,100k/100k,4.5V_on/4.3V_off preliminary; real CHRG not connected",
+  "vbat_measurement": "Switched BAT_SW/B+100k/100k GPIO9; represents cell only when battery switch ON, OFF+USB is open-circuit charger output"
+}

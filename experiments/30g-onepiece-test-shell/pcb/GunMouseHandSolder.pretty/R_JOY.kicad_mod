@@ -1,0 +1,112 @@
+(footprint "R_JOY"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "R_JOY"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "67a3cee1-6146-4bc1-ad4c-f9ec88a934b5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "3.3k"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "f13c7f19-ab42-4fbf-8fe2-dd059379a67e")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "31f89be3-b1fe-4636-9281-bdc73e410c5b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "0e0c35f0-777c-4972-a252-ebbe45583049")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -3.45 -1.55)
+		(end 3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ef6fa22e-f2d2-4e26-bbc2-312e344f8f2e")
+	)
+	(fp_line
+		(start -3.45 1.55)
+		(end -3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "c54519d9-bd00-4ca4-bb46-8bf23d0c4861")
+	)
+	(fp_line
+		(start 3.45 -1.55)
+		(end 3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "733462ca-2d1a-4edf-a843-a0ce5deed724")
+	)
+	(fp_line
+		(start 3.45 1.55)
+		(end -3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "7b80e47c-6265-4bd2-b58f-b9c0283e6b38")
+	)
+	(pad "1" thru_hole circle
+		(at 3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "648c45fa-cb16-4a6f-8053-9a43ae545de5")
+	)
+	(pad "2" thru_hole circle
+		(at -3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "844ede43-1df1-4f27-9e62-42d1dd3a3520")
+	)
+	(embedded_fonts no)
+)

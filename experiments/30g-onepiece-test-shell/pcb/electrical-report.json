@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+  "actual_board_sha256": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0",
+  "actual_pth_count": 74,
+  "net_count": 16,
+  "actual_pad_net_position_drill_errors": 0,
+  "mount_holes_verified": 4,
+  "resistors": 8,
+  "capacitors": 7,
+  "gpio_unique_reserved_and_adc1_check": "pass",
+  "divider_adc_v_at_4_2v_battery": 2.1,
+  "divider_adc_v_at_5_25v_rail": 2.625,
+  "divider_thevenin_ohm": 50000,
+  "divider_rc_ms": 5,
+  "divider_5tau_ms": 25,
+  "button_closed_current_ma": 1,
+  "button_rc_ms": 0.33,
+  "schematic_erc": "Not performed: no KiCad schematic supplied; explicit circuit/net/pad contract and independent written review are provided",
+  "prototype_checks": "Purchased module topology, B+/B- polarity, footprint fit, ADC calibration, LDO margin, charging, touch and contact stability"
+}

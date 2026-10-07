@@ -1,0 +1,112 @@
+(footprint "R_RIGHT"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "R_RIGHT"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "fdd87934-6198-43ec-ac37-5309e1054e90")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "3.3k"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8e26779d-bad2-41d6-9f9b-a7d541d70ac5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "75c4d894-2afa-4357-8105-49d78cc3a315")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "57b6f3f4-7857-43ef-9799-b51f10893831")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -3.450001 -1.55)
+		(end 3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "e8867542-61f5-4f72-b1dc-baccce7b395a")
+	)
+	(fp_line
+		(start -3.450001 1.55)
+		(end -3.450001 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "30f9efee-3fac-4582-8b85-c9acc37041e6")
+	)
+	(fp_line
+		(start 3.45 -1.55)
+		(end 3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "be29cee3-bb41-4d54-9ad3-a9ca6c923004")
+	)
+	(fp_line
+		(start 3.45 1.55)
+		(end -3.450001 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "962433df-3e54-4c60-8fc2-411784fb9398")
+	)
+	(pad "1" thru_hole circle
+		(at 3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1879fc1e-4445-4109-aa66-18877e4df611")
+	)
+	(pad "2" thru_hole circle
+		(at -3.810001 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "061f2bd1-78cf-4397-9ede-29ddb438e959")
+	)
+	(embedded_fonts no)
+)

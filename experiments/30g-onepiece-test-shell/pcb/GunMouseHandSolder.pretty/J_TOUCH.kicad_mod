@@ -1,0 +1,112 @@
+(footprint "J_TOUCH"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "J_TOUCH"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "4c4d2db9-dda4-4019-9c19-f2b9e0a8ec7e")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Labelled solder wires"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8c06ecc5-3299-4580-a019-8094ad4816e7")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "77ecea49-9f94-4de8-9ad0-e0e24a7509b2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "62a1fbc7-d696-46a3-8761-2de84b724b5b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -1.25 -1.25)
+		(end 1.25 -1.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "f0fb438b-798c-41fa-923f-0d9c0b479476")
+	)
+	(fp_line
+		(start -1.25 3.789999)
+		(end -1.25 -1.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "870f664e-2bb0-41c3-a455-f1db7e7ad4e2")
+	)
+	(fp_line
+		(start 1.25 -1.25)
+		(end 1.25 3.789999)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "36d32e3e-b9db-4a56-aa4c-b3635128c921")
+	)
+	(fp_line
+		(start 1.25 3.789999)
+		(end -1.25 3.789999)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "563de0cc-7c20-477b-85b8-52b662eb1154")
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "8c440fc7-6a15-4550-8206-61af21bef2c3")
+	)
+	(pad "2" thru_hole circle
+		(at 0 2.539999)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d7b7024a-fbd3-4a63-b3f1-f2ae4075fb8e")
+	)
+	(embedded_fonts no)
+)

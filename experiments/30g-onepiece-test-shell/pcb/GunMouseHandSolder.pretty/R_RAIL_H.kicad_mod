@@ -1,0 +1,112 @@
+(footprint "R_RAIL_H"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "R_RAIL_H"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "369eba3a-b37c-42e5-8f73-59e368eaa7b7")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "100k"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "10e419d6-4bfa-489c-ae5d-43ef5d51a079")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8a313067-c31f-457b-b6d9-6aec47cf5f34")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7df48bbf-f69f-411b-b9be-6efe13535b80")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -3.45 -1.55)
+		(end 3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "e648db35-4f48-44db-b4bf-ded0dcdbf15b")
+	)
+	(fp_line
+		(start -3.45 1.55)
+		(end -3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "5808d717-9da9-4840-986c-6be12d93179c")
+	)
+	(fp_line
+		(start 3.45 -1.55)
+		(end 3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "acd2f177-f7ac-4152-b21a-884b02a04392")
+	)
+	(fp_line
+		(start 3.45 1.55)
+		(end -3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "54a3ab37-13a9-4f83-978a-1a6fc23d4ebb")
+	)
+	(pad "1" thru_hole circle
+		(at 3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "724ea022-7b99-43a3-8637-0b864faea64f")
+	)
+	(pad "2" thru_hole circle
+		(at -3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9f5c0e37-a35d-4745-84fd-4145d4bf388e")
+	)
+	(embedded_fonts no)
+)

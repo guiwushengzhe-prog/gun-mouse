@@ -1,0 +1,112 @@
+(footprint "R_BAT_L"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "R_BAT_L"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "1ee34bc3-5307-4632-a371-2ad9379efa6c")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "100k"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fe68ffd8-1dea-41ac-a1cb-479d703a6248")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d7440da0-489d-4c16-8777-2b3dcc81c049")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "bdc677ab-35e3-4e18-a9e7-0a4280ba05e5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -3.450001 -1.55)
+		(end 3.45 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "492cdf3f-1846-4847-8f18-d4a52ef4a54e")
+	)
+	(fp_line
+		(start -3.450001 1.55)
+		(end -3.450001 -1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "0cf2c883-82f9-4651-ae30-4c11eaf93e3c")
+	)
+	(fp_line
+		(start 3.45 -1.55)
+		(end 3.45 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "3e48b58d-4f45-4c43-bfd3-c42709f2416f")
+	)
+	(fp_line
+		(start 3.45 1.55)
+		(end -3.450001 1.55)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ea1e8d00-0c15-4817-bfd2-980a74add102")
+	)
+	(pad "1" thru_hole circle
+		(at 3.81 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "bdda1229-eb0d-41b0-825d-2efa3cf0e88b")
+	)
+	(pad "2" thru_hole circle
+		(at -3.810001 0)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d056aa45-3cce-45d6-8e55-7ff30d6a945c")
+	)
+	(embedded_fonts no)
+)

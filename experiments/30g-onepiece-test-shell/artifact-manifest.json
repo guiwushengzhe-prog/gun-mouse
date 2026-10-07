@@ -1,26 +1,746 @@
 {
-  "experiment": "EVT-A 30g one-piece test shell",
-  "date": "2026-10-07",
+  "experiment": "SuperMini hand-soldered 30g open-frame prototype",
   "branch": "experiment/30g-onepiece-test-shell",
-  "status": "experimental-do-not-merge",
-  "one_piece_model": {
-    "volume_cm3": 21.469157906461387,
-    "estimated_mass_g_at_1_35": 28.983363173722873,
-    "watertight": true,
-    "connected_components": 1,
-    "sha256_stl": "8ef0ca38de6dc4f39554e82e27f4244f1cd704a2cfc697def017e0de41038773"
+  "status": "CAD-and-compile-verified; first physical sample pending",
+  "carrier_config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+  "pcb_size_mm": [
+    52,
+    82
+  ],
+  "main_pcb_smt_parts": 0,
+  "print": {
+    "all_parts_volume_mm3": 20745.73294728119,
+    "sprues_added_volume_mm3": 309.8648146357591,
+    "all_print_parts_and_sprues_volume_mm3": 21055.59776191695,
+    "density_g_cm3": 1.35,
+    "mass_g": 28.425056978587882,
+    "maximum_density_for_30g_g_cm3": 1.4247992547739823,
+    "solid_count": 1,
+    "print_bounds_mm": [
+      -66.10000009999999,
+      146.02660183697554,
+      -49.85,
+      98.10000000000001,
+      0.0,
+      33.851592684762636
+    ],
+    "stl": {
+      "watertight": true,
+      "winding_consistent": true,
+      "connected_bodies": 1,
+      "volume_mm3": 21054.35608751994,
+      "triangle_count": 198462,
+      "merged_vertex_count": 99111,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_triangles": 0,
+      "vertex_merge_tolerance_mm": 1e-05,
+      "relative_volume_error": 5.8971225184382e-05
+    }
   },
-  "skeleton_v3": {
-    "volume_cm3": 16.461072504023046,
-    "sha256_stl": "91dc8f819b84e45be226934b5eec686d19c0de1ed9b6a7d1f225e4949436e343"
+  "geometry_checks": {
+    "exact_geometry_pass": true,
+    "conservative_envelope_review_clear": true,
+    "full_validation_pass": true,
+    "check_coverage": {
+      "pcb_mounts": 4,
+      "socket_head_screws_and_hex_nuts": 14,
+      "specified_motion_states_or_sweeps": [
+        "trigger_travel_0mm",
+        "trigger_travel_2.05mm",
+        "trigger_travel_4.1mm",
+        "right_button_travel_0mm",
+        "right_button_travel_0.4mm",
+        "right_button_travel_0.8mm",
+        "joystick_20deg_az0_press0_shaftplus0",
+        "joystick_20deg_az45_press0_shaftplus0",
+        "joystick_20deg_az90_press0_shaftplus0",
+        "joystick_20deg_az135_press0_shaftplus0",
+        "joystick_20deg_az180_press0_shaftplus0",
+        "joystick_20deg_az225_press0_shaftplus0",
+        "joystick_20deg_az270_press0_shaftplus0",
+        "joystick_20deg_az315_press0_shaftplus0",
+        "joystick_20deg_az0_press0.9_shaftplus0",
+        "joystick_20deg_az45_press0.9_shaftplus0",
+        "joystick_20deg_az90_press0.9_shaftplus0",
+        "joystick_20deg_az135_press0.9_shaftplus0",
+        "joystick_20deg_az180_press0.9_shaftplus0",
+        "joystick_20deg_az225_press0.9_shaftplus0",
+        "joystick_20deg_az270_press0.9_shaftplus0",
+        "joystick_20deg_az315_press0.9_shaftplus0",
+        "joystick_20deg_az0_press0_shaftplus0.7",
+        "joystick_20deg_az45_press0_shaftplus0.7",
+        "joystick_20deg_az90_press0_shaftplus0.7",
+        "joystick_20deg_az135_press0_shaftplus0.7",
+        "joystick_20deg_az180_press0_shaftplus0.7",
+        "joystick_20deg_az225_press0_shaftplus0.7",
+        "joystick_20deg_az270_press0_shaftplus0.7",
+        "joystick_20deg_az315_press0_shaftplus0.7",
+        "joystick_20deg_az0_press0.9_shaftplus0.7",
+        "joystick_20deg_az45_press0.9_shaftplus0.7",
+        "joystick_20deg_az90_press0.9_shaftplus0.7",
+        "joystick_20deg_az135_press0.9_shaftplus0.7",
+        "joystick_20deg_az180_press0.9_shaftplus0.7",
+        "joystick_20deg_az225_press0.9_shaftplus0.7",
+        "joystick_20deg_az270_press0.9_shaftplus0.7",
+        "joystick_20deg_az315_press0.9_shaftplus0.7"
+      ],
+      "specified_insertion_paths": [
+        "battery_from_positive_Y",
+        "SuperMini_wired_from_positive_X",
+        "populated_carrier_from_positive_Y_before_GY_holder",
+        "GY_cradle_after_carrier_from_positive_Y",
+        "GY_module_from_positive_Y",
+        "GL13_complete_holder_after_carrier_from_positive_Y",
+        "right_cap_into_detached_bridge_from_positive_X_pressed_0.15mm",
+        "bridge_rightcap_keeper_workbench_subassembly_from_positive_Y",
+        "trigger_contact_subassembly_from_positive_Y_with_gate_removed",
+        "trigger_gate_from_positive_Y",
+        "SuperMini_front_clamp_from_positive_Y_before_carrier",
+        "GY_front_clamp_from_positive_Y_after_module",
+        "right_cap_workbench_release_0.15mm_after_side_insertion"
+      ],
+      "specified_strap_or_wire_envelopes": [
+        "trigger_terminal_wire_corridor",
+        "battery_strap_z-73",
+        "battery_strap_lock_z-73",
+        "battery_strap_z-43",
+        "battery_strap_lock_z-43"
+      ],
+      "scope": "Pass flags apply only to listed geometry checks; omitted motion/assembly/accessories are not implicitly verified",
+      "continuous_linear_motion_certificates": [
+        "trigger_complete_4.1mm_stroke",
+        "right_button_complete_0.8mm_stroke"
+      ],
+      "joystick_all_azimuth_bridge_envelope": true
+    },
+    "not_certified": [
+      "Resin strength / fatigue / drop or impact resistance",
+      "Print-service billable weight, support material, shrinkage and dimensional tolerance",
+      "Real module manufacturer variation and battery protection/lead protrusions",
+      "Real switch actuation/lever/plunger geometry and joystick articulation",
+      "Actual wire bending, solder protrusions, strap tension, insulation and assembly force",
+      "L-key bend, driver handle and open-ended nut-wrench swept access"
+    ]
   },
-  "preview_sha256": {
-    "front": "e3e8ecdd14d7e2ab2d9913d595a4d6d18475de3a196c3758a3a007d9eac47086",
-    "back": "bf7f479e82279b3450581e7b736189ea431f2dc904ced12c158dcb7d6eaabdb8"
-  },
-  "notes": [
-    "CAD geometry only; resin print tolerance is not yet validated.",
-    "Keep this experiment isolated from main manufacturing deliverables.",
-    "The generated binary STL is identified by SHA-256 above."
-  ]
+  "firmware_compile": "passed esp32 Arduino 3.3.2; host logic tests passed",
+  "limits": [
+    "Mass is calculated from CAD volume, including printed connecting bridges; shop supports are excluded.",
+    "Physical print fit, normal-use strength, actual purchased modules, wiring and firmware remain first-sample checks.",
+    "This experimental carrier has a checked PCB/netlist but no native KiCad schematic/ERC."
+  ],
+  "files": {
+    ".gitattributes": {
+      "bytes": 197,
+      "sha256": "9db5435a438e2ec16e02ef18953e7c4feeb9ec3c7e8a84a071ee31861ec8e710"
+    },
+    ".gitignore": {
+      "bytes": 145,
+      "sha256": "bf841b699d5f5fb798ad6462f3880ffe83dbedebf80749ab26381a988d7e3d60"
+    },
+    "README.md": {
+      "bytes": 5803,
+      "sha256": "cfc4c590640d218e6f998c2074f316cbaf35ed6a38954843398209183c8a88f4"
+    },
+    "assembly.md": {
+      "bytes": 10735,
+      "sha256": "2fe4e5349cc9fea98bda93e00adc541c5a4ec6bf35445252e8f580438d91bfbb"
+    },
+    "build_artifact_manifest.py": {
+      "bytes": 5425,
+      "sha256": "eb5955dd36cd49204106e56061a4e969a76c30986d66c7678281dd8f03c0df1a"
+    },
+    "build_carrier_pcb.py": {
+      "bytes": 46332,
+      "sha256": "c16db75f940f16c8fcb603cd06e678b17f114c08b62f810b09fff0f8da25db5f"
+    },
+    "build_skeleton.py": {
+      "bytes": 20967,
+      "sha256": "7a377795aba3f09275b1f1e206ab8afabe70642e0696ca95478fdd8a48c0441b"
+    },
+    "build_supermini_firmware.py": {
+      "bytes": 7355,
+      "sha256": "638082d73ea301b04ed15302538134c601742db4ef93e87a368caa2017f0a805"
+    },
+    "carrier-config.json": {
+      "bytes": 43909,
+      "sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00"
+    },
+    "firmware/README.md": {
+      "bytes": 7193,
+      "sha256": "8314c583252f72d00041c478a9e087b96a8085ab91eb87460e5703254da33fa0"
+    },
+    "firmware/bin/gun_mouse_supermini.ino.bin": {
+      "bytes": 717072,
+      "sha256": "0c9f7f9a0027fd17785abed8732e0a673aef29786316f74172761b045a9b566c"
+    },
+    "firmware/bin/gun_mouse_supermini.ino.bootloader.bin": {
+      "bytes": 20224,
+      "sha256": "939725836a1e5e60f024f94762423729f843568236799ca0095db6fd5299e490"
+    },
+    "firmware/bin/gun_mouse_supermini.ino.merged.bin": {
+      "bytes": 4194304,
+      "sha256": "701018e608f6b5f824fb70be51297f59c2b76f72a74719ed6e61878840d10b3d"
+    },
+    "firmware/bin/gun_mouse_supermini.ino.partitions.bin": {
+      "bytes": 3072,
+      "sha256": "6a88d59601a83a16a19a08114b59d338324b8dec267d8b43e5d61ad56ec92102"
+    },
+    "firmware/build-config.json": {
+      "bytes": 503,
+      "sha256": "4445d2372de111a9a6f11cb23b1212c4e6c166b1fa003d8e6f7fc92d51fd82e5"
+    },
+    "firmware/build-log.txt": {
+      "bytes": 208,
+      "sha256": "1271bc2dad0ccb35d127c28630c06c53318196df4a5cc0b01032ebf8b247f90d"
+    },
+    "firmware/build-manifest.json": {
+      "bytes": 2069,
+      "sha256": "7d823de2570d91b5593ac533943e7c7c39830abc270acd9f006e9cb8d52a7d82"
+    },
+    "firmware/generate_board_pins.py": {
+      "bytes": 2968,
+      "sha256": "a49c95d06054c512fbee56d61d67a8f932f14d4c32826efcd34550bb7cef6fb9"
+    },
+    "firmware/gun_mouse_supermini/board_pins.h": {
+      "bytes": 871,
+      "sha256": "3acb4aa6156fd840901f68c047c294f8188d3d62a4c8913e53987c1fb47cc73e"
+    },
+    "firmware/gun_mouse_supermini/control_core.h": {
+      "bytes": 3216,
+      "sha256": "e2ff4ba55f38e497852859415f9b857339e350d569d86693deda8892787daabb"
+    },
+    "firmware/gun_mouse_supermini/gun_mouse_supermini.ino": {
+      "bytes": 28788,
+      "sha256": "a3ec9f71eeb3ce3097876d7874254e5f31cfdc1bb623be5342270a14f0f0ea25"
+    },
+    "firmware/gun_mouse_supermini/imu_logic.h": {
+      "bytes": 7266,
+      "sha256": "8ea88f5bd49f71b920c5762c706864e043a952f335b823214cb3d94ef9628450"
+    },
+    "firmware/gun_mouse_supermini/input_logic.h": {
+      "bytes": 12509,
+      "sha256": "3797c4fb12889e637c7327d763267c2761b69cfd43942f3ae01ed5cbdbf2762c"
+    },
+    "firmware/tests/test_firmware_logic.cpp": {
+      "bytes": 9866,
+      "sha256": "65c96129b7732c490ffa075954d7b89b7b0014825f972de635f9a6e16e4c09eb"
+    },
+    "generated/assembly-check.json": {
+      "bytes": 1187213,
+      "sha256": "9ef57a302752bdeab767309a680edb8766c367c5aaed113c8ca630339502ab96"
+    },
+    "generated/assembly-original.step": {
+      "bytes": 4318225,
+      "sha256": "6014b86a5a93412e9377fa9deb52229c477ea1b80cc8605193dd5e2aa893dc4c"
+    },
+    "generated/carrier-geometry-crosscheck.json": {
+      "bytes": 1477,
+      "sha256": "cb29126bc82d145617a226eb811dece0a990b00d78d62e144dd1b4d20c859df2"
+    },
+    "generated/control_bridge.step": {
+      "bytes": 257030,
+      "sha256": "80f94b65c8481c0447e788ec594e5c05a63af75f89f1d60282c242e2f1e540db"
+    },
+    "generated/frame.step": {
+      "bytes": 2694066,
+      "sha256": "2a13c0775c5e0e11966d861417a895bd055b1ed3acab714faae53dd809c3ce85"
+    },
+    "generated/imu_clamp.step": {
+      "bytes": 75740,
+      "sha256": "22a9712fbed66cd27160d110d0363a021d1640133921538a3d91a641e81f8ea0"
+    },
+    "generated/imu_cradle.step": {
+      "bytes": 145884,
+      "sha256": "fb4a90b447858c86deb31a078de673bfb8b0315f992eccc3c4a90c506131dc41"
+    },
+    "generated/joystick-hardware-motion-check.json": {
+      "bytes": 2530,
+      "sha256": "3e743eba61dc48960dd1e68e6b1d3f9fb878fb6f817286285ecbfdce77e2e46d"
+    },
+    "generated/joystick_cap.step": {
+      "bytes": 88508,
+      "sha256": "160436604e644d9684d88e732e35ca08fda76226f0a0586ba66a27137d370feb"
+    },
+    "generated/onepiece-print.step": {
+      "bytes": 5036588,
+      "sha256": "d6312461dbd84a47149dd5df59a7f3e7e55dc8cb24b01846d1fcd98fd38e11ed"
+    },
+    "generated/onepiece-print.stl": {
+      "bytes": 9923184,
+      "sha256": "3205948f62c9d6604aeedaa5e4269fb278c48cbed2a1b406c0b7daa36780d82e"
+    },
+    "generated/part-volumes.json": {
+      "bytes": 1252,
+      "sha256": "8636ea8f934209e3ae93c7cc711f6d3fb6de23673b36ce071c4deac600585851"
+    },
+    "generated/pcb_clamp_H1.step": {
+      "bytes": 42605,
+      "sha256": "c9ea039e389b6db86c8b3b4b6ce5847d4e7a993a4925dcab3f88b5294e96f4c6"
+    },
+    "generated/pcb_clamp_H4.step": {
+      "bytes": 50868,
+      "sha256": "0edc3dcb8aa70629dab35fc1a800d031e757c045cf5a79d62a64e1506d505ca5"
+    },
+    "generated/print-pack.json": {
+      "bytes": 33810,
+      "sha256": "8a4bd2a465b5d53416cea6bbb960bd893327904a36f56fbc8228c5e1b5ce9910"
+    },
+    "generated/renders/assembly-back.png": {
+      "bytes": 1134688,
+      "sha256": "0582bd7926f578b79c54d97f325c0a0dd9d347d7439ba9e13045037b5605d577"
+    },
+    "generated/renders/assembly-exploded.png": {
+      "bytes": 1174063,
+      "sha256": "a75d1e1411e4ab067936d0f32ef338fa5ab3d76040599f25ceb9d5e6ac088c91"
+    },
+    "generated/renders/assembly-front.png": {
+      "bytes": 1131428,
+      "sha256": "b9ec70c28453c40b3275003e78c3d21407f9797e47756a74ac3a450ba971f229"
+    },
+    "generated/renders/assembly-isometric.png": {
+      "bytes": 1147420,
+      "sha256": "1ea68572ac31a3953fd01f91cc24263a54f774164acd89e94c26161f71f602ae"
+    },
+    "generated/renders/render-metadata.json": {
+      "bytes": 30871,
+      "sha256": "eb9e760948dd26c442563bb5b91c110157af9fd608e9d8a6399eb657ab58eda8"
+    },
+    "generated/right_cap.step": {
+      "bytes": 102404,
+      "sha256": "f8a6daeab93c2dc6f0a56a832c7c5106e310a9065b59db2b3be41be5a9871f91"
+    },
+    "generated/supermini_clamp.step": {
+      "bytes": 152150,
+      "sha256": "def32549dc4d7b9bf34f4fac038ae4d6b8c41f16b36b6bf24804767d423b2e69"
+    },
+    "generated/touch_cover.step": {
+      "bytes": 16225,
+      "sha256": "66d883223d23f55a2c260a505e6c2caf7bb0c0fdef00e7a0c5ae1d8584091e2b"
+    },
+    "generated/trigger.step": {
+      "bytes": 310888,
+      "sha256": "4de304696587d57c2003cc66c386504d7b7a717b0720b1221223b2a80bcffc34"
+    },
+    "generated/trigger_gate.step": {
+      "bytes": 158414,
+      "sha256": "a4f287f463d9c07d22c287026d50332295698a31d10bd5e3e66997b5e9e2bad3"
+    },
+    "generated/trigger_holder.step": {
+      "bytes": 188965,
+      "sha256": "693e7f000ebde4a752fdcdd4daf4f5783b7e6abcf79224277100298ed054ddce"
+    },
+    "open-frame-config.json": {
+      "bytes": 4206,
+      "sha256": "7e8b42380539cd791e477b210dfacf4a9348276fc89dfd3e9dca94c1e5acee2f"
+    },
+    "packing-plan.json": {
+      "bytes": 11793,
+      "sha256": "b878125cc4be4d92d612488c6e8641a18a878943be463023bf62bffc1cb1349f"
+    },
+    "pcb/BOM.csv": {
+      "bytes": 4313,
+      "sha256": "341ce85eda87c20a192795fc654695850fe432b8a5ff3a5ea1dcf21c0c11d8c8"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-B_Cu.gbl": {
+      "bytes": 129216,
+      "sha256": "31158510434cae9d7bd234d00e6cff3c020e80c8d6f91e45ac2b239578a382f2"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-B_Mask.gbs": {
+      "bytes": 3239,
+      "sha256": "076eabbee74cbd58169b8acdb8902399a4328e970faaf2edac80d9c00dce86d3"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-B_Silkscreen.gbo": {
+      "bytes": 485,
+      "sha256": "618a5cf2bde48bf9710219aacd0d23ad800aef5715800934f05f6210ce40328e"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-Edge_Cuts.gm1": {
+      "bytes": 794,
+      "sha256": "7d8bb3804e9e933a2456e035ccbaf79a26e4f00b539a16eafd53a53c7ee598df"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-F_Cu.gtl": {
+      "bytes": 142089,
+      "sha256": "7fda6ca9be6235fe6a3e2b593fbb1cff9c328b1dcb6329d7ad038990beea744c"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-F_Mask.gts": {
+      "bytes": 3239,
+      "sha256": "56fdf7de1949a134c65b2da737a885197e21fd6df1cf5ac2ba7db45893b48cc0"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-F_Silkscreen.gto": {
+      "bytes": 34001,
+      "sha256": "109da7d9699d335d49ef302e1731a470d6b017d1fd466567f144462368d7bbac"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier-job.gbrjob": {
+      "bytes": 2601,
+      "sha256": "be1a9ba5b86a53efc275f47333157e807df2fa5f8c85572fcaea7b7282517d73"
+    },
+    "pcb/Gerber/gun-mouse-supermini-carrier.drl": {
+      "bytes": 2091,
+      "sha256": "8b3b1e92f61d527e2bdb94d827ef192977fbb81662dde49c9e05c357f4f02c82"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_BAT.kicad_mod": {
+      "bytes": 1958,
+      "sha256": "9778896cae2c62ffba69f52a4f5a06822b0bc47ec3d8e357df8ed64512875ae2"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_JOY_SW.kicad_mod": {
+      "bytes": 1964,
+      "sha256": "6cd3ae9017e12dc46f412b268b17276150f313af41addac44982e2c1702136ed"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_JOY_X.kicad_mod": {
+      "bytes": 1962,
+      "sha256": "f28dc8761ed4d733c1d0cfcd48d31e7ecda8ec2c693224983c90ed2e3c886f66"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_JOY_Y.kicad_mod": {
+      "bytes": 1962,
+      "sha256": "bd1bbf05cb95b9be72314e5ea150f118832dfa8aae381cef58a6ffda8baa8ac0"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_RAIL.kicad_mod": {
+      "bytes": 1960,
+      "sha256": "a3f2736e09fa637f81ca4a70ed1cfae8584252866ef69f5a1cc0b9e7fdd1c279"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_RIGHT.kicad_mod": {
+      "bytes": 1962,
+      "sha256": "94427f6a0a53bd359d9465b2ec4ae8bbeff5ef5c02b46f7e3c8c7edce86e1d22"
+    },
+    "pcb/GunMouseHandSolder.pretty/C_TRIG.kicad_mod": {
+      "bytes": 1960,
+      "sha256": "a413a740cd08a65517cbd79647522228cbef8fece536f412c0a9a8b112b924d1"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_BAT.kicad_mod": {
+      "bytes": 1967,
+      "sha256": "6fbb0f4d82d43a7a904c6523f1a332e9fffd57054ebc718f34b3b92bd889a960"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_GY.kicad_mod": {
+      "bytes": 2336,
+      "sha256": "4928082ecc8b3372af935694bfc5291e7ce946d99dd2839c3087fe324972426b"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_MCU.kicad_mod": {
+      "bytes": 3744,
+      "sha256": "86c2ac5719dd4f2a331242a19180053e296e10500effeaa553df1664f769ec14"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_MODULE_BAT.kicad_mod": {
+      "bytes": 1981,
+      "sha256": "16bed796b6043d125d4c5aa57d136f750d55e181d86c84943428fbb39382f240"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_MODULE_RAIL.kicad_mod": {
+      "bytes": 1807,
+      "sha256": "5688325f8b59a26df17be5936501f34d6588b615988fefca2d33a1860fbbd810"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_SWITCH.kicad_mod": {
+      "bytes": 1973,
+      "sha256": "04b9e246a7eae7cd40f7981239f875903a3ddc85f603f265407768df9fe54f4d"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_TOUCH.kicad_mod": {
+      "bytes": 1991,
+      "sha256": "3a441eb01d31ce1478616623508d65933485f4e27588f14dfd455fd8499d5987"
+    },
+    "pcb/GunMouseHandSolder.pretty/J_TRIG.kicad_mod": {
+      "bytes": 1969,
+      "sha256": "d2ac1a866b9c9e14d3db5ed93ae6f9e89a5e3177bb0724f5a4e7ea12521f6053"
+    },
+    "pcb/GunMouseHandSolder.pretty/Mount_M2.kicad_mod": {
+      "bytes": 1116,
+      "sha256": "b2556ca13f8a30bdc091b136d4769b8da1a6a15555d01a6d6a00c90ff1d94ef2"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_BAT_H.kicad_mod": {
+      "bytes": 1962,
+      "sha256": "163422848a42be1b4b0585ab6c81717ccf9441c1938e2a02a1723eb1744c3551"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_BAT_L.kicad_mod": {
+      "bytes": 1982,
+      "sha256": "968caa646774de7bc3459a22719d0d05d3992f1511afc66d0ee7ff01a96e0592"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_JOY.kicad_mod": {
+      "bytes": 1958,
+      "sha256": "dee73f820f0d5579be0b22ddc81af9874a0f1a3e8704af0f43f7e71fff3f1cd8"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_RAIL_H.kicad_mod": {
+      "bytes": 1964,
+      "sha256": "3bfce73d0134987a91743337cf32251d9d118bdc6b241a6b1e243e1d81322bb0"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_RAIL_L.kicad_mod": {
+      "bytes": 1984,
+      "sha256": "b2c806ff4386c3867567b97e299f80bd09a4ced89933116eaa7edcd03653476b"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_RIGHT.kicad_mod": {
+      "bytes": 1982,
+      "sha256": "209b0457e1e9d0670e02b17c24a19a20b5a5114982ea07e1df0eae2b6bafec87"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_TOUCH.kicad_mod": {
+      "bytes": 1981,
+      "sha256": "1036f898a5e34e5c2c55e7eac54ed7e0885a1f6f20bfdd2ea41f38f7573cfe0d"
+    },
+    "pcb/GunMouseHandSolder.pretty/R_TRIG.kicad_mod": {
+      "bytes": 1960,
+      "sha256": "0f608d49b745a73557039790b8fc56bab0ec4022d9ba50a5d004b452f4b85e90"
+    },
+    "pcb/GunMouseHandSolder.pretty/SW1.kicad_mod": {
+      "bytes": 4499,
+      "sha256": "93e0ad10a570f444a57b2b8b6d7e3141446e462e0dbb3b0eba222d826072dab9"
+    },
+    "pcb/GunMouseHandSolder.pretty/SW2.kicad_mod": {
+      "bytes": 2246,
+      "sha256": "2c1fbc9e64e203c45013b02df4f40cc653beea9119a132af95461454e25d0ee1"
+    },
+    "pcb/PCB-manufacture-notes.md": {
+      "bytes": 10218,
+      "sha256": "78fccb67179ba0067f7fad52d601dd1aef3a0426f405f3379ad2ea8a3f8f0670"
+    },
+    "pcb/build-report.json": {
+      "bytes": 906,
+      "sha256": "2487f44c8222a356d14801c0d6c9a8911b21894f4c9e2896abeaf96e36c8e1ba"
+    },
+    "pcb/carrier-assembly-map-1to1.pdf": {
+      "bytes": 19883,
+      "sha256": "61887458da2124f2c47d38dce39ba84e068fa20f15266dbc62fc8b8c308fa789"
+    },
+    "pcb/carrier-assembly-map.png": {
+      "bytes": 104340,
+      "sha256": "ddd2c833e7d87193947253a0db89ae19321884004c6304f5d2d0858ef24c4a57"
+    },
+    "pcb/carrier-assembly-map.svg": {
+      "bytes": 21184,
+      "sha256": "412aa421f967f6711e767aa3c959f3dd090352cfaa63dd44bf3e04086e6e5af5"
+    },
+    "pcb/carrier-copper-preview.png": {
+      "bytes": 168023,
+      "sha256": "d0a4cd511720955db56d1d1fb72928154590602268cc1b4e881cfc0e62c8a68c"
+    },
+    "pcb/carrier-copper-preview.svg": {
+      "bytes": 284257,
+      "sha256": "15a9e85b5040b463a266b58a57e553701ea9660c4229a8b07e4e54e0a5846122"
+    },
+    "pcb/carrier-layout.json": {
+      "bytes": 33117,
+      "sha256": "072fc709b1e604aeae25adfc91a1e92a117447781e1caad904de4d61daff8669"
+    },
+    "pcb/circuit-netlist.json": {
+      "bytes": 6388,
+      "sha256": "01864108b2761fe7268f7f5e9e5899dc6eb1415617532772e59a899b889e74df"
+    },
+    "pcb/drc-report.json": {
+      "bytes": 293,
+      "sha256": "5cdbb310577d47a194c7e217c79414aca0c497e3ce16b40f4adac609929fd0c2"
+    },
+    "pcb/electrical-independent-review.md": {
+      "bytes": 8530,
+      "sha256": "02ce9eeead38b1ffb3425578376f4c84d44ae3ee892a1a7b82badcaf80173478"
+    },
+    "pcb/electrical-report.json": {
+      "bytes": 919,
+      "sha256": "c4eaec3cbe592cf752ecb4071453d8823f0ea778fff6fdf0dfb333dd6ddb5a3d"
+    },
+    "pcb/fabrication-manifest.json": {
+      "bytes": 1532,
+      "sha256": "7e1d7b1c74deeb8cc9cea01f5b45155a8b19499497de0f8bdcea757943a0dbcc"
+    },
+    "pcb/fp-lib-table": {
+      "bytes": 187,
+      "sha256": "b9f9af479b56b77f5ebe80959ef64bbe4ce01a08a82498ee940abc12fc79e84c"
+    },
+    "pcb/gun-mouse-supermini-carrier-Gerber.zip": {
+      "bytes": 81333,
+      "sha256": "c510141cec0f73dfeacebcf184730be085a3d8d49b4fcba195b043f57cf6d53e"
+    },
+    "pcb/gun-mouse-supermini-carrier.kicad_pcb": {
+      "bytes": 381574,
+      "sha256": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0"
+    },
+    "pcb/gun-mouse-supermini-carrier.kicad_pro": {
+      "bytes": 8385,
+      "sha256": "0b926eb1fd8f92a61f53a223b2fc9cd55fc5a585834c2882ba0af2d1c2c12819"
+    },
+    "pcb/wiring.csv": {
+      "bytes": 1578,
+      "sha256": "af895079d8f4bd37eee34f4b41451516cb69e2f77ae3349c06907cfd4d213ebc"
+    },
+    "print_pack.py": {
+      "bytes": 23058,
+      "sha256": "0fd9d5b5f78fefc2247104b94fdb6a877e1c77f2a05b2b847ccaf93fcf51b809"
+    },
+    "printing.md": {
+      "bytes": 4052,
+      "sha256": "2ff8d37fc4ae4840cf6918b6de5df5b2860b02acada84c520b5dcbac35632ea1"
+    },
+    "procurement.md": {
+      "bytes": 4845,
+      "sha256": "f571a1d3c4d438f879c2f85db267d1bca468aecef3e9441421a4f0446f76e6aa"
+    },
+    "reference_models.py": {
+      "bytes": 11401,
+      "sha256": "54c2b5793dcfd63d4448c9ac58a82033e4582a664ee223738d2ca08237afeea6"
+    },
+    "render_open_frame.py": {
+      "bytes": 19668,
+      "sha256": "1661155d931cfb308b708fd974efcc63010717f0e646a9127d364d501e790576"
+    },
+    "research/Omron-SS-datasheet.pdf": {
+      "bytes": 1425317,
+      "sha256": "1da8d5060235366a89c16b463f26d9ec6dcc2dd756b980523c4cd97db4920a9f"
+    },
+    "research/assembly/Omron-D2FC-datasheet.pdf": {
+      "bytes": 726989,
+      "sha256": "2c636a971a18f2964c386696a8cc7915b273cf9b3e001c228b390d373309f071"
+    },
+    "research/assembly/alps-rkjxv1224005-dimensions.gif": {
+      "bytes": 30268,
+      "sha256": "57feff5d1dd491470d4c96bc55143c1eae159ceffd135943c6443b62099cbb6d"
+    },
+    "research/normal-use-mechanical-review.md": {
+      "bytes": 10404,
+      "sha256": "3af4d1c9e7aee83abb8052b26f377314bfdc24018f93cfc9156442a86400bdf3"
+    },
+    "research/supermini/TP4054-TopPower-datasheet.pdf": {
+      "bytes": 481394,
+      "sha256": "89bb8e97428a70bc38908bdc1d761ab90c92fdbef8072b96556a6f77ebc1692a"
+    },
+    "research/supermini/community-ESP32-S3-SuperMini.kicad_mod": {
+      "bytes": 9923,
+      "sha256": "0a80a099fc80dcf3f543604f6d5ce4894ebe5551ff17ce35d3d49ee3e0ad4684"
+    },
+    "research/supermini/community-model-source.html": {
+      "bytes": 26297,
+      "sha256": "3a4abb9a4f52364257c54d40907435298975f705987d2b0fbf483b66e24289ac"
+    },
+    "research/supermini/esphome-pinouts.webp": {
+      "bytes": 273062,
+      "sha256": "29bf52a8df6520feed9a1e2a88aeeaacf4ca5cf775bad78f9b43aa6c284a1ff2"
+    },
+    "research/supermini/mechanical-evidence.md": {
+      "bytes": 6169,
+      "sha256": "a6d5db37d72dde954cc3b07dfc5b0555bcdd40c90b3a87b690e3c04d0c5c3c65"
+    },
+    "research/supermini/nologo-dimension.jpg": {
+      "bytes": 162714,
+      "sha256": "266bcf25148523f15400700b488cfa7b88a02fef0b9a67e76be23370a8d765b3"
+    },
+    "research/supermini/nologo-front-back-pinouts.jpg": {
+      "bytes": 1913201,
+      "sha256": "484c336d46e12d9978eda6716bc90c7292b43f94e53ebebe48f1cff58f2448c9"
+    },
+    "research/supermini/nologo-s3-schematic.png": {
+      "bytes": 667223,
+      "sha256": "9bc7256b41384fde1007402fd187477b499f2ae2f265ead181a3a765e6b40201"
+    },
+    "research/supermini/nologo-supermini.html": {
+      "bytes": 139206,
+      "sha256": "2bd8dc9e06c5940bb0193b8a94f64ad55ccab74a87767ecf2b1035356a205889"
+    },
+    "research/supermini/nzn-angled.png": {
+      "bytes": 1439249,
+      "sha256": "b1b8306fa8681a7bd2a8aa02043fafc85dc0cc0d4f0858e144fc6fcbec16129d"
+    },
+    "research/supermini/nzn-dimensions.png": {
+      "bytes": 1550825,
+      "sha256": "5150adef7fce13757f1d2ca68c0c26604918762b44674301e3fb46f67c7440f6"
+    },
+    "research/supermini/nzn-seller-datasheet-v3.pdf": {
+      "bytes": 542544,
+      "sha256": "51990fac3056181307e991566fca6261daa5c866c0131f42b8ef84f285dea63b"
+    },
+    "research/supermini/power-and-pin-review.md": {
+      "bytes": 6048,
+      "sha256": "625264598205c8a927dcc9c9b3034c057791eb67ab7ef4ddcb18cbfd9d3a4c86"
+    },
+    "research/supermini/power-pin-evidence.json": {
+      "bytes": 1374,
+      "sha256": "399bffbf0d24105ed2179cea54b77d0b7d209e52ed388e0db07e717de73abdbb"
+    },
+    "research/supermini/tenstar-original-pinout-dimensions.png": {
+      "bytes": 1002270,
+      "sha256": "9be0b2c98c44954e1929beeafa1c00063e7f1c343bb6f0ff15afbb1d49ca80c1"
+    },
+    "research/supermini/tenstar-s3-pin-dim.png": {
+      "bytes": 1002270,
+      "sha256": "9be0b2c98c44954e1929beeafa1c00063e7f1c343bb6f0ff15afbb1d49ca80c1"
+    },
+    "sources/packing-protection/gunmouse-control_bridge-bore-1-guard.step": {
+      "bytes": 5651,
+      "sha256": "bde0a52ea170093d4df2011924856f3aec74230f33efd87a832b7090dd328f8f"
+    },
+    "sources/packing-protection/gunmouse-control_bridge-bore-2-guard.step": {
+      "bytes": 5651,
+      "sha256": "bddde955e74cfcf8d55d13c73ba846828a717f796f63ccffd54bdba8d28b3068"
+    },
+    "sources/packing-protection/gunmouse-imu_clamp-bore-1-guard.step": {
+      "bytes": 5657,
+      "sha256": "111c3ea907d43da2c3318df3f0e11b032d78f5e5c4698a8762dac6ea95a2adad"
+    },
+    "sources/packing-protection/gunmouse-imu_clamp-bore-2-guard.step": {
+      "bytes": 5628,
+      "sha256": "e08aa447d853af446ee581994bc7070690904a1817bc026e0bb94656fb611b0a"
+    },
+    "sources/packing-protection/gunmouse-imu_cradle-bore-1-guard.step": {
+      "bytes": 5655,
+      "sha256": "e3be11aedf6ee59da1e799679ae27eafe9465639605db0a7bfba777d5c94c9ce"
+    },
+    "sources/packing-protection/gunmouse-imu_cradle-bore-2-guard.step": {
+      "bytes": 5626,
+      "sha256": "3783ff5449f74b09e8520496b3e53b3b4fbb095d47e79c161a6dead982de621a"
+    },
+    "sources/packing-protection/gunmouse-pcb_clamp_H1-bore-1-guard.step": {
+      "bytes": 5647,
+      "sha256": "98684bab2701adb056d3c0da827bf6226bff551ab35eb91d3095a8f37277eb99"
+    },
+    "sources/packing-protection/gunmouse-pcb_clamp_H4-bore-1-guard.step": {
+      "bytes": 5657,
+      "sha256": "f3a9ea3bd38e8c2d95f1c9566a5b4255623ccefe31324b89d3c5b2d445e81e41"
+    },
+    "sources/packing-protection/gunmouse-supermini_clamp-bore-1-guard.step": {
+      "bytes": 5690,
+      "sha256": "19efbd74784ea7d16b53a17604dc07c9df9227f54923b87364d5bc1c528b5374"
+    },
+    "sources/packing-protection/gunmouse-supermini_clamp-bore-2-guard.step": {
+      "bytes": 5636,
+      "sha256": "9a18bd5a9de720a459f41183683045d90ec1d16fff7fcd28919875691939c6f1"
+    },
+    "sources/packing-protection/remaining-parts-review.json": {
+      "bytes": 11464,
+      "sha256": "b20984ee453a2635094a0467f05bf9a26a64a608164836cd3877b2a7a97c2300"
+    },
+    "sources/packing-protection/small-parts-review.json": {
+      "bytes": 7154,
+      "sha256": "b3cb9610497bc17e4d463af530b06f75fc61455d4d233e87c307c64e44eda6b0"
+    },
+    "sources/packing-protection/touch-cover-glue-back-face-guard.step": {
+      "bytes": 16646,
+      "sha256": "06d4d91747799fb046ea49c497f7d54105a59b090cbd26808aee55af0117bfbc"
+    },
+    "sources/packing-protection/touch-cover-touch-outer-face-guard.step": {
+      "bytes": 16660,
+      "sha256": "ac5906fbaab7d264b622982d94baf69556444cda135ba78709dda65cf3f2bb8c"
+    },
+    "sources/扳机端接基准.step": {
+      "bytes": 186159,
+      "sha256": "3d4ae2f49bee34298d8de59f097785d632cf17c41b90ec30b2827c073e9fd166"
+    },
+    "trigger-carrier-validation.json": {
+      "bytes": 17525,
+      "sha256": "26a6a15f68e112602568534755f018036e4861d4daf1a67ab98cbac5465ee4f8"
+    },
+    "trigger-holder-validation.json": {
+      "bytes": 5582,
+      "sha256": "92ebf0d6bdbfe6b35ef92bb89f73c2fb2af687d7553e34d4751c5de829db7e0a"
+    },
+    "trigger-validation.json": {
+      "bytes": 5872,
+      "sha256": "baeaf8506358f78bcd0184378c6c7c172ff3309198a3fec34aba6590f2d208c4"
+    },
+    "trigger_holder.py": {
+      "bytes": 10793,
+      "sha256": "01133acc42923bf3fcd6fad913fe6c2c3fcaf3ededacea6c8533d286c0f73584"
+    },
+    "trigger_parts.py": {
+      "bytes": 15713,
+      "sha256": "d6be68fdbc2ae614fc43d3baefa4a8abd0910eef72065af36b393a91b1bfbf2a"
+    },
+    "verify_joystick_hardware.py": {
+      "bytes": 3420,
+      "sha256": "af589fd3afb1f4e3b0f940704f4c759031b1ebf4d469095bcd1278963d010c65"
+    },
+    "verify_open_frame.py": {
+      "bytes": 55240,
+      "sha256": "2dfe302aa04a636376d476db31d39fa5fa116e9a71025c2b87841a997feeab4e"
+    }
+  }
 }

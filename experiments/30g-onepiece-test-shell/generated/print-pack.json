@@ -1,0 +1,1503 @@
+{
+  "units": "mm",
+  "coordinate_policy": "Independent assembly sources; explicit per-part print transforms",
+  "packing_layout": "columns outside +X with low cut-apart sprues",
+  "parking_columns": [
+    {
+      "names": [
+        "control_bridge",
+        "trigger_gate",
+        "trigger"
+      ],
+      "height": 137.903847380442,
+      "width": 37.599999999999994,
+      "left_x_mm": 24.8,
+      "rail_x_mm": 21.3
+    },
+    {
+      "names": [
+        "imu_cradle",
+        "imu_clamp",
+        "supermini_clamp",
+        "joystick_cap"
+      ],
+      "height": 142.2,
+      "width": 45.2,
+      "left_x_mm": 69.39999999999999,
+      "rail_x_mm": 65.89999999999999
+    },
+    {
+      "names": [
+        "trigger_holder",
+        "right_cap",
+        "touch_cover",
+        "pcb_clamp_H4",
+        "pcb_clamp_H1"
+      ],
+      "height": 76.0,
+      "width": 24.426601836975525,
+      "left_x_mm": 121.6,
+      "rail_x_mm": 118.1
+    }
+  ],
+  "all_input_print_parts_included": [
+    "frame",
+    "control_bridge",
+    "trigger_gate",
+    "trigger",
+    "touch_cover",
+    "right_cap",
+    "joystick_cap",
+    "supermini_clamp",
+    "imu_cradle",
+    "imu_clamp",
+    "trigger_holder",
+    "pcb_clamp_H1",
+    "pcb_clamp_H4"
+  ],
+  "parts": {
+    "frame": {
+      "assembly_bounds_mm": [
+        -66.10000009999999,
+        17.8,
+        -18.0000001,
+        15.600000099999999,
+        -98.10000000000001,
+        45.9
+      ],
+      "print_bounds_mm": [
+        -66.10000009999999,
+        17.8,
+        -45.9,
+        98.10000000000001,
+        0.25159248476261964,
+        33.851592684762636
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          18.25159258476263
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.0
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          -18.25159258476263
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          -1.1175877219135562e-15
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 12234.946776917783,
+      "sprue_attachment": {
+        "point_print_mm": [
+          17.25024754937576,
+          -36.82878288186949,
+          0.9015924847626178
+        ],
+        "point_assembly_mm": [
+          17.25024754937576,
+          -17.350000100000017,
+          36.82878288186949
+        ],
+        "rail_point_print_mm": [
+          21.3,
+          -36.82878288186949,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 9,
+        "contact_volume_mm3": 0.39472657228600266
+      }
+    },
+    "control_bridge": {
+      "assembly_bounds_mm": [
+        -59.3,
+        -21.7,
+        -1.63,
+        22.0,
+        -11.4,
+        39.3
+      ],
+      "print_bounds_mm": [
+        24.799999999999994,
+        62.4,
+        -45.9,
+        4.8,
+        0.2515924847626181,
+        23.88159248476262
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          84.1
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          -34.5
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          22.251592484762618
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -84.1
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          22.25159248476262
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          34.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 1660.071059500201,
+      "sprue_attachment": {
+        "point_print_mm": [
+          29.861583184929493,
+          -24.68605210188381,
+          2.9015924847626176
+        ],
+        "point_assembly_mm": [
+          -54.2384168150705,
+          19.350000000000005,
+          9.81394789811619
+        ],
+        "rail_point_print_mm": [
+          21.3,
+          -24.68605210188381,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 6,
+        "contact_volume_mm3": 0.41351213121149927
+      }
+    },
+    "trigger_gate": {
+      "assembly_bounds_mm": [
+        -22.0,
+        7.0,
+        5.35,
+        8.6,
+        -36.0,
+        10.0
+      ],
+      "print_bounds_mm": [
+        24.799999999999997,
+        53.8,
+        8.799999999999997,
+        54.8,
+        0.2515924847626181,
+        3.501592484762622
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          46.8
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          44.8
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          8.851592484762621
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -46.8
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          8.851592484762618
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          -44.8
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 966.5985687520714,
+      "sprue_attachment": {
+        "point_print_mm": [
+          24.799999999999997,
+          25.799999999999997,
+          0.9015924847626196
+        ],
+        "point_assembly_mm": [
+          -22.0,
+          7.949999999999999,
+          -19.0
+        ],
+        "rail_point_print_mm": [
+          21.3,
+          25.799999999999997,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 4,
+        "contact_volume_mm3": 0.4135121325638612
+      }
+    },
+    "trigger": {
+      "assembly_bounds_mm": [
+        -1.5,
+        19.390938795809,
+        -5.0,
+        5.0,
+        -33.5080627738,
+        -4.304215393358
+      ],
+      "print_bounds_mm": [
+        24.800000000000004,
+        45.690938795809004,
+        58.800000000000004,
+        88.00384738044201,
+        0.2515924847626189,
+        10.251592484762623
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          90
+        ],
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          180
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          -1.0,
+          -7.498798913309288e-33,
+          1.2246467991473532e-16,
+          44.190938795809004
+        ],
+        [
+          1.2246467991473532e-16,
+          -6.123233995736766e-17,
+          1.0,
+          92.3080627738
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          5.2515924847626225
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          -1.0,
+          1.2246467991473532e-16,
+          0.0,
+          44.19093879580899
+        ],
+        [
+          -7.498798913309288e-33,
+          -6.123233995736766e-17,
+          1.0,
+          -5.251592484762617
+        ],
+        [
+          1.2246467991473532e-16,
+          1.0,
+          6.123233995736766e-17,
+          -92.3080627738
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 2066.7462292730934,
+      "sprue_attachment": {
+        "point_print_mm": [
+          24.95078833123813,
+          86.34157570641936,
+          0.9015924847626231
+        ],
+        "point_assembly_mm": [
+          19.24015046457087,
+          -4.35,
+          -5.9664870673806405
+        ],
+        "rail_point_print_mm": [
+          21.3,
+          86.34157570641936,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 3,
+        "contact_volume_mm3": 0.39823059903790253
+      }
+    },
+    "touch_cover": {
+      "assembly_bounds_mm": [
+        13.046428571429,
+        19.025,
+        -3.65,
+        3.65,
+        -30.85,
+        -7.15
+      ],
+      "print_bounds_mm": [
+        121.6,
+        146.02660183697554,
+        -2.3999999999999915,
+        4.900000000000008,
+        0.25159248476261914,
+        1.131614657432704
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            0,
+            1,
+            0
+          ],
+          77.9052429229879
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          0.20952908873087345,
+          0.0,
+          0.9778024140774095,
+          149.03159818452414
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.2500000000000084
+        ],
+        [
+          -0.9778024140774095,
+          0.0,
+          0.20952908873087345,
+          20.352416397011496
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          0.20952908873087345,
+          0.0,
+          -0.9778024140774095,
+          -11.325813074402543
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.2500000000000084
+        ],
+        [
+          0.9778024140774095,
+          0.0,
+          0.20952908873087345,
+          -149.9878797397793
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 155.7089999996587,
+      "sprue_attachment": {
+        "point_print_mm": [
+          121.69428808992885,
+          1.2500000000000084,
+          0.6916035710976562
+        ],
+        "point_assembly_mm": [
+          13.49642857142879,
+          0.0,
+          -30.850000000000023
+        ],
+        "rail_point_print_mm": [
+          118.1,
+          1.2500000000000084,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.5,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 2,
+        "contact_volume_mm3": 0.12762720185507884
+      }
+    },
+    "right_cap": {
+      "assembly_bounds_mm": [
+        -41.4,
+        -24.6,
+        5.67,
+        21.950000000000003,
+        -7.9,
+        3.9000000000000004
+      ],
+      "print_bounds_mm": [
+        121.6,
+        138.4,
+        -18.199999999999992,
+        -6.3999999999999915,
+        0.25159248476262064,
+        16.53159248476262
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          163.0
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          -10.299999999999994
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          22.20159248476262
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -163.0
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          22.20159248476262
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          10.299999999999992
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 875.5825829218095,
+      "sprue_attachment": {
+        "point_print_mm": [
+          122.20208696284493,
+          -12.299999999999992,
+          0.8015924847626235
+        ],
+        "point_assembly_mm": [
+          -40.79791303715507,
+          21.4,
+          -2.0
+        ],
+        "rail_point_print_mm": [
+          118.1,
+          -12.299999999999992,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 5,
+        "contact_volume_mm3": 0.393812118279516
+      }
+    },
+    "joystick_cap": {
+      "assembly_bounds_mm": [
+        -41.0,
+        -25.0,
+        13.75,
+        27.6,
+        15.0,
+        31.0000001
+      ],
+      "print_bounds_mm": [
+        69.39999999999999,
+        85.39999999999999,
+        76.3,
+        92.30000009999999,
+        0.25159248476261836,
+        14.101592484762621
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          110.39999999999999
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          61.3
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          27.851592484762616
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -110.39999999999999
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          27.851592484762612
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          -61.3
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 856.7920789045294,
+      "sprue_attachment": {
+        "point_print_mm": [
+          69.46325030024023,
+          84.3,
+          0.9015924847626178
+        ],
+        "point_assembly_mm": [
+          -40.93674969975976,
+          26.95,
+          23.0
+        ],
+        "rail_point_print_mm": [
+          65.89999999999999,
+          84.3,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 2,
+        "contact_volume_mm3": 0.39219142085768377
+      }
+    },
+    "supermini_clamp": {
+      "assembly_bounds_mm": [
+        -2.8,
+        14.0,
+        -9.6,
+        -6.1,
+        8.600000000000001,
+        37.4
+      ],
+      "print_bounds_mm": [
+        69.39999999999999,
+        86.19999999999999,
+        43.50000000000001,
+        72.3,
+        0.2515924847626188,
+        3.7515924847626216
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          72.19999999999999
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          34.900000000000006
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          -5.848407515237382
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -72.19999999999999
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          -5.848407515237383
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          -34.900000000000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 216.96857383787489,
+      "sprue_attachment": {
+        "point_print_mm": [
+          69.39999999999999,
+          46.300000000000004,
+          0.9015924847626196
+        ],
+        "point_assembly_mm": [
+          -2.799999999999997,
+          -6.75,
+          11.399999999999999
+        ],
+        "rail_point_print_mm": [
+          65.89999999999999,
+          46.300000000000004,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 5,
+        "contact_volume_mm3": 0.4077352802214263
+      }
+    },
+    "imu_cradle": {
+      "assembly_bounds_mm": [
+        -27.400000000000002,
+        17.8,
+        5.6,
+        9.0,
+        5.2,
+        45.9
+      ],
+      "print_bounds_mm": [
+        69.39999999999999,
+        114.6,
+        -45.9,
+        -5.2,
+        0.251592484762619,
+        3.651592484762623
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          96.8
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          -51.1
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          9.251592484762618
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -96.8
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          9.251592484762622
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          51.1
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 388.42979348451183,
+      "sprue_attachment": {
+        "point_print_mm": [
+          69.4,
+          -8.0,
+          2.5515924847626197
+        ],
+        "point_assembly_mm": [
+          -27.39999999999999,
+          6.700000000000001,
+          43.1
+        ],
+        "rail_point_print_mm": [
+          65.89999999999999,
+          -8.0,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 7,
+        "contact_volume_mm3": 0.4069845860561778
+      }
+    },
+    "imu_clamp": {
+      "assembly_bounds_mm": [
+        -27.400000000000002,
+        17.8,
+        9.0,
+        10.6,
+        5.199999999999999,
+        45.9
+      ],
+      "print_bounds_mm": [
+        69.39999999999999,
+        114.6,
+        -1.1999999999999997,
+        39.5,
+        0.2515924847626193,
+        1.8515924847626244
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          96.8
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          -6.400000000000001
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          10.85159248476262
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -96.8
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          10.85159248476262
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          6.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 264.2679467710884,
+      "sprue_attachment": {
+        "point_print_mm": [
+          69.4,
+          36.7,
+          0.9015924847626213
+        ],
+        "point_assembly_mm": [
+          -27.39999999999999,
+          9.95,
+          43.1
+        ],
+        "rail_point_print_mm": [
+          65.89999999999999,
+          36.7,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 5,
+        "contact_volume_mm3": 0.4077352802215675
+      }
+    },
+    "trigger_holder": {
+      "assembly_bounds_mm": [
+        -20.6,
+        -13.1,
+        -7.0,
+        7.0,
+        -21.2,
+        2.5
+      ],
+      "print_bounds_mm": [
+        121.6,
+        129.1,
+        -45.9,
+        -22.199999999999992,
+        0.25159248476261914,
+        14.251592484762623
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ],
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          180
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          -1.0,
+          -7.498798913309288e-33,
+          -1.2246467991473532e-16,
+          108.5
+        ],
+        [
+          1.2246467991473532e-16,
+          -6.123233995736766e-17,
+          -1.0,
+          -43.39999999999999
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          7.251592484762622
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          -1.0,
+          1.2246467991473532e-16,
+          0.0,
+          108.5
+        ],
+        [
+          -7.498798913309288e-33,
+          -6.123233995736766e-17,
+          -1.0,
+          7.251592484762619
+        ],
+        [
+          -1.2246467991473532e-16,
+          -1.0,
+          6.123233995736766e-17,
+          -43.39999999999998
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 868.4102720596865,
+      "sprue_attachment": {
+        "point_print_mm": [
+          121.6,
+          -22.899999999999995,
+          1.8515924847626206
+        ],
+        "point_assembly_mm": [
+          -13.099999999999994,
+          5.4,
+          -20.499999999999996
+        ],
+        "rail_point_print_mm": [
+          118.1,
+          -22.899999999999995,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 5,
+        "contact_volume_mm3": 0.248064249889278
+      }
+    },
+    "pcb_clamp_H1": {
+      "assembly_bounds_mm": [
+        -15.3,
+        -8.7,
+        -1.63,
+        3.1000000000000005,
+        32.7,
+        39.3
+      ],
+      "print_bounds_mm": [
+        121.60000000000001,
+        128.20000000000002,
+        19.500000000000007,
+        26.10000000000001,
+        0.251592484762619,
+        4.98159248476262
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          136.9
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          1.0,
+          -13.199999999999992
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          3.3515924847626155
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -136.9
+        ],
+        [
+          0.0,
+          6.123233995736766e-17,
+          -1.0,
+          3.3515924847626164
+        ],
+        [
+          0.0,
+          1.0,
+          6.123233995736766e-17,
+          13.199999999999992
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 108.53494003839421,
+      "sprue_attachment": {
+        "point_print_mm": [
+          121.60000000000001,
+          22.800000000000008,
+          0.9015924847626178
+        ],
+        "point_assembly_mm": [
+          -15.299999999999997,
+          2.45,
+          36.0
+        ],
+        "rail_point_print_mm": [
+          118.1,
+          22.800000000000008,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.9,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 4,
+        "contact_volume_mm3": 0.4086153960692056
+      }
+    },
+    "pcb_clamp_H4": {
+      "assembly_bounds_mm": [
+        -28.800000000003596,
+        -23.7,
+        -1.63,
+        3.1000000000000005,
+        -30.3,
+        -23.7
+      ],
+      "print_bounds_mm": [
+        121.6,
+        126.70000000000358,
+        8.90000000000001,
+        15.50000000000001,
+        0.251592484762619,
+        4.98159248476262
+      ],
+      "rotations_about_assembly_origin": [
+        [
+          [
+            1,
+            0,
+            0
+          ],
+          -90
+        ],
+        [
+          [
+            0,
+            0,
+            1
+          ],
+          180
+        ]
+      ],
+      "assembly_to_print_4x4": [
+        [
+          -1.0,
+          -7.498798913309288e-33,
+          -1.2246467991473532e-16,
+          97.89999999999999
+        ],
+        [
+          1.2246467991473532e-16,
+          -6.123233995736766e-17,
+          -1.0,
+          -14.799999999999986
+        ],
+        [
+          0.0,
+          -1.0,
+          6.123233995736766e-17,
+          3.351592484762623
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "print_to_assembly_4x4": [
+        [
+          -1.0,
+          1.2246467991473532e-16,
+          0.0,
+          97.89999999999999
+        ],
+        [
+          -7.498798913309288e-33,
+          -6.123233995736766e-17,
+          -1.0,
+          3.351592484762622
+        ],
+        [
+          -1.2246467991473532e-16,
+          -1.0,
+          6.123233995736766e-17,
+          -14.799999999999974
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 82.67512482049023,
+      "sprue_attachment": {
+        "point_print_mm": [
+          124.6,
+          15.486335345031005,
+          0.5765924847626216
+        ],
+        "point_assembly_mm": [
+          -26.700000000000003,
+          2.775,
+          -30.286335345030995
+        ],
+        "rail_point_print_mm": [
+          118.1,
+          15.486335345031005,
+          0.7015924847626192
+        ],
+        "sprue_d_mm": 0.5,
+        "automatic_location_requires_review": false,
+        "protected_region_count": 5,
+        "contact_volume_mm3": 0.1195506451402164
+      }
+    }
+  },
+  "print_part_count": 13,
+  "all_attachment_locations_explicit": true,
+  "print_bounds_mm": [
+    -66.10000009999999,
+    146.02660183697554,
+    -49.85,
+    98.10000000000001,
+    0.0,
+    33.851592684762636
+  ],
+  "solid_count": 1,
+  "cad_valid": true,
+  "all_parts_volume_mm3": 20745.73294728119,
+  "sprues_nominal_volume_mm3": 314.39519472515366,
+  "sprues_added_volume_mm3": 309.8648146357591,
+  "all_print_parts_and_sprues_volume_mm3": 21055.59776191695,
+  "density_g_cm3": 1.35,
+  "mass_g": 28.425056978587882,
+  "mass_is_estimate_not_measured": true,
+  "maximum_density_for_30g_g_cm3": 1.4247992547739823,
+  "scope": "Net model including every listed print part and sacrificial sprue; printing supports are not modeled",
+  "manufacturing_review_required": [
+    "Resin fit/strength and shop support orientation",
+    "Shop build-area and mass accounting rules"
+  ],
+  "files": {
+    "onepiece_stl": "onepiece-print.stl",
+    "onepiece_step": "onepiece-print.step",
+    "assembly_original_step": "assembly-original.step"
+  },
+  "sha256": {
+    "onepiece_stl": "3205948f62c9d6604aeedaa5e4269fb278c48cbed2a1b406c0b7daa36780d82e",
+    "onepiece_step": "d6312461dbd84a47149dd5df59a7f3e7e55dc8cb24b01846d1fcd98fd38e11ed",
+    "assembly_original_step": "6014b86a5a93412e9377fa9deb52229c477ea1b80cc8605193dd5e2aa893dc4c"
+  },
+  "stl": {
+    "watertight": true,
+    "winding_consistent": true,
+    "connected_bodies": 1,
+    "volume_mm3": 21054.35608751994,
+    "triangle_count": 198462,
+    "merged_vertex_count": 99111,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "degenerate_triangles": 0,
+    "vertex_merge_tolerance_mm": 1e-05,
+    "relative_volume_error": 5.8971225184382e-05
+  },
+  "source_assembly_steps_sha256": {
+    "frame": "2a13c0775c5e0e11966d861417a895bd055b1ed3acab714faae53dd809c3ce85",
+    "control_bridge": "80f94b65c8481c0447e788ec594e5c05a63af75f89f1d60282c242e2f1e540db",
+    "trigger_gate": "a4f287f463d9c07d22c287026d50332295698a31d10bd5e3e66997b5e9e2bad3",
+    "trigger": "4de304696587d57c2003cc66c386504d7b7a717b0720b1221223b2a80bcffc34",
+    "touch_cover": "66d883223d23f55a2c260a505e6c2caf7bb0c0fdef00e7a0c5ae1d8584091e2b",
+    "right_cap": "f8a6daeab93c2dc6f0a56a832c7c5106e310a9065b59db2b3be41be5a9871f91",
+    "joystick_cap": "160436604e644d9684d88e732e35ca08fda76226f0a0586ba66a27137d370feb",
+    "supermini_clamp": "def32549dc4d7b9bf34f4fac038ae4d6b8c41f16b36b6bf24804767d423b2e69",
+    "imu_cradle": "fb4a90b447858c86deb31a078de673bfb8b0315f992eccc3c4a90c506131dc41",
+    "imu_clamp": "22a9712fbed66cd27160d110d0363a021d1640133921538a3d91a641e81f8ea0",
+    "trigger_holder": "693e7f000ebde4a752fdcdd4daf4f5783b7e6abcf79224277100298ed054ddce",
+    "pcb_clamp_H1": "c9ea039e389b6db86c8b3b4b6ce5847d4e7a993a4925dcab3f88b5294e96f4c6",
+    "pcb_clamp_H4": "0edc3dcb8aa70629dab35fc1a800d031e757c045cf5a79d62a64e1506d505ca5"
+  },
+  "packing_config_sha256": "b878125cc4be4d92d612488c6e8641a18a878943be463023bf62bffc1cb1349f",
+  "packing_config_contact_review": {
+    "frame": "Non-functional rounded outer front-upper edge of the right-side outline beam; no mating surface or hole at this point.",
+    "trigger": "Upper blade rounded exterior above foil/cover-seat keepouts; no slide/contact/spring surface.",
+    "touch_cover": "Lower narrow edge at mid-thickness; both large foil/glue faces protected by normal slabs.",
+    "trigger_holder": "Outside front wall near lower edge, clear of cavity, mounting bosses and card-slot surfaces.",
+    "control_bridge": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "trigger_gate": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "right_cap": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "joystick_cap": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "supermini_clamp": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "imu_cradle": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "imu_clamp": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "pcb_clamp_H1": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts.",
+    "pcb_clamp_H4": "Reviewed external edge; bore, nut-access and assembly contact surfaces protected by the listed keepouts."
+  },
+  "protected_geometry_files_sha256": {
+    "sources/packing-protection/touch-cover-touch-outer-face-guard.step": "ac5906fbaab7d264b622982d94baf69556444cda135ba78709dda65cf3f2bb8c",
+    "sources/packing-protection/touch-cover-glue-back-face-guard.step": "06d4d91747799fb046ea49c497f7d54105a59b090cbd26808aee55af0117bfbc",
+    "sources/packing-protection/gunmouse-control_bridge-bore-1-guard.step": "bde0a52ea170093d4df2011924856f3aec74230f33efd87a832b7090dd328f8f",
+    "sources/packing-protection/gunmouse-control_bridge-bore-2-guard.step": "bddde955e74cfcf8d55d13c73ba846828a717f796f63ccffd54bdba8d28b3068",
+    "sources/packing-protection/gunmouse-supermini_clamp-bore-1-guard.step": "19efbd74784ea7d16b53a17604dc07c9df9227f54923b87364d5bc1c528b5374",
+    "sources/packing-protection/gunmouse-supermini_clamp-bore-2-guard.step": "9a18bd5a9de720a459f41183683045d90ec1d16fff7fcd28919875691939c6f1",
+    "sources/packing-protection/gunmouse-imu_cradle-bore-1-guard.step": "e3be11aedf6ee59da1e799679ae27eafe9465639605db0a7bfba777d5c94c9ce",
+    "sources/packing-protection/gunmouse-imu_cradle-bore-2-guard.step": "3783ff5449f74b09e8520496b3e53b3b4fbb095d47e79c161a6dead982de621a",
+    "sources/packing-protection/gunmouse-imu_clamp-bore-1-guard.step": "111c3ea907d43da2c3318df3f0e11b032d78f5e5c4698a8762dac6ea95a2adad",
+    "sources/packing-protection/gunmouse-imu_clamp-bore-2-guard.step": "e08aa447d853af446ee581994bc7070690904a1817bc026e0bb94656fb611b0a",
+    "sources/packing-protection/gunmouse-pcb_clamp_H1-bore-1-guard.step": "98684bab2701adb056d3c0da827bf6226bff551ab35eb91d3095a8f37277eb99",
+    "sources/packing-protection/gunmouse-pcb_clamp_H4-bore-1-guard.step": "f3a9ea3bd38e8c2d95f1c9566a5b4255623ccefe31324b89d3c5b2d445e81e41"
+  }
+}

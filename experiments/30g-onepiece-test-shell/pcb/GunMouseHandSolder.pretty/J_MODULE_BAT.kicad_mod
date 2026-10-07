@@ -1,0 +1,112 @@
+(footprint "J_MODULE_BAT"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "J_MODULE_BAT"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "1e3be3e7-ec15-4f0b-9ba9-9226916d425f")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Labelled solder wires"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b99fecda-f508-4fb9-b443-b6e4394db3f0")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1fe1a086-ebd1-4ffc-b1ba-8ee5d1f4317f")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "608c274a-6559-4dbe-a4cb-7042bdd94128")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -1.25 -1.25)
+		(end 1.25 -1.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "59fa5119-52c2-4de5-a891-47265169cad3")
+	)
+	(fp_line
+		(start -1.25 3.79)
+		(end -1.25 -1.25)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "4b62a2a5-d64b-406d-848d-5bb64476c8cc")
+	)
+	(fp_line
+		(start 1.25 -1.25)
+		(end 1.25 3.79)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "9e1ac5ae-3243-4413-b89a-b466dcce0a09")
+	)
+	(fp_line
+		(start 1.25 3.79)
+		(end -1.25 3.79)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "1e5210f2-a6b3-4e9e-b3e2-397398c74c31")
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "64d9de94-0cb7-4be1-af01-b40b78b5ebd8")
+	)
+	(pad "2" thru_hole circle
+		(at 0 2.54)
+		(size 1.8 1.8)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "c3e1e05c-af10-446a-88b8-ecb873c3838c")
+	)
+	(embedded_fonts no)
+)
