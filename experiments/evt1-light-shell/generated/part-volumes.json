@@ -21,7 +21,7 @@
       "solids": 1
     },
     "touch_cover": {
-      "volume_mm3": 155.709,
+      "volume_mm3": 267.183,
       "valid": true,
       "solids": 1
     },
@@ -41,12 +41,12 @@
       "solids": 1
     }
   },
-  "all_parts_volume_mm3": 39993.225,
+  "all_parts_volume_mm3": 40104.699,
   "mass_g": {
-    "resin_low": 45.99,
-    "resin_mid": 47.99,
-    "resin_experiment_assumption": 53.99,
-    "PA12_MJF": 40.39
+    "resin_low": 46.12,
+    "resin_mid": 48.13,
+    "resin_experiment_assumption": 54.14,
+    "PA12_MJF": 40.51
   },
   "stl_checks": {
     "shell_right": {
@@ -76,7 +76,7 @@
     "touch_cover": {
       "watertight": true,
       "bodies": 1,
-      "mesh_vs_cad_volume": 0.0,
+      "mesh_vs_cad_volume": 4e-06,
       "ok": true
     },
     "switch_holder": {
