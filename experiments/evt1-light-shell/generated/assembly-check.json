@@ -1,0 +1,1286 @@
+{
+ "scope": "EVT-1 light shell: nominal CAD vs nominal/conservative references",
+ "parts": {
+  "shell_right": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -63.90186101431,
+    19.500000100000012,
+    -18.0000001,
+    7.2,
+    -96.0000001,
+    44.0000001
+   ]
+  },
+  "shell_left": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -63.90186101431,
+    19.500000100000005,
+    -12.95,
+    15.600000099999999,
+    -96.0,
+    44.0
+   ]
+  },
+  "imu_cradle": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -23.1,
+    5.8,
+    -1.63,
+    8.8,
+    8.2,
+    42.0
+   ]
+  },
+  "trigger": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -1.5,
+    19.390938795809,
+    -5.0,
+    5.0,
+    -33.5080627738,
+    -4.304215393358
+   ]
+  },
+  "touch_cover": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    13.046428571429,
+    19.025,
+    -3.65,
+    3.65,
+    -30.85,
+    -7.15
+   ]
+  },
+  "switch_holder": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -18.7,
+    -11.2,
+    -7.0,
+    7.0,
+    -21.2,
+    2.5
+   ]
+  },
+  "right_cap": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -41.4,
+    -24.6,
+    5.67,
+    17.1,
+    -7.9,
+    3.9000000000000004
+   ]
+  },
+  "joystick_cap": {
+   "valid": true,
+   "solids": 1,
+   "bounds_mm": [
+    -41.0,
+    -25.0,
+    13.75,
+    23.6,
+    15.0,
+    31.0000001
+   ]
+  }
+ },
+ "static": {
+  "part_pairs": {
+   "shell_right/shell_left": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/imu_cradle": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/trigger": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/touch_cover": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/switch_holder": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/right_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/imu_cradle": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/trigger": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/touch_cover": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/switch_holder": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/right_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/trigger": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/touch_cover": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/switch_holder": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/right_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/touch_cover": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/switch_holder": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/right_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/switch_holder": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/right_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/right_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "right_cap/joystick_cap": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   }
+  },
+  "part_vs_reference": {
+   "shell_right/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_right/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "shell_left/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "imu_cradle/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "trigger/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "touch_cover/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "switch_holder/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "right_cap/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "right_cap/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "right_cap/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "right_cap/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "right_cap/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "joystick_cap/pcb_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "joystick_cap/battery": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "joystick_cap/dev_board": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "joystick_cap/imu": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   },
+   "joystick_cap/trigger_switch": {
+    "overlap_mm3": 0.0,
+    "clear_of_volume_interference": true
+   }
+  },
+  "part_vs_envelopes": [
+   {
+    "part": "right_cap",
+    "ref": "SW2",
+    "side": "top",
+    "pad": null,
+    "sub_envelope": 1,
+    "allowed_contact": true,
+    "overlap_mm3": 0.24,
+    "clear_of_volume_interference": false,
+    "intersection_bounds_mm": [
+     -31.45,
+     -30.65,
+     5.67,
+     5.82,
+     -3.0,
+     -1.0
+    ]
+   },
+   {
+    "part": "joystick_cap",
+    "ref": "SW1",
+    "side": "top",
+    "pad": null,
+    "sub_envelope": 1,
+    "allowed_contact": true,
+    "overlap_mm3": 18.935194,
+    "clear_of_volume_interference": false,
+    "intersection_bounds_mm": [
+     -35.15,
+     -30.85,
+     13.75,
+     18.02,
+     20.85,
+     25.15
+    ]
+   }
+  ],
+  "pass": true
+ },
+ "accessories": {
+  "touch_wire_exit": {
+   "collisions": {},
+   "clear": true
+  },
+  "touch_wire_run": {
+   "collisions": {},
+   "clear": true
+  },
+  "touch_wire_drop": {
+   "collisions": {},
+   "clear": true
+  },
+  "switch_leads": {
+   "collisions": {},
+   "clear": true
+  },
+  "switch_leads_to_J_TRIG": {
+   "collisions": {},
+   "clear": true
+  },
+  "battery_switch_body": {
+   "collisions": {},
+   "clear": true
+  },
+  "battery_switch_actuator_full_travel": {
+   "collisions": {},
+   "clear": true
+  },
+  "battery_switch_pins": {
+   "collisions": {},
+   "clear": true
+  },
+  "touch_wire_exit_vs_trigger_at_0.0": {
+   "clear": true
+  },
+  "touch_wire_exit_vs_trigger_at_4.1": {
+   "clear": true
+  },
+  "pass": true
+ },
+ "motion": {
+  "states": {
+   "trigger_0.00": {
+    "collisions": {},
+    "clear": true
+   },
+   "trigger_2.05": {
+    "collisions": {},
+    "clear": true
+   },
+   "trigger_4.10": {
+    "collisions": {},
+    "clear": true
+   },
+   "right_cap_0.0": {
+    "collisions": {},
+    "clear": true
+   },
+   "right_cap_0.4": {
+    "collisions": {},
+    "clear": true
+   },
+   "right_cap_0.8": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az0": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az45": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az90": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az135": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az180": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az225": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az270": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.0_az315": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az0": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az45": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az90": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az135": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az180": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az225": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az270": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.0_p0.9_az315": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az0": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az45": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az90": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az135": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az180": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az225": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az270": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.0_az315": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az0": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az45": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az90": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az135": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az180": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az225": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az270": {
+    "collisions": {},
+    "clear": true
+   },
+   "joystick_e0.7_p0.9_az315": {
+    "collisions": {},
+    "clear": true
+   }
+  },
+  "state_count": 38,
+  "pass": true,
+  "joystick_pivot_assumed_mm": [
+   -33.0,
+   5.37,
+   23.0
+  ]
+ },
+ "joystick_cone_stop": {
+  "max_overlap_mm3_by_tilt": {
+   "tilt_20.0": 0.0,
+   "tilt_20.5": 0.3592
+  },
+  "stops_at_20_deg": true
+ },
+ "trigger_contact_adjust_and_stroke": {
+  "collisions": {},
+  "pass": true,
+  "contact_budget": {
+   "switch": "SS-01GL",
+   "axis_z": -19.02,
+   "switch_bottom_x": -17.1,
+   "operating_x_range": [
+    -6.2,
+    -4.6
+   ],
+   "free_x_max": -0.6,
+   "body_top_x": -7.6,
+   "adjust_range": [
+    -1.5,
+    1.2
+   ],
+   "per_delta": {
+    "delta_-1.5": {
+     "face_x_rest": -0.5,
+     "face_x_full_press": -4.6,
+     "clear_of_GL_body_top_at_full_press_mm": 3.0,
+     "reaches_earliest_OP": true,
+     "reaches_latest_OP": false,
+     "rest_face_before_earliest_OP_mm": 4.1
+    },
+    "delta_+0.0": {
+     "face_x_rest": -2.0,
+     "face_x_full_press": -6.1,
+     "clear_of_GL_body_top_at_full_press_mm": 1.5,
+     "reaches_earliest_OP": true,
+     "reaches_latest_OP": false,
+     "rest_face_before_earliest_OP_mm": 2.6
+    },
+    "delta_+1.2": {
+     "face_x_rest": -3.2,
+     "face_x_full_press": -7.3,
+     "clear_of_GL_body_top_at_full_press_mm": 0.3,
+     "reaches_earliest_OP": true,
+     "reaches_latest_OP": true,
+     "rest_face_before_earliest_OP_mm": 1.4
+    }
+   },
+   "delta_needed_to_close_at_3.1mm_for_OP_extremes": [
+    1.1,
+    -0.5
+   ],
+   "calibration_inside_range": true,
+   "overtravel_after_calibrated_close_mm": 1.0,
+   "overtravel_within_GL_minimum": true
+  }
+ },
+ "pcb_clamps": {
+  "H1": {
+   "rear_support": "shell_right",
+   "front_clamp": "imu_cradle",
+   "rear_band_mm3": 1.4726,
+   "front_band_mm3": 1.4726,
+   "rear_gap_mm": 0.0,
+   "front_gap_mm": 0.0,
+   "clamped": true
+  },
+  "H2": {
+   "rear_support": "shell_right",
+   "front_clamp": "shell_left",
+   "rear_band_mm3": 1.4726,
+   "front_band_mm3": 1.4726,
+   "rear_gap_mm": 0.0,
+   "front_gap_mm": 0.0,
+   "clamped": true
+  },
+  "H3": {
+   "rear_support": "shell_right",
+   "front_clamp": "shell_left",
+   "rear_band_mm3": 1.4726,
+   "front_band_mm3": 1.4726,
+   "rear_gap_mm": 0.0,
+   "front_gap_mm": 0.0,
+   "clamped": true
+  },
+  "H4": {
+   "rear_support": "shell_right",
+   "front_clamp": "shell_left",
+   "rear_band_mm3": 1.4726,
+   "front_band_mm3": 1.3055,
+   "rear_gap_mm": 0.0,
+   "front_gap_mm": 0.0,
+   "clamped": true
+  },
+  "pass": true
+ },
+ "fasteners": {
+  "PCB_H1": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 16.15,
+     "available_length_mm": 3.85,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 2.25,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": "imu_cradle",
+   "nut_clear_of_resin": true,
+   "pass": true
+  },
+  "PCB_H2": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 16.15,
+     "available_length_mm": 3.85,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 2.25,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": "shell_left",
+   "nut_clear_of_resin": true,
+   "pass": true
+  },
+  "PCB_H3": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 16.15,
+     "available_length_mm": 3.85,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 2.25,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": "shell_left",
+   "nut_clear_of_resin": true,
+   "pass": true
+  },
+  "PCB_H4": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 16.15,
+     "available_length_mm": 3.85,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 2.25,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": "shell_left",
+   "nut_clear_of_resin": true,
+   "pass": true
+  },
+  "shell_6_39": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 17.5,
+     "available_length_mm": 2.5,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 0.9,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": "shell_left",
+   "nut_clear_of_resin": true,
+   "pass": true
+  },
+  "shell_-34_-90.5": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 17.5,
+     "available_length_mm": 2.5,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 0.9,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": "shell_left",
+   "nut_clear_of_resin": true,
+   "pass": true
+  },
+  "trigger_switch_1": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 11.2,
+     "available_length_mm": 8.8,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 7.2,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": null,
+   "nut_clear_of_resin": null,
+   "pass": true
+  },
+  "trigger_switch_2": {
+   "length": 20,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 11.2,
+     "available_length_mm": 8.8,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 7.2,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [],
+   "nut_in_pocket_of": null,
+   "nut_clear_of_resin": null,
+   "pass": true
+  },
+  "trigger_contact": {
+   "length": 10,
+   "fixed_reference_collisions": {},
+   "printed_part_collisions": {},
+   "nut_engagement": [
+    {
+     "nut_near_from_seat_mm": 3.6999999999999997,
+     "available_length_mm": 6.3,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 4.7,
+     "full_nut_engagement": true
+    },
+    {
+     "nut_near_from_seat_mm": 5.300000000000001,
+     "available_length_mm": 4.7,
+     "nut_thickness_mm": 1.6,
+     "tip_projection_mm": 3.1,
+     "full_nut_engagement": true
+    }
+   ],
+   "component_envelope_collisions": [
+    {
+     "kind": "tool",
+     "ref": "SS01GL-body-tolerance",
+     "side": "all",
+     "pad": null,
+     "sub_envelope": null,
+     "overlap_mm3": 20.219225,
+     "clear_of_volume_interference": false,
+     "intersection_bounds_mm": [
+      -14.0,
+      -6.5,
+      -1.0,
+      1.0,
+      -19.621,
+      -18.02
+     ]
+    }
+   ],
+   "nut_in_pocket_of": null,
+   "nut_clear_of_resin": null,
+   "pass": true
+  },
+  "counts": {
+   "M2x20": 8,
+   "M2x10": 1,
+   "M2_nuts": 10
+  },
+  "pass": true
+ },
+ "usb_c_access": {
+  "receptacle_mouth_x": 18.5,
+  "front_outer_x": 19.5,
+  "usb_c_spec_max_overmold_12.35x6.5": {
+   "mated_collisions": {},
+   "plug_reaches_full_depth": true
+  },
+  "slim_overmold_10.5x5.0": {
+   "mated_collisions": {},
+   "plug_reaches_full_depth": true
+  },
+  "pass": true,
+  "note": "Receptacle mouth uses the conservative 2.5 mm overhang (inner wall face); the opening admits the USB-C maximum overmold, so recess depth does not limit mating."
+ },
+ "trigger_internal": {
+  "pass": true,
+  "trigger_volume_mm3": 2197.8204873848263,
+  "holder_volume_mm3": 868.4102720596178,
+  "overlaps_mm3": {
+   "screw_delta_-1.5_vs_resin_mm3": 0.0,
+   "screw_delta_+0.0_vs_resin_mm3": 0.0,
+   "screw_delta_+1.2_vs_resin_mm3": 0.0,
+   "fixed_nut_vs_resin_mm3": 0.0,
+   "jam_nut_vs_resin_mm3": 0.0,
+   "jam_nut_all_rotations_envelope_vs_resin_mm3": 0.0,
+   "cover_vs_trigger_mm3": 0.0,
+   "holder_vs_switch_rigid_mm3": 0.0,
+   "holder_vs_switch_tolerance_mm3": 0.0,
+   "holder_vs_contact_sweep_mm3": 0.0,
+   "switch_vs_contact_sweep_mm3": 0.0,
+   "holder_vs_bolt_1_mm3": 0.0,
+   "holder_vs_nut_1_mm3": 0.0,
+   "contact_sweep_vs_bolt_1_mm3": 0.0,
+   "holder_vs_bolt_2_mm3": 0.0,
+   "holder_vs_nut_2_mm3": 0.0,
+   "contact_sweep_vs_bolt_2_mm3": 0.0
+  },
+  "trigger_midstroke_distance_mm": {
+   "holder": 7.6499999999999995,
+   "switch_rigid": 4.05,
+   "bolt_1": 10.309060020235295,
+   "bolt_2": 8.95023427535457
+  },
+  "resin_between_nut_cavity_and_spring_bore_mm": 0.58,
+  "contact_budget": {
+   "switch": "SS-01GL",
+   "axis_z": -19.02,
+   "switch_bottom_x": -17.1,
+   "operating_x_range": [
+    -6.2,
+    -4.6
+   ],
+   "free_x_max": -0.6,
+   "body_top_x": -7.6,
+   "adjust_range": [
+    -1.5,
+    1.2
+   ],
+   "per_delta": {
+    "delta_-1.5": {
+     "face_x_rest": -0.5,
+     "face_x_full_press": -4.6,
+     "clear_of_GL_body_top_at_full_press_mm": 3.0,
+     "reaches_earliest_OP": true,
+     "reaches_latest_OP": false,
+     "rest_face_before_earliest_OP_mm": 4.1
+    },
+    "delta_+0.0": {
+     "face_x_rest": -2.0,
+     "face_x_full_press": -6.1,
+     "clear_of_GL_body_top_at_full_press_mm": 1.5,
+     "reaches_earliest_OP": true,
+     "reaches_latest_OP": false,
+     "rest_face_before_earliest_OP_mm": 2.6
+    },
+    "delta_+1.2": {
+     "face_x_rest": -3.2,
+     "face_x_full_press": -7.3,
+     "clear_of_GL_body_top_at_full_press_mm": 0.3,
+     "reaches_earliest_OP": true,
+     "reaches_latest_OP": true,
+     "rest_face_before_earliest_OP_mm": 1.4
+    }
+   },
+   "delta_needed_to_close_at_3.1mm_for_OP_extremes": [
+    1.1,
+    -0.5
+   ],
+   "calibration_inside_range": true,
+   "overtravel_after_calibrated_close_mm": 1.0,
+   "overtravel_within_GL_minimum": true
+  }
+ },
+ "assembly_paths": {
+  "method": "Each part/subassembly translated along -Y from 45.0 mm above its seat to 0.05 mm above it (continuous distance-bound proof); the seated pose itself is covered by the static interference check, where landing faces touch at zero gap.",
+  "battery_into_right_shell": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 7.3,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "supermini_into_nose_pocket": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 52.3,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "battery": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "switch_holder_subassembly": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 45.7,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "battery": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "trigger_lift_out_for_calibration": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 225.5,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "holder": {
+     "proved": true,
+     "failures": []
+    },
+    "switch": {
+     "proved": true,
+     "failures": []
+    },
+    "switch_env_0": {
+     "proved": true,
+     "failures": []
+    },
+    "holder_hw_0": {
+     "proved": true,
+     "failures": []
+    },
+    "holder_hw_1": {
+     "proved": true,
+     "failures": []
+    },
+    "holder_hw_2": {
+     "proved": true,
+     "failures": []
+    },
+    "holder_hw_3": {
+     "proved": true,
+     "failures": []
+    },
+    "carrier": {
+     "proved": true,
+     "failures": []
+    },
+    "imu": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "carrier_onto_bosses": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 175.0,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "battery": {
+     "proved": true,
+     "failures": []
+    },
+    "supermini": {
+     "proved": true,
+     "failures": []
+    },
+    "holder": {
+     "proved": true,
+     "failures": []
+    },
+    "trigger": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "imu_cradle_and_gy": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 44.7,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "carrier": {
+     "proved": true,
+     "failures": []
+    },
+    "supermini": {
+     "proved": true,
+     "failures": []
+    },
+    "holder": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "battery_switch_after_carrier": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 15.6,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "carrier": {
+     "proved": true,
+     "failures": []
+    },
+    "battery": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "left_shell_with_right_cap": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 741.1,
+   "obstacles": {
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    },
+    "battery": {
+     "proved": true,
+     "failures": []
+    },
+    "supermini": {
+     "proved": true,
+     "failures": []
+    },
+    "holder": {
+     "proved": true,
+     "failures": []
+    },
+    "trigger": {
+     "proved": true,
+     "failures": []
+    },
+    "carrier": {
+     "proved": true,
+     "failures": []
+    },
+    "imu": {
+     "proved": true,
+     "failures": []
+    },
+    "battery_switch": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "joystick_cap_onto_shaft": {
+   "direction": "-Y (installed from the open +Y side)",
+   "travel_mm": 44.95,
+   "entire_path_clear": true,
+   "seconds": 4.7,
+   "obstacles": {
+    "shell_left": {
+     "proved": true,
+     "failures": []
+    },
+    "shell_right": {
+     "proved": true,
+     "failures": []
+    }
+   }
+  },
+  "pass": true,
+  "seconds": 1312.1
+ },
+ "mass": {
+  "parts_mm3": {
+   "shell_right": 20566.19,
+   "shell_left": 14169.41,
+   "imu_cradle": 641.78,
+   "trigger": 2197.82,
+   "touch_cover": 155.71,
+   "switch_holder": 868.41,
+   "right_cap": 691.06,
+   "joystick_cap": 702.85
+  },
+  "total_mm3": 39993.23,
+  "mass_g": {
+   "resin_low": 45.99,
+   "resin_mid": 47.99,
+   "resin_experiment_assumption": 53.99,
+   "PA12_MJF": 40.39
+  },
+  "density_note": "Resin density is the print shop's number; weigh the first print to find it."
+ },
+ "pass_flags": {
+  "static": true,
+  "accessories": true,
+  "motion": true,
+  "trigger_contact_adjust_and_stroke": true,
+  "pcb_clamps": true,
+  "fasteners": true,
+  "usb_c_access": true,
+  "trigger_internal": true,
+  "assembly_paths": true,
+  "joystick_cone_stop": true,
+  "all_parts_single_valid_solid": true
+ },
+ "all_pass": true,
+ "not_verified": [
+  "Resin strength, creep and drop; printed tolerances and nut-pocket fit",
+  "Actual SS-01GL operating point (calibrated with the 0.8/1.0/1.2 gauges)",
+  "Module dimensions of the purchased SuperMini/GY/battery/slide switch",
+  "BLE range with the hand on the grip; charge current and TP4054/battery temperature with BOOST",
+  "Touch false-trigger margin with the palm on the closed grip",
+  "Flexible wire routing beyond the declared corridors"
+ ],
+ "runtime_s": 1354.5,
+ "parts_source_sha256": {
+  "shell_right.step": "6308205655f9967a5b5e7cdefa9e20428cbbc803f07a75f916f7b04bf4e6343f",
+  "shell_left.step": "f5f9db41ed9b9e0693c22eead210b552128b3c21a4ddb0c7da15a174ea7bbb92",
+  "imu_cradle.step": "615a980c7b080100e3e1a21e7b42d579f9984edda7dd580441a976d0df662211",
+  "trigger.step": "7695078eccb8617333550384c28269cf45bd00448fc6378e60726b33e55c43a1",
+  "touch_cover.step": "2ac9a2f20326d299102b86b11f1c9960fb5ccc4425639ae12ef071b3aaf3f060",
+  "switch_holder.step": "e436b1704d3c29934f946ecd417e1396203a3260462b4144cf7c30146ce232a4",
+  "right_cap.step": "b5bbef117210a2270563374a924a3be4e0ed2f03516b89d37b2c580be283cb3d",
+  "joystick_cap.step": "ce73768f42d3c47fee211a60456edd774b8b6bae4e1376ab1043002849a53001"
+ }
+}

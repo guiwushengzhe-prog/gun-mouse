@@ -1,0 +1,20 @@
+{
+  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+  "board_sha256": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0",
+  "generator_sha256": "c16db75f940f16c8fcb603cd06e678b17f114c08b62f810b09fff0f8da25db5f",
+  "kicad_version": "9.0.2",
+  "files": {
+    "pcb/gun-mouse-supermini-carrier.kicad_pcb": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0",
+    "pcb/gun-mouse-supermini-carrier.kicad_pro": "0b926eb1fd8f92a61f53a223b2fc9cd55fc5a585834c2882ba0af2d1c2c12819",
+    "carrier-config.json": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+    "pcb/gun-mouse-supermini-carrier-Gerber.zip": "c510141cec0f73dfeacebcf184730be085a3d8d49b4fcba195b043f57cf6d53e",
+    "pcb/BOM.csv": "341ce85eda87c20a192795fc654695850fe432b8a5ff3a5ea1dcf21c0c11d8c8",
+    "pcb/wiring.csv": "af895079d8f4bd37eee34f4b41451516cb69e2f77ae3349c06907cfd4d213ebc",
+    "pcb/circuit-netlist.json": "01864108b2761fe7268f7f5e9e5899dc6eb1415617532772e59a899b889e74df",
+    "pcb/drc-report.json": "5cdbb310577d47a194c7e217c79414aca0c497e3ce16b40f4adac609929fd0c2",
+    "pcb/electrical-report.json": "c4eaec3cbe592cf752ecb4071453d8823f0ea778fff6fdf0dfb333dd6ddb5a3d",
+    "pcb/carrier-layout.json": "072fc709b1e604aeae25adfc91a1e92a117447781e1caad904de4d61daff8669",
+    "pcb/build-report.json": "2487f44c8222a356d14801c0d6c9a8911b21894f4c9e2896abeaf96e36c8e1ba",
+    "pcb/carrier-assembly-map.svg": "412aa421f967f6711e767aa3c959f3dd090352cfaa63dd44bf3e04086e6e5af5"
+  }
+}

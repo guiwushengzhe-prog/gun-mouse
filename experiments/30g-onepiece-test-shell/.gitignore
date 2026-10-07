@@ -1,0 +1,5 @@
+generated/*-debug.step
+generated/assembly-progress.json
+generated/assembly-static-check.json
+generated/assembly-preliminary.json
+pcb/*.kicad_prl

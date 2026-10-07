@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product | CraftedTech Engineering</title>
+  <meta name="description" content="Electronics components, modules, and design services from CraftedTech Engineering.">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=live94">
+</head>
+<body class="pdp-page">
+  <div id="site-header"></div>
+  <main class="wrap pdp" id="main"></main>
+  <div id="site-footer"></div>
+  <script src="js/config.js"></script>
+  <script src="js/catalog.js?v=cat21"></script>
+  <script src="js/app.js?v=live85"></script>
+  <script src="js/cart.js?v=acc5"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    const el = document.getElementById("main");
+    const FAV_KEY = "cte_fav";
+    const SEL_KEY = "cte_cart_sel";
+    let heroIndex = 0;
+    let heroProductId = "";
+
+    function favIds() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(FAV_KEY) || "[]");
+        return Array.isArray(raw) ? raw : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function setFav(on) {
+      const next = favIds().filter(function (x) { return x !== id; });
+      if (on) next.push(id);
+      localStorage.setItem(FAV_KEY, JSON.stringify(next));
+    }
+
+    function catLabel(catId) {
+      const row = (CTE.categories || []).find(function (c) { return c.id === catId; });
+      return row ? row.label : (catId || "Products");
+    }
+
+    function starsHtml(n) {
+      const r = Math.max(0, Math.min(5, Number(n) || 0));
+      let html = '<span class="pdp-stars" aria-hidden="true">';
+      for (let i = 1; i <= 5; i++) {
+        html += '<i class="' + (r >= i - 0.25 ? "full" : r >= i - 0.75 ? "half" : "") + '"></i>';
+      }
+      return html + "</span>";
+    }
+
+    function shareHref(net, url, name) {
+      const u = encodeURIComponent(url);
+      const t = encodeURIComponent(name);
+      if (net === "facebook") return "https://www.facebook.com/sharer/sharer.php?u=" + u;
+      if (net === "messenger") return "https://www.facebook.com/sharer/sharer.php?u=" + u;
+      if (net === "pinterest") return "https://pinterest.com/pin/create/button/?url=" + u + "&description=" + t;
+      return "https://twitter.com/intent/tweet?url=" + u + "&text=" + t;
+    }
+
+    function paintProduct() {
+      const p = CTE.getProduct(id);
+      const keepQty = document.getElementById("qty") ? document.getElementById("qty").value : "1";
+      if (!p) {
+        el.innerHTML = `<div class="empty"><p>Product not found.</p><a class="btn btn-primary" href="shop.html">Back to shop</a></div>`;
+        return;
+      }
+      if (typeof CTE.applyProductSeo === "function") CTE.applyProductSeo(p);
+      else document.title = p.name + " | CraftedTech Engineering";
+
+      const kind = typeof CTE.productKind === "function" ? CTE.productKind(p) : (p.kind || (p.service ? "service" : "physical"));
+      const shopLike = kind === "physical" || kind === "affiliate";
+      const kindLabel = kind === "efile" ? CTE.t("efile") : kind === "service" ? CTE.t("service") : "";
+      const shots = (p.images || []).filter(Boolean);
+      const rating = Number(p.rating);
+      const hasRating = !isNaN(rating) && rating > 0;
+      const stock = Number(p.stock);
+      const inStock = kind === "affiliate" ? true : (kind === "physical" ? stock > 0 : true);
+      const stockText = shopLike
+        ? (inStock ? CTE.t("in_stock_label") + (kind === "physical" && stock ? " (" + stock + ")" : "") : CTE.t("out_stock"))
+        : (kind === "efile" ? CTE.t("efile") : kind === "service" ? CTE.t("service") : "");
+      const shipLine = kind === "efile"
+        ? CTE.t("digital")
+        : kind === "service"
+          ? "Scoped kickoff. Complex boards are quoted after review."
+          : "Standard local - arranged after payment confirmation";
+      const shipsFrom = kind === "efile" ? "Email delivery" : kind === "service" ? "Remote kickoff" : "Philippines";
+      const logo = (CTE.brand && CTE.brand.logo) || "images/logo.png";
+      const storeName = (CTE.brand && CTE.brand.name) || "CraftedTech Engineering";
+      const pageUrl = location.href;
+      const faved = favIds().indexOf(p.id) >= 0;
+      const qtyVal = Math.max(1, Number(keepQty) || 1);
+
+      if (heroProductId !== p.id) {
+        heroProductId = p.id;
+        heroIndex = 0;
+      }
+      if (shots.length) heroIndex = Math.max(0, Math.min(heroIndex, shots.length - 1));
+      const heroInner = shots.length
+        ? '<div class="pdp-hero-track" id="hero-track">' + shots.map(function (src, i) {
+            return '<img' + (i === 0 ? ' id="hero-shot"' : "") + ' src="' + CTE.esc(src) + '" alt="" draggable="false">';
+          }).join("") + "</div>" +
+          (shots.length > 1
+            ? '<button type="button" class="pdp-hero-nav prev" data-hero-dir="-1" aria-label="Previous image">‹</button>' +
+              '<button type="button" class="pdp-hero-nav next" data-hero-dir="1" aria-label="Next image">›</button>'
+            : "")
+        : '<div class="pdp-hero-empty">' + CTE.thumbSvg(p) + "</div>";
+      const thumbsInner = shots.length
+        ? '<div class="pdp-thumbs">' + shots.map(function (src, i) {
+            return '<button type="button" class="' + (i === heroIndex ? "on" : "") + '" data-src="' + CTE.esc(src) + '" data-i="' + i + '"><img src="' + CTE.esc(src) + '" alt=""></button>';
+          }).join("") + "</div>"
+        : "";
+
+      const others = (CTE.products || []).filter(function (x) { return x.id !== p.id; });
+      const sameCat = others.filter(function (x) { return x.category === p.category; });
+      const featured = others.filter(function (x) { return x.featured && x.category !== p.category; });
+      const rest = others.filter(function (x) { return x.category !== p.category && !x.featured; });
+      const picks = sameCat.concat(featured, rest).slice(0, 4);
+      const suggestHtml = picks.length
+        ? '<section class="suggest-block">' +
+          '<div class="mall-daily-head"><h2 data-i18n="suggested">' + (CTE.t("suggested") || "Suggested products") + "</h2></div>" +
+          '<div class="grid-4 mall-grid">' + picks.map(CTE.cardHtml).join("") + "</div></section>"
+        : "";
+
+      const specRows = [
+        ["Category", '<a href="shop.html">Shop</a> &gt; <a href="shop.html?cat=' + encodeURIComponent(p.category || "") + '">' + CTE.esc(catLabel(p.category)) + "</a>"],
+        ["SKU", CTE.esc(p.sku || "")],
+        kindLabel ? ["Type", CTE.esc(kindLabel)] : null,
+        (p.category === "apps" && p.devices && p.devices.length)
+          ? [(CTE.t("available_on") || "Available on"), CTE.esc((p.devices || []).map(CTE.deviceLabel).join(", "))]
+          : null,
+        shopLike ? [CTE.t("stock_label"), '<b class="' + (inStock ? "pdp-ok" : "pdp-no") + '">' + CTE.esc(stockText) + "</b>"] : null,
+        [CTE.t("ships_from"), CTE.esc(shipsFrom)],
+      ].concat((p.specs || []).map(function (s) {
+        return [s[0], CTE.esc(s[1])];
+      })).filter(Boolean);
+
+      const buyBtns = kind === "affiliate"
+        ? '<button class="btn pdp-buy-now" type="button" id="buy">' + CTE.t("buy_now") + "</button>"
+        : kind === "service"
+        ? (function () {
+            const svc = CTE.serviceForProduct(p) || {};
+            return '<a class="btn pdp-buy-now" href="' + CTE.quoteHref(svc.contact_topic || "", svc.id) + '">' + (CTE.t("request_quote") || "Request a Quotation") + "</a>";
+          })()
+        : '<button class="btn pdp-add" type="button" id="add"' + (inStock ? "" : " disabled") + ">" +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7V6a5 5 0 0 1 10 0v1h3l-1.2 12.2A2 2 0 0 1 16.8 21H7.2a2 2 0 0 1-2-1.8L4 7h3zm2 0h6V6a3 3 0 0 0-6 0v1z" fill="currentColor"/></svg>' +
+          "<span>" + CTE.t("add_cart") + "</span></button>" +
+          '<button class="btn pdp-buy-now" type="button" id="buy"' + (inStock ? "" : " disabled") + ">" + CTE.t("buy_now") + "</button>";
+
+      const qtyBlock = (kind === "service" || kind === "affiliate") ? "" : `
+        <div class="pdp-row">
+          <span>${CTE.t("qty")}</span>
+          <div class="pdp-qty">
+            <button type="button" data-step="-1" aria-label="Decrease">-</button>
+            <input id="qty" type="number" min="1" value="${qtyVal}">
+            <button type="button" data-step="1" aria-label="Increase">+</button>
+            <em class="${inStock ? "pdp-ok" : "pdp-no"}">${CTE.esc(stockText)}</em>
+          </div>
+        </div>`;
+
+      el.innerHTML = `
+        <section class="pdp-buy">
+          <div class="pdp-gallery">
+            <div class="pdp-hero" id="hero-swipe">${heroInner}</div>
+            ${thumbsInner}
+            <div class="pdp-share">
+              <span>${CTE.t("share")}:</span>
+              <a class="pdp-soc fb" href="${shareHref("facebook", pageUrl, p.name)}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+              <a class="pdp-soc ms" href="${shareHref("messenger", pageUrl, p.name)}" target="_blank" rel="noopener" aria-label="Messenger">m</a>
+              <a class="pdp-soc pin" href="${shareHref("pinterest", pageUrl, p.name)}" target="_blank" rel="noopener" aria-label="Pinterest">p</a>
+              <a class="pdp-soc tw" href="${shareHref("x", pageUrl, p.name)}" target="_blank" rel="noopener" aria-label="X">ð•</a>
+              <button type="button" class="pdp-fav${faved ? " on" : ""}" id="fav" aria-pressed="${faved ? "true" : "false"}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.2-4.6-9.5-9.1C.7 8.5 2.4 5 6 5c2 0 3.3 1.1 4 2.2C10.7 6.1 12 5 14 5c3.6 0 5.3 3.5 3.5 6.9C19.2 16.4 12 21 12 21z" fill="${faved ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.6"/></svg>
+                ${CTE.t("favorite")}
+              </button>
+            </div>
+          </div>
+          <div class="pdp-info">
+            <h1>${CTE.esc(p.name)}</h1>
+            ${p.seller_name ? `<p class="muted">Sold by ${p.owner_id ? '<a href="seller.php?id=' + encodeURIComponent(p.owner_id) + '">' + CTE.esc(p.seller_name) + "</a>" : CTE.esc(p.seller_name)}</p>` : ""}
+            <div class="pdp-meta">
+              <a href="#pdp-ratings" id="pdp-meta-rate">${hasRating ? starsHtml(rating) + "<b>" + rating.toFixed(1) + "</b>" : CTE.t("ratings_word")}</a>
+              ${kindLabel ? "<i></i><span>" + CTE.esc(kindLabel) + "</span>" : ""}
+              <i></i>
+              <span class="sku">${CTE.esc(p.sku || "")}</span>
+            </div>
+            <div class="pdp-price">${CTE.formatMoney(p.price)}${kind === "service" ? '<small>' + CTE.t("starting") + "</small>" : ""}</div>
+            <div class="pdp-row">
+              <span>${CTE.t("shipping")}</span>
+              <div class="pdp-ship">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v8H3V6zm11 3h4l3 3v2h-7V9zM6 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="currentColor"/></svg>
+                <div>
+                  <strong>${CTE.esc(shipsFrom)}</strong>
+                  <small>${CTE.esc(shipLine)}</small>
+                </div>
+              </div>
+            </div>
+            ${qtyBlock}
+            <div class="pdp-actions">${buyBtns}</div>
+          </div>
+        </section>
+
+        <section class="pdp-shop">
+          <div class="pdp-shop-id">
+            <img src="${CTE.esc(logo)}" alt="">
+            <div>
+              <strong>${CTE.esc(storeName)}</strong>
+              <small>${CTE.t("official_store")}</small>
+              <div class="pdp-shop-btns">
+                <a class="btn pdp-chat" href="contact.html">${CTE.t("chat_now")}</a>
+                <a class="btn pdp-view" href="shop.html">${CTE.t("view_shop")}</a>
+              </div>
+            </div>
+          </div>
+          <dl class="pdp-shop-stats">
+            <div><dt>${CTE.t("ratings_word")}</dt><dd id="pdp-shop-rate">${hasRating ? rating.toFixed(1) : "-"}</dd></div>
+            <div><dt>Products</dt><dd>${(CTE.products || []).length}</dd></div>
+            <div><dt>${CTE.t("ships_from")}</dt><dd>${CTE.esc(shipsFrom)}</dd></div>
+          </dl>
+        </section>
+
+        <section class="pdp-panel">
+          <h2>${CTE.t("product_specs")}</h2>
+          <div class="pdp-panel-b">
+            <table class="pdp-specs">${specRows.map(function (s) {
+              const label = Array.isArray(s) ? s[0] : "";
+              const val = Array.isArray(s) ? s[1] : "";
+              return "<tr><th>" + CTE.esc(label) + "</th><td>" + val + "</td></tr>";
+            }).join("")}</table>
+          </div>
+        </section>
+
+        <section class="pdp-panel">
+          <h2>${CTE.t("product_desc")}</h2>
+          <div class="pdp-panel-b pdp-desc">
+            <strong>${CTE.esc(p.name)}</strong>
+            ${p.lead ? String(p.lead).split(/\n\s*\n/).map(function (para) {
+              return "<p>" + CTE.esc(para).replace(/\n/g, "<br>") + "</p>";
+            }).join("") : ""}
+            ${(p.includes || []).length ? "<h3>" + CTE.t("features") + "</h3><ul>" + (p.includes || []).map(function (i) {
+              return "<li>" + CTE.esc(i) + "</li>";
+            }).join("") + "</ul>" : ""}
+            ${kind === "service" ? '<p class="notice">After design, fabricate through <a href="partners.html">PCB and 3D print partners</a>.</p>' : ""}
+          </div>
+        </section>
+
+        <section class="pdp-panel" id="pdp-ratings">
+          <h2>${CTE.t("product_ratings")}</h2>
+          <div class="pdp-panel-b" id="pdp-reviews-box"></div>
+        </section>
+        ${suggestHtml}`;
+
+      function qtyNow() {
+        const input = document.getElementById("qty");
+        return Math.max(1, Number(input && input.value) || 1);
+      }
+
+      const addBtn = document.getElementById("add");
+      if (addBtn) {
+        addBtn.addEventListener("click", function () {
+          const n = qtyNow();
+          const run = function () {
+            if (!CTE.cart.requireAccount()) return;
+            CTE.cart.add(p.id, n);
+            const label = addBtn.querySelector("span");
+            if (label) label.textContent = CTE.t("added");
+            else addBtn.textContent = CTE.t("added");
+          };
+          if (typeof CTE.cart.whenReady === "function") CTE.cart.whenReady(run);
+          else run();
+        });
+      }
+      const buyBtn = document.getElementById("buy");
+      if (buyBtn) {
+        buyBtn.addEventListener("click", function () {
+          if (kind === "affiliate") {
+            if (p.affiliate_url) window.open(p.affiliate_url, "_blank", "noopener");
+            return;
+          }
+          const n = qtyNow();
+          const run = function () {
+            if (!CTE.cart.loggedIn()) {
+              try { sessionStorage.setItem("cte_pending_buy", JSON.stringify({ id: p.id, qty: n })); } catch (err) {}
+              CTE.cart.requireAccount("checkout.html");
+              return;
+            }
+            const has = CTE.cart.items().some(function (i) { return i.id === p.id; });
+            if (has) CTE.cart.setQty(p.id, n);
+            else CTE.cart.add(p.id, n);
+            sessionStorage.setItem(SEL_KEY, JSON.stringify([p.id]));
+            location.href = "checkout.html";
+          };
+          if (typeof CTE.cart.whenReady === "function") CTE.cart.whenReady(run);
+          else run();
+        });
+      }
+      const favBtn = document.getElementById("fav");
+      if (favBtn) {
+        favBtn.addEventListener("click", function () {
+          const on = !this.classList.contains("on");
+          setFav(on);
+          paintProduct();
+        });
+      }
+      function showShot(i, animate) {
+        if (!shots.length) return;
+        heroIndex = ((i % shots.length) + shots.length) % shots.length;
+        const track = document.getElementById("hero-track");
+        if (track) {
+          track.style.transition = animate === false ? "none" : "";
+          track.style.transform = "translateX(" + (-heroIndex * 100) + "%)";
+        }
+        el.querySelectorAll(".pdp-thumbs button").forEach(function (b, n) {
+          b.classList.toggle("on", n === heroIndex);
+        });
+      }
+      function bindHeroSwipe() {
+        const hero = document.getElementById("hero-swipe");
+        const track = document.getElementById("hero-track");
+        if (!hero || !track || shots.length < 2) return;
+        let startX = 0;
+        let startY = 0;
+        let lastX = 0;
+        let dragging = false;
+        let locked = "";
+        function point(e) {
+          return { x: e.clientX, y: e.clientY };
+        }
+        function dragTo(dx) {
+          hero.classList.add("is-dragging");
+          track.style.transition = "none";
+          track.style.transform = "translateX(calc(" + (-heroIndex * 100) + "% + " + dx + "px))";
+        }
+        function onStart(e) {
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          if (e.target.closest(".pdp-hero-nav")) return;
+          const pnt = point(e);
+          startX = lastX = pnt.x;
+          startY = pnt.y;
+          dragging = true;
+          locked = "";
+          try { hero.setPointerCapture(e.pointerId); } catch (err) {}
+        }
+        function onMove(e) {
+          if (!dragging) return;
+          const pnt = point(e);
+          const dx = pnt.x - startX;
+          const dy = pnt.y - startY;
+          if (!locked) {
+            if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+            locked = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+            if (locked !== "x") return;
+          }
+          if (locked !== "x") return;
+          e.preventDefault();
+          lastX = pnt.x;
+          dragTo(dx);
+        }
+        function onEnd() {
+          if (!dragging) return;
+          dragging = false;
+          hero.classList.remove("is-dragging");
+          if (locked !== "x") {
+            showShot(heroIndex);
+            return;
+          }
+          const dx = lastX - startX;
+          const need = Math.min(80, Math.max(40, hero.clientWidth * 0.18));
+          if (dx <= -need) showShot(heroIndex + 1);
+          else if (dx >= need) showShot(heroIndex - 1);
+          else showShot(heroIndex);
+          locked = "";
+        }
+        hero.addEventListener("pointerdown", onStart);
+        hero.addEventListener("pointermove", onMove, { passive: false });
+        hero.addEventListener("pointerup", onEnd);
+        hero.addEventListener("pointercancel", onEnd);
+      }
+      showShot(heroIndex, false);
+      bindHeroSwipe();
+      el.querySelectorAll(".pdp-thumbs button").forEach(function (btn) {
+        btn.addEventListener("mouseenter", function () { showShot(Number(btn.getAttribute("data-i"))); });
+        btn.addEventListener("click", function () { showShot(Number(btn.getAttribute("data-i"))); });
+      });
+      el.querySelectorAll("[data-hero-dir]").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          showShot(heroIndex + Number(btn.getAttribute("data-hero-dir")));
+        });
+      });
+      el.querySelectorAll("[data-step]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const input = document.getElementById("qty");
+          if (!input) return;
+          input.value = String(Math.max(1, (Number(input.value) || 1) + Number(btn.getAttribute("data-step"))));
+        });
+      });
+      loadReviews();
+    }
+
+    let reviewRows = [];
+    let reviewAvg = 0;
+    let reviewFilter = 0;
+    let reviewName = "";
+    let reviewDraft = "";
+
+    function fmtReviewDate(iso) {
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return "";
+      return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+    }
+
+    function paintReviews() {
+      const box = document.getElementById("pdp-reviews-box");
+      if (!box) return;
+      const list = reviewFilter
+        ? reviewRows.filter(function (r) { return Number(r.stars) === reviewFilter; })
+        : reviewRows.slice();
+      const avg = reviewRows.length ? reviewAvg : 0;
+      const pick = [];
+      for (let i = 1; i <= 5; i++) {
+        pick.push('<button type="button" class="pdp-star-btn" data-star="' + i + '" aria-label="' + i + ' stars"><i></i></button>');
+      }
+      const filters = [0, 5, 4, 3, 2, 1].map(function (n) {
+        const label = n === 0 ? (CTE.t("all_reviews") || "All") : n + " star";
+        return '<button type="button" class="pdp-rev-filter' + (reviewFilter === n ? " on" : "") + '" data-rev-filter="' + n + '">' + label + "</button>";
+      }).join("");
+      const items = list.map(function (r) {
+        return '<article class="pdp-rev-item">' +
+          '<div class="pdp-rev-head"><strong>' + CTE.esc(r.name) + "</strong>" + starsHtml(r.stars) +
+          '<span class="muted">' + CTE.esc(fmtReviewDate(r.created_at)) + "</span></div>" +
+          "<p>" + CTE.esc(r.text) + "</p></article>";
+      }).join("");
+      box.innerHTML =
+        '<div class="pdp-rate-sum">' +
+          '<div class="pdp-rate-num"><b>' + (reviewRows.length ? avg.toFixed(1) : "-") + "</b>" +
+          "<span>out of 5</span>" + (reviewRows.length ? starsHtml(avg) : "") +
+          '<em>' + reviewRows.length + " " + (CTE.t("ratings_word") || "Ratings") + "</em></div>" +
+          '<div class="pdp-rev-filters">' + filters + "</div>" +
+        "</div>" +
+        '<form class="pdp-rev-form" id="rev-form">' +
+          "<h3>" + (CTE.t("write_review") || "Write a review") + "</h3>" +
+          '<label>' + (CTE.t("your_name") || "Your name") +
+          '<input id="rev-name" name="name" required maxlength="60" value="' + CTE.esc(reviewName) + '"></label>' +
+          '<div class="pdp-star-pick" id="rev-stars"><span>' + (CTE.t("your_stars") || "Your stars") + "</span>" +
+          '<div class="pdp-star-btns">' + pick.join("") + "</div>" +
+          '<input type="hidden" id="rev-star-val" value="5"></div>' +
+          '<label>' + (CTE.t("your_review") || "Your review") +
+          '<textarea id="rev-text" required minlength="3" maxlength="800" rows="4" placeholder="How was this product?">' + CTE.esc(reviewDraft) + "</textarea></label>" +
+          '<p class="muted" id="rev-err" style="color:var(--red)"></p>' +
+          '<button class="btn pdp-buy-now" type="submit">' + (CTE.t("submit_review") || "Submit review") + "</button>" +
+        "</form>" +
+        (items || '<p class="muted">' + CTE.t("no_reviews") + "</p>");
+      setStarPick(Number(document.getElementById("rev-star-val").value) || 5);
+      const meta = document.getElementById("pdp-meta-rate");
+      if (meta) {
+        meta.innerHTML = reviewRows.length
+          ? starsHtml(avg) + "<b>" + avg.toFixed(1) + "</b><span> (" + reviewRows.length + ")</span>"
+          : CTE.t("ratings_word");
+      }
+      const shopRate = document.getElementById("pdp-shop-rate");
+      if (shopRate) shopRate.textContent = reviewRows.length ? avg.toFixed(1) : "-";
+    }
+
+    function setStarPick(n) {
+      const val = document.getElementById("rev-star-val");
+      if (val) val.value = String(n);
+      document.querySelectorAll(".pdp-star-btn").forEach(function (btn) {
+        const v = Number(btn.getAttribute("data-star"));
+        btn.classList.toggle("on", v <= n);
+      });
+    }
+
+    function loadReviews() {
+      if (!id) return;
+      fetch("api/reviews.php?product=" + encodeURIComponent(id), { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          reviewRows = (d && d.reviews) ? d.reviews : [];
+          reviewAvg = Number(d && d.avg) || 0;
+          paintReviews();
+        })
+        .catch(function () { paintReviews(); });
+    }
+
+    document.getElementById("main").addEventListener("click", function (e) {
+      const star = e.target.closest("[data-star]");
+      if (star && star.closest("#rev-stars")) {
+        setStarPick(Number(star.getAttribute("data-star")));
+        return;
+      }
+      const filter = e.target.closest("[data-rev-filter]");
+      if (filter) {
+        reviewFilter = Number(filter.getAttribute("data-rev-filter")) || 0;
+        const nameEl = document.getElementById("rev-name");
+        const textEl = document.getElementById("rev-text");
+        if (nameEl) reviewName = nameEl.value;
+        if (textEl) reviewDraft = textEl.value;
+        paintReviews();
+      }
+    });
+    document.getElementById("main").addEventListener("submit", function (e) {
+      const form = e.target.closest("#rev-form");
+      if (!form) return;
+      e.preventDefault();
+      const err = document.getElementById("rev-err");
+      const name = (document.getElementById("rev-name").value || "").trim();
+      const text = (document.getElementById("rev-text").value || "").trim();
+      const stars = Number(document.getElementById("rev-star-val").value) || 0;
+      reviewName = name;
+      if (err) err.textContent = "";
+      fetch("api/reviews.php", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ product_id: id, name: name, text: text, stars: stars }),
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || !d.ok) throw new Error((d && d.error) || "Could not save review.");
+        reviewRows = d.reviews || [];
+        reviewAvg = Number(d.avg) || 0;
+        reviewFilter = 0;
+        reviewDraft = "";
+        paintReviews();
+      }).catch(function (ex) {
+        if (err) err.textContent = ex.message || "Could not save review.";
+      });
+    });
+
+    fetch("api/session.php", { credentials: "same-origin", cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (s) {
+        if (s && s.logged_in && s.name) reviewName = s.name;
+      })
+      .catch(function () {});
+
+    CTE.loadCatalog().then(paintProduct);
+    window.addEventListener("cte:locale", paintProduct);
+  </script>
+</body>
+</html>

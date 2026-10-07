@@ -1,0 +1,86 @@
+{
+  "pad_hole_count_expected": 80,
+  "pad_hole_count_actual": 80,
+  "missing": [],
+  "unexpected": [],
+  "outline_edges_mismatch": [],
+  "thickness_matches": true,
+  "routing_vias": [
+    {
+      "xz": [
+        -49.148,
+        13.329999999999998
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -47.116,
+        21.458
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -39.75,
+        -19.436000000000007
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -30.352,
+        -11.561999999999998
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -37.21,
+        -17.404000000000003
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -31.876,
+        -10.037999999999997
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -44.576,
+        23.998
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -54.99,
+        12.060001
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -38.734,
+        -17.15
+      ],
+      "drill_mm": 0.3
+    },
+    {
+      "xz": [
+        -42.29,
+        -20.451999999999998
+      ],
+      "drill_mm": 0.3
+    }
+  ],
+  "routing_vias_not_reconstructed_in_mechanical_board": true,
+  "pass": true,
+  "sources_sha256": {
+    "carrier-config.json": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+    "gun-mouse-supermini-carrier.kicad_pcb": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0"
+  }
+}

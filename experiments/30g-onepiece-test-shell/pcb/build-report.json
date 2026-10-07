@@ -1,0 +1,22 @@
+{
+  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+  "board_sha256": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0",
+  "pcb_size_mm": [
+    52,
+    82
+  ],
+  "factory_smt": false,
+  "pads": 80,
+  "routed_connections": 35,
+  "vias": 10,
+  "drc_violations": 0,
+  "drc_unconnected": 0,
+  "drc_warning_types": [],
+  "drc_error_types": [],
+  "electrical_contract": "electrical-report.json",
+  "actual_pth_count": 74,
+  "fabrication_ready": true,
+  "fabrication_scope": "Carrier PCB only; prototype module topology and physical fit checks remain necessary",
+  "schematic_parity": "No KiCad schematic supplied; actual PTHs checked against circuit/net/pad contract, independent source review provided",
+  "boundary": "DRC verifies board geometry and routing; real module power topology, physical lead fit and solder workmanship require prototype checks"
+}

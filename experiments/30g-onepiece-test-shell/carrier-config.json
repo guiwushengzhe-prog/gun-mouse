@@ -1,0 +1,2220 @@
+{
+  "version": "supermini-tht-carrier-v1",
+  "units": "mm",
+  "status": "Hand-soldered prototype; routing/DRC report controls fabrication readiness, module variant still requires physical power-path check",
+  "pcb": {
+    "outline_xz": [
+      [
+        -60,
+        -42
+      ],
+      [
+        -23,
+        -42
+      ],
+      [
+        -23,
+        10
+      ],
+      [
+        -8,
+        10
+      ],
+      [
+        -8,
+        40
+      ],
+      [
+        -60,
+        40
+      ]
+    ],
+    "thickness": 1.6,
+    "top_face_y": -1.63,
+    "max_size_mm": [
+      52,
+      82
+    ],
+    "layers": 2,
+    "copper_oz": 1,
+    "mount_holes": [
+      {
+        "id": "H1",
+        "xz": [
+          -12,
+          36
+        ],
+        "d": 2.4
+      },
+      {
+        "id": "H2",
+        "xz": [
+          -56,
+          36
+        ],
+        "d": 2.4
+      },
+      {
+        "id": "H3",
+        "xz": [
+          -51,
+          -4
+        ],
+        "d": 2.4
+      },
+      {
+        "id": "H4",
+        "xz": [
+          -27,
+          -27
+        ],
+        "d": 2.4
+      }
+    ],
+    "mount_contact_radius": 3.3,
+    "trace_width_mm": 0.3,
+    "clearance_mm": 0.25,
+    "via_d_drill_mm": [
+      0.7,
+      0.3
+    ],
+    "factory_smt": false,
+    "kicad_mapping": "(Kx,Ky)=(-X-3,45-Z); top components face +Y in the assembly"
+  },
+  "firmware_pins": {
+    "JOY_X": 1,
+    "JOY_Y": 2,
+    "JOY_SW": 4,
+    "BTN_R": 12,
+    "TRIG": 8,
+    "SDA": 5,
+    "SCL": 6,
+    "TOUCH": 7,
+    "VBAT_ADC": 9,
+    "VBUS_DET": 10
+  },
+  "mcu": {
+    "name": "TENSTAR-style ESP32-S3 SuperMini, USB-C, two 9-pad sides",
+    "chip": "ESP32-S3FH4R2",
+    "flash_mb": 4,
+    "psram_mb": 2,
+    "psram_mode": "qspi",
+    "flash_size_mb": 4,
+    "native_usb_gpio": [
+      19,
+      20
+    ],
+    "reserved_gpio": [
+      3,
+      43,
+      44
+    ],
+    "source": "TENSTAR product physical pin diagram; family circuit reference NOLOGO S3 schematic, do not substitute C3/ordinary ESP32"
+  },
+  "modules": {
+    "mcu": {
+      "name": "TENSTAR-style S3 SuperMini",
+      "x": [
+        -12,
+        11.5
+      ],
+      "z": [
+        14,
+        32
+      ],
+      "component_face_y": -8.0,
+      "board_thickness": 1.6,
+      "front_allowance": 3.5,
+      "back_wire_allowance": 2.0,
+      "source": "TENSTAR family product diagram: 23.5x18 mm board; assembled allowance requires first-sample check",
+      "limits": "Direct solder wires, no Dupont housings; leave USB at X=-12 and ceramic antenna at X=11.5 unobstructed"
+    },
+    "imu": {
+      "name": "GY-601N1-LSM6DSV16X",
+      "x": [
+        -22,
+        -1.4
+      ],
+      "z": [
+        20.1,
+        37.9
+      ],
+      "component_face_y": 9.0,
+      "board_thickness": 1.2,
+      "front_allowance": 5.0,
+      "back_wire_allowance": 0.0,
+      "source": "config/economy-mechanical.json; manufacturer GY-601N1 module manual 17.8x20.6x2.8",
+      "limits": "Remove tall headers; front component/solder-wire allowance <=5 mm, no unverified mounting holes"
+    }
+  },
+  "battery": {
+    "name": "Protected 1S LiPo <=8x31x52.5 mm, approx 600-700 mAh",
+    "center_xyz": [
+      -37.7,
+      -8.23,
+      -58
+    ],
+    "size_xyz": [
+      31,
+      8,
+      52.5
+    ],
+    "source": "Maximum assembly dimensional allowance; protection/lead overhang requires physical check"
+  },
+  "power": {
+    "logic_v": 3.3,
+    "battery_net": "BAT_SW",
+    "battery_switch": "BAT_RAW -> external SPST -> BAT_SW",
+    "low_battery_shutdown_mv": 3600,
+    "low_battery_delay_s": 30,
+    "battery_divider": {
+      "upper_ohm": 100000,
+      "lower_ohm": 100000,
+      "capacitor_f": 1e-07,
+      "scale": 2
+    },
+    "rail_divider": {
+      "upper_ohm": 100000,
+      "lower_ohm": 100000,
+      "capacitor_f": 1e-07,
+      "scale": 2
+    },
+    "vbus_detection": {
+      "mode": "adc_shared_rail_external_5v_inference",
+      "pin": 10,
+      "on_mv": 4500,
+      "off_mv": 4300
+    },
+    "module_reference": "BAT -> BAT60B diode -> shared USB VBUS/5V rail; TP4054-style charger; not XIAO load-sharing circuit",
+    "charge_current_ma": 100,
+    "charge_current_boost": "Keep BOOST open; do not assume 300 mA is appropriate",
+    "safety_limits": [
+      "Protected battery mandatory; family diagram has no protection IC",
+      "Battery OFF before connecting computer USB; only powered wall chargers during battery operation",
+      "Battery OFF disables battery charging but USB can keep the MCU running",
+      "Check actual purchased module against B+/B-, diode OR and charger reference before wiring",
+      "Shared 5V pin is also battery-powered below 4.2 V; never use it as a digital USB-present input"
+    ]
+  },
+  "parts": [
+    {
+      "ref": "SW1",
+      "kind": "joystick",
+      "value": "RKJXV1224005",
+      "position_xz": [
+        -34.201,
+        22.219
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -41.73,
+            20.499
+          ],
+          "net": "GND",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2.0,
+            2.0
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -41.73,
+            22.999
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2.0,
+            2.0
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -41.73,
+            25.501
+          ],
+          "net": "3V3",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2.0,
+            2.0
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -35.499,
+            31.729
+          ],
+          "net": "3V3",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2.0,
+            2.0
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -33.0,
+            31.729
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2.0,
+            2.0
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "6",
+          "xz": [
+            -30.498,
+            31.729
+          ],
+          "net": "GND",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2.0,
+            2.0
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "7",
+          "xz": [
+            -26.675,
+            28.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "8",
+          "xz": [
+            -26.675,
+            18.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "9",
+          "xz": [
+            -39.324,
+            18.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "10",
+          "xz": [
+            -39.324,
+            28.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "a",
+          "xz": [
+            -29.479,
+            17.208
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.6,
+            1.6
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "c",
+          "xz": [
+            -36.479,
+            17.208
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.6,
+            1.6
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "b",
+          "xz": [
+            -29.479,
+            12.709
+          ],
+          "net": "GND",
+          "drill": [
+            1.6,
+            1.6
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "d",
+          "xz": [
+            -36.479,
+            12.709
+          ],
+          "net": "GND",
+          "drill": [
+            1.6,
+            1.6
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [
+        {
+          "xz": [
+            -28.698,
+            23.0
+          ],
+          "d": 1.8
+        },
+        {
+          "xz": [
+            -37.298,
+            23.0
+          ],
+          "d": 1.8
+        }
+      ],
+      "envelope": {
+        "x": [
+          -42.701,
+          -25.401
+        ],
+        "z": [
+          11.419,
+          32.719
+        ],
+        "y_above_board": 19.65,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Static body and narrow shaft split using official drawing, upper bounds retained separately; shaft pivot/motion needs physical check",
+      "source": "config/pcb-parts-geometry.json, config/pcb-shell-v1.json",
+      "assembly": "THT hand solder; SW2 COM/NO verified with a meter before use",
+      "populate": true,
+      "envelopes": [
+        {
+          "kind": "box",
+          "x": [
+            -42.701,
+            -25.401
+          ],
+          "z": [
+            11.419,
+            32.719
+          ],
+          "y_above_board": [
+            0,
+            12.75
+          ],
+          "source": "Alps official drawing: side VR max12.45 mm +0.3 mm allowance"
+        },
+        {
+          "kind": "cylinder_y",
+          "xz": [
+            -33,
+            23
+          ],
+          "radius": 2.15,
+          "y_above_board": [
+            12.45,
+            19.65
+          ],
+          "source": "Alps shaft nominal diameter4 mm +0.3 mm allowance, source tip-high19.65 mm"
+        }
+      ]
+    },
+    {
+      "ref": "SW2",
+      "kind": "microswitch",
+      "value": "D2FC-F-7N(20M)",
+      "position_xz": [
+        -33.0,
+        -2.0
+      ],
+      "pads": [
+        {
+          "number": "3",
+          "xz": [
+            -38.08,
+            -2.0
+          ],
+          "net": "",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -33.0,
+            -2.0
+          ],
+          "net": "BTN_R",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        },
+        {
+          "number": "1",
+          "xz": [
+            -27.92,
+            -2.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -39.4,
+          -26.6
+        ],
+        "z": [
+          -4.904999999999999,
+          0.9049999999999998
+        ],
+        "y_above_board": 7.45,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Official 6.5+0.1 mm case and local movable plunger split; top recess must be checked on purchased sample",
+      "source": "config/pcb-parts-geometry.json, config/pcb-shell-v1.json",
+      "assembly": "THT hand solder; pin1 COM,GND; pin2 NO,BTN_R; pin3 dummy mechanical terminal, no circuit connection",
+      "populate": true,
+      "envelopes": [
+        {
+          "kind": "box",
+          "x": [
+            -39.4,
+            -26.6
+          ],
+          "z": [
+            -4.904999999999999,
+            0.9049999999999998
+          ],
+          "y_above_board": [
+            0,
+            6.6
+          ],
+          "source": "Omron D2FC official case height6.5+0.1 mm; recess beside plunger requires sample check"
+        },
+        {
+          "kind": "box",
+          "x": [
+            -31.65,
+            -30.45
+          ],
+          "z": [
+            -3.45,
+            -0.55
+          ],
+          "y_above_board": [
+            6.5,
+            7.45
+          ],
+          "source": "Omron D2FC drawing: plunger1.2x2.9 mm at globalX=-31.05,Z=-2; source tip-high7.45 mm"
+        }
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -56,
+        -5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -56.0,
+            -5.0
+          ],
+          "net": "3V3",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -56.0,
+            -7.54
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -56.0,
+            -10.08
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -56.0,
+            -12.62
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -56.0,
+            -15.16
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "6",
+          "xz": [
+            -56.0,
+            -17.7
+          ],
+          "net": "BTN_R",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "7",
+          "xz": [
+            -56.0,
+            -20.24
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "8",
+          "xz": [
+            -56.0,
+            -22.78
+          ],
+          "net": "SDA",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "9",
+          "xz": [
+            -56.0,
+            -25.32
+          ],
+          "net": "SCL",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "10",
+          "xz": [
+            -56.0,
+            -27.86
+          ],
+          "net": "TOUCH",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "11",
+          "xz": [
+            -56.0,
+            -30.4
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "12",
+          "xz": [
+            -56.0,
+            -32.94
+          ],
+          "net": "VBUS_DET",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -57,
+          -55
+        ],
+        "z": [
+          -33.94,
+          -4
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "One wire per functional net to the verified SuperMini pinmap; no plug/socket on the carrier",
+      "populate": true
+    },
+    {
+      "ref": "J_GY",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -53,
+        10
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -53.0,
+            10.0
+          ],
+          "net": "3V3",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -53.0,
+            7.46
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -53.0,
+            4.92
+          ],
+          "net": "SCL",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -53.0,
+            2.38
+          ],
+          "net": "SDA",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -54,
+          -52
+        ],
+        "z": [
+          1.38,
+          11
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "GY-601N1 chip interface H2: VCC,GND,SCL,SDA; module already has I2C pullups",
+      "populate": true
+    },
+    {
+      "ref": "J_TRIG",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -25.5,
+        -9
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -25.5,
+            -9.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -25.5,
+            -11.54
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -26.5,
+          -24.5
+        ],
+        "z": [
+          -12.54,
+          -8
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "External SS-01GL13 COM/NO, NC unconnected",
+      "populate": true
+    },
+    {
+      "ref": "J_TOUCH",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -25.5,
+        -18
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -25.5,
+            -18.0
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -25.5,
+            -20.54
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -26.5,
+          -24.5
+        ],
+        "z": [
+          -21.54,
+          -17
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",
+      "populate": true
+    },
+    {
+      "ref": "J_BAT",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -56,
+        25
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -56.0,
+            25.0
+          ],
+          "net": "BAT_RAW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -56.0,
+            22.46
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -57,
+          -55
+        ],
+        "z": [
+          21.46,
+          26
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "Protected single-cell LiPo input",
+      "populate": true
+    },
+    {
+      "ref": "J_SWITCH",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -56,
+        17
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -56.0,
+            17.0
+          ],
+          "net": "BAT_RAW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -56.0,
+            14.46
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -57,
+          -55
+        ],
+        "z": [
+          13.46,
+          18
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "External SPST battery-positive isolation switch",
+      "populate": true
+    },
+    {
+      "ref": "J_MODULE_BAT",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -13,
+        20
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -13.0,
+            20.0
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -13.0,
+            17.46
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -14,
+          -12
+        ],
+        "z": [
+          16.46,
+          21
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "SuperMini dedicated B+ and B- pads only",
+      "populate": true
+    },
+    {
+      "ref": "J_MODULE_RAIL",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -13,
+        12.5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -13.0,
+            12.5
+          ],
+          "net": "VBUS_SHARED",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -14,
+          -12
+        ],
+        "z": [
+          11.5,
+          13.5
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "SuperMini 5V/shared VBUS rail monitor only; not an external battery input",
+      "populate": true
+    },
+    {
+      "ref": "R_JOY",
+      "kind": "resistor",
+      "value": "3.3k",
+      "position_xz": [
+        -47,
+        -11
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.81,
+            -11.0
+          ],
+          "net": "3V3",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -43.19,
+            -11.0
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -50.2,
+          -43.8
+        ],
+        "z": [
+          -12.3,
+          -9.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Joystick click external pullup",
+      "populate": true
+    },
+    {
+      "ref": "R_RIGHT",
+      "kind": "resistor",
+      "value": "3.3k",
+      "position_xz": [
+        -37,
+        -11
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -40.81,
+            -11.0
+          ],
+          "net": "3V3",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -33.19,
+            -11.0
+          ],
+          "net": "BTN_R",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -40.2,
+          -33.8
+        ],
+        "z": [
+          -12.3,
+          -9.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Right button external pullup",
+      "populate": true
+    },
+    {
+      "ref": "R_TRIG",
+      "kind": "resistor",
+      "value": "3.3k",
+      "position_xz": [
+        -47,
+        -17
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.81,
+            -17.0
+          ],
+          "net": "3V3",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -43.19,
+            -17.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -50.2,
+          -43.8
+        ],
+        "z": [
+          -18.3,
+          -15.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "SS-01GL closed contact current approx 1 mA at 3.3 V",
+      "populate": true
+    },
+    {
+      "ref": "R_TOUCH",
+      "kind": "resistor",
+      "value": "510",
+      "position_xz": [
+        -37,
+        -17
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -40.81,
+            -17.0
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -33.19,
+            -17.0
+          ],
+          "net": "TOUCH",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -40.2,
+          -33.8
+        ],
+        "z": [
+          -18.3,
+          -15.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Touch series resistor, no pullup or parallel capacitor",
+      "populate": true
+    },
+    {
+      "ref": "R_BAT_H",
+      "kind": "resistor",
+      "value": "100k",
+      "position_xz": [
+        -47,
+        -23
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.81,
+            -23.0
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -43.19,
+            -23.0
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -50.2,
+          -43.8
+        ],
+        "z": [
+          -24.3,
+          -21.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Battery switched-side divider upper",
+      "populate": true
+    },
+    {
+      "ref": "R_BAT_L",
+      "kind": "resistor",
+      "value": "100k",
+      "position_xz": [
+        -37,
+        -23
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -40.81,
+            -23.0
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -33.19,
+            -23.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -40.2,
+          -33.8
+        ],
+        "z": [
+          -24.3,
+          -21.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Battery divider lower, scale=2",
+      "populate": true
+    },
+    {
+      "ref": "R_RAIL_H",
+      "kind": "resistor",
+      "value": "100k",
+      "position_xz": [
+        -47,
+        -29
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.81,
+            -29.0
+          ],
+          "net": "VBUS_SHARED",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -43.19,
+            -29.0
+          ],
+          "net": "VBUS_DET",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -50.2,
+          -43.8
+        ],
+        "z": [
+          -30.3,
+          -27.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Shared rail divider upper; ADC inference, not digital USB state",
+      "populate": true
+    },
+    {
+      "ref": "R_RAIL_L",
+      "kind": "resistor",
+      "value": "100k",
+      "position_xz": [
+        -37,
+        -29
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -40.81,
+            -29.0
+          ],
+          "net": "VBUS_DET",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -33.19,
+            -29.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -40.2,
+          -33.8
+        ],
+        "z": [
+          -30.3,
+          -27.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",
+      "purpose": "Shared rail divider lower, scale=2",
+      "populate": true
+    },
+    {
+      "ref": "C_JOY_X",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -49,
+        24
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.27,
+            24.0
+          ],
+          "net": "JOY_X",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -47.73,
+            24.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -52,
+          -46
+        ],
+        "z": [
+          23,
+          25
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    },
+    {
+      "ref": "C_JOY_Y",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -49,
+        17
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.27,
+            17.0
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -47.73,
+            17.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -52,
+          -46
+        ],
+        "z": [
+          16,
+          18
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    },
+    {
+      "ref": "C_JOY_SW",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -42,
+        -8
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -43.27,
+            -8.0
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.73,
+            -8.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -45,
+          -39
+        ],
+        "z": [
+          -9,
+          -7
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    },
+    {
+      "ref": "C_RIGHT",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -32,
+        -8
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -33.27,
+            -8.0
+          ],
+          "net": "BTN_R",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -30.73,
+            -8.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -35,
+          -29
+        ],
+        "z": [
+          -9,
+          -7
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    },
+    {
+      "ref": "C_TRIG",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -42,
+        -14
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -43.27,
+            -14.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.73,
+            -14.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -45,
+          -39
+        ],
+        "z": [
+          -15,
+          -13
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    },
+    {
+      "ref": "C_BAT",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -42,
+        -26
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -43.27,
+            -26.0
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.73,
+            -26.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -45,
+          -39
+        ],
+        "z": [
+          -27,
+          -25
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    },
+    {
+      "ref": "C_RAIL",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -32,
+        -26
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -33.27,
+            -26.0
+          ],
+          "net": "VBUS_DET",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -30.73,
+            -26.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.8,
+            0.8
+          ],
+          "size": [
+            1.6,
+            1.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -35,
+          -29
+        ],
+        "z": [
+          -27,
+          -25
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",
+      "purpose": "ADC/contact filter",
+      "populate": true
+    }
+  ],
+  "source_sha256": {
+    "config/pcb-shell-v1.json": "7fe80e1e2e066cec1c183877b920eb5e2993332164d19e1b66ddfe4d19ce390b",
+    "config/pcb-parts-geometry.json": "68eef13f2e0565452a7f5501419544a84462694704475a6c1a5aa992f4a3112b"
+  }
+}

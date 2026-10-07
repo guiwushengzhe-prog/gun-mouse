@@ -1,0 +1,362 @@
+{
+  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+  "nets": {
+    "3V3": [
+      "SW1.3",
+      "SW1.4",
+      "J_MCU.1",
+      "J_GY.1",
+      "R_JOY.1",
+      "R_RIGHT.1",
+      "R_TRIG.1"
+    ],
+    "BAT_RAW": [
+      "J_BAT.1",
+      "J_SWITCH.1"
+    ],
+    "BAT_SW": [
+      "J_SWITCH.2",
+      "J_MODULE_BAT.1",
+      "R_BAT_H.1"
+    ],
+    "BTN_R": [
+      "SW2.2",
+      "J_MCU.6",
+      "R_RIGHT.2",
+      "C_RIGHT.1"
+    ],
+    "GND": [
+      "SW1.1",
+      "SW1.6",
+      "SW1.7",
+      "SW1.8",
+      "SW1.9",
+      "SW1.10",
+      "SW1.b",
+      "SW1.d",
+      "SW2.1",
+      "J_MCU.2",
+      "J_GY.2",
+      "J_TRIG.1",
+      "J_TOUCH.2",
+      "J_BAT.2",
+      "J_MODULE_BAT.2",
+      "R_BAT_L.2",
+      "R_RAIL_L.2",
+      "C_JOY_X.2",
+      "C_JOY_Y.2",
+      "C_JOY_SW.2",
+      "C_RIGHT.2",
+      "C_TRIG.2",
+      "C_BAT.2",
+      "C_RAIL.2"
+    ],
+    "JOY_SW": [
+      "SW1.a",
+      "SW1.c",
+      "J_MCU.5",
+      "R_JOY.2",
+      "C_JOY_SW.1"
+    ],
+    "JOY_X": [
+      "SW1.2",
+      "J_MCU.3",
+      "C_JOY_X.1"
+    ],
+    "JOY_Y": [
+      "SW1.5",
+      "J_MCU.4",
+      "C_JOY_Y.1"
+    ],
+    "SCL": [
+      "J_MCU.9",
+      "J_GY.3"
+    ],
+    "SDA": [
+      "J_MCU.8",
+      "J_GY.4"
+    ],
+    "TOUCH": [
+      "J_MCU.10",
+      "R_TOUCH.2"
+    ],
+    "TOUCH_ELECTRODE": [
+      "J_TOUCH.1",
+      "R_TOUCH.1"
+    ],
+    "TRIG": [
+      "J_MCU.7",
+      "J_TRIG.2",
+      "R_TRIG.2",
+      "C_TRIG.1"
+    ],
+    "VBAT_ADC": [
+      "J_MCU.11",
+      "R_BAT_H.2",
+      "R_BAT_L.1",
+      "C_BAT.1"
+    ],
+    "VBUS_DET": [
+      "J_MCU.12",
+      "R_RAIL_H.2",
+      "R_RAIL_L.1",
+      "C_RAIL.1"
+    ],
+    "VBUS_SHARED": [
+      "J_MODULE_RAIL.1",
+      "R_RAIL_H.1"
+    ]
+  },
+  "parts": [
+    {
+      "ref": "SW1",
+      "kind": "joystick",
+      "value": "RKJXV1224005",
+      "pins": {
+        "1": "GND",
+        "2": "JOY_X",
+        "3": "3V3",
+        "4": "3V3",
+        "5": "JOY_Y",
+        "6": "GND",
+        "7": "GND",
+        "8": "GND",
+        "9": "GND",
+        "10": "GND",
+        "a": "JOY_SW",
+        "c": "JOY_SW",
+        "b": "GND",
+        "d": "GND"
+      }
+    },
+    {
+      "ref": "SW2",
+      "kind": "microswitch",
+      "value": "D2FC-F-7N(20M)",
+      "pins": {
+        "3": "",
+        "2": "BTN_R",
+        "1": "GND"
+      }
+    },
+    {
+      "ref": "J_MCU",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "3V3",
+        "2": "GND",
+        "3": "JOY_X",
+        "4": "JOY_Y",
+        "5": "JOY_SW",
+        "6": "BTN_R",
+        "7": "TRIG",
+        "8": "SDA",
+        "9": "SCL",
+        "10": "TOUCH",
+        "11": "VBAT_ADC",
+        "12": "VBUS_DET"
+      }
+    },
+    {
+      "ref": "J_GY",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "3V3",
+        "2": "GND",
+        "3": "SCL",
+        "4": "SDA"
+      }
+    },
+    {
+      "ref": "J_TRIG",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "GND",
+        "2": "TRIG"
+      }
+    },
+    {
+      "ref": "J_TOUCH",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "TOUCH_ELECTRODE",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "J_BAT",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "BAT_RAW",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "J_SWITCH",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "BAT_RAW",
+        "2": "BAT_SW"
+      }
+    },
+    {
+      "ref": "J_MODULE_BAT",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "J_MODULE_RAIL",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "pins": {
+        "1": "VBUS_SHARED"
+      }
+    },
+    {
+      "ref": "R_JOY",
+      "kind": "resistor",
+      "value": "3.3k",
+      "pins": {
+        "1": "3V3",
+        "2": "JOY_SW"
+      }
+    },
+    {
+      "ref": "R_RIGHT",
+      "kind": "resistor",
+      "value": "3.3k",
+      "pins": {
+        "1": "3V3",
+        "2": "BTN_R"
+      }
+    },
+    {
+      "ref": "R_TRIG",
+      "kind": "resistor",
+      "value": "3.3k",
+      "pins": {
+        "1": "3V3",
+        "2": "TRIG"
+      }
+    },
+    {
+      "ref": "R_TOUCH",
+      "kind": "resistor",
+      "value": "510",
+      "pins": {
+        "1": "TOUCH_ELECTRODE",
+        "2": "TOUCH"
+      }
+    },
+    {
+      "ref": "R_BAT_H",
+      "kind": "resistor",
+      "value": "100k",
+      "pins": {
+        "1": "BAT_SW",
+        "2": "VBAT_ADC"
+      }
+    },
+    {
+      "ref": "R_BAT_L",
+      "kind": "resistor",
+      "value": "100k",
+      "pins": {
+        "1": "VBAT_ADC",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "R_RAIL_H",
+      "kind": "resistor",
+      "value": "100k",
+      "pins": {
+        "1": "VBUS_SHARED",
+        "2": "VBUS_DET"
+      }
+    },
+    {
+      "ref": "R_RAIL_L",
+      "kind": "resistor",
+      "value": "100k",
+      "pins": {
+        "1": "VBUS_DET",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_JOY_X",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "JOY_X",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_JOY_Y",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "JOY_Y",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_JOY_SW",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "JOY_SW",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_RIGHT",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "BTN_R",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_TRIG",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "TRIG",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_BAT",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "VBAT_ADC",
+        "2": "GND"
+      }
+    },
+    {
+      "ref": "C_RAIL",
+      "kind": "capacitor",
+      "value": "100n",
+      "pins": {
+        "1": "VBUS_DET",
+        "2": "GND"
+      }
+    }
+  ],
+  "external_connections": "wiring.csv; bought modules are connected by wires and are not fabricated on this board"
+}

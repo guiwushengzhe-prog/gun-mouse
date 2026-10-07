@@ -1,0 +1,28 @@
+﻿Carrier reference,Pin,Net,Connect to,Global X mm,Global Z mm
+J_MCU,1,3V3,SuperMini 3V3 pin,-56.0,-5.0
+J_MCU,2,GND,SuperMini GND pin,-56.0,-7.54
+J_MCU,3,JOY_X,SuperMini GPIO1,-56.0,-10.08
+J_MCU,4,JOY_Y,SuperMini GPIO2,-56.0,-12.62
+J_MCU,5,JOY_SW,SuperMini GPIO4,-56.0,-15.16
+J_MCU,6,BTN_R,SuperMini GPIO12,-56.0,-17.7
+J_MCU,7,TRIG,SuperMini GPIO8,-56.0,-20.24
+J_MCU,8,SDA,SuperMini GPIO5,-56.0,-22.78
+J_MCU,9,SCL,SuperMini GPIO6,-56.0,-25.32
+J_MCU,10,TOUCH,SuperMini GPIO7,-56.0,-27.86
+J_MCU,11,VBAT_ADC,SuperMini GPIO9,-56.0,-30.4
+J_MCU,12,VBUS_DET,SuperMini GPIO10,-56.0,-32.94
+J_GY,1,3V3,GY-601N1 H2 VCC,-53.0,10.0
+J_GY,2,GND,GY-601N1 H2 GND,-53.0,7.46
+J_GY,3,SCL,GY-601N1 H2 SCL,-53.0,4.92
+J_GY,4,SDA,GY-601N1 H2 SDA,-53.0,2.38
+J_TRIG,1,GND,SS-01GL13 COM,-25.5,-9.0
+J_TRIG,2,TRIG,SS-01GL13 NO; NC unconnected,-25.5,-11.54
+J_TOUCH,1,TOUCH_ELECTRODE,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-18.0
+J_TOUCH,2,GND,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-20.54
+J_BAT,1,BAT_RAW,Protected single-cell LiPo input,-56.0,25.0
+J_BAT,2,GND,Protected single-cell LiPo input,-56.0,22.46
+J_SWITCH,1,BAT_RAW,External SPST battery-positive isolation switch,-56.0,17.0
+J_SWITCH,2,BAT_SW,External SPST battery-positive isolation switch,-56.0,14.46
+J_MODULE_BAT,1,BAT_SW,SuperMini dedicated B+,-13.0,20.0
+J_MODULE_BAT,2,GND,SuperMini dedicated B-,-13.0,17.46
+J_MODULE_RAIL,1,VBUS_SHARED,"SuperMini 5V/shared VBUS pin, sense only",-13.0,12.5
