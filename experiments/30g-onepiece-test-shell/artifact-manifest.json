@@ -1,0 +1,26 @@
+{
+  "experiment": "EVT-A 30g one-piece test shell",
+  "date": "2026-10-07",
+  "branch": "experiment/30g-onepiece-test-shell",
+  "status": "experimental-do-not-merge",
+  "one_piece_model": {
+    "volume_cm3": 21.469157906461387,
+    "estimated_mass_g_at_1_35": 28.983363173722873,
+    "watertight": true,
+    "connected_components": 1,
+    "sha256_stl": "8ef0ca38de6dc4f39554e82e27f4244f1cd704a2cfc697def017e0de41038773"
+  },
+  "skeleton_v3": {
+    "volume_cm3": 16.461072504023046,
+    "sha256_stl": "91dc8f819b84e45be226934b5eec686d19c0de1ed9b6a7d1f225e4949436e343"
+  },
+  "preview_sha256": {
+    "front": "e3e8ecdd14d7e2ab2d9913d595a4d6d18475de3a196c3758a3a007d9eac47086",
+    "back": "bf7f479e82279b3450581e7b736189ea431f2dc904ced12c158dcb7d6eaabdb8"
+  },
+  "notes": [
+    "CAD geometry only; resin print tolerance is not yet validated.",
+    "Keep this experiment isolated from main manufacturing deliverables.",
+    "The generated binary STL is identified by SHA-256 above."
+  ]
+}
