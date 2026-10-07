@@ -11,7 +11,9 @@ Printed parts (assembly coordinates, one STEP/STL each, no sprue tree):
   shell_left   - shallow half: joystick cone, right-button bezel, trigger
                  gate, holder groove, PCB clamp posts with nut pockets
   imu_cradle   - GY-601N1 cradle with the H1 carrier clamp leg
-  trigger, touch_cover, switch_holder, right_cap, joystick_cap
+  trigger, switch_holder, right_cap, joystick_cap
+(no printed touch cover: copper foil tape goes straight into the trigger's
+front recess; the 0.9 and 1.5 mm covers failed the print shop's size check)
 
 Run from this directory with CadQuery 2.7:  python build_evt1.py
 """
@@ -577,7 +579,6 @@ def build_parts():
         "shell_left": build_left(skin),
         "imu_cradle": build_imu_cradle(skin),
         "trigger": et.build_trigger(),
-        "touch_cover": et.build_touch_cover(),
         "switch_holder": et.build_holder(),
         "right_cap": build_right_cap(),
         "joystick_cap": build_joystick_cap(),

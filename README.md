@@ -1,6 +1,6 @@
 # 枪型飞鼠：电路板与外壳
 
-**当前推荐：EVT-1 轻壳（`experiments/evt1-light-shell/`）**。电路用 ESP32-S3 SuperMini 加手焊载板，不需要 SMT 贴片单；外壳是封闭握把的左右两半壳，另有 6 个小件，USB-C 在机头正前方，扳机开关是 SS-01GL。打印文件、要买的东西、装配顺序和 BOOST 充电步骤都在该目录的 README。载板 Gerber、BOM 和固件在 `experiments/30g-onepiece-test-shell/`（`pcb/`、`firmware/`）；该目录的 30 g 开放骨架只作历史参考，标准 USB-C 线插不进，不要下单。
+**当前推荐：EVT-1 轻壳（`experiments/evt1-light-shell/`）**。电路用 ESP32-S3 SuperMini 加手焊载板，不需要 SMT 贴片单；外壳是封闭握把的左右两半壳，另有 5 个小件，USB-C 在机头正前方，扳机开关是 SS-01GL。打印文件、要买的东西、装配顺序和 BOOST 充电步骤都在该目录的 README。载板 Gerber、BOM 和固件在 `experiments/30g-onepiece-test-shell/`（`pcb/`、`firmware/`）；该目录的 30 g 开放骨架只作历史参考，标准 USB-C 线插不进，不要下单。
 
 **此前的推荐版：单板经济型，扳机开关自焊**：取消扳机小板只做一款主板，SS-01GL 由用户焊两根线后装在打印支架上；恢复充电灯，R3 改 5.1k（约235mA），U4 不装（国内库存不足）；扳机调节触点改用市售 M2×10 内六角圆柱头螺钉；全机螺丝统一为 M2×10、M2×20 两种杯头内六角加 M2 螺母。J3/J4/J5 三个 PH2.0 座不装，电池、扳机开关和触摸线直接焊在焊盘上。下单文件、费用推算、装配与充电温度首件检查见 `deliverables/经济型单板自焊版/README.md`；重新生成依次运行 `scripts/prepare_single_board.py`、`single_board_eda.py`、`package_single_board.py`、`economy_holder.py`、`render_holder.py`、`check_left_equivalence.py`、`check_holder_screw_heads.py`、`check_unified_screws.py`、`build_single_handoff.py`。`deliverables/经济型工厂代焊版` 与 `deliverables/经济型改版` 保留为历史方案，不再用于下单。
 

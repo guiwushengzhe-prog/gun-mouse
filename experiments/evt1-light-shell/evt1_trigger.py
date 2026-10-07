@@ -57,32 +57,6 @@ GL_BODY_TOP_X = SWITCH_BOTTOM_X + 9.5
 GL_OVERTRAVEL_MIN = 1.2
 
 
-TOUCH_COVER_X = 1.55     # 1.5 mm normal to the 12 deg blade face (print-shop minimum feature)
-
-
-def build_touch_cover(offset_x=0.0):
-    """Touch cover thickened outward from 0.9 to 1.5 mm normal thickness.
-
-    The inner face stays where the experiment put it (0.15 mm foil/adhesive
-    gap above the 1.05 mm recess floor), so the trigger is unchanged; the
-    cover now stands 0.6 mm proud of the blade face with rounded edges.
-    """
-    tr = tp._cfg()["trigger"]
-    bl, ct = tr["blade"], tr["touch_cover_thickness"]
-    z0, z1 = bl["z"]
-    w = bl["width_y"] / 2
-
-    def xf(z):
-        return 8.0 + (2.0 - 8.0) * (z + 4.0) / (-32.0 + 4.0) + bl["gap_to_grip"] + bl["thickness"]
-    a, b = z1 - 3.15, z0 + 3.15
-    lo, hi = -ct, TOUCH_COVER_X - ct
-    cover = tp._prism_xz([(xf(a) + lo, a), (xf(a) + hi, a), (xf(b) + hi, b), (xf(b) + lo, b)],
-                         -w + 1.35, w - 1.35)
-    outer = max(cover.Faces(), key=lambda f: f.Center().x)
-    cover = cover.fillet(0.5, outer.Edges())
-    return single(cover.translate(V(offset_x, 0, 0)), "touch cover")
-
-
 def build_trigger(offset_x=0.0):
     """Experiment trigger with the nut-locked contact moved to the GL axis."""
     digest = hashlib.sha256(tp.SOURCE.read_bytes()).hexdigest()
@@ -217,7 +191,6 @@ def validate_internal():
         rows[f"{which}_nut_vs_resin_mm3"] = trigger.intersect(nut(which)).Volume()
     spin = cyl_x(0, AXIS_Z, NUT_AF / math.sqrt(3), JAM_NUT_X, JAM_NUT_X + NUT_K)
     rows["jam_nut_all_rotations_envelope_vs_resin_mm3"] = trigger.intersect(spin).Volume()
-    rows["cover_vs_trigger_mm3"] = trigger.intersect(build_touch_cover()).Volume()
     # Resin left between the GL nut cavities and the spring bore (top Z=-22.2).
     cavity_low = AXIS_Z - max(2.6, POCKET_AF / math.sqrt(3))
     holder, rigid = build_holder(), switch_rigid()
