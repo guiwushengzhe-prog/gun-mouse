@@ -240,9 +240,8 @@ def motion_checks(parts, refs):
                 hits[f"env/{e['ref']}/{e['side']}/{e.get('sub_envelope', e.get('pad'))}"] = pr
         states[label] = {"collisions": hits, "clear": not hits}
 
-    trig = compound([parts["trigger"], parts["touch_cover"]])
     for t in (0.0, et.TRAVEL / 2, et.TRAVEL):
-        check(f"trigger_{t:.2f}", trig.translate(V(-t, 0, 0)), {"trigger", "touch_cover"})
+        check(f"trigger_{t:.2f}", parts["trigger"].translate(V(-t, 0, 0)), {"trigger"})
     # Right cap: tip preloads the D2FC plunger (sub-envelope 1) by design.
     active = {"ref": "SW2", "sub": 0, "bounds": [-31.45, -30.65, 4.77, 4.97, -3, -1]}
     for t in (0.0, 0.4, 0.8):
@@ -283,7 +282,7 @@ def contact_adjustment_check(parts, refs):
     sweep = et.screw_motion_envelope()
     hits = {}
     for k, s in parts.items():
-        if k in ("trigger", "touch_cover"):
+        if k == "trigger":
             continue
         pr = pair(sweep, s)
         if not pr["clear_of_volume_interference"]:
@@ -401,7 +400,7 @@ def path_checks(parts, refs):
                        + [e["shape"] for e in refs["component_envelopes"] if e["board_group"] == "imu"])
     sm_sub = compound([fixed_all["dev_board"]]
                       + [e["shape"] for e in refs["component_envelopes"] if e["board_group"] == "dev_board"])
-    trig_sub = compound([parts["trigger"], parts["touch_cover"], et.screw(0.0), et.nut("fixed"), et.nut("jam")])
+    trig_sub = compound([parts["trigger"], et.screw(0.0), et.nut("fixed"), et.nut("jam")])
     sw_env = [e["shape"] for e in refs["component_envelopes"] if e["board_group"] == "trigger_switch"]
     acc = accessory_shapes()
     switch_sub = compound([acc["battery_switch_body"], acc["battery_switch_actuator_full_travel"],

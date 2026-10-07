@@ -19,7 +19,7 @@ import verify_evt1 as ve  # noqa: E402
 
 OUT = HERE / "generated"
 OFFSETS = {"shell_left": (0, 55, 0), "shell_right": (0, -45, 0), "imu_cradle": (0, 30, 10),
-           "imu": (0, 32, 10), "trigger": (26, 0, 0), "touch_cover": (44, 0, 0),
+           "imu": (0, 32, 10), "trigger": (26, 0, 0),
            "switch_holder": (-22, 12, 0), "trigger_switch": (-22, 12, 0), "right_cap": (0, 70, 0),
            "joystick_cap": (0, 78, 0), "pcb_board": (0, 8, 0), "battery": (0, -30, 0), "dev_board": (0, -20, 0)}
 _base_explode = rof._explode
