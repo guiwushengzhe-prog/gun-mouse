@@ -32,7 +32,7 @@ EXP = HERE.parent / "30g-onepiece-test-shell"
 sys.path.insert(0, str(EXP))
 import trigger_parts as tp  # noqa: E402
 import trigger_holder as th  # noqa: E402
-from trigger_parts import box, cyl_x, hex_prism_x, single, build_touch_cover  # noqa: E402,F401
+from trigger_parts import box, cyl_x, hex_prism_x, single  # noqa: E402
 
 V = cq.Vector
 SWITCH_MODEL = "SS-01GL"
@@ -55,6 +55,32 @@ GL_OPERATING_X = (SWITCH_BOTTOM_X + 10.9, SWITCH_BOTTOM_X + 12.5)
 GL_FREE_X_MAX = SWITCH_BOTTOM_X + 16.5
 GL_BODY_TOP_X = SWITCH_BOTTOM_X + 9.5
 GL_OVERTRAVEL_MIN = 1.2
+
+
+TOUCH_COVER_X = 1.55     # 1.5 mm normal to the 12 deg blade face (print-shop minimum feature)
+
+
+def build_touch_cover(offset_x=0.0):
+    """Touch cover thickened outward from 0.9 to 1.5 mm normal thickness.
+
+    The inner face stays where the experiment put it (0.15 mm foil/adhesive
+    gap above the 1.05 mm recess floor), so the trigger is unchanged; the
+    cover now stands 0.6 mm proud of the blade face with rounded edges.
+    """
+    tr = tp._cfg()["trigger"]
+    bl, ct = tr["blade"], tr["touch_cover_thickness"]
+    z0, z1 = bl["z"]
+    w = bl["width_y"] / 2
+
+    def xf(z):
+        return 8.0 + (2.0 - 8.0) * (z + 4.0) / (-32.0 + 4.0) + bl["gap_to_grip"] + bl["thickness"]
+    a, b = z1 - 3.15, z0 + 3.15
+    lo, hi = -ct, TOUCH_COVER_X - ct
+    cover = tp._prism_xz([(xf(a) + lo, a), (xf(a) + hi, a), (xf(b) + hi, b), (xf(b) + lo, b)],
+                         -w + 1.35, w - 1.35)
+    outer = max(cover.Faces(), key=lambda f: f.Center().x)
+    cover = cover.fillet(0.5, outer.Edges())
+    return single(cover.translate(V(offset_x, 0, 0)), "touch cover")
 
 
 def build_trigger(offset_x=0.0):

@@ -54,9 +54,9 @@
    "solids": 1,
    "bounds_mm": [
     13.046428571429,
-    19.025,
-    -3.65,
-    3.65,
+    19.55650639059732,
+    -3.65000000000032,
+    3.65000000000032,
     -30.85,
     -7.15
    ]
@@ -1011,7 +1011,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 7.3,
+   "seconds": 6.8,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1023,7 +1023,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 52.3,
+   "seconds": 48.0,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1039,7 +1039,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 45.7,
+   "seconds": 45.0,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1055,7 +1055,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 225.5,
+   "seconds": 235.2,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1103,7 +1103,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 175.0,
+   "seconds": 193.1,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1131,7 +1131,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 44.7,
+   "seconds": 49.1,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1155,7 +1155,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 15.6,
+   "seconds": 17.8,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1175,7 +1175,7 @@
    "direction": "-Y (installed from the open +Y side)",
    "travel_mm": 44.95,
    "entire_path_clear": true,
-   "seconds": 741.1,
+   "seconds": 794.3,
    "obstacles": {
     "shell_right": {
      "proved": true,
@@ -1228,7 +1228,7 @@
    }
   },
   "pass": true,
-  "seconds": 1312.1
+  "seconds": 1394.2
  },
  "mass": {
   "parts_mm3": {
@@ -1236,17 +1236,17 @@
    "shell_left": 14169.41,
    "imu_cradle": 641.78,
    "trigger": 2197.82,
-   "touch_cover": 155.71,
+   "touch_cover": 267.18,
    "switch_holder": 868.41,
    "right_cap": 691.06,
    "joystick_cap": 702.85
   },
-  "total_mm3": 39993.23,
+  "total_mm3": 40104.7,
   "mass_g": {
-   "resin_low": 45.99,
-   "resin_mid": 47.99,
-   "resin_experiment_assumption": 53.99,
-   "PA12_MJF": 40.39
+   "resin_low": 46.12,
+   "resin_mid": 48.13,
+   "resin_experiment_assumption": 54.14,
+   "PA12_MJF": 40.51
   },
   "density_note": "Resin density is the print shop's number; weigh the first print to find it."
  },
@@ -1272,15 +1272,15 @@
   "Touch false-trigger margin with the palm on the closed grip",
   "Flexible wire routing beyond the declared corridors"
  ],
- "runtime_s": 1354.5,
+ "runtime_s": 1437.8,
  "parts_source_sha256": {
-  "shell_right.step": "6308205655f9967a5b5e7cdefa9e20428cbbc803f07a75f916f7b04bf4e6343f",
-  "shell_left.step": "f5f9db41ed9b9e0693c22eead210b552128b3c21a4ddb0c7da15a174ea7bbb92",
-  "imu_cradle.step": "615a980c7b080100e3e1a21e7b42d579f9984edda7dd580441a976d0df662211",
-  "trigger.step": "7695078eccb8617333550384c28269cf45bd00448fc6378e60726b33e55c43a1",
-  "touch_cover.step": "2ac9a2f20326d299102b86b11f1c9960fb5ccc4425639ae12ef071b3aaf3f060",
-  "switch_holder.step": "e436b1704d3c29934f946ecd417e1396203a3260462b4144cf7c30146ce232a4",
-  "right_cap.step": "b5bbef117210a2270563374a924a3be4e0ed2f03516b89d37b2c580be283cb3d",
-  "joystick_cap.step": "ce73768f42d3c47fee211a60456edd774b8b6bae4e1376ab1043002849a53001"
+  "shell_right.step": "091d78088514fd0633bdca176af9f507115512c5a3c1bdf4d6bbe87f997abbd9",
+  "shell_left.step": "784ed8e7ccccbf1834e9b27aa93c3b99acefe670009e075a2085b4c8c80641a6",
+  "imu_cradle.step": "a49521317156565dbc0b91cb123393e9a25a3e8c898bed5238b97aba4366aed8",
+  "trigger.step": "95c66553aa8f1c17b3c74c34a11ea6d996cb168d6feea596f465591c9b5b8a2f",
+  "touch_cover.step": "dfd5a978f041fde07938318f9a957a61424dd0877899f5f26cbee792d5dce55c",
+  "switch_holder.step": "73e7f79a9c64637f9f972e36cd7e5f1c6113f45da97dec0535e19d5bbb01c1f9",
+  "right_cap.step": "9522f6f93ae7faef048fb4dd903f08fb850eb7d58c0e883ce3b342d28b1f32d9",
+  "joystick_cap.step": "0def55b09d8db6790adf61dd330fcfd25a13a93beb40e71009e9539ab6aca7af"
  }
 }
