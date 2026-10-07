@@ -5,6 +5,7 @@
 ## 制板文件和规格
 
 - 制造文件：[Gerber ZIP](gun-mouse-supermini-carrier-Gerber.zip)；原生编辑文件：[KiCad PCB](gun-mouse-supermini-carrier.kicad_pcb)。使用 ZIP 内板框、铜层、阻焊、丝印及钻孔文件完整制板，不从截图重画。
+- 嘉立创下单版：[JLC Gerber ZIP](gun-mouse-supermini-carrier-JLC-Gerber.zip)。做法是用嘉立创EDA专业版 v4.1.66 导入上面的 KiCad PCB，再原生导出（工程见 [jlceda/](jlceda/gun-mouse-supermini-carrier.eprj2)），两份 ZIP 二选一上传。逐层比对结果：铜层、阻焊、板框和 90 个钻孔（含 3 个 D2FC 长圆孔）与 KiCad 版一致；6 个非金属化孔在铜层多了与孔径等大的铜盘，钻孔后会被完全钻掉。丝印只改了字号：EDA 默认字体同字号显示偏小，因此统一放大，实际字高约 0.86 mm，原版为 0.8 mm，位置不变。EDA 规则检查报出的覆铜间距 0.2505 mm（小于 10 mil）和过孔孔径 0.3 mm 两类问题，是导入规则换算造成的，几何以 KiCad DRC 为准。
 - 板材采用常规 FR-4，外接矩形 **52×82mm**，一侧带缺口；以 `Edge.Cuts` 的真实轮廓为准，不能做成实心矩形。板厚 **1.6mm、2层、1oz铜**。
 - 主板不做工厂 SMT。摇杆、右键微动、电阻、电容和导线在本板手焊；SuperMini 与 GY-601N1 购买现成模块，不在本载板上复制它们的贴片电路。
 - 安装孔 H1–H4 为 Ø2.4mm 非金属化孔；摇杆定位孔同样为非金属化孔。器件/焊线通孔按钻孔文件做金属化，D2FC 的长圆孔也按原制造文件加工，不能擅自换成更小圆孔。

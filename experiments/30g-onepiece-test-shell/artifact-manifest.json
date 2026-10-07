@@ -483,8 +483,8 @@
       "sha256": "2c1fbc9e64e203c45013b02df4f40cc653beea9119a132af95461454e25d0ee1"
     },
     "pcb/PCB-manufacture-notes.md": {
-      "bytes": 10218,
-      "sha256": "78fccb67179ba0067f7fad52d601dd1aef3a0426f405f3379ad2ea8a3f8f0670"
+      "bytes": 11005,
+      "sha256": "ae20d1607a2a9445b2448a76f1e3a519b112068ac9f46642b62f8bcbdcc3d647"
     },
     "pcb/build-report.json": {
       "bytes": 906,
@@ -542,6 +542,10 @@
       "bytes": 81333,
       "sha256": "c510141cec0f73dfeacebcf184730be085a3d8d49b4fcba195b043f57cf6d53e"
     },
+    "pcb/gun-mouse-supermini-carrier-JLC-Gerber.zip": {
+      "bytes": 129239,
+      "sha256": "b46ff747ef8bdfd59d1492c3795dc4bf87ca4e2e4a6f914ecb05aa0da4f5ba05"
+    },
     "pcb/gun-mouse-supermini-carrier.kicad_pcb": {
       "bytes": 381574,
       "sha256": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0"
@@ -549,6 +553,10 @@
     "pcb/gun-mouse-supermini-carrier.kicad_pro": {
       "bytes": 8385,
       "sha256": "0b926eb1fd8f92a61f53a223b2fc9cd55fc5a585834c2882ba0af2d1c2c12819"
+    },
+    "pcb/jlceda/gun-mouse-supermini-carrier.eprj2": {
+      "bytes": 983040,
+      "sha256": "c42e6a052caf78af72090af1c3c65b61ed96ec27c37f9d88c7f448112fb08833"
     },
     "pcb/wiring.csv": {
       "bytes": 1578,
