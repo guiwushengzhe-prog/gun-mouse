@@ -1,4 +1,0 @@
-# Preserve the exact bytes used by manufacturing and validation SHA manifests.
-* -text
-pcb/*.csv whitespace=cr-at-eol
-research/supermini/community-ESP32-S3-SuperMini.kicad_mod whitespace=cr-at-eol

@@ -1,12 +1,3 @@
 * text=auto eol=lf
-# 自动导出的三维交换文件按原字节保存；修改应来自配置与生成脚本。
+# 自动导出的三维交换文件按原字节保存
 *.step binary
-# 实际接口证据按原字节保存，避免换行转换改变校验值。
-evidence/route-writeback-fix/* -text
-# 新版交付校验清单按实际原字节计算，检出时也保持原字节。
-deliverables/经济型工厂代焊版/** -text whitespace=cr-at-eol
-deliverables/经济型改版/** -text whitespace=cr-at-eol
-pcb/gun-mouse-economy-factory-v3/** -text whitespace=cr-at-eol
-pcb/gun-mouse-economy-v2/** -text whitespace=cr-at-eol
-deliverables/经济型单板自焊版/** -text whitespace=cr-at-eol
-pcb/gun-mouse-economy-single-v4/** -text whitespace=cr-at-eol

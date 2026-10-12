@@ -1,9 +1,0 @@
-{
-  "geometry_check_passed": true,
-  "manufacturing_finalized": false,
-  "assembled_pcb_source": "outputs\\pcb-shell-v1\\preview-models\\pcb.step",
-  "assembled_pcb_sha256": "ce6324781fb291ddba48f354bfc38403adaa384328fbd63f34233bc0cd13f0b4",
-  "assembled_pcb_solids": 209,
-  "positive_intersections_mm3": [],
-  "note": "只证明所读装配主板的局部几何；未证明真实柱高、板弯曲、触点保持力或寿命。"
-}

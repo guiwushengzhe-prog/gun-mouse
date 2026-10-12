@@ -1,6 +1,0 @@
-name: cadquery
-channels:
-  - conda-forge
-dependencies:
-  - python=3.12.14
-  - cadquery=2.8.0

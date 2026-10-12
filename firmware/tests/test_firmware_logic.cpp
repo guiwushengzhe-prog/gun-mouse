@@ -117,6 +117,32 @@ int testDebounce() {
   return 0;
 }
 
+int testRejectedSend() {
+  ControlCore core;
+  ReportSender sender;
+  HidReport report;
+  core.setInputs(true, false, true, 0, 1);
+  sender.absorb(core.takeReport());
+  CHECK(sender.prepare(10000, 7500, report) && report.buttons == 0);
+  // 底层拒绝发送：不调用 commit。首次中立帧必须留给下一次成功发送。
+  CHECK(sender.prepare(13000, 7500, report) && report.buttons == 0 && report.dx == 0);
+  sender.commit(13000);
+  core.setInputs(true, false, true, 1, 2);
+  sender.absorb(core.takeReport());
+  core.setInputs(true, false, true, 0, 3);
+  core.offerJoystick(4, 0);
+  sender.absorb(core.takeReport());
+  CHECK(sender.prepare(21000, 7500, report) && report.buttons == 1 && report.dx == 4);
+  const int queuedBeforeRetry = sender.queued();
+  CHECK(sender.prepare(24000, 7500, report) && report.buttons == 1 && report.dx == 4);
+  CHECK(sender.queued() == queuedBeforeRetry && sender.joystick().x() == 4);
+  sender.commit(24000);
+  CHECK(sender.prepare(27000, 7500, report) && report.buttons == 0 && report.dx == 0);
+  sender.commit(27000);
+  CHECK(sender.queued() == 0 && sender.joystick().x() == 0);
+  return 0;
+}
+
 int testTouch() {
   TouchDetector t;
   t.begin(0);
@@ -189,13 +215,16 @@ int testGyro() {
 int testBatteryUsb() {
   CHECK(batteryPercentFromMillivolts(4200) == 100 && batteryPercentFromMillivolts(3200) == 0);
   CHECK(batteryPercentFromMillivolts(3850) > 45 && batteryPercentFromMillivolts(3850) < 62);
-  UsbDetector u;
-  CHECK(u.updateMillivolts(2375) && u.updateMillivolts(1350) && !u.updateMillivolts(1100));
+  External5vDetector u;
+  CHECK(!u.updateMillivolts(4000));  // 充满电池经二极管供电时不能误报 USB
+  CHECK(!u.updateMillivolts(4500) && u.updateMillivolts(4501));
+  CHECK(u.updateMillivolts(4400) && u.updateMillivolts(4300) && !u.updateMillivolts(4299));
+  CHECK(!u.updateMillivolts(NAN));
   return 0;
 }
 
 int main() {
-  if (testSender() || testDebounce() || testTouch() || testJoystick() || testGyro() || testBatteryUsb()) return 1;
+  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testJoystick() || testGyro() || testBatteryUsb()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;
 }
