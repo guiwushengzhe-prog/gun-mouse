@@ -377,6 +377,60 @@ def verify_mesh(path, cad_volume):
     return result
 
 
+def export_assembled_stl():
+    """合并现有底座、实际PCB网格、器件示意体和紧固件，供装配查看。"""
+    import vtk
+    base = cq.importers.importStep(str(OUT / "step" / "engineering_mount.step")).val()
+    b = base.BoundingBox()
+    refs = references()
+    refs.pop("载板")
+    refs.update(hardware()[0])
+    geometry = vtk.vtkAppendPolyData()
+    reader = vtk.vtkSTLReader()
+    reader.SetFileName(str(OUT / "stl" / "engineering_mount.stl"))
+    reader.Update()
+    geometry.AddInputData(reader.GetOutput())
+    for name, shape in refs.items():
+        if "留空" in name:
+            continue
+        verts, tris = shape.tessellate(.05)
+        points, cells = vtk.vtkPoints(), vtk.vtkCellArray()
+        for p in verts:
+            points.InsertNextPoint(p.x-b.xmin, b.zmax-p.z, p.y-BASE[0])
+        for tri in tris:
+            cells.InsertNextCell(3, tri)
+        data = vtk.vtkPolyData()
+        data.SetPoints(points)
+        data.SetPolys(cells)
+        geometry.AddInputData(data)
+    board = vtk.vtkOBJReader()
+    board.SetFileName(str(ROOT / "pcb" / "3d" / "gun-mouse-gen2.obj"))
+    board.Update()
+    board_mesh = vtk.vtkPolyData()
+    board_mesh.DeepCopy(board.GetOutput())
+    z0, z1 = board_mesh.GetBounds()[4:6]
+    middle_y = (BACK+TOP)/2
+    vertices = vtk.vtkPoints()
+    for i in range(board_mesh.GetNumberOfPoints()):
+        u, v, w = board_mesh.GetPoint(i)
+        vertices.InsertNextPoint(-u-3-b.xmin, b.zmax-(v+45),
+                                 middle_y+w-(z0+z1)/2-BASE[0])
+    board_mesh.SetPoints(vertices)
+    geometry.AddInputData(board_mesh)
+    triangles = vtk.vtkTriangleFilter()
+    triangles.SetInputConnection(geometry.GetOutputPort())
+    triangles.Update()
+    path = OUT / "stl" / "第二代完整装配.stl"
+    writer = vtk.vtkSTLWriter()
+    writer.SetFileName(str(path))
+    writer.SetFileTypeToBinary()
+    writer.SetInputConnection(triangles.GetOutputPort())
+    if writer.Write() != 1:
+        raise RuntimeError("装配STL导出失败")
+    print(str(path), flush=True)
+    print("毫米；包含底座、PCB、器件外形示意及紧固件；不含运动留空体。", flush=True)
+
+
 def main():
     s = build_mount()
     refs = references()
@@ -401,4 +455,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--assembly-only" in sys.argv:
+        export_assembled_stl()
+    else:
+        main()
