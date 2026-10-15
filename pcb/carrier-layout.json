@@ -80,1790 +80,75 @@
   },
   "all_pads": [
     {
+      "ref": "R_TOUCH",
       "number": "1",
-      "xz": [
-        -41.73,
-        20.499
-      ],
-      "net": "GND",
-      "drill": [
-        1.2,
-        1.2
-      ],
-      "size": [
-        2.0,
-        2.0
-      ],
-      "shape": "circle",
-      "ref": "SW1",
       "xy": [
-        38.73,
-        24.501
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "2",
-      "xz": [
-        -41.73,
-        22.999
-      ],
-      "net": "JOY_X",
-      "drill": [
-        1.2,
-        1.2
-      ],
-      "size": [
-        2.0,
-        2.0
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        38.73,
-        22.001
-      ],
-      "net_code": 7
-    },
-    {
-      "number": "3",
-      "xz": [
-        -41.73,
-        25.501
-      ],
-      "net": "3V3",
-      "drill": [
-        1.2,
-        1.2
-      ],
-      "size": [
-        2.0,
-        2.0
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        38.73,
-        19.499
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "4",
-      "xz": [
-        -35.499,
-        31.729
-      ],
-      "net": "3V3",
-      "drill": [
-        1.2,
-        1.2
-      ],
-      "size": [
-        2.0,
-        2.0
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        32.499,
-        13.271
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "5",
-      "xz": [
-        -33.0,
-        31.729
-      ],
-      "net": "JOY_Y",
-      "drill": [
-        1.2,
-        1.2
-      ],
-      "size": [
-        2.0,
-        2.0
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        30.0,
-        13.271
-      ],
-      "net_code": 8
-    },
-    {
-      "number": "6",
-      "xz": [
-        -30.498,
-        31.729
-      ],
-      "net": "GND",
-      "drill": [
-        1.2,
-        1.2
-      ],
-      "size": [
-        2.0,
-        2.0
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        27.498,
-        13.271
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "7",
-      "xz": [
-        -26.675,
-        28.0
-      ],
-      "net": "GND",
-      "drill": [
-        1.8,
-        1.8
-      ],
-      "size": [
-        2.6,
-        2.6
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        23.675,
-        17.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "8",
-      "xz": [
-        -26.675,
-        18.0
-      ],
-      "net": "GND",
-      "drill": [
-        1.8,
-        1.8
-      ],
-      "size": [
-        2.6,
-        2.6
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        23.675,
-        27.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "9",
-      "xz": [
-        -39.324,
-        18.0
-      ],
-      "net": "GND",
-      "drill": [
-        1.8,
-        1.8
-      ],
-      "size": [
-        2.6,
-        2.6
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        36.324,
-        27.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "10",
-      "xz": [
-        -39.324,
-        28.0
-      ],
-      "net": "GND",
-      "drill": [
-        1.8,
-        1.8
-      ],
-      "size": [
-        2.6,
-        2.6
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        36.324,
-        17.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "a",
-      "xz": [
-        -29.479,
-        17.208
-      ],
-      "net": "JOY_SW",
-      "drill": [
-        1.6,
-        1.6
-      ],
-      "size": [
-        2.4,
-        2.4
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        26.479,
-        27.792
-      ],
-      "net_code": 6
-    },
-    {
-      "number": "c",
-      "xz": [
-        -36.479,
-        17.208
-      ],
-      "net": "JOY_SW",
-      "drill": [
-        1.6,
-        1.6
-      ],
-      "size": [
-        2.4,
-        2.4
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        33.479,
-        27.792
-      ],
-      "net_code": 6
-    },
-    {
-      "number": "b",
-      "xz": [
-        -29.479,
-        12.709
-      ],
-      "net": "GND",
-      "drill": [
-        1.6,
-        1.6
-      ],
-      "size": [
-        2.4,
-        2.4
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        26.479,
-        32.291
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "d",
-      "xz": [
-        -36.479,
-        12.709
-      ],
-      "net": "GND",
-      "drill": [
-        1.6,
-        1.6
-      ],
-      "size": [
-        2.4,
-        2.4
-      ],
-      "shape": "circle",
-      "ref": "SW1",
-      "xy": [
-        33.479,
-        32.291
-      ],
-      "net_code": 5
-    },
-    {
-      "ref": "SW1",
-      "number": "NPTH1",
-      "xy": [
-        25.698,
-        22.0
-      ],
-      "net_code": -1,
-      "drill": [
-        1.8,
-        1.8
-      ],
-      "size": [
-        1.8,
-        1.8
-      ]
-    },
-    {
-      "ref": "SW1",
-      "number": "NPTH2",
-      "xy": [
-        34.298,
-        22.0
-      ],
-      "net_code": -1,
-      "drill": [
-        1.8,
-        1.8
-      ],
-      "size": [
-        1.8,
-        1.8
-      ]
-    },
-    {
-      "number": "3",
-      "xz": [
-        -38.08,
-        -2.0
-      ],
-      "net": "",
-      "drill": [
-        0.7,
-        1.2
-      ],
-      "size": [
-        1.5,
-        2.0
-      ],
-      "shape": "oval",
-      "ref": "SW2",
-      "xy": [
-        35.08,
-        47.0
-      ],
-      "net_code": 0
-    },
-    {
-      "number": "2",
-      "xz": [
-        -33.0,
-        -2.0
-      ],
-      "net": "BTN_R",
-      "drill": [
-        0.7,
-        1.2
-      ],
-      "size": [
-        1.5,
-        2.0
-      ],
-      "shape": "oval",
-      "ref": "SW2",
-      "xy": [
-        30.0,
-        47.0
-      ],
-      "net_code": 4
-    },
-    {
-      "number": "1",
-      "xz": [
-        -27.92,
-        -2.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.7,
-        1.2
-      ],
-      "size": [
-        1.5,
-        2.0
-      ],
-      "shape": "oval",
-      "ref": "SW2",
-      "xy": [
-        24.92,
-        47.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -56.0,
-        -5.0
-      ],
-      "net": "3V3",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        50.0
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "2",
-      "xz": [
-        -56.0,
-        -7.54
-      ],
-      "net": "GND",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        52.54
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "3",
-      "xz": [
-        -56.0,
-        -10.08
-      ],
-      "net": "JOY_X",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        55.08
-      ],
-      "net_code": 7
-    },
-    {
-      "number": "4",
-      "xz": [
-        -56.0,
-        -12.62
-      ],
-      "net": "JOY_Y",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        57.62
-      ],
-      "net_code": 8
-    },
-    {
-      "number": "5",
-      "xz": [
-        -56.0,
-        -15.16
-      ],
-      "net": "JOY_SW",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        60.16
-      ],
-      "net_code": 6
-    },
-    {
-      "number": "6",
-      "xz": [
-        -56.0,
-        -17.7
-      ],
-      "net": "BTN_R",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        62.7
-      ],
-      "net_code": 4
-    },
-    {
-      "number": "7",
-      "xz": [
-        -56.0,
-        -20.24
-      ],
-      "net": "TRIG",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        65.24
-      ],
-      "net_code": 13
-    },
-    {
-      "number": "8",
-      "xz": [
-        -56.0,
-        -22.78
-      ],
-      "net": "SDA",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        67.78
-      ],
-      "net_code": 10
-    },
-    {
-      "number": "9",
-      "xz": [
-        -56.0,
-        -25.32
-      ],
-      "net": "SCL",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        70.32
-      ],
-      "net_code": 9
-    },
-    {
-      "number": "10",
-      "xz": [
-        -56.0,
-        -27.86
-      ],
-      "net": "TOUCH",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        72.86
-      ],
-      "net_code": 11
-    },
-    {
-      "number": "11",
-      "xz": [
-        -56.0,
-        -30.4
-      ],
-      "net": "VBAT_ADC",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        75.4
-      ],
-      "net_code": 14
-    },
-    {
-      "number": "12",
-      "xz": [
-        -56.0,
-        -32.94
-      ],
-      "net": "VBUS_DET",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_MCU",
-      "xy": [
-        53.0,
-        77.94
-      ],
-      "net_code": 15
-    },
-    {
-      "number": "1",
-      "xz": [
-        -53.0,
-        10.0
-      ],
-      "net": "3V3",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_GY",
-      "xy": [
-        50.0,
-        35.0
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "2",
-      "xz": [
-        -53.0,
-        7.46
-      ],
-      "net": "GND",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_GY",
-      "xy": [
-        50.0,
-        37.54
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "3",
-      "xz": [
-        -53.0,
-        4.92
-      ],
-      "net": "SCL",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_GY",
-      "xy": [
-        50.0,
-        40.08
-      ],
-      "net_code": 9
-    },
-    {
-      "number": "4",
-      "xz": [
-        -53.0,
-        2.38
-      ],
-      "net": "SDA",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_GY",
-      "xy": [
-        50.0,
-        42.62
-      ],
-      "net_code": 10
-    },
-    {
-      "number": "1",
-      "xz": [
-        -25.5,
-        -9.0
-      ],
-      "net": "GND",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_TRIG",
-      "xy": [
-        22.5,
-        54.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "2",
-      "xz": [
-        -25.5,
-        -11.54
-      ],
-      "net": "TRIG",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_TRIG",
-      "xy": [
-        22.5,
-        56.54
-      ],
-      "net_code": 13
-    },
-    {
-      "number": "1",
-      "xz": [
-        -25.5,
-        -18.0
+        37.81,
+        62.0
       ],
       "net": "TOUCH_ELECTRODE",
-      "drill": [
-        1.0,
-        1.0
-      ],
+      "net_code": 12,
       "size": [
-        1.8,
-        1.8
+        1.6,
+        1.6
       ],
-      "shape": "circle",
-      "ref": "J_TOUCH",
-      "xy": [
-        22.5,
-        63.0
-      ],
-      "net_code": 12
+      "drill": [
+        0.8,
+        0.8
+      ]
     },
     {
+      "ref": "R_TOUCH",
       "number": "2",
-      "xz": [
-        -25.5,
-        -20.54
-      ],
-      "net": "GND",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_TOUCH",
       "xy": [
-        22.5,
-        65.53999999999999
+        30.189999,
+        62.0
       ],
-      "net_code": 5
+      "net": "TOUCH",
+      "net_code": 11,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
     },
     {
-      "number": "1",
-      "xz": [
-        -56.0,
-        25.0
-      ],
-      "net": "BAT_RAW",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_BAT",
-      "xy": [
-        53.0,
-        20.0
-      ],
-      "net_code": 2
-    },
-    {
-      "number": "2",
-      "xz": [
-        -56.0,
-        22.46
-      ],
-      "net": "GND",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_BAT",
-      "xy": [
-        53.0,
-        22.54
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -56.0,
-        17.0
-      ],
-      "net": "BAT_RAW",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_SWITCH",
-      "xy": [
-        53.0,
-        28.0
-      ],
-      "net_code": 2
-    },
-    {
-      "number": "2",
-      "xz": [
-        -56.0,
-        14.46
-      ],
-      "net": "BAT_SW",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
-      "ref": "J_SWITCH",
-      "xy": [
-        53.0,
-        30.54
-      ],
-      "net_code": 3
-    },
-    {
-      "number": "1",
-      "xz": [
-        -13.0,
-        20.0
-      ],
-      "net": "BAT_SW",
-      "drill": [
-        1.0,
-        1.0
-      ],
-      "size": [
-        1.8,
-        1.8
-      ],
-      "shape": "circle",
       "ref": "J_MODULE_BAT",
+      "number": "1",
       "xy": [
         10.0,
         25.0
       ],
-      "net_code": 3
-    },
-    {
-      "number": "2",
-      "xz": [
-        -13.0,
-        17.46
-      ],
-      "net": "GND",
-      "drill": [
-        1.0,
-        1.0
-      ],
+      "net": "BAT_SW",
+      "net_code": 3,
       "size": [
         1.8,
         1.8
       ],
-      "shape": "circle",
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
       "ref": "J_MODULE_BAT",
+      "number": "2",
       "xy": [
         10.0,
         27.54
       ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -13.0,
-        12.5
-      ],
-      "net": "VBUS_SHARED",
-      "drill": [
-        1.0,
-        1.0
-      ],
+      "net": "GND",
+      "net_code": 5,
       "size": [
         1.8,
         1.8
       ],
-      "shape": "circle",
-      "ref": "J_MODULE_RAIL",
-      "xy": [
-        10.0,
-        32.5
-      ],
-      "net_code": 16
-    },
-    {
-      "number": "1",
-      "xz": [
-        -50.81,
-        -11.0
-      ],
-      "net": "3V3",
       "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_JOY",
-      "xy": [
-        47.81,
-        56.0
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "2",
-      "xz": [
-        -43.19,
-        -11.0
-      ],
-      "net": "JOY_SW",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_JOY",
-      "xy": [
-        40.19,
-        56.0
-      ],
-      "net_code": 6
-    },
-    {
-      "number": "1",
-      "xz": [
-        -40.81,
-        -11.0
-      ],
-      "net": "3V3",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_RIGHT",
-      "xy": [
-        37.81,
-        56.0
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "2",
-      "xz": [
-        -33.19,
-        -11.0
-      ],
-      "net": "BTN_R",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_RIGHT",
-      "xy": [
-        30.189999999999998,
-        56.0
-      ],
-      "net_code": 4
-    },
-    {
-      "number": "1",
-      "xz": [
-        -50.81,
-        -17.0
-      ],
-      "net": "3V3",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_TRIG",
-      "xy": [
-        47.81,
-        62.0
-      ],
-      "net_code": 1
-    },
-    {
-      "number": "2",
-      "xz": [
-        -43.19,
-        -17.0
-      ],
-      "net": "TRIG",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_TRIG",
-      "xy": [
-        40.19,
-        62.0
-      ],
-      "net_code": 13
-    },
-    {
-      "number": "1",
-      "xz": [
-        -40.81,
-        -17.0
-      ],
-      "net": "TOUCH_ELECTRODE",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_TOUCH",
-      "xy": [
-        37.81,
-        62.0
-      ],
-      "net_code": 12
-    },
-    {
-      "number": "2",
-      "xz": [
-        -33.19,
-        -17.0
-      ],
-      "net": "TOUCH",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_TOUCH",
-      "xy": [
-        30.189999999999998,
-        62.0
-      ],
-      "net_code": 11
-    },
-    {
-      "number": "1",
-      "xz": [
-        -50.81,
-        -23.0
-      ],
-      "net": "BAT_SW",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_BAT_H",
-      "xy": [
-        47.81,
-        68.0
-      ],
-      "net_code": 3
-    },
-    {
-      "number": "2",
-      "xz": [
-        -43.19,
-        -23.0
-      ],
-      "net": "VBAT_ADC",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_BAT_H",
-      "xy": [
-        40.19,
-        68.0
-      ],
-      "net_code": 14
-    },
-    {
-      "number": "1",
-      "xz": [
-        -40.81,
-        -23.0
-      ],
-      "net": "VBAT_ADC",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_BAT_L",
-      "xy": [
-        37.81,
-        68.0
-      ],
-      "net_code": 14
-    },
-    {
-      "number": "2",
-      "xz": [
-        -33.19,
-        -23.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_BAT_L",
-      "xy": [
-        30.189999999999998,
-        68.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -50.81,
-        -29.0
-      ],
-      "net": "VBUS_SHARED",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_RAIL_H",
-      "xy": [
-        47.81,
-        74.0
-      ],
-      "net_code": 16
-    },
-    {
-      "number": "2",
-      "xz": [
-        -43.19,
-        -29.0
-      ],
-      "net": "VBUS_DET",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_RAIL_H",
-      "xy": [
-        40.19,
-        74.0
-      ],
-      "net_code": 15
-    },
-    {
-      "number": "1",
-      "xz": [
-        -40.81,
-        -29.0
-      ],
-      "net": "VBUS_DET",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_RAIL_L",
-      "xy": [
-        37.81,
-        74.0
-      ],
-      "net_code": 15
-    },
-    {
-      "number": "2",
-      "xz": [
-        -33.19,
-        -29.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "R_RAIL_L",
-      "xy": [
-        30.189999999999998,
-        74.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -50.27,
-        24.0
-      ],
-      "net": "JOY_X",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_JOY_X",
-      "xy": [
-        47.27,
-        21.0
-      ],
-      "net_code": 7
-    },
-    {
-      "number": "2",
-      "xz": [
-        -47.73,
-        24.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_JOY_X",
-      "xy": [
-        44.73,
-        21.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -50.27,
-        17.0
-      ],
-      "net": "JOY_Y",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_JOY_Y",
-      "xy": [
-        47.27,
-        28.0
-      ],
-      "net_code": 8
-    },
-    {
-      "number": "2",
-      "xz": [
-        -47.73,
-        17.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_JOY_Y",
-      "xy": [
-        44.73,
-        28.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -43.27,
-        -8.0
-      ],
-      "net": "JOY_SW",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_JOY_SW",
-      "xy": [
-        40.27,
-        53.0
-      ],
-      "net_code": 6
-    },
-    {
-      "number": "2",
-      "xz": [
-        -40.73,
-        -8.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_JOY_SW",
-      "xy": [
-        37.73,
-        53.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -33.27,
-        -8.0
-      ],
-      "net": "BTN_R",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_RIGHT",
-      "xy": [
-        30.270000000000003,
-        53.0
-      ],
-      "net_code": 4
-    },
-    {
-      "number": "2",
-      "xz": [
-        -30.73,
-        -8.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_RIGHT",
-      "xy": [
-        27.73,
-        53.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -43.27,
-        -14.0
-      ],
-      "net": "TRIG",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_TRIG",
-      "xy": [
-        40.27,
-        59.0
-      ],
-      "net_code": 13
-    },
-    {
-      "number": "2",
-      "xz": [
-        -40.73,
-        -14.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_TRIG",
-      "xy": [
-        37.73,
-        59.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -43.27,
-        -26.0
-      ],
-      "net": "VBAT_ADC",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_BAT",
-      "xy": [
-        40.27,
-        71.0
-      ],
-      "net_code": 14
-    },
-    {
-      "number": "2",
-      "xz": [
-        -40.73,
-        -26.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_BAT",
-      "xy": [
-        37.73,
-        71.0
-      ],
-      "net_code": 5
-    },
-    {
-      "number": "1",
-      "xz": [
-        -33.27,
-        -26.0
-      ],
-      "net": "VBUS_DET",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_RAIL",
-      "xy": [
-        30.270000000000003,
-        71.0
-      ],
-      "net_code": 15
-    },
-    {
-      "number": "2",
-      "xz": [
-        -30.73,
-        -26.0
-      ],
-      "net": "GND",
-      "drill": [
-        0.8,
-        0.8
-      ],
-      "size": [
-        1.6,
-        1.6
-      ],
-      "shape": "circle",
-      "ref": "C_RAIL",
-      "xy": [
-        27.73,
-        71.0
-      ],
-      "net_code": 5
-    },
-    {
-      "ref": "H1",
-      "number": "",
-      "xy": [
-        9.0,
-        9.0
-      ],
-      "net_code": -1,
-      "drill": [
-        2.4,
-        2.4
-      ],
-      "size": [
-        2.4,
-        2.4
-      ]
-    },
-    {
-      "ref": "H2",
-      "number": "",
-      "xy": [
-        53.0,
-        9.0
-      ],
-      "net_code": -1,
-      "drill": [
-        2.4,
-        2.4
-      ],
-      "size": [
-        2.4,
-        2.4
-      ]
-    },
-    {
-      "ref": "H3",
-      "number": "",
-      "xy": [
-        48.0,
-        49.0
-      ],
-      "net_code": -1,
-      "drill": [
-        2.4,
-        2.4
-      ],
-      "size": [
-        2.4,
-        2.4
+        1.0,
+        1.0
       ]
     },
     {
@@ -1873,103 +158,1388 @@
         24.0,
         72.0
       ],
-      "net_code": -1,
-      "drill": [
-        2.4,
-        2.4
-      ],
+      "net": "",
+      "net_code": 0,
       "size": [
         2.4,
         2.4
+      ],
+      "drill": [
+        2.4,
+        2.4
       ]
-    }
-  ],
-  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
-  "routed_connections": [
-    {
-      "net": "JOY_SW",
-      "start_mm": [
-        26.479,
-        27.792
-      ],
-      "end_mm": [
-        33.479,
-        27.792
-      ],
-      "grid_steps": 28
     },
     {
-      "net": "JOY_SW",
-      "start_mm": [
-        33.479,
-        27.792
+      "ref": "SW1",
+      "number": "",
+      "xy": [
+        34.302,
+        22.0
       ],
-      "end_mm": [
-        40.27,
-        53.0
+      "net": "",
+      "net_code": 0,
+      "size": [
+        1.8,
+        1.8
       ],
-      "grid_steps": 100
+      "drill": [
+        1.8,
+        1.8
+      ]
     },
     {
+      "ref": "SW1",
+      "number": "",
+      "xy": [
+        25.702,
+        22.0
+      ],
+      "net": "",
+      "net_code": 0,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.8,
+        1.8
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "1",
+      "xy": [
+        21.27,
+        24.501
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.0,
+        2.0
+      ],
+      "drill": [
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "2",
+      "xy": [
+        21.27,
+        22.001
+      ],
+      "net": "JOY_X",
+      "net_code": 7,
+      "size": [
+        2.0,
+        2.0
+      ],
+      "drill": [
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "3",
+      "xy": [
+        21.27,
+        19.499
+      ],
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        2.0,
+        2.0
+      ],
+      "drill": [
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "4",
+      "xy": [
+        27.501,
+        13.271
+      ],
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        2.0,
+        2.0
+      ],
+      "drill": [
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "5",
+      "xy": [
+        30.0,
+        13.271
+      ],
+      "net": "JOY_Y",
+      "net_code": 8,
+      "size": [
+        2.0,
+        2.0
+      ],
+      "drill": [
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "6",
+      "xy": [
+        32.502,
+        13.271
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.0,
+        2.0
+      ],
+      "drill": [
+        1.2,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "7",
+      "xy": [
+        36.325,
+        17.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.6,
+        2.6
+      ],
+      "drill": [
+        1.8,
+        1.8
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "8",
+      "xy": [
+        36.325,
+        27.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.6,
+        2.6
+      ],
+      "drill": [
+        1.8,
+        1.8
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "9",
+      "xy": [
+        23.676,
+        27.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.6,
+        2.6
+      ],
+      "drill": [
+        1.8,
+        1.8
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "10",
+      "xy": [
+        23.676,
+        17.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.6,
+        2.6
+      ],
+      "drill": [
+        1.8,
+        1.8
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "a",
+      "xy": [
+        33.521,
+        27.792
+      ],
       "net": "JOY_SW",
-      "start_mm": [
-        40.27,
+      "net_code": 6,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        1.6,
+        1.6
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "b",
+      "xy": [
+        33.521,
+        32.290999
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        1.6,
+        1.6
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "c",
+      "xy": [
+        26.521,
+        27.792
+      ],
+      "net": "JOY_SW",
+      "net_code": 6,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        1.6,
+        1.6
+      ]
+    },
+    {
+      "ref": "SW1",
+      "number": "d",
+      "xy": [
+        26.521,
+        32.290999
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        1.6,
+        1.6
+      ]
+    },
+    {
+      "ref": "C_RIGHT",
+      "number": "1",
+      "xy": [
+        30.27,
         53.0
       ],
-      "end_mm": [
+      "net": "BTN_R",
+      "net_code": 4,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_RIGHT",
+      "number": "2",
+      "xy": [
+        27.73,
+        53.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "J_MODULE_RAIL",
+      "number": "1",
+      "xy": [
+        10.0,
+        32.5
+      ],
+      "net": "VBUS_SHARED",
+      "net_code": 16,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "C_BAT",
+      "number": "1",
+      "xy": [
+        40.27,
+        71.0
+      ],
+      "net": "VBAT_ADC",
+      "net_code": 14,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_BAT",
+      "number": "2",
+      "xy": [
+        37.73,
+        71.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_JOY",
+      "number": "1",
+      "xy": [
+        47.81,
+        56.0
+      ],
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_JOY",
+      "number": "2",
+      "xy": [
         40.19,
         56.0
       ],
-      "grid_steps": 13
+      "net": "JOY_SW",
+      "net_code": 6,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
     },
     {
-      "net": "JOY_SW",
-      "start_mm": [
+      "ref": "H1",
+      "number": "",
+      "xy": [
+        9.0,
+        9.0
+      ],
+      "net": "",
+      "net_code": 0,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        2.4,
+        2.4
+      ]
+    },
+    {
+      "ref": "R_BAT_H",
+      "number": "1",
+      "xy": [
+        47.81,
+        68.0
+      ],
+      "net": "BAT_SW",
+      "net_code": 3,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_BAT_H",
+      "number": "2",
+      "xy": [
         40.19,
+        68.0
+      ],
+      "net": "VBAT_ADC",
+      "net_code": 14,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_BAT_L",
+      "number": "1",
+      "xy": [
+        37.81,
+        68.0
+      ],
+      "net": "VBAT_ADC",
+      "net_code": 14,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_BAT_L",
+      "number": "2",
+      "xy": [
+        30.189999,
+        68.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_RAIL_H",
+      "number": "1",
+      "xy": [
+        47.81,
+        74.0
+      ],
+      "net": "VBUS_SHARED",
+      "net_code": 16,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_RAIL_H",
+      "number": "2",
+      "xy": [
+        40.19,
+        74.0
+      ],
+      "net": "VBUS_DET",
+      "net_code": 15,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_RIGHT",
+      "number": "1",
+      "xy": [
+        37.81,
         56.0
       ],
-      "end_mm": [
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_RIGHT",
+      "number": "2",
+      "xy": [
+        30.189999,
+        56.0
+      ],
+      "net": "BTN_R",
+      "net_code": 4,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "SW2",
+      "number": "1",
+      "xy": [
+        24.92,
+        47.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.5,
+        2.0
+      ],
+      "drill": [
+        0.7,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW2",
+      "number": "2",
+      "xy": [
+        30.0,
+        47.0
+      ],
+      "net": "BTN_R",
+      "net_code": 4,
+      "size": [
+        1.5,
+        2.0
+      ],
+      "drill": [
+        0.7,
+        1.2
+      ]
+    },
+    {
+      "ref": "SW2",
+      "number": "3",
+      "xy": [
+        35.08,
+        47.0
+      ],
+      "net": "",
+      "net_code": 0,
+      "size": [
+        1.5,
+        2.0
+      ],
+      "drill": [
+        0.7,
+        1.2
+      ]
+    },
+    {
+      "ref": "H2",
+      "number": "",
+      "xy": [
+        53.0,
+        9.0
+      ],
+      "net": "",
+      "net_code": 0,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        2.4,
+        2.4
+      ]
+    },
+    {
+      "ref": "J_BAT",
+      "number": "1",
+      "xy": [
+        53.0,
+        20.0
+      ],
+      "net": "BAT_RAW",
+      "net_code": 2,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_BAT",
+      "number": "2",
+      "xy": [
+        53.0,
+        22.54
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "C_JOY_Y",
+      "number": "1",
+      "xy": [
+        47.27,
+        28.0
+      ],
+      "net": "JOY_Y",
+      "net_code": 8,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_JOY_Y",
+      "number": "2",
+      "xy": [
+        44.73,
+        28.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_TRIG",
+      "number": "1",
+      "xy": [
+        40.27,
+        59.0
+      ],
+      "net": "TRIG",
+      "net_code": 13,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_TRIG",
+      "number": "2",
+      "xy": [
+        37.73,
+        59.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_RAIL_L",
+      "number": "1",
+      "xy": [
+        37.81,
+        74.0
+      ],
+      "net": "VBUS_DET",
+      "net_code": 15,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_RAIL_L",
+      "number": "2",
+      "xy": [
+        30.189999,
+        74.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "1",
+      "xy": [
+        53.0,
+        50.0
+      ],
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "2",
+      "xy": [
+        53.0,
+        52.54
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "3",
+      "xy": [
+        53.0,
+        55.08
+      ],
+      "net": "JOY_X",
+      "net_code": 7,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "4",
+      "xy": [
+        53.0,
+        57.62
+      ],
+      "net": "JOY_Y",
+      "net_code": 8,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "5",
+      "xy": [
         53.0,
         60.16
       ],
-      "grid_steps": 51
+      "net": "JOY_SW",
+      "net_code": 6,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
     },
     {
-      "net": "VBUS_DET",
-      "start_mm": [
+      "ref": "J_MCU",
+      "number": "6",
+      "xy": [
+        53.0,
+        62.7
+      ],
+      "net": "BTN_R",
+      "net_code": 4,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "7",
+      "xy": [
+        53.0,
+        65.239999
+      ],
+      "net": "TRIG",
+      "net_code": 13,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "8",
+      "xy": [
+        53.0,
+        67.78
+      ],
+      "net": "SDA",
+      "net_code": 10,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "9",
+      "xy": [
+        53.0,
+        70.32
+      ],
+      "net": "SCL",
+      "net_code": 9,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "10",
+      "xy": [
+        53.0,
+        72.86
+      ],
+      "net": "TOUCH",
+      "net_code": 11,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "11",
+      "xy": [
+        53.0,
+        75.4
+      ],
+      "net": "VBAT_ADC",
+      "net_code": 14,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_MCU",
+      "number": "12",
+      "xy": [
         53.0,
         77.94
       ],
-      "end_mm": [
-        40.19,
-        74.0
+      "net": "VBUS_DET",
+      "net_code": 15,
+      "size": [
+        1.8,
+        1.8
       ],
-      "grid_steps": 51
+      "drill": [
+        1.0,
+        1.0
+      ]
     },
     {
-      "net": "VBUS_DET",
-      "start_mm": [
-        40.19,
-        74.0
+      "ref": "J_GY",
+      "number": "1",
+      "xy": [
+        50.0,
+        35.0
       ],
-      "end_mm": [
-        37.81,
-        74.0
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        1.8,
+        1.8
       ],
-      "grid_steps": 11
+      "drill": [
+        1.0,
+        1.0
+      ]
     },
     {
-      "net": "VBUS_DET",
-      "start_mm": [
-        37.81,
-        74.0
+      "ref": "J_GY",
+      "number": "2",
+      "xy": [
+        50.0,
+        37.54
       ],
-      "end_mm": [
-        30.270000000000003,
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_GY",
+      "number": "3",
+      "xy": [
+        50.0,
+        40.08
+      ],
+      "net": "SCL",
+      "net_code": 9,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_GY",
+      "number": "4",
+      "xy": [
+        50.0,
+        42.62
+      ],
+      "net": "SDA",
+      "net_code": 10,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_SWITCH",
+      "number": "3",
+      "xy": [
+        54.3,
+        32.5
+      ],
+      "net": "",
+      "net_code": 0,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_SWITCH",
+      "number": "1",
+      "xy": [
+        54.3,
+        27.5
+      ],
+      "net": "BAT_RAW",
+      "net_code": 2,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_SWITCH",
+      "number": "2",
+      "xy": [
+        54.3,
+        30.0
+      ],
+      "net": "BAT_SW",
+      "net_code": 3,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_TRIG",
+      "number": "1",
+      "xy": [
+        22.5,
+        54.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_TRIG",
+      "number": "2",
+      "xy": [
+        22.5,
+        56.54
+      ],
+      "net": "TRIG",
+      "net_code": 13,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_TOUCH",
+      "number": "1",
+      "xy": [
+        22.5,
+        63.0
+      ],
+      "net": "TOUCH_ELECTRODE",
+      "net_code": 12,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "J_TOUCH",
+      "number": "2",
+      "xy": [
+        22.5,
+        65.539999
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.8,
+        1.8
+      ],
+      "drill": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "ref": "C_JOY_X",
+      "number": "1",
+      "xy": [
+        47.27,
+        21.0
+      ],
+      "net": "JOY_X",
+      "net_code": 7,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_JOY_X",
+      "number": "2",
+      "xy": [
+        44.73,
+        21.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_RAIL",
+      "number": "1",
+      "xy": [
+        30.869999,
         71.0
       ],
-      "grid_steps": 31
+      "net": "VBUS_DET",
+      "net_code": 15,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
     },
+    {
+      "ref": "C_RAIL",
+      "number": "2",
+      "xy": [
+        28.33,
+        71.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_JOY_SW",
+      "number": "1",
+      "xy": [
+        40.27,
+        53.0
+      ],
+      "net": "JOY_SW",
+      "net_code": 6,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "C_JOY_SW",
+      "number": "2",
+      "xy": [
+        37.73,
+        53.0
+      ],
+      "net": "GND",
+      "net_code": 5,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "H3",
+      "number": "",
+      "xy": [
+        48.0,
+        49.0
+      ],
+      "net": "",
+      "net_code": 0,
+      "size": [
+        2.4,
+        2.4
+      ],
+      "drill": [
+        2.4,
+        2.4
+      ]
+    },
+    {
+      "ref": "R_TRIG",
+      "number": "1",
+      "xy": [
+        47.81,
+        62.0
+      ],
+      "net": "3V3",
+      "net_code": 1,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "ref": "R_TRIG",
+      "number": "2",
+      "xy": [
+        40.19,
+        62.0
+      ],
+      "net": "TRIG",
+      "net_code": 13,
+      "size": [
+        1.6,
+        1.6
+      ],
+      "drill": [
+        0.8,
+        0.8
+      ]
+    }
+  ],
+  "config_sha256": "d51bd25b661340a425c98128dbd1fd9cdec967bc447bc3222a15b1bb2b156508",
+  "routed_connections": [
     {
       "net": "VBAT_ADC",
       "start_mm": [
@@ -2079,54 +1649,6 @@
       "grid_steps": 91
     },
     {
-      "net": "JOY_X",
-      "start_mm": [
-        38.73,
-        22.001
-      ],
-      "end_mm": [
-        47.27,
-        21.0
-      ],
-      "grid_steps": 34
-    },
-    {
-      "net": "JOY_X",
-      "start_mm": [
-        47.27,
-        21.0
-      ],
-      "end_mm": [
-        53.0,
-        55.08
-      ],
-      "grid_steps": 135
-    },
-    {
-      "net": "JOY_Y",
-      "start_mm": [
-        30.0,
-        13.271
-      ],
-      "end_mm": [
-        47.27,
-        28.0
-      ],
-      "grid_steps": 82
-    },
-    {
-      "net": "JOY_Y",
-      "start_mm": [
-        47.27,
-        28.0
-      ],
-      "end_mm": [
-        53.0,
-        57.62
-      ],
-      "grid_steps": 117
-    },
-    {
       "net": "TOUCH",
       "start_mm": [
         53.0,
@@ -2187,49 +1709,181 @@
       "grid_steps": 212
     },
     {
+      "net": "JOY_SW",
+      "start_mm": [
+        33.521,
+        27.792
+      ],
+      "end_mm": [
+        26.521,
+        27.792
+      ],
+      "grid_steps": 28
+    },
+    {
+      "net": "JOY_SW",
+      "start_mm": [
+        33.521,
+        27.792
+      ],
+      "end_mm": [
+        40.27,
+        53.0
+      ],
+      "grid_steps": 100
+    },
+    {
+      "net": "JOY_SW",
+      "start_mm": [
+        40.27,
+        53.0
+      ],
+      "end_mm": [
+        40.19,
+        56.0
+      ],
+      "grid_steps": 13
+    },
+    {
+      "net": "JOY_SW",
+      "start_mm": [
+        40.19,
+        56.0
+      ],
+      "end_mm": [
+        53.0,
+        60.16
+      ],
+      "grid_steps": 51
+    },
+    {
+      "net": "VBUS_DET",
+      "start_mm": [
+        40.19,
+        74.0
+      ],
+      "end_mm": [
+        37.81,
+        74.0
+      ],
+      "grid_steps": 11
+    },
+    {
+      "net": "VBUS_DET",
+      "start_mm": [
+        37.81,
+        74.0
+      ],
+      "end_mm": [
+        30.869999,
+        71.0
+      ],
+      "grid_steps": 28
+    },
+    {
+      "net": "VBUS_DET",
+      "start_mm": [
+        40.19,
+        74.0
+      ],
+      "end_mm": [
+        53.0,
+        77.94
+      ],
+      "grid_steps": 51
+    },
+    {
+      "net": "JOY_X",
+      "start_mm": [
+        21.27,
+        22.001
+      ],
+      "end_mm": [
+        47.27,
+        21.0
+      ],
+      "grid_steps": 103
+    },
+    {
+      "net": "JOY_X",
+      "start_mm": [
+        47.27,
+        21.0
+      ],
+      "end_mm": [
+        53.0,
+        55.08
+      ],
+      "grid_steps": 135
+    },
+    {
+      "net": "JOY_Y",
+      "start_mm": [
+        30.0,
+        13.271
+      ],
+      "end_mm": [
+        47.27,
+        28.0
+      ],
+      "grid_steps": 70
+    },
+    {
+      "net": "JOY_Y",
+      "start_mm": [
+        47.27,
+        28.0
+      ],
+      "end_mm": [
+        53.0,
+        57.62
+      ],
+      "grid_steps": 117
+    },
+    {
       "net": "BAT_RAW",
       "start_mm": [
         53.0,
         20.0
       ],
       "end_mm": [
-        53.0,
-        28.0
+        54.3,
+        27.5
       ],
-      "grid_steps": 33
+      "grid_steps": 31
     },
     {
       "net": "BAT_SW",
       "start_mm": [
-        53.0,
-        30.54
+        10.0,
+        25.0
+      ],
+      "end_mm": [
+        54.3,
+        30.0
+      ],
+      "grid_steps": 175
+    },
+    {
+      "net": "BAT_SW",
+      "start_mm": [
+        54.3,
+        30.0
       ],
       "end_mm": [
         47.81,
         68.0
       ],
-      "grid_steps": 246
-    },
-    {
-      "net": "BAT_SW",
-      "start_mm": [
-        53.0,
-        30.54
-      ],
-      "end_mm": [
-        10.0,
-        25.0
-      ],
-      "grid_steps": 170
+      "grid_steps": 249
     },
     {
       "net": "3V3",
       "start_mm": [
-        38.73,
+        21.27,
         19.499
       ],
       "end_mm": [
-        32.499,
+        27.501,
         13.271
       ],
       "grid_steps": 37
@@ -2237,14 +1891,14 @@
     {
       "net": "3V3",
       "start_mm": [
-        38.73,
-        19.499
+        27.501,
+        13.271
       ],
       "end_mm": [
         50.0,
         35.0
       ],
-      "grid_steps": 72
+      "grid_steps": 92
     },
     {
       "net": "3V3",
@@ -2304,8 +1958,8 @@
         55.0,
         37.54
       ],
-      "grid_steps": 38
+      "grid_steps": 21
     }
   ],
-  "vias": 10
+  "vias": 8
 }

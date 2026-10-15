@@ -1,31 +1,23 @@
-# 枪型飞鼠
+# 枪型飞鼠 · 第二代工程样机
 
-ESP32-S3 SuperMini + 手焊载板 + 打印外壳（EVT-1 轻壳）的体感蓝牙鼠标：扳机是左键、右键微动是右键、摇杆按下是中键；手指摸着扳机上的铜箔时，晃动机身移动光标。
+ESP32-S3 SuperMini、手焊载板和一件开放固定底座。使用手头的 SS-01GL 金属摆杆作左键，右键直接按微动本体，摇杆使用原生杆并保留中键。手指接触摆杆上的绝缘铜箔时启用体感移动，松开即停止。
 
-仓库只保留最终版：
+第二代修正 SW1 的整组非对称孔位，保持摇杆轴心；增加直接焊在载板上的电源拨动开关，电池两根线也直接焊载板。取消塑料扳机、外置复位弹簧、调节螺丝、摇杆帽、外壳摇杆限位和粗握把。握持形状先用纸壳试，不额外打印握把。
 
-| 目录 | 内容 |
+| 目录 | 当前交付 |
 |---|---|
-| [pcb/](pcb/README.md) | 载板（丝印 `S3 THT CARRIER v1`，52×82 mm，2 层，全直插手焊）：Gerber、KiCad 与嘉立创工程、BOM、焊线表、1:1 装配图、焊接说明 |
-| [shell/](shell/README.md) | EVT-1 外壳 7 个打印件（STL / STEP）、要买的东西、装配顺序、扳机校准、充电 |
-| [firmware/](firmware/README.md) | SuperMini 固件源码、编译好的镜像（合并镜像烧到 0x0）、烧录与串口调试 |
+| [pcb/](pcb/README.md) | 第二代载板：52×82 毫米、1.6 毫米厚、双面、全直插手焊；制板包、源工程、物料与接线表、1:1 套孔图、[三维预览](pcb/3d/gun-mouse-gen2.obj) |
+| [shell/](shell/README.md) | 一件开放固定底座，电池与模块允许外露；手头右键帽原尺寸保留为可选件 |
+| [firmware/](firmware/README.md) | 原固件与已编译镜像，鼠标按键、触摸许可和体感逻辑不变 |
 
-## 下单
+## 下单与装配
 
-- PCB：把 `pcb/gun-mouse-supermini-carrier-JLC-Gerber.zip` 上传嘉立创（或用 KiCad 导出的 `pcb/gun-mouse-supermini-carrier-Gerber.zip`，二选一）。FR-4、1.6 mm、2 层、1 oz，只做裸板，不要 SMT。
-- 外壳：`shell/stl/` 下 7 个 STL。
-- 元件：板上元件见 [pcb/BOM.csv](pcb/BOM.csv)，模块、开关、电池、螺丝等见 [外壳说明的采购清单](shell/README.md#要买的东西)。
+1. 先将 [1:1 装配图](pcb/carrier-assembly-map-1to1.pdf) 按实际尺寸打印，用手头 SW1 从标示的安装面套孔。此次修正依据原厂孔图与第一代实物反馈，尚未进行第二代实物插装。
+2. 上传 [第二代嘉立创制板包](pcb/gun-mouse-supermini-carrier-JLC-Gerber.zip)。常规 FR-4、双面、1.6 毫米、1 盎司铜；只做裸板，不做贴片装配。板框有缺口，以文件轮廓为准。
+3. 只需新增打印 [开放底座](shell/stl/engineering_mount.stl)，毫米、100% 比例。手头旧小件不用重新打印；右键帽可留作后续手感试验。
+4. 按 [载板说明](pcb/README.md) 焊元件与模块线，电池开关置关后通过 USB 烧录并检查，再固定到底座。SS-01GL 的公共端、常开端仍用两根软线接载板。
+5. 金属摆杆上依次贴薄绝缘胶带、铜箔、表面绝缘胶带。铜箔只连接触摸焊盘，导线不牵拉摆杆；贴好后实测触摸和回弹。电池、模块固定及供电限制见 [底座装配说明](shell/README.md)。
 
-## 做的顺序
+## 版本与验收范围
 
-1. 焊载板上的电阻、电容、右键和摇杆，再焊模块飞线：[pcb/README.md](pcb/README.md)
-2. 不接电池，只插 SuperMini 的 USB 烧固件、用串口检查：[firmware/README.md](firmware/README.md)
-3. 装壳、调扳机、贴触摸铜箔、充电：[shell/README.md](shell/README.md)
-
-## 旧版本
-
-经济型主板、PCB 与外壳 V1、EVT-A、30 g 开放骨架、概念图以及各种生成脚本已从当前目录删除。需要时从提交 `e2848bd` 或更早的历史里取，例如：
-
-```sh
-git checkout e2848bd -- experiments/evt1-light-shell
-```
+当前目录只列第二代交付，第一代保存在 Git 提交 `9e3d071` 中。电路设计检查、名义几何检查与实物试装、通电验收分别记录，不能用软件检查代替摇杆实物插装、触摸灵敏度、充电和握持验收。

@@ -1,5 +1,5 @@
 {
-  "version": "supermini-tht-carrier-v1",
+  "version": "supermini-tht-carrier-v2",
   "units": "mm",
   "status": "Hand-soldered prototype; routing/DRC report controls fabrication readiness, module variant still requires physical power-path check",
   "pcb": {
@@ -164,7 +164,7 @@
   "power": {
     "logic_v": 3.3,
     "battery_net": "BAT_SW",
-    "battery_switch": "BAT_RAW -> external SPST -> BAT_SW",
+    "battery_switch": "BAT_RAW -> J_SWITCH board-mounted SPDT pins 1-2 -> BAT_SW; pin3 isolated",
     "low_battery_shutdown_mv": 3600,
     "low_battery_delay_s": 30,
     "battery_divider": {
@@ -202,14 +202,14 @@
       "kind": "joystick",
       "value": "RKJXV1224005",
       "position_xz": [
-        -34.201,
-        22.219
+        -33,
+        23
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -41.73,
+            -24.27,
             20.499
           ],
           "net": "GND",
@@ -226,7 +226,7 @@
         {
           "number": "2",
           "xz": [
-            -41.73,
+            -24.27,
             22.999
           ],
           "net": "JOY_X",
@@ -243,7 +243,7 @@
         {
           "number": "3",
           "xz": [
-            -41.73,
+            -24.27,
             25.501
           ],
           "net": "3V3",
@@ -260,7 +260,7 @@
         {
           "number": "4",
           "xz": [
-            -35.499,
+            -30.501,
             31.729
           ],
           "net": "3V3",
@@ -294,7 +294,7 @@
         {
           "number": "6",
           "xz": [
-            -30.498,
+            -35.502,
             31.729
           ],
           "net": "GND",
@@ -311,7 +311,7 @@
         {
           "number": "7",
           "xz": [
-            -26.675,
+            -39.325,
             28.0
           ],
           "net": "GND",
@@ -328,7 +328,7 @@
         {
           "number": "8",
           "xz": [
-            -26.675,
+            -39.325,
             18.0
           ],
           "net": "GND",
@@ -345,7 +345,7 @@
         {
           "number": "9",
           "xz": [
-            -39.324,
+            -26.676,
             18.0
           ],
           "net": "GND",
@@ -362,7 +362,7 @@
         {
           "number": "10",
           "xz": [
-            -39.324,
+            -26.676,
             28.0
           ],
           "net": "GND",
@@ -379,7 +379,7 @@
         {
           "number": "a",
           "xz": [
-            -29.479,
+            -36.521,
             17.208
           ],
           "net": "JOY_SW",
@@ -396,7 +396,7 @@
         {
           "number": "c",
           "xz": [
-            -36.479,
+            -29.521,
             17.208
           ],
           "net": "JOY_SW",
@@ -413,7 +413,7 @@
         {
           "number": "b",
           "xz": [
-            -29.479,
+            -36.521,
             12.709
           ],
           "net": "GND",
@@ -430,7 +430,7 @@
         {
           "number": "d",
           "xz": [
-            -36.479,
+            -29.521,
             12.709
           ],
           "net": "GND",
@@ -448,14 +448,14 @@
       "npth": [
         {
           "xz": [
-            -28.698,
+            -37.302,
             23.0
           ],
           "d": 1.8
         },
         {
           "xz": [
-            -37.298,
+            -28.702,
             23.0
           ],
           "d": 1.8
@@ -463,8 +463,8 @@
       ],
       "envelope": {
         "x": [
-          -42.701,
-          -25.401
+          -40.599,
+          -23.299
         ],
         "z": [
           11.419,
@@ -474,15 +474,15 @@
         "lead_below_board": 1.0
       },
       "envelope_basis": "Static body and narrow shaft split using official drawing, upper bounds retained separately; shaft pivot/motion needs physical check",
-      "source": "config/pcb-parts-geometry.json, config/pcb-shell-v1.json",
-      "assembly": "THT hand solder; SW2 COM/NO verified with a meter before use",
+      "source": "Alps RKJXV1224005 official drawing plus user physical reverse-side fit; all 16 holes mirrored about shaft Kx=30 mm",
+      "assembly": "Top-side insertion; no added mechanical travel limit; verify all 16 holes using the 1:1 drawing and actual part before ordering",
       "populate": true,
       "envelopes": [
         {
           "kind": "box",
           "x": [
-            -42.701,
-            -25.401
+            -40.599,
+            -23.299
           ],
           "z": [
             11.419,
@@ -1006,7 +1006,7 @@
         "lead_below_board": 1.0
       },
       "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
-      "purpose": "External SS-01GL13 COM/NO, NC unconnected",
+      "purpose": "Existing SS-01GL COM/NO wired trigger; no PCB slots",
       "populate": true
     },
     {
@@ -1133,23 +1133,23 @@
     },
     {
       "ref": "J_SWITCH",
-      "kind": "wirebank",
-      "value": "Labelled solder wires",
+      "kind": "power_switch",
+      "value": "SS-12D01-G030",
       "position_xz": [
-        -56,
-        17
+        -57.3,
+        15
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -56.0,
-            17.0
+            -57.3,
+            17.5
           ],
           "net": "BAT_RAW",
           "drill": [
-            1.0,
-            1.0
+            1,
+            1
           ],
           "size": [
             1.8,
@@ -1160,13 +1160,30 @@
         {
           "number": "2",
           "xz": [
-            -56.0,
-            14.46
+            -57.3,
+            15
           ],
           "net": "BAT_SW",
           "drill": [
-            1.0,
-            1.0
+            1,
+            1
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -57.3,
+            12.5
+          ],
+          "net": "",
+          "drill": [
+            1,
+            1
           ],
           "size": [
             1.8,
@@ -1178,19 +1195,20 @@
       "npth": [],
       "envelope": {
         "x": [
-          -57,
-          -55
+          -59.25,
+          -55.35
         ],
         "z": [
-          13.46,
-          18
+          10.6,
+          19.4
         ],
-        "y_above_board": 2.0,
-        "lead_below_board": 1.0
+        "y_above_board": 6.5,
+        "lead_below_board": 1
       },
-      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
-      "purpose": "External SPST battery-positive isolation switch",
-      "populate": true
+      "envelope_basis": "G-Switch SS-12D01-G030: body 8.8x3.9x3.5 mm, actuator 3 mm, three leads at 2.5 mm pitch; clip tails <=1 mm",
+      "purpose": "Board-mounted battery-positive switch: 1=BAT_RAW, 2=BAT_SW common, 3=isolated; no external switch wire",
+      "populate": true,
+      "source": "https://datasheet.lcsc.com/datasheet/pdf/af2c04499242010f9bc8773a044bd472.pdf?productCode=C5446804"
     },
     {
       "ref": "J_MODULE_BAT",
@@ -2156,14 +2174,14 @@
       "kind": "capacitor",
       "value": "100n",
       "position_xz": [
-        -32,
+        -32.6,
         -26
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -33.27,
+            -33.87,
             -26.0
           ],
           "net": "VBUS_DET",
@@ -2180,7 +2198,7 @@
         {
           "number": "2",
           "xz": [
-            -30.73,
+            -31.33,
             -26.0
           ],
           "net": "GND",
@@ -2198,8 +2216,8 @@
       "npth": [],
       "envelope": {
         "x": [
-          -35,
-          -29
+          -35.6,
+          -29.6
         ],
         "z": [
           -27,

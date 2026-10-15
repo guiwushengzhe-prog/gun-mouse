@@ -1,8 +1,8 @@
 {
   "status": "pass",
-  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
-  "actual_board_sha256": "8516f2156d765da2e32b3538fc794eba1a2137169497c32cad32380091ad6bb0",
-  "actual_pth_count": 74,
+  "config_sha256": "d51bd25b661340a425c98128dbd1fd9cdec967bc447bc3222a15b1bb2b156508",
+  "actual_board_sha256": "53a32bdafc749cb6a18cbb570e42e957da58e2fbf6296ab8494b4d20567817e6",
+  "actual_pth_count": 75,
   "net_count": 16,
   "actual_pad_net_position_drill_errors": 0,
   "mount_holes_verified": 4,
@@ -16,6 +16,6 @@
   "divider_5tau_ms": 25,
   "button_closed_current_ma": 1,
   "button_rc_ms": 0.33,
-  "schematic_erc": "Not performed: no KiCad schematic supplied; explicit circuit/net/pad contract and independent written review are provided",
-  "prototype_checks": "Purchased module topology, B+/B- polarity, footprint fit, ADC calibration, LDO margin, charging, touch and contact stability"
+  "schematic_erc": "未执行原理图电气规则检查：未提供KiCad原理图；已核对实际焊盘与配置定义",
+  "prototype_checks": "实物模块供电路径、电池正负极、引脚试装、电压采样校准、稳压余量、充电、触摸和按键稳定性"
 }

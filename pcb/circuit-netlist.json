@@ -1,5 +1,5 @@
 {
-  "config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
+  "config_sha256": "d51bd25b661340a425c98128dbd1fd9cdec967bc447bc3222a15b1bb2b156508",
   "nets": {
     "3V3": [
       "SW1.3",
@@ -198,11 +198,12 @@
     },
     {
       "ref": "J_SWITCH",
-      "kind": "wirebank",
-      "value": "Labelled solder wires",
+      "kind": "power_switch",
+      "value": "SS-12D01-G030",
       "pins": {
         "1": "BAT_RAW",
-        "2": "BAT_SW"
+        "2": "BAT_SW",
+        "3": ""
       }
     },
     {

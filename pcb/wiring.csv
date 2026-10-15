@@ -15,14 +15,12 @@ J_GY,1,3V3,GY-601N1 H2 VCC,-53.0,10.0
 J_GY,2,GND,GY-601N1 H2 GND,-53.0,7.46
 J_GY,3,SCL,GY-601N1 H2 SCL,-53.0,4.92
 J_GY,4,SDA,GY-601N1 H2 SDA,-53.0,2.38
-J_TRIG,1,GND,SS-01GL13 COM,-25.5,-9.0
-J_TRIG,2,TRIG,SS-01GL13 NO; NC unconnected,-25.5,-11.54
+J_TRIG,1,GND,SS-01GL COM,-25.5,-9.0
+J_TRIG,2,TRIG,SS-01GL NO; NC unconnected,-25.5,-11.54
 J_TOUCH,1,TOUCH_ELECTRODE,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-18.0
 J_TOUCH,2,GND,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-20.54
 J_BAT,1,BAT_RAW,Protected single-cell LiPo input,-56.0,25.0
 J_BAT,2,GND,Protected single-cell LiPo input,-56.0,22.46
-J_SWITCH,1,BAT_RAW,External SPST battery-positive isolation switch,-56.0,17.0
-J_SWITCH,2,BAT_SW,External SPST battery-positive isolation switch,-56.0,14.46
 J_MODULE_BAT,1,BAT_SW,SuperMini dedicated B+,-13.0,20.0
 J_MODULE_BAT,2,GND,SuperMini dedicated B-,-13.0,17.46
 J_MODULE_RAIL,1,VBUS_SHARED,"SuperMini 5V/shared VBUS pin, sense only",-13.0,12.5
