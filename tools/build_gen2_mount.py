@@ -37,10 +37,10 @@ GY = (*GY_CFG["x"], GY_CFG["component_face_y"]-GY_CFG["board_thickness"],
       GY_CFG["component_face_y"], *GY_CFG["z"])
 JOYSTICK = next(p for p in C["parts"] if p["ref"] == "SW1")
 # DZYJ标称图：黑板33x27，孔距26.4x19.5，孔径3.3；图注尺寸误差0.5-1mm。
-# 这里只改装配与一体底座，实际载板五针孔位留待用户确认姿态后更新。
+# 器件外形使用原始模块坐标，载板孔与网络使用配置中的最终装配坐标。
 JOY_PIN_CENTER = (C["battery"]["center_xyz"][0]+4.0, 5.0)
 JOY_BOARD = (JOY_PIN_CENTER[0]-13.5, JOY_PIN_CENTER[0]+13.5,
-             -37.0, -4.0, 4.2, 5.8)
+             -37.0, -4.0, 6.2, 7.8)
 JOY_AXIS = (JOY_PIN_CENTER[0], -20.5, JOY_BOARD[5])
 JOY_HOLES = [(JOY_PIN_CENTER[0]+dx, y)
              for y in (-7.3, -33.7) for dx in (-9.75, 9.75)]
@@ -103,7 +103,7 @@ def beam(a, b, width, y0=BASE[0], y1=BASE[1]):
 def build_mount():
     parts = []
     # Sparse carrier skeleton; the long lower portion is only a battery tray.
-    for a, b in [((-12, 36), (-12, 44)),
+    for a, b in [((-12, 36), (-12, 45)),
                  ((-51, -4), (-27, -27)), ((-12, 36), (-15, 0)),
                  ((-15, 0), (-27, -27)),
                  ((-51, -4), (-49, -32)), ((-27, -27), (-26, -32)),
@@ -111,10 +111,10 @@ def build_mount():
                  ((JOY_MOUNT_HOLES[0][0], 0), (-15, 0))]:
         parts.append(beam(a, b, 3.6))
     # 上横梁靠主板布置，避开摇杆帽上方的拇指接近空间。
-    parts.append(beam((-56, 44), (-12, 44), 3.6, -6.8, -3.8))
-    for a, b in [((-56, 36), (-58, 44)), ((-58, 44), (-56, 44))]:
+    parts.append(beam((-56, 45), (-12, 45), 3.6, -6.8, -3.8))
+    for a, b in [((-56, 36), (-58, 45)), ((-58, 45), (-56, 45))]:
         parts.append(beam(a, b, 3.6, -6.8, -3.8))
-    parts.append(box(-13.8, -10.2, BASE[0], -3.8, 42.2, 45.8))
+    parts.append(box(-13.8, -10.2, BASE[0], -3.8, 43.2, 46.8))
     for h in P["mount_holes"]:
         x, z = h["xz"]
         start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
@@ -166,6 +166,8 @@ def build_mount():
             window = box(x0, x1, -21, -16.7, z0, z1)
             cuts.append(cq.Workplane().add(window).edges("|Y").fillet(.8).val())
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES):
+        # 弯针水平段Z=5，黑板抬高2毫米给90度弯折留空间；螺钉头内收2毫米，仍用M2x10。
+        cuts.append(cz(x, y, 2.15, -2, .2))
         if i == 0:
             cuts.append(cz(x, y, 1.2, -2.0, JOY_BOARD[4]+.1))
         else:
@@ -194,7 +196,7 @@ def references():
         if p["ref"] in {"SW1", "J_MCU", "J_GY"}:
             continue
         envs = p.get("envelopes", [p["envelope"]] if "envelope" in p else [])
-        backside = p.get("mount_side") == "bottom"
+        backside = p.get("model_reference_mount_side", p.get("mount_side")) == "bottom"
         for i, e in enumerate(envs):
             ys = e.get("y_above_board", 0)
             a, b = ys if isinstance(ys, list) else (0, ys)
@@ -204,7 +206,7 @@ def references():
             else:
                 s = box(*e["x"], y0, y1, *e["z"])
             r[f"{p['ref']}-本体{i}"] = flip_about_x(s, p["position_xz"][1])
-        for i, pad in enumerate(p.get("pads", [])):
+        for i, pad in enumerate(p.get("model_reference_pads", p.get("pads", []))):
             if pad.get("drill"):
                 rad = max(pad.get("size", [2, 2]))/2
                 y0, y1 = (TOP, TOP+1) if backside else (BACK-1, BACK)
@@ -220,7 +222,7 @@ def references():
                               ("J_GY", "陀螺仪排针", GY[3])]:
         p = next(v for v in C["parts"] if v["ref"] == ref)
         r[label] = fuse([cy(*pad["xz"], .32, BACK-1, top_y+.6)
-                         for pad in p["pads"]])
+                         for pad in p.get("model_reference_pads", p["pads"])])
     # Module board and four holes use the DZYJ nominal dimensional drawing.
     # The shaft centre, hat shape and header bend remain schematic.
     x, y, z = JOY_AXIS
@@ -233,10 +235,10 @@ def references():
     r["SW1-原生摇杆帽"] = fuse([
         cz(x, y, 12, z+24.4, z+28.4),
         cq.Solid.makeCone(4, 10, 8, V(x, y, z+16.4), V(0, 0, 1))])
-    old_z = JOYSTICK["position_xz"][1]
+    old_z = JOYSTICK.get("model_reference_position_xz", JOYSTICK["position_xz"])[1]
     r["SW1-五针示意"] = fuse([cy(x+p["xz"][1]-old_z, JOY_PIN_CENTER[1],
                                     .32, -5, TOP+1)
-                                  for p in JOYSTICK["pads"]])
+                                  for p in JOYSTICK.get("model_reference_pads", JOYSTICK["pads"])])
     ss = fuse([box(-17.1, -7.6, -3.2, 3.2, -19.221, .579),
                box(-7.6, -6.9, -3.2, 3.2, -7.421, .579)])
     for x, z in SS_HOLES:
@@ -254,7 +256,7 @@ def references():
     r["USB插头留空"] = box(SM[1]+1.5, SM[1]+27,
                                 SM[3]-1.5, SM[3]+5.0,
                                 (SM[4]+SM[5])/2-6.2, (SM[4]+SM[5])/2+6.2)
-    # 整个模块按实体旋转换面；实际载板孔号尚未同步，不能用于下单。
+    # 整个模块按实体旋转换面；配置pads已按这个最终姿态同步。
     for name, shape in list(r.items()):
         if name.startswith("SW1-") or name == "摇杆全角度留空":
             r[name] = shape.rotate((JOY_PIN_CENTER[0], MIDDLE_Y, 0),
@@ -269,8 +271,10 @@ def references():
 
 
 def preview_references():
-    """摇杆在拇指面，主板元件在相反面，帽仍朝上。"""
-    return references()
+    """完整焊接后的外形；保守包络单独用于底座检查。"""
+    import sys
+    from gen2_component_details import assembled_details
+    return assembled_details(sys.modules[__name__], references())[0]
 
 
 def bounds(s):
@@ -330,8 +334,8 @@ def hardware():
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES, 1):
         k = f"摇杆{i}"
         top = JOY_BOARD[5]
-        head = cz(x, y, 2, -3.9, -1.8).cut(hex_z(x, y, 1.5, -4.0, -2.6))
-        r[k+"-螺钉"] = head.fuse(cz(x, y, 1, -1.8, 8.2))
+        head = cz(x, y, 2, -1.9, .2).cut(hex_z(x, y, 1.5, -2, -.6))
+        r[k+"-螺钉"] = head.fuse(cz(x, y, 1, .2, 10.2))
         r[k+"-螺母"] = hex_z(x, y, 4, top, top+1.6).cut(
             cz(x, y, 1.05, top-.1, top+1.7))
         seats.append({"id": k, "thread": "M2", "length_mm": 10,
@@ -404,7 +408,7 @@ def verify(s, refs):
                 hit = max(hit, driver.intersect(shape).Volume())
         tool_access[f"SS{i}"] = round(hit, 6)
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES, 1):
-        driver = opposite_face(cz(x, y, 1.5, -24, -3.91))
+        driver = opposite_face(cz(x, y, 1.5, -24, -1.91))
         hit = s.intersect(driver).Volume()
         for n, shape in refs.items():
             if "留空" not in n and "摆杆示意" not in n:
@@ -428,9 +432,9 @@ def verify(s, refs):
             "installation_faces": {"拇指面+Y": "摇杆、电池托和一体底座", "元件面-Y": "开发板、陀螺仪及其他主板元件"},
             "retention": {"载板": "H2靠拇指侧改近板短柱+M2x10，其余3颗M2x20；均从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
                           "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
-                          "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
-                          "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
-                          "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10从短柱底部向上穿，普通M2螺母在模块上方直接压原孔；塑料一孔2.4mm、一孔沿X为2.4x3.6mm，模块原孔3.3mm，保留弯针；实际载板新五孔后置",
+                          "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，孔号与网络已同步",
+                          "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；孔号与网络已同步",
+                          "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10，头部内收2mm；黑板抬高2mm容纳原弯针，横排五孔已同步；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
                           "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"},
             "battery_structure": {"outer_width_mm": 25.6, "frame_thickness_mm": 2.4,
                                   "side_beam_width_mm": 2.3, "side_beam_depth_mm": 11.1,
@@ -438,7 +442,7 @@ def verify(s, refs):
                                   "window_count": 10, "window_width_mm": 6.8,
                                   "window_corner_radius_mm": .8, "root_radius_mm": .8,
                                   "note": "外缘承力，开放面与小窗不能提供全方向抗压保护；未做载荷实测"},
-            "limits": ["精简小元件并加大手焊焊盘；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
+            "limits": ["八颗手焊小元件，实际载板翻面孔号、摇杆横排五针孔和布线已同步；仍需实物插装与通电验证",
                        "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
                        "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
                        "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",
@@ -532,16 +536,78 @@ def verify_mesh(path, cad_volume):
     return result
 
 
+def routed_pcb_meshes(b):
+    """保留实际板的分材质铜层、绿油、丝印，避免OBJ读取后整板变单色。"""
+    import vtk
+    source = ROOT / "pcb" / "3d" / "gun-mouse-gen2.obj"
+    material_data, current = {}, None
+    for line in source.with_suffix(".mtl").read_text(encoding="utf-8").splitlines():
+        words=line.split()
+        if not words:
+            continue
+        if words[0]=="newmtl":
+            current=words[1]
+            material_data[current]=[.5,.5,.5,1.]
+        elif words[0]=="Kd":
+            material_data[current][:3]=map(float,words[1:4])
+        elif words[0]=="d":
+            material_data[current][3]=float(words[1])
+    vertices, groups, current = [], {}, None
+    for line in source.read_text(encoding="utf-8").splitlines():
+        words=line.split()
+        if not words:
+            continue
+        if words[0]=="v":
+            vertices.append(tuple(map(float,words[1:4])))
+        elif words[0]=="usemtl":
+            current=words[1]
+            groups.setdefault(current,[])
+        elif words[0]=="f":
+            groups[current].append([int(w.split("/")[0])-1 for w in words[1:]])
+    mid_w=(min(p[2] for p in vertices)+max(p[2] for p in vertices))/2
+    labels={"mtl1":"载板-基材","mtl7037":"载板-绿色保护层","mtl10481":"载板-丝印",
+            "mtl12537":"载板-真实铜层焊盘","mtl44413":"载板-孔壁金属"}
+    meshes,colors=[],{}
+    for material,faces in groups.items():
+        points,cells=vtk.vtkPoints(),vtk.vtkCellArray()
+        remap={}
+        for face in faces:
+            ids=[]
+            for old in face:
+                if old not in remap:
+                    u,v,w=vertices[old]
+                    remap[old]=points.InsertNextPoint(-u-3-b.xmin,b.zmax-(v+45),
+                                                     MIDDLE_Y+w-mid_w-BASE[0])
+                ids.append(remap[old])
+            cells.InsertNextCell(len(ids),ids)
+        data=vtk.vtkPolyData()
+        data.SetPoints(points)
+        data.SetPolys(cells)
+        name=labels.get(material,"载板-"+material)
+        meshes.append((name,name,data))
+        colors[name]=material_data[material]
+    return meshes,colors
+
+
 def export_assembled_stl():
     """同一组毫米几何导出装配STL和带色分组OBJ，仅供装配查看。"""
     import vtk
+    import sys
+    from gen2_component_details import assembled_details
     base = cq.importers.importStep(str(OUT / "step" / "engineering_mount.step")).val()
     b = base.BoundingBox()
-    refs = preview_references()
+    refs, detail_colors, wires = assembled_details(sys.modules[__name__], references())
     refs.pop("载板")
     refs.update(hardware()[0])
     geometry = vtk.vtkAppendPolyData()
     meshes = []
+    colors = {"底座": (.22,.48,.61), "电路板": (.10,.42,.20),
+              "电池": (.72,.74,.77), "摇杆帽": (.10,.10,.11),
+              "芯片": (.23,.25,.27), "金属": (.64,.66,.69)}
+    colors.update(detail_colors)
+    invalid=[name for name,shape in refs.items() if not shape.isValid()]
+    if invalid:
+        raise RuntimeError("详细外形无效："+"、".join(invalid))
     # 完整装配固定使用原坐标，不跟随单件底座的打印摆放方向翻转。
     for name, shape in [("一体底座", base), *refs.items()]:
         if "留空" in name:
@@ -556,26 +622,16 @@ def export_assembled_stl():
         data.SetPoints(points)
         data.SetPolys(cells)
         geometry.AddInputData(data)
-        material = ("底座" if name == "一体底座" else "电池" if name == "电池" else "摇杆帽" if "摇杆帽" in name
+        material = (name if name in detail_colors else "底座" if name == "一体底座" else "电池" if name == "电池" else "摇杆帽" if "摇杆帽" in name
                     else "电路板" if name in {"开发板", "陀螺仪板", "SW1-模块黑板"}
                     else "芯片" if "元件" in name or "金属本体" in name
                     else "金属")
         meshes.append((name, material, data))
-    board = vtk.vtkOBJReader()
-    board.SetFileName(str(ROOT / "pcb" / "3d" / "gun-mouse-gen2.obj"))
-    board.Update()
-    board_mesh = vtk.vtkPolyData()
-    board_mesh.DeepCopy(board.GetOutput())
-    z0, z1 = board_mesh.GetBounds()[4:6]
-    middle_y = (BACK+TOP)/2
-    vertices = vtk.vtkPoints()
-    for i in range(board_mesh.GetNumberOfPoints()):
-        u, v, w = board_mesh.GetPoint(i)
-        vertices.InsertNextPoint(-u-3-b.xmin, b.zmax-(v+45),
-                                 middle_y+w-(z0+z1)/2-BASE[0])
-    board_mesh.SetPoints(vertices)
-    geometry.AddInputData(board_mesh)
-    meshes.append(("实际载板", "电路板", board_mesh))
+    board_meshes,board_colors=routed_pcb_meshes(b)
+    colors.update(board_colors)
+    for item in board_meshes:
+        geometry.AddInputData(item[2])
+        meshes.append(item)
     triangles = vtk.vtkTriangleFilter()
     triangles.SetInputConnection(geometry.GetOutputPort())
     triangles.Update()
@@ -586,15 +642,12 @@ def export_assembled_stl():
     writer.SetInputConnection(triangles.GetOutputPort())
     if writer.Write() != 1:
         raise RuntimeError("装配STL导出失败")
-    colors = {"底座": (.22, .48, .61), "电路板": (.10, .42, .20),
-              "电池": (.72, .74, .77), "摇杆帽": (.10, .10, .11),
-              "芯片": (.23, .25, .27), "金属": (.64, .66, .69)}
     obj_path = OUT / "第二代完整装配.obj"
     mtl_path = obj_path.with_suffix(".mtl")
     with mtl_path.open("w", encoding="utf-8", newline="\n") as output:
-        for name, rgb in colors.items():
-            output.write(f"newmtl {name}\nKa 0.15 0.15 0.15\nKd {' '.join(map(str, rgb))}\n"
-                         "Ks 0.2 0.2 0.2\nNs 25\nd 1.0\nillum 2\n")
+        for name, rgba in colors.items():
+            output.write(f"newmtl {name}\nKa 0.15 0.15 0.15\nKd {' '.join(map(str, rgba[:3]))}\n"
+                         f"Ks 0.2 0.2 0.2\nNs 25\nd {rgba[3] if len(rgba)>3 else 1.0}\nillum 2\n")
     with obj_path.open("w", encoding="utf-8", newline="\n", buffering=1024*1024) as output:
         output.write(f"# 毫米；与完整装配STL同坐标，仅供查看，不能整体打印\nmtllib {mtl_path.name}\n")
         offset = 1
@@ -610,8 +663,45 @@ def export_assembled_stl():
             offset += mesh.GetNumberOfPoints()
     print(str(path), flush=True)
     print(str(obj_path), flush=True)
-    print("毫米；STL与OBJ同坐标。摇杆与电池托在拇指面，主板元件在反面；摇杆帽仍朝+Z。实际载板孔号与布线待同步，仅供看装配，不能整体打印。", flush=True)
-    render(base, preview_references())
+    report_path=OUT/"assembly-check.json"
+    report=json.loads(report_path.read_text(encoding="utf-8"))
+    wire_shapes={n:s for n,s in refs.items() if n.endswith("-绝缘皮")}
+    base_hits={n:round(base.intersect(s).Volume(),5) for n,s in wire_shapes.items()}
+    pair_hits={}
+    wire_names=list(wire_shapes)
+    for i,a in enumerate(wire_names):
+        for other in wire_names[i+1:]:
+            hit=wire_shapes[a].intersect(wire_shapes[other]).Volume()
+            if hit>.001:
+                pair_hits[a+"/"+other]=round(hit,5)
+    report["assembled_model"]={"object_count":len(meshes),"invalid_shapes":invalid,
+                               "manual_wire_count":len(wires),"wires":wires,
+                               "wire_insulation_vs_mount_mm3":base_hits,
+                               "wire_insulation_pair_overlaps_mm3":pair_hits,
+                               "pcb_sha256":hashlib.sha256((ROOT/"pcb/gun-mouse-supermini-carrier.kicad_pcb").read_bytes()).hexdigest(),
+                               "real_copper_materials":[n for n,_,_ in board_meshes],
+                               "appearance_basis":"开发板为本地官方器件参考外形；其余小件和线弯曲为名义外形。B焊盘和铜箔尾按照片比读，未实测。",
+                               "stl_sha256":hashlib.sha256(path.read_bytes()).hexdigest(),
+                               "obj_sha256":hashlib.sha256(obj_path.read_bytes()).hexdigest()}
+    report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    print(f"毫米；{len(meshes)}组实体、{len(wires)}根手焊线；包含实际铜层及焊点。仅供装配查看，不能整体打印。",flush=True)
+    # 使用完整导出网格离屏渲染，不打开任何软件窗口。
+    renderer=vtk.vtkRenderer()
+    renderer.SetBackground(.92,.94,.96)
+    for _,material,mesh in meshes:
+        mapper=vtk.vtkPolyDataMapper(); mapper.SetInputData(mesh)
+        actor=vtk.vtkActor(); actor.SetMapper(mapper)
+        rgb=colors[material]; actor.GetProperty().SetColor(*rgb[:3])
+        actor.GetProperty().SetOpacity(rgb[3] if len(rgb)>3 else 1)
+        renderer.AddActor(actor)
+    camera=renderer.GetActiveCamera()
+    camera.SetPosition(210,-230,-200); camera.SetViewUp(0,-1,0)
+    camera.ParallelProjectionOn(); renderer.ResetCamera()
+    window=vtk.vtkRenderWindow(); window.SetOffScreenRendering(1)
+    window.SetSize(1400,1400); window.AddRenderer(renderer); window.Render()
+    capture=vtk.vtkWindowToImageFilter(); capture.SetInput(window); capture.ReadFrontBufferOff(); capture.Update()
+    png=vtk.vtkPNGWriter(); png.SetFileName(str(OUT/"renders/gen2-assembly.png"))
+    png.SetInputConnection(capture.GetOutputPort()); png.Write(); window.Finalize()
 
 
 def main():

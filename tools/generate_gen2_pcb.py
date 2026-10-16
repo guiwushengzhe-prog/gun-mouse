@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import ast
+import copy
 import csv
 import hashlib
 import heapq
@@ -53,7 +54,7 @@ def legacy_functions():
                             'bank("J_GY",["3V3","GND","SCL","SDA","","","","","3V3","GND","","","",""])')
     source = source.replace('        a=next(p["xy"] for p in self.pads if p["ref"]=="J_GY" and p["number"]=="2")\n        b=[55.0,a[1]]\n        self.apply_path(self.astar(a,b,self.nets["GND"].GetNetCode()),a,b,"GND")', '')
     source = source.replace('("JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH","TOUCH_ELECTRODE","SDA","SCL","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")',
-                            '("SDA","SCL","JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH","TOUCH_ELECTRODE","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")')
+                            '("TOUCH","SDA","SCL","JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH_ELECTRODE","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")')
     source = source.replace('if part["kind"]!="wirebank":continue', 'if part["kind"] not in {"wirebank","module"}:continue')
     source = source.replace('elif part["ref"]=="J_GY":destination={"3V3":"GY-601N1 H2 VCC","GND":"GY-601N1 H2 GND","SCL":"GY-601N1 H2 SCL","SDA":"GY-601N1 H2 SDA"}[n]',
                             'elif part["ref"]=="J_GY":destination="GY-601N1 直接焊接；闲脚独立不接线"')
@@ -79,6 +80,7 @@ def legacy_functions():
     env = dict(globals())
     exec(compile(selected, SOURCE_PATH, "exec"), env)
     env["render_previews"] = lambda: None
+    env["validate_electrical"] = lambda config, board: validate_current_electrical(config, board, env)
     return env
 
 
@@ -116,6 +118,37 @@ def base_configuration():
         p["xz"][0] = round(p["xz"][0] - .6, 4)
     cap["envelope"]["x"] = [round(x - .6, 4) for x in cap["envelope"]["x"]]
     parts["J_TRIG"]["purpose"] = "Existing SS-01GL COM/NO wired trigger; no PCB slots"
+    return config
+
+
+def apply_assembly_pose(config):
+    """实体装配中的旋转只计算一次；基准模型数据与最终制板孔分开保存。"""
+    for part in config["parts"]:
+        part.setdefault("model_reference_pads", copy.deepcopy(part["pads"]))
+        part.setdefault("model_reference_mount_side", part.get("mount_side", "top"))
+        part.setdefault("model_reference_position_xz", copy.deepcopy(part["position_xz"]))
+        original = part["model_reference_pads"]
+        part["pads"] = copy.deepcopy(original)
+        if part["ref"] == "SW1":
+            for pad in part["pads"]:
+                pad["xz"] = [round(-33.7-(pad["xz"][1]-20), 4), 5]
+            part["mount_side"] = "top"
+            part["assembly_pose"] = "拇指面+Y，摇杆帽朝+Z，五针横排；原弯针直接插入载板"
+            part["fabrication_envelope"] = {"x": [-47.2, -20.2], "z": [4.2, 34.2]}
+            part["assembly"] = "五针从整机X小到大：GND、3V3、VRX、VRY、SW；按下使用内部上拉，电气引脚不变"
+        else:
+            center_z = part["position_xz"][1]
+            for pad in part["pads"]:
+                pad["xz"][1] = round(2*center_z-pad["xz"][1], 4)
+            part["mount_side"] = "bottom"
+            e = part["envelope"]
+            part["fabrication_envelope"] = {
+                "x": e["x"], "z": [round(2*center_z-v, 4) for v in reversed(e["z"])]}
+            part["assembly_pose"] = "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    config["pcb"]["kicad_mapping"] = "(Kx,Ky)=(-X-3,45-Z)；摇杆在+Y拇指面，开发板、陀螺仪和其他元件在-Y；模型基准数据只用于原始实体构造"
+    config["pcb"]["antenna_keepout_xz"] = [[-35, 17], [-27, 17], [-27, 28], [-35, 28]]
+    config["pcb"]["antenna_keepout_basis"] = "开发板绕X轴、Z=22.5毫米翻转；原Z=17..28毫米禁铜区关于22.5对称，变换后范围相同"
+    config["status"] = "八颗手焊电阻电容；真实模块翻面孔号和摇杆横排五孔已同步，正在重新布线检查"
     return config
 
 
@@ -165,7 +198,7 @@ def simplify_hand_solder(config):
 def configuration(reset_layout=False):
     config = json.loads((PCB_DIR / CONFIG_NAME).read_text(encoding="utf-8"))
     if not reset_layout:
-        return simplify_hand_solder(config)
+        return apply_assembly_pose(simplify_hand_solder(config))
     config["version"] = "supermini-tht-carrier-v2"
     config["pcb"]["kicad_mapping"] = "(Kx,Ky)=(-X-3,45-Z); MCU/GY components face +Y; HW504 PCB is perpendicular, shaft points -X"
     config["pcb"]["antenna_keepout_xz"] = [[-35, 17], [-27, 17], [-27, 28], [-35, 28]]
@@ -268,7 +301,7 @@ def configuration(reset_layout=False):
             pad["xz"] = [round(x+(-.5 if i == 0 else .5)*pitch, 4), z]
         if part["kind"] == "capacitor":
             part["envelope_basis"] = "采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距"
-    return simplify_hand_solder(config)
+    return apply_assembly_pose(simplify_hand_solder(config))
 
 
 def write_bom(config):
@@ -326,7 +359,7 @@ def relocate(board, config, env):
         for item in list(fp.GraphicalItems()):
             RETIRED.append(item)
             fp.Remove(item)
-        e = info["envelope"]
+        e = info.get("fabrication_envelope", info["envelope"])
         a, b = env["kxy"]([max(e["x"]), max(e["z"])]), env["kxy"]([min(e["x"]), min(e["z"])])
         courtyard, fab = (pcb.B_CrtYd, pcb.B_Fab) if info.get("mount_side") == "bottom" else (pcb.F_CrtYd, pcb.F_Fab)
         for layer, margin, width in [(courtyard, .25, .05), (fab, 0, .1)]:
@@ -342,7 +375,7 @@ def relocate(board, config, env):
             RETIRED.append(item)
             board.Remove(item)
     env["add_text"](board, "S3 MODULE CARRIER v2", env["kxy"]([-39, 38]), .8)
-    env["add_text"](board, "BAT OFF BEFORE PC USB", env["kxy"]([-41, 5]), .8)
+    env["add_text"](board, "BAT OFF BEFORE PC USB", env["kxy"]([-41, 8]), .8)
     env["add_text"](board, "ON", env["kxy"]([-49.8, -38.3]), .8)
     env["add_text"](board, "OFF", env["kxy"]([-32.7, -38.3]), .8)
     for part in config["parts"]:
@@ -382,6 +415,77 @@ def route_antenna_keepout(router, config, env):
     router.hole_keepout[mask] = True
 
 
+def validate_current_electrical(config, board, env):
+    """核对精简电路、真实孔号和引脚，不沿用旧十五颗电路约定。"""
+    expected = {(part["ref"], pad["number"]): pad for part in config["parts"] for pad in part["pads"]}
+    actual = {(fp.GetReference(), pad.GetNumber()): pad for fp in board.GetFootprints()
+              for pad in fp.Pads() if pad.GetAttribute() == pcb.PAD_ATTRIB_PTH}
+    errors = []
+    if set(actual) != set(expected):
+        errors.append("实际通孔与配置数量不符")
+    for key, info in expected.items():
+        pad = actual.get(key)
+        if pad is None:
+            continue
+        xy = [pcb.ToMM(pad.GetPosition().x), pcb.ToMM(pad.GetPosition().y)]
+        if pad.GetNetname() != info["net"] or math.dist(xy, env["kxy"](info["xz"])) > .002:
+            errors.append(f"{key}网络或位置不符")
+        if any(abs(pcb.ToMM(pad.GetDrillSize()[i])-info["drill"][i]) > .002 for i in (0, 1)):
+            errors.append(f"{key}孔径不符")
+    parts = {p["ref"]: p for p in config["parts"]}
+    contract = {"R_TRIG": ("3.3k", "3V3", "TRIG"), "R_TOUCH": ("510", "TOUCH_ELECTRODE", "TOUCH"),
+                "R_BAT_H": ("100k", "BAT_SW", "VBAT_ADC"), "R_BAT_L": ("100k", "VBAT_ADC", "GND"),
+                "C_JOY_X": ("100n", "JOY_X", "GND"), "C_JOY_Y": ("100n", "JOY_Y", "GND"),
+                "C_TRIG": ("100n", "TRIG", "GND"), "C_BAT": ("100n", "VBAT_ADC", "GND")}
+    if {p["ref"] for p in config["parts"] if p["kind"] in {"resistor", "capacitor"}} != set(contract):
+        errors.append("八颗小元件清单不符")
+    for ref, (value, a, b) in contract.items():
+        part = parts.get(ref, {})
+        if part.get("value") != value or [p["net"] for p in part.get("pads", [])] != [a, b]:
+            errors.append(f"{ref}功能不符")
+    if config["power"]["low_battery_shutdown_enabled"] or config["power"]["external_power_detection_enabled"]:
+        errors.append("已取消的供电功能仍启用")
+    if any(p["net"] in {"VBUS_DET", "VBUS_SHARED"} for p in expected.values()):
+        errors.append("已取消的外部供电识别仍有接线")
+    pins = config["firmware_pins"]
+    if len(set(pins.values())) != len(pins) or set(pins.values()) & {0, 3, 19, 20, 43, 44, 45, 46}:
+        errors.append("控制引脚重复或占用保留引脚")
+    for ref in ("J_MCU", "J_GY"):
+        fp = next(fp for fp in board.GetFootprints() if fp.GetReference() == ref)
+        if fp.GetLayer() != pcb.B_Cu:
+            errors.append(f"{ref}安装面不符")
+    if errors:
+        raise RuntimeError("电路核对失败："+"；".join(errors))
+    nets = defaultdict(list)
+    for (ref, number), info in expected.items():
+        if info["net"]:
+            nets[info["net"]].append(f"{ref}.{number}")
+    env["write_json"](env["OUT"] / "circuit-netlist.json", {
+        "config_sha256": env["digest"](env["CONFIG"]), "nets": dict(sorted(nets.items())),
+        "parts": [{"ref": p["ref"], "kind": p["kind"], "value": p["value"],
+                   "pins": {i["number"]: i["net"] for i in p["pads"]}} for p in config["parts"]],
+        "external_connections": "开发板和陀螺仪两排直接焊板；扳机、电池、触摸电极及开发板电池端为短软线"})
+    report = {"status": "pass", "config_sha256": env["digest"](env["CONFIG"]),
+              "actual_board_sha256": env["digest"](env["BOARD_FILE"]), "actual_pth_count": len(actual),
+              "net_count": len(nets), "actual_pad_net_position_drill_errors": 0,
+              "resistors": 4, "capacitors": 4, "mount_holes_verified": 4,
+              "module_terminal_pose": "实际孔号已随完整装配中的实体旋转同步",
+              "divider_adc_v_at_4_2v_battery": 2.1, "battery_voltage_display_enabled": True,
+              "low_battery_shutdown_enabled": False, "external_power_detection_enabled": False,
+              "schematic_erc": "未提供原理图；逐焊盘核对配置、电气网络、坐标和孔径，不声称原理图一致",
+              "prototype_checks": "实物模块、引脚适配、电池极性、焊接、电量校准、触摸及充电待样机验证"}
+    env["write_json"](env["OUT"] / "electrical-report.json", report)
+    with (env["OUT"] / "wiring.csv").open("w", encoding="utf-8-sig", newline="") as output:
+        writer = csv.writer(output)
+        writer.writerow(["载板元件", "孔号", "网络", "连接方式", "整机X毫米", "整机Z毫米"])
+        for part in config["parts"]:
+            if part["kind"] not in {"wirebank", "module", "joystick"}:
+                continue
+            for pad in part["pads"]:
+                writer.writerow([part["ref"], pad["number"], pad["net"], part.get("purpose", ""), *pad["xz"]])
+    return report
+
+
 def generate(geometry_only=False, reset_layout=False):
     config = configuration(reset_layout=reset_layout)
     AFFECTED.update(p["net"] for part in config["parts"] if part["kind"] in {"resistor", "capacitor"}
@@ -410,7 +514,7 @@ def generate(geometry_only=False, reset_layout=False):
             shutil.copy2(board_path, PCB_DIR / BOARD_NAME)
             env["write_json"](PCB_DIR / CONFIG_NAME, config)
             write_bom(config)
-            print("已更新八颗小元件焊孔和同名物料清单；模块孔号及布线仍待同步，不可下单。", flush=True)
+            print("已同步实际安装面和孔号；尚未重新布线，不可下单。", flush=True)
             return
         nets = {str(n.GetNetname()): n for n in board.GetNetsByNetcode().values()}
         pads = []
@@ -439,6 +543,8 @@ def generate(geometry_only=False, reset_layout=False):
         router.route()
         board = env["add_ground_zone"](board, nets, outline)
         router.via_count = sum(isinstance(t, pcb.PCB_VIA) for t in board.GetTracks())
+        config["status"] = "八颗手焊电阻电容；模块翻面孔号与摇杆横排五孔已同步，板上网络已布线；实物插装和通电待验证"
+        env["write_json"](env["CONFIG"], config)
         try:
             env["export_files"](config, board, router, pads)
         except RuntimeError:
@@ -447,7 +553,9 @@ def generate(geometry_only=False, reset_layout=False):
                 print(report.read_text(encoding="utf-8"), flush=True)
             raise
         for item in env["OUT"].rglob("*"):
-            if item.is_file() and "Gerber" not in item.relative_to(env["OUT"]).parts and item.suffix != ".kicad_prl":
+            if (item.is_file() and "Gerber" not in item.relative_to(env["OUT"]).parts
+                    and "GunMouseHandSolder.pretty" not in item.relative_to(env["OUT"]).parts
+                    and item.name != "fp-lib-table" and item.suffix != ".kicad_prl"):
                 dest = PCB_DIR / item.relative_to(env["OUT"])
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)

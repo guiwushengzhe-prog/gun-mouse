@@ -1,13 +1,11 @@
 {
-  "config_sha256": "d51bd25b661340a425c98128dbd1fd9cdec967bc447bc3222a15b1bb2b156508",
+  "config_sha256": "b04fbf91bca0ae51f017b5a042b539b614c42efb68eabba66ef5f24bb7966397",
   "nets": {
     "3V3": [
-      "SW1.3",
-      "SW1.4",
-      "J_MCU.1",
+      "SW1.2",
+      "J_MCU.12",
       "J_GY.1",
-      "R_JOY.1",
-      "R_RIGHT.1",
+      "J_GY.14",
       "R_TRIG.1"
     ],
     "BAT_RAW": [
@@ -21,63 +19,48 @@
     ],
     "BTN_R": [
       "SW2.2",
-      "J_MCU.6",
-      "R_RIGHT.2",
-      "C_RIGHT.1"
+      "J_MCU.14"
     ],
     "GND": [
       "SW1.1",
-      "SW1.6",
-      "SW1.7",
-      "SW1.8",
-      "SW1.9",
-      "SW1.10",
-      "SW1.b",
-      "SW1.d",
       "SW2.1",
-      "J_MCU.2",
+      "J_MCU.11",
       "J_GY.2",
+      "J_GY.13",
       "J_TRIG.1",
       "J_TOUCH.2",
       "J_BAT.2",
       "J_MODULE_BAT.2",
       "R_BAT_L.2",
-      "R_RAIL_L.2",
       "C_JOY_X.2",
       "C_JOY_Y.2",
-      "C_JOY_SW.2",
-      "C_RIGHT.2",
       "C_TRIG.2",
-      "C_BAT.2",
-      "C_RAIL.2"
+      "C_BAT.2"
     ],
     "JOY_SW": [
-      "SW1.a",
-      "SW1.c",
-      "J_MCU.5",
-      "R_JOY.2",
-      "C_JOY_SW.1"
+      "SW1.5",
+      "J_MCU.6"
     ],
     "JOY_X": [
-      "SW1.2",
+      "SW1.3",
       "J_MCU.3",
       "C_JOY_X.1"
     ],
     "JOY_Y": [
-      "SW1.5",
+      "SW1.4",
       "J_MCU.4",
       "C_JOY_Y.1"
     ],
     "SCL": [
-      "J_MCU.9",
+      "J_MCU.8",
       "J_GY.3"
     ],
     "SDA": [
-      "J_MCU.8",
+      "J_MCU.7",
       "J_GY.4"
     ],
     "TOUCH": [
-      "J_MCU.10",
+      "J_MCU.9",
       "R_TOUCH.2"
     ],
     "TOUCH_ELECTRODE": [
@@ -85,48 +68,29 @@
       "R_TOUCH.1"
     ],
     "TRIG": [
-      "J_MCU.7",
+      "J_MCU.18",
       "J_TRIG.2",
       "R_TRIG.2",
       "C_TRIG.1"
     ],
     "VBAT_ADC": [
-      "J_MCU.11",
+      "J_MCU.17",
       "R_BAT_H.2",
       "R_BAT_L.1",
       "C_BAT.1"
-    ],
-    "VBUS_DET": [
-      "J_MCU.12",
-      "R_RAIL_H.2",
-      "R_RAIL_L.1",
-      "C_RAIL.1"
-    ],
-    "VBUS_SHARED": [
-      "J_MODULE_RAIL.1",
-      "R_RAIL_H.1"
     ]
   },
   "parts": [
     {
       "ref": "SW1",
       "kind": "joystick",
-      "value": "RKJXV1224005",
+      "value": "HW-504 34x26mm",
       "pins": {
         "1": "GND",
-        "2": "JOY_X",
-        "3": "3V3",
-        "4": "3V3",
-        "5": "JOY_Y",
-        "6": "GND",
-        "7": "GND",
-        "8": "GND",
-        "9": "GND",
-        "10": "GND",
-        "a": "JOY_SW",
-        "c": "JOY_SW",
-        "b": "GND",
-        "d": "GND"
+        "2": "3V3",
+        "3": "JOY_X",
+        "4": "JOY_Y",
+        "5": "JOY_SW"
       }
     },
     {
@@ -141,32 +105,48 @@
     },
     {
       "ref": "J_MCU",
-      "kind": "wirebank",
-      "value": "Labelled solder wires",
+      "kind": "module",
+      "value": "ESP32-S3 SuperMini 2x9",
       "pins": {
-        "1": "3V3",
-        "2": "GND",
+        "1": "",
+        "2": "",
         "3": "JOY_X",
         "4": "JOY_Y",
-        "5": "JOY_SW",
-        "6": "BTN_R",
-        "7": "TRIG",
-        "8": "SDA",
-        "9": "SCL",
-        "10": "TOUCH",
-        "11": "VBAT_ADC",
-        "12": "VBUS_DET"
+        "5": "",
+        "6": "JOY_SW",
+        "7": "SDA",
+        "8": "SCL",
+        "9": "TOUCH",
+        "10": "",
+        "11": "GND",
+        "12": "3V3",
+        "13": "",
+        "14": "BTN_R",
+        "15": "",
+        "16": "",
+        "17": "VBAT_ADC",
+        "18": "TRIG"
       }
     },
     {
       "ref": "J_GY",
-      "kind": "wirebank",
-      "value": "Labelled solder wires",
+      "kind": "module",
+      "value": "GY-601N1-LSM6DSV16X 8+6",
       "pins": {
         "1": "3V3",
         "2": "GND",
         "3": "SCL",
-        "4": "SDA"
+        "4": "SDA",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
+        "14": "3V3",
+        "13": "GND",
+        "12": "",
+        "11": "",
+        "10": "",
+        "9": ""
       }
     },
     {
@@ -199,7 +179,7 @@
     {
       "ref": "J_SWITCH",
       "kind": "power_switch",
-      "value": "SS-12D01-G030",
+      "value": "SS12D10 G5",
       "pins": {
         "1": "BAT_RAW",
         "2": "BAT_SW",
@@ -213,32 +193,6 @@
       "pins": {
         "1": "BAT_SW",
         "2": "GND"
-      }
-    },
-    {
-      "ref": "J_MODULE_RAIL",
-      "kind": "wirebank",
-      "value": "Labelled solder wires",
-      "pins": {
-        "1": "VBUS_SHARED"
-      }
-    },
-    {
-      "ref": "R_JOY",
-      "kind": "resistor",
-      "value": "3.3k",
-      "pins": {
-        "1": "3V3",
-        "2": "JOY_SW"
-      }
-    },
-    {
-      "ref": "R_RIGHT",
-      "kind": "resistor",
-      "value": "3.3k",
-      "pins": {
-        "1": "3V3",
-        "2": "BTN_R"
       }
     },
     {
@@ -278,24 +232,6 @@
       }
     },
     {
-      "ref": "R_RAIL_H",
-      "kind": "resistor",
-      "value": "100k",
-      "pins": {
-        "1": "VBUS_SHARED",
-        "2": "VBUS_DET"
-      }
-    },
-    {
-      "ref": "R_RAIL_L",
-      "kind": "resistor",
-      "value": "100k",
-      "pins": {
-        "1": "VBUS_DET",
-        "2": "GND"
-      }
-    },
-    {
       "ref": "C_JOY_X",
       "kind": "capacitor",
       "value": "100n",
@@ -310,24 +246,6 @@
       "value": "100n",
       "pins": {
         "1": "JOY_Y",
-        "2": "GND"
-      }
-    },
-    {
-      "ref": "C_JOY_SW",
-      "kind": "capacitor",
-      "value": "100n",
-      "pins": {
-        "1": "JOY_SW",
-        "2": "GND"
-      }
-    },
-    {
-      "ref": "C_RIGHT",
-      "kind": "capacitor",
-      "value": "100n",
-      "pins": {
-        "1": "BTN_R",
         "2": "GND"
       }
     },
@@ -348,16 +266,7 @@
         "1": "VBAT_ADC",
         "2": "GND"
       }
-    },
-    {
-      "ref": "C_RAIL",
-      "kind": "capacitor",
-      "value": "100n",
-      "pins": {
-        "1": "VBUS_DET",
-        "2": "GND"
-      }
     }
   ],
-  "external_connections": "wiring.csv; bought modules are connected by wires and are not fabricated on this board"
+  "external_connections": "开发板和陀螺仪两排直接焊板；扳机、电池、触摸电极及开发板电池端为短软线"
 }

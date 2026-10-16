@@ -1,18 +1,18 @@
-﻿"Reference","Value / Type","Qty","Assembly","Purchase / Fit Requirement","Nets / Purpose"
-"SW1","HW-504 34x26mm","1","直插手工焊接","用户实测黑板34x26mm、五针2.54mm；按现有弯针垂直插入载板，模块向背面伸出","现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位"
-"SW2","D2FC-F-7N(20M)","1","直插手工焊接","Official 6.5+0.1 mm case and local movable plunger split; top recess must be checked on purchased sample","THT hand solder; pin1 COM,GND; pin2 NO,BTN_R; pin3 dummy mechanical terminal, no circuit connection"
-"J_MCU","ESP32-S3 SuperMini 2x9","1","现成模块两排针手焊到载板","用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定","两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路"
-"J_GY","GY-601N1-LSM6DSV16X 8+6","1","现成模块两排针手焊到载板","用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定","重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网"
-"J_TRIG","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","Existing SS-01GL COM/NO wired trigger; no PCB slots"
-"J_TOUCH","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil"
-"J_BAT","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","Protected single-cell LiPo input"
-"J_SWITCH","SS12D10 G5","1","直插手工焊接","用户SS12D10 G5尺寸图：相邻4.7mm、首末9.4mm，扁脚1.3x0.8mm，采用1.8mm圆孔/3mm焊盘；柄5mm","1=BAT_RAW、2=BAT_SW公共脚、3独立空网；拨向1脚侧为ON；电池两线永久焊板，不接外置开关线"
-"J_MODULE_BAT","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","SuperMini dedicated B+ and B- pads only"
-"R_TRIG","3.3k","1","直插手工焊接","轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米","SS-01GL closed contact current approx 1 mA at 3.3 V"
-"R_TOUCH","510","1","直插手工焊接","轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米","Touch series resistor, no pullup or parallel capacitor"
-"R_BAT_H","100k","1","直插手工焊接","轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米","Battery switched-side divider upper"
-"R_BAT_L","100k","1","直插手工焊接","轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米","Battery divider lower, scale=2"
-"C_JOY_X","100n","1","直插手工焊接","直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米","ADC/contact filter"
-"C_JOY_Y","100n","1","直插手工焊接","直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米","ADC/contact filter"
-"C_TRIG","100n","1","直插手工焊接","直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米","ADC/contact filter"
-"C_BAT","100n","1","直插手工焊接","直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米","ADC/contact filter"
+﻿Reference,Value / Type,Qty,Assembly,Purchase / Fit Requirement,Nets / Purpose
+SW1,HW-504 34x26mm,1,Hand-solder THT,用户实测黑板34x26mm、五针2.54mm；按现有弯针垂直插入载板，模块向背面伸出,现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位
+SW2,D2FC-F-7N(20M),1,Hand-solder THT,Official 6.5+0.1 mm case and local movable plunger split; top recess must be checked on purchased sample,"THT hand solder; pin1 COM,GND; pin2 NO,BTN_R; pin3 dummy mechanical terminal, no circuit connection"
+J_MCU,ESP32-S3 SuperMini 2x9,1,Hand-solder THT,用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路
+J_GY,GY-601N1-LSM6DSV16X 8+6,1,Hand-solder THT,用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网
+J_TRIG,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,Existing SS-01GL COM/NO wired trigger; no PCB slots
+J_TOUCH,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil"
+J_BAT,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,Protected single-cell LiPo input
+J_SWITCH,SS12D10 G5,1,Hand-solder THT,用户SS12D10 G5尺寸图：相邻4.7mm、首末9.4mm，扁脚1.3x0.8mm，采用1.8mm圆孔/3mm焊盘；柄5mm,1=BAT_RAW、2=BAT_SW公共脚、3独立空网；拨向1脚侧为ON；电池两线永久焊板，不接外置开关线
+J_MODULE_BAT,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,SuperMini dedicated B+ and B- pads only
+R_TRIG,3.3k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,SS-01GL closed contact current approx 1 mA at 3.3 V
+R_TOUCH,510,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,"Touch series resistor, no pullup or parallel capacitor"
+R_BAT_H,100k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,Battery switched-side divider upper
+R_BAT_L,100k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,"Battery divider lower, scale=2"
+C_JOY_X,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+C_JOY_Y,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+C_TRIG,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+C_BAT,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter

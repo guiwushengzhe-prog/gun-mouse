@@ -1,26 +1,46 @@
-﻿Carrier reference,Pin,Net,Connect to,Global X mm,Global Z mm
-J_MCU,1,3V3,SuperMini 3V3 pin,-56.0,-5.0
-J_MCU,2,GND,SuperMini GND pin,-56.0,-7.54
-J_MCU,3,JOY_X,SuperMini GPIO1,-56.0,-10.08
-J_MCU,4,JOY_Y,SuperMini GPIO2,-56.0,-12.62
-J_MCU,5,JOY_SW,SuperMini GPIO4,-56.0,-15.16
-J_MCU,6,BTN_R,SuperMini GPIO12,-56.0,-17.7
-J_MCU,7,TRIG,SuperMini GPIO8,-56.0,-20.24
-J_MCU,8,SDA,SuperMini GPIO5,-56.0,-22.78
-J_MCU,9,SCL,SuperMini GPIO6,-56.0,-25.32
-J_MCU,10,TOUCH,SuperMini GPIO7,-56.0,-27.86
-J_MCU,11,VBAT_ADC,SuperMini GPIO9,-56.0,-30.4
-J_MCU,12,VBUS_DET,SuperMini GPIO10,-56.0,-32.94
-J_GY,1,3V3,GY-601N1 H2 VCC,-53.0,10.0
-J_GY,2,GND,GY-601N1 H2 GND,-53.0,7.46
-J_GY,3,SCL,GY-601N1 H2 SCL,-53.0,4.92
-J_GY,4,SDA,GY-601N1 H2 SDA,-53.0,2.38
-J_TRIG,1,GND,SS-01GL COM,-25.5,-9.0
-J_TRIG,2,TRIG,SS-01GL NO; NC unconnected,-25.5,-11.54
+﻿载板元件,孔号,网络,连接方式,整机X毫米,整机Z毫米
+SW1,1,GND,现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位,-38.78,5
+SW1,2,3V3,现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位,-36.24,5
+SW1,3,JOY_X,现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位,-33.7,5
+SW1,4,JOY_Y,现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位,-31.16,5
+SW1,5,JOY_SW,现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位,-28.62,5
+J_MCU,1,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-11.59,30.12
+J_MCU,2,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-14.13,30.12
+J_MCU,3,JOY_X,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-16.67,30.12
+J_MCU,4,JOY_Y,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-19.21,30.12
+J_MCU,5,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-21.75,30.12
+J_MCU,6,JOY_SW,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-24.29,30.12
+J_MCU,7,SDA,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-26.83,30.12
+J_MCU,8,SCL,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-29.37,30.12
+J_MCU,9,TOUCH,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-31.91,30.12
+J_MCU,10,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-11.59,14.88
+J_MCU,11,GND,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-14.13,14.88
+J_MCU,12,3V3,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-16.67,14.88
+J_MCU,13,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-19.21,14.88
+J_MCU,14,BTN_R,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-21.75,14.88
+J_MCU,15,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-24.29,14.88
+J_MCU,16,,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-26.83,14.88
+J_MCU,17,VBAT_ADC,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-29.37,14.88
+J_MCU,18,TRIG,两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路,-31.91,14.88
+J_GY,1,3V3,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,13.0
+J_GY,2,GND,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,15.54
+J_GY,3,SCL,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,18.08
+J_GY,4,SDA,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,20.62
+J_GY,5,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,23.16
+J_GY,6,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,25.7
+J_GY,7,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,28.24
+J_GY,8,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-42.504,30.78
+J_GY,14,3V3,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-57.744,15.54
+J_GY,13,GND,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-57.744,18.08
+J_GY,12,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-57.744,20.62
+J_GY,11,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-57.744,23.16
+J_GY,10,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-57.744,25.7
+J_GY,9,,重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网,-57.744,28.24
+J_TRIG,1,GND,Existing SS-01GL COM/NO wired trigger; no PCB slots,-25.5,-9.0
+J_TRIG,2,TRIG,Existing SS-01GL COM/NO wired trigger; no PCB slots,-25.5,-6.46
 J_TOUCH,1,TOUCH_ELECTRODE,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-18.0
-J_TOUCH,2,GND,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-20.54
-J_BAT,1,BAT_RAW,Protected single-cell LiPo input,-56.0,25.0
-J_BAT,2,GND,Protected single-cell LiPo input,-56.0,22.46
-J_MODULE_BAT,1,BAT_SW,SuperMini dedicated B+,-13.0,20.0
-J_MODULE_BAT,2,GND,SuperMini dedicated B-,-13.0,17.46
-J_MODULE_RAIL,1,VBUS_SHARED,"SuperMini 5V/shared VBUS pin, sense only",-13.0,12.5
+J_TOUCH,2,GND,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",-25.5,-15.46
+J_BAT,1,BAT_RAW,Protected single-cell LiPo input,-55.7,-36
+J_BAT,2,GND,Protected single-cell LiPo input,-55.7,-33.46
+J_MODULE_BAT,1,BAT_SW,SuperMini dedicated B+ and B- pads only,-19,35
+J_MODULE_BAT,2,GND,SuperMini dedicated B+ and B- pads only,-21.54,35
