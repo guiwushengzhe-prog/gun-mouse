@@ -139,10 +139,6 @@ def build_mount():
     for h in P["mount_holes"]:
         x, z = h["xz"]
         cuts.append(cy(x, z, 1.2, -20, BACK+0.2))
-    # C_RAIL's outer solder tail is close to H4. Relieve the post edge
-    # locally instead of making the whole carrier sit higher.
-    tail = next(p for p in C["parts"] if p["ref"] == "C_RAIL")["pads"][1]
-    cuts.append(cy(*tail["xz"], 1.3, BACK-1.2, BACK+.1))
     # 给右键焊脚留出空间，避免新增摇杆短臂顶到焊点。
     for tail in next(p for p in C["parts"] if p["ref"] == "SW2")["pads"]:
         cuts.append(cy(*tail["xz"], 1.5, BACK-1.2, BACK+.1))
@@ -416,7 +412,7 @@ def verify(s, refs):
                           "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
                           "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10从短柱底部向上穿，普通M2螺母在模块上方直接压原孔；塑料一孔2.4mm、一孔沿X为2.4x3.6mm，模块原孔3.3mm，保留弯针；实际载板新五孔后置",
                           "电池": "602060含保护板/出线预留20x80x8mm，出线端敞开；薄软垫+两条软绑带，不承担手掌握力"},
-            "limits": ["本轮仅改安装面与装配模型；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
+            "limits": ["精简小元件并加大手焊焊盘；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
                        "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
                        "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
                        "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",

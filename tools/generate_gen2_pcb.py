@@ -119,8 +119,53 @@ def base_configuration():
     return config
 
 
-def configuration():
+def simplify_hand_solder(config):
+    """只精简当前电路及手焊区，不恢复旧模块、摇杆或安装面。"""
+    removed = {"R_JOY", "R_RIGHT", "C_JOY_SW", "C_RIGHT",
+               "R_RAIL_H", "R_RAIL_L", "C_RAIL"}
+    config["parts"] = [p for p in config["parts"] if p["ref"] not in removed]
+    # 引脚常量仍可生成；硬件检测电路已移除，该引脚不再连接或采样。
+    config["firmware_pins"]["VBUS_DET"] = 10
+    power = config["power"]
+    for key in ("low_battery_shutdown_mv", "low_battery_delay_s", "rail_divider", "vbus_detection"):
+        power.pop(key, None)
+    power.update(low_battery_shutdown_enabled=False, external_power_detection_enabled=False,
+                 battery_voltage_display_enabled=True)
+    positions = {"R_TRIG": [-48, -10], "R_TOUCH": [-34, -10],
+                 "C_TRIG": [-48, -18], "C_JOY_X": [-34, -18],
+                 "R_BAT_H": [-48, -26], "R_BAT_L": [-36, -26],
+                 "C_BAT": [-48, -32], "C_JOY_Y": [-34, -32]}
+    for part in config["parts"]:
+        if part["ref"] == "J_MCU":
+            for pad in part["pads"]:
+                if part["pin_labels"].get(pad["number"]) in {"5V", "10"}:
+                    pad["net"] = ""
+            part["purpose"] = "两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路"
+        elif part["ref"] == "SW1":
+            part["purpose"] = "现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位"
+        if part["ref"] not in positions:
+            continue
+        old_x, old_z = part["position_xz"]
+        x, z = positions[part["ref"]]
+        part["position_xz"] = [x, z]
+        for axis, delta in (("x", x-old_x), ("z", z-old_z)):
+            part["envelope"][axis] = [round(v+delta, 4) for v in part["envelope"][axis]]
+        pitch = 7.62 if part["kind"] == "resistor" else 5.08
+        for i, pad in enumerate(part["pads"]):
+            pad.update(xz=[round(x+(-.5 if i == 0 else .5)*pitch, 4), z],
+                       drill=[1.1, 1.1], size=[2.6, 2.6], shape="circle")
+        part["envelope_basis"] = (
+            "轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米"
+            if part["kind"] == "resistor" else
+            "直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米")
+    config["status"] = "八颗电阻电容的手焊结构预览板；保留电量显示，取消低电自动休眠及外部供电识别；模块翻面孔号、摇杆新孔及重新布线待完成，不可下单制造"
+    return config
+
+
+def configuration(reset_layout=False):
     config = json.loads((PCB_DIR / CONFIG_NAME).read_text(encoding="utf-8"))
+    if not reset_layout:
+        return simplify_hand_solder(config)
     config["version"] = "supermini-tht-carrier-v2"
     config["pcb"]["kicad_mapping"] = "(Kx,Ky)=(-X-3,45-Z); MCU/GY components face +Y; HW504 PCB is perpendicular, shaft points -X"
     config["pcb"]["antenna_keepout_xz"] = [[-35, 17], [-27, 17], [-27, 28], [-35, 28]]
@@ -223,7 +268,21 @@ def configuration():
             pad["xz"] = [round(x+(-.5 if i == 0 else .5)*pitch, 4), z]
         if part["kind"] == "capacitor":
             part["envelope_basis"] = "采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距"
-    return config
+    return simplify_hand_solder(config)
+
+
+def write_bom(config):
+    """更新同名物料清单；不生成额外交付或制造包。"""
+    with (PCB_DIR / "BOM.csv").open("w", encoding="utf-8-sig", newline="") as output:
+        writer = csv.writer(output, quoting=csv.QUOTE_ALL)
+        writer.writerow(["Reference", "Value / Type", "Qty", "Assembly", "Purchase / Fit Requirement", "Nets / Purpose"])
+        for part in config["parts"]:
+            if not part.get("populate", True):
+                continue
+            assembly = ("现成模块两排针手焊到载板" if part["kind"] == "module" else
+                        "导线直接焊接" if part["kind"] == "wirebank" else "直插手工焊接")
+            writer.writerow([part["ref"], part["value"], 1, assembly,
+                             part.get("envelope_basis", ""), part.get("purpose", part.get("assembly", ""))])
 
 
 def relocate(board, config, env):
@@ -323,8 +382,8 @@ def route_antenna_keepout(router, config, env):
     router.hole_keepout[mask] = True
 
 
-def generate(geometry_only=False):
-    config = configuration()
+def generate(geometry_only=False, reset_layout=False):
+    config = configuration(reset_layout=reset_layout)
     AFFECTED.update(p["net"] for part in config["parts"] if part["kind"] in {"resistor", "capacitor"}
                     for p in part["pads"] if p["net"])
     env = legacy_functions()
@@ -349,9 +408,9 @@ def generate(geometry_only=False):
         if geometry_only:
             pcb.SaveBoard(str(board_path), board)
             shutil.copy2(board_path, PCB_DIR / BOARD_NAME)
-            config["status"] = "装配预览用实际孔位板；新模块全部已放置、尚未完成重新布线，不可下单制造"
             env["write_json"](PCB_DIR / CONFIG_NAME, config)
-            print("已更新真实模块孔位和原生PCB，尚未重新布线；用于装配预览。", flush=True)
+            write_bom(config)
+            print("已更新八颗小元件焊孔和同名物料清单；模块孔号及布线仍待同步，不可下单。", flush=True)
             return
         nets = {str(n.GetNetname()): n for n in board.GetNetsByNetcode().values()}
         pads = []
@@ -397,4 +456,4 @@ def generate(geometry_only=False):
 
 
 if __name__ == "__main__":
-    generate(geometry_only="--geometry-only" in sys.argv)
+    generate(geometry_only="--geometry-only" in sys.argv, reset_layout="--reset-layout" in sys.argv)

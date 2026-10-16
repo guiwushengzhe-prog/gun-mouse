@@ -4,7 +4,7 @@
 // - 触摸扳机只决定是否允许体感移动；机械扳机=左键，右键、摇杆按下=中键、摇杆移动都与触摸无关。
 // - 松开触摸立即丢弃未发送的体感位移；重新触摸从新样本开始，不补发离开期间的积压。
 // - 惯性芯片未就绪只停体感，不影响按键和摇杆；断线不累计，重连首帧全释放。
-// - 插拔 USB 不暂停、不恢复鼠标；USB 检测只用于状态显示与电量判断。
+// - 插拔 USB 不暂停、不恢复鼠标；仅按电池节点电压估算电量，不识别外部供电或充电状态。
 //
 // 硬件：TENSTAR 两侧 9 针 ESP32-S3 SuperMini，ESP32-S3FH4R2（4MB Flash / 2MB QSPI PSRAM）。
 // 使用 native USB CDC；USB 19/20 不接载板，GPIO3/45/46 启动配置脚不用。
@@ -14,8 +14,6 @@
 #include <Preferences.h>
 #include <Wire.h>
 #include <atomic>
-#include <esp_sleep.h>
-#include <driver/rtc_io.h>
 
 #if !ARDUINO_USB_CDC_ON_BOOT || !ARDUINO_USB_MODE
 #error "Use native USB hardware CDC: CDCOnBoot=cdc,USBMode=hwcdc"
@@ -49,8 +47,6 @@ constexpr int kJoyCenterMax = 2900;
 constexpr uint32_t kImuRetryMs = 2000;
 constexpr uint32_t kImuNoDataUs = 250000;
 constexpr uint32_t kPowerPeriodMs = 200;
-constexpr float kLowBatteryMv = 3600.0f;          // 电池经二极管+LDO：首轮保守供电余量阈值，非电芯保护点
-constexpr uint32_t kLowBatteryHoldMs = 30000;
 constexpr uint32_t kConnectSettleMs = 400;        // 连接后等主机开始接收再发首帧
 }  // namespace Fw
 
@@ -85,7 +81,6 @@ ControlCore core;
 ReportSender sender;
 GyroPipeline gyro;
 TouchDetector touch;
-External5vDetector external5vDetector;
 Debouncer trigDebounce, rightDebounce, middleDebounce;
 JoystickAxisCal joyCalX, joyCalY;
 
@@ -104,9 +99,6 @@ uint32_t touchReadUs = 0;
 uint8_t buttonMask = 0;
 
 float vbatMv = NAN;
-float powerRailMv = NAN;
-bool usbPresent = false;
-uint32_t lowBatterySinceMs = 0;
 uint32_t lastPowerMs = 0;
 uint8_t lastBatteryLevel = 255;
 uint32_t lastBatteryReportMs = 0;
@@ -428,42 +420,14 @@ void serviceButtons(uint32_t nowUs) {
 }
 
 // ============================================================ 电源
-bool sleepForLowBattery(float batteryMv) {
-  Serial.printf("[电源] 电池 %.0f mV，进入深睡；按扳机或 10 分钟计时唤醒检查（插 USB 至多等 10 分钟）\n", batteryMv);
-  Serial.flush();
-  // GPIO8 为 RTC GPIO。共同供电轨在电池模式仍为高，不能用 VBUS 数字高电平唤醒。
-  const esp_err_t triggerWake = esp_sleep_enable_ext0_wakeup((gpio_num_t)Pins::TRIG, 0);
-  const esp_err_t timerWake = esp_sleep_enable_timer_wakeup(600ULL * 1000000ULL);
-  if (triggerWake != ESP_OK || timerWake != ESP_OK) {
-    Serial.println("[电源] 唤醒配置失败，保持运行并稍后重试");
-    return false;
-  }
-  rtc_gpio_pullup_en((gpio_num_t)Pins::TRIG);
-  rtc_gpio_pulldown_dis((gpio_num_t)Pins::TRIG);
-  esp_deep_sleep_start();
-  return true;
-}
-
 void servicePower() {
   const uint32_t nowMs = millis();
   if ((uint32_t)(nowMs - lastPowerMs) < Fw::kPowerPeriodMs) return;
   lastPowerMs = nowMs;
   const float vbat = analogReadMilliVolts(Pins::VBAT_ADC) * 2.0f;
-  // SuperMini 的 5V/VBUS 节点也被电池经二极管供电，不能用 digitalRead 判断 USB。
-  // GPIO10 ADC 读取 100k/100k 分压；4.5V/4.3V 滞回推断外部 5V，无法判断充电完成。
-  powerRailMv = analogReadMilliVolts(Pins::VBUS_DET) * 2.0f;
-  usbPresent = external5vDetector.updateMillivolts(powerRailMv);
   vbatMv = std::isnan(vbatMv) ? vbat : vbatMv + 0.05f * (vbat - vbatMv);  // 约 4 秒平滑
-  if (!usbPresent && vbatMv < Fw::kLowBatteryMv) {
-    if (!lowBatterySinceMs) lowBatterySinceMs = nowMs;
-    if ((uint32_t)(nowMs - lowBatterySinceMs) >= Fw::kLowBatteryHoldMs) {
-      if (!sleepForLowBattery(vbatMv)) lowBatterySinceMs = nowMs;
-    }
-  } else {
-    lowBatterySinceMs = 0;
-  }
-  // 充电时电压偏高，不更新电量；未插 USB 时每分钟最多更新一次。
-  if (hid && !usbPresent && ((uint32_t)(nowMs - lastBatteryReportMs) >= 60000 || lastBatteryLevel == 255)) {
+  // 无外部供电反馈：每分钟最多更新一次估算电量，充电或电池开关关闭时可能偏高。
+  if (hid && ((uint32_t)(nowMs - lastBatteryReportMs) >= 60000 || lastBatteryLevel == 255)) {
     const uint8_t level = batteryPercentFromMillivolts(vbatMv);
     lastBatteryReportMs = nowMs;
     if (level != lastBatteryLevel) {
@@ -499,8 +463,8 @@ void printStatus() {
                 buttonMask & 1, (buttonMask >> 1) & 1, (buttonMask >> 2) & 1, joyAvailable ? "正常" : "暂停", joyRawX,
                 joyRawY, joyCalX.center, joyCalY.center, joyCalX.min, joyCalX.max, joyCalY.min, joyCalY.max, joyOutX,
                 joyOutY);
-  Serial.printf("[状态] BAT_SW/B+=%.0fmV(仅BAT开关ON代表电池) 5V/VBUS轨=%.0fmV 外部5V=%s(ADC推断，非充电状态) | 灵敏度=%.1f计数/度 反向X=%d Y=%d | 摇杆速度=%.0f 交换=%d 反向X=%d Y=%d\n",
-                vbatMv, powerRailMv, usbPresent ? "有" : "无", settings.counts_per_deg, settings.invert_x,
+  Serial.printf("[状态] BAT_SW/B+=%.0fmV(仅BAT开关ON代表电池；电量为电压估算，充电时可能偏高) | 灵敏度=%.1f计数/度 反向X=%d Y=%d | 摇杆速度=%.0f 交换=%d 反向X=%d Y=%d\n",
+                vbatMv, settings.counts_per_deg, settings.invert_x,
                 settings.invert_y, settings.joy_speed, settings.joy_swap, settings.joy_invert_x, settings.joy_invert_y);
 }
 
@@ -586,34 +550,16 @@ void handleSerial() {
 
 // ============================================================ 主流程
 void setup() {
-  // 深睡唤醒后将 RTC 管理的引脚交回普通 GPIO，再设置按钮/USB 输入。
-  rtc_gpio_deinit((gpio_num_t)Pins::TRIG);
   setCpuFrequencyMhz(160);
   Serial.begin(115200);
   Serial.setTxTimeoutMs(0);  // 没接电脑时不阻塞
-  pinMode(Pins::TRIG, INPUT_PULLUP);  // 板上已有外部上拉；内部上拉保证单独测开发板时不乱触发
+  pinMode(Pins::TRIG, INPUT_PULLUP);  // 扳机保留外部上拉；右键和摇杆按键使用内部上拉
   pinMode(Pins::BTN_R, INPUT_PULLUP);
   pinMode(Pins::JOY_SW, INPUT_PULLUP);
   analogReadResolution(12);
   analogSetPinAttenuation(Pins::JOY_X, ADC_11db);
   analogSetPinAttenuation(Pins::JOY_Y, ADC_11db);
   analogSetPinAttenuation(Pins::VBAT_ADC, ADC_11db);
-  analogSetPinAttenuation(Pins::VBUS_DET, ADC_11db);
-  // 周期检查仍低电时，不开启 BLE 再运行 30 秒；电容/ADC 先稳定 50ms 后取 8 次平均。
-  if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
-    delay(50);
-    float battery = 0, rail = 0;
-    for (int i = 0; i < 8; ++i) {
-      battery += analogReadMilliVolts(Pins::VBAT_ADC) * 2.0f;
-      rail += analogReadMilliVolts(Pins::VBUS_DET) * 2.0f;
-      delay(2);
-    }
-    battery /= 8;
-    rail /= 8;
-    if (!external5vDetector.updateMillivolts(rail) && battery > 0 && battery < Fw::kLowBatteryMv) {
-      sleepForLowBattery(battery);
-    }
-  }
   prefs.begin("gunmouse", false);
   loadSettings();
   applySettings();
