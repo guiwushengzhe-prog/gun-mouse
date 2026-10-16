@@ -197,6 +197,17 @@ def references():
     return r
 
 
+def preview_references():
+    """只改变整块摇杆的查看姿态；载板旧孔位与打印底座保持不动。"""
+    refs = references()
+    x, z = JOYSTICK["position_xz"]
+    shift = V(C["battery"]["center_xyz"][0]-x, 0, 5-z)
+    for name, shape in list(refs.items()):
+        if name.startswith("SW1-") or name == "摇杆全角度留空":
+            refs[name] = shape.rotate((x, 0, z), (x, 1, z), 90).translate(shift)
+    return refs
+
+
 def bounds(s):
     b = s.BoundingBox()
     return [round(v, 4) for v in (b.xmin, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax)]
@@ -358,7 +369,7 @@ def render(s, refs):
     camera.SetViewUp(0, 0, 1)
     camera.ParallelProjectionOn()
     renderer.ResetCamera()
-    camera.Zoom(1.12)
+    camera.Zoom(1.0)
     window = vtk.vtkRenderWindow()
     window.SetOffScreenRendering(1)
     window.SetSize(1400, 1400)
@@ -411,7 +422,7 @@ def export_assembled_stl():
     import vtk
     base = cq.importers.importStep(str(OUT / "step" / "engineering_mount.step")).val()
     b = base.BoundingBox()
-    refs = references()
+    refs = preview_references()
     refs.pop("载板")
     refs.update(hardware()[0])
     geometry = vtk.vtkAppendPolyData()
@@ -488,7 +499,8 @@ def export_assembled_stl():
             offset += mesh.GetNumberOfPoints()
     print(str(path), flush=True)
     print(str(obj_path), flush=True)
-    print("毫米；STL与OBJ同坐标，含底座、实际PCB、器件外形示意及紧固件；仅供看装配，不能整体打印。", flush=True)
+    print("毫米；STL与OBJ同坐标。摇杆朝整机+Z的姿态预览；旧PCB孔位与支撑待调整，仅供看装配，不能整体打印。", flush=True)
+    render(base, preview_references())
 
 
 def main():
