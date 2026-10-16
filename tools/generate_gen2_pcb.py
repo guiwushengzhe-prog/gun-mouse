@@ -14,6 +14,7 @@ import math
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 import zipfile
 from collections import defaultdict
@@ -41,11 +42,23 @@ def legacy_functions():
     """读取指定历史版本，避免恢复旧目录或复制整套旧交付。"""
     source = subprocess.check_output(["git", "show", f"{SOURCE_COMMIT}:{SOURCE_PATH}"], cwd=ROOT, text=True)
     source = source.replace('"wirebank":8,"joystick":1,"microswitch":1',
-                            '"wirebank":7,"joystick":1,"microswitch":1,"power_switch":1')
+                            '"wirebank":4,"module":2,"joystick":1,"microswitch":1,"power_switch":1')
     source = source.replace('bank("J_SWITCH",["BAT_RAW","BAT_SW"])',
                             'bank("J_SWITCH",["BAT_RAW","BAT_SW",""])')
     source = source.replace('"microswitch":"#d9d9df"}',
-                            '"microswitch":"#d9d9df","power_switch":"#d7ead2"}')
+                            '"microswitch":"#d9d9df","power_switch":"#d7ead2","module":"#eadcf5"}')
+    source = source.replace('bank("J_MODULE_BAT",["BAT_SW","GND"]);bank("J_MODULE_RAIL",["VBUS_SHARED"])',
+                            'bank("J_MODULE_BAT",["BAT_SW","GND"])')
+    source = source.replace('bank("J_GY",["3V3","GND","SCL","SDA"])',
+                            'bank("J_GY",["3V3","GND","SCL","SDA","","","","","3V3","GND","","","",""])')
+    source = source.replace('        a=next(p["xy"] for p in self.pads if p["ref"]=="J_GY" and p["number"]=="2")\n        b=[55.0,a[1]]\n        self.apply_path(self.astar(a,b,self.nets["GND"].GetNetCode()),a,b,"GND")', '')
+    source = source.replace('("JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH","TOUCH_ELECTRODE","SDA","SCL","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")',
+                            '("SDA","SCL","JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH","TOUCH_ELECTRODE","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")')
+    source = source.replace('if part["kind"]!="wirebank":continue', 'if part["kind"] not in {"wirebank","module"}:continue')
+    source = source.replace('elif part["ref"]=="J_GY":destination={"3V3":"GY-601N1 H2 VCC","GND":"GY-601N1 H2 GND","SCL":"GY-601N1 H2 SCL","SDA":"GY-601N1 H2 SDA"}[n]',
+                            'elif part["ref"]=="J_GY":destination="GY-601N1 直接焊接；闲脚独立不接线"')
+    source = source.replace('if part["ref"]=="J_MCU":destination=f"SuperMini GPIO{pinmap[n]}" if n in pinmap else f"SuperMini {n} pin"',
+                            'if part["ref"]=="J_MCU":destination="SuperMini 直接焊接 "+part["pin_labels"][p["number"]]')
     source = source.replace('SS-01GL13 COM', 'SS-01GL COM').replace('SS-01GL13 NO', 'SS-01GL NO')
     source = source.replace('Carrier PCB only; prototype module topology and physical fit checks remain necessary',
                             '仅载板制造文件；模块供电路径与实物装配仍需首件验证')
@@ -56,7 +69,9 @@ def legacy_functions():
     source = source.replace('Not performed: no KiCad schematic supplied; explicit circuit/net/pad contract and independent written review are provided',
                             '未执行原理图电气规则检查：未提供KiCad原理图；已核对实际焊盘与配置定义')
     source = source.replace('            if part["kind"]=="wirebank":',
-                            '            if part["kind"]=="wirebank" or part["ref"] in {"SW1", "J_SWITCH"}:')
+                            '            if part["kind"] in {"wirebank", "module"} or part["ref"] in {"SW1", "J_SWITCH"}:')
+    source = source.replace('escape(part["ref"])',
+                            'escape(part["ref"] + ("(B)" if part.get("mount_side") == "bottom" else ""))')
     names = {"write_json", "digest", "kxy", "vec", "add_text", "line", "configure_default_netclass",
              "Router", "add_ground_zone", "validate_electrical", "assembly_map", "export_files"}
     tree = ast.parse(source)
@@ -67,7 +82,7 @@ def legacy_functions():
     return env
 
 
-def configuration():
+def base_configuration():
     config = json.loads((PCB_DIR / CONFIG_NAME).read_text(encoding="utf-8"))
     if config["version"] == "supermini-tht-carrier-v2":
         return config
@@ -104,13 +119,131 @@ def configuration():
     return config
 
 
-def relocate(board, config, env):
-    fps = {fp.GetReference(): fp for fp in board.GetFootprints()}
-    for info in config["parts"]:
-        if info["ref"] not in {"SW1", "J_SWITCH", "C_RAIL"}:
+def configuration():
+    config = json.loads((PCB_DIR / CONFIG_NAME).read_text(encoding="utf-8"))
+    config["version"] = "supermini-tht-carrier-v2"
+    config["pcb"]["kicad_mapping"] = "(Kx,Ky)=(-X-3,45-Z); MCU/GY components face +Y; HW504 PCB is perpendicular, shaft points -X"
+    config["pcb"]["antenna_keepout_xz"] = [[-35, 17], [-27, 17], [-27, 28], [-35, 28]]
+    config["status"] = "模块直焊工程版；SuperMini两排孔距15.24mm由用户指定暂定，最终实物尺寸仍需核实"
+    config["battery"].update(
+        name="602060 单节带保护锂电池",
+        cell_size_mm=[6, 20, 60],
+        center_xyz=[-37.7, -12.7, -72],
+        size_xyz=[20, 8, 80],
+        source="用户电芯602060；含保护板总长约70-80mm，按80mm包络、厚8mm容纳；保护板出线朝整机+Z，实际外皮宽厚待试放",
+    )
+    config["modules"]["mcu"].update(
+        x=[-33.5, -10], z=[13.5, 31.5], component_face_y=2.97,
+        board_thickness=1.6, front_allowance=3.5, back_wire_allowance=0,
+        row_pitch_mm=15.24, row_pitch_status="用户同意先按15.24mm；不把其他批次15.46mm当成本实物尺寸",
+        carrier_gap_mm=3, limits="两排各9针直焊，USB朝+X；背面B+/B-仍用两根短线，天线中央区双面禁铜、走线和过孔",
+    )
+    config["modules"]["imu"].update(
+        x=[-58.965, -41.2], z=[11.7, 32.3], component_face_y=2.57,
+        board_thickness=1.2, front_allowance=2.8, back_wire_allowance=0,
+        row_pitch_mm=15.24, carrier_gap_mm=3,
+        limits="左8右6，右排首末孔分别对齐左排第2和第7孔；两排全焊，闲脚独立不接线",
+    )
+    parts = {p["ref"]: p for p in config["parts"]}
+
+    def pad(number, x, z, net, drill=1, size=1.8):
+        return {"number": str(number), "xz": [round(x, 4), round(z, 4)], "net": net,
+                "drill": [drill, drill], "size": [size, size], "shape": "circle"}
+
+    def module(ref, value, position, pads, x, z, height, purpose, labels):
+        parts[ref] = {"ref": ref, "kind": "module", "value": value,
+                      "position_xz": position, "pads": pads, "npth": [], "populate": True,
+                      "mount_side": "top", "pin_labels": labels,
+                      "envelope": {"x": x, "z": z, "y_above_board": height, "lead_below_board": 1},
+                      "envelope_basis": "用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定",
+                      "purpose": purpose}
+
+    left = ["TX43", "RX44", "1", "2", "3", "4", "5", "6", "7"]
+    right = ["5V", "GND", "3V3", "13", "12", "11", "10", "9", "8"]
+    left_nets = ["", "", "JOY_X", "JOY_Y", "", "JOY_SW", "SDA", "SCL", "TOUCH"]
+    right_nets = ["VBUS_SHARED", "GND", "3V3", "", "BTN_R", "", "VBUS_DET", "VBAT_ADC", "TRIG"]
+    row_pitch = config["modules"]["mcu"]["row_pitch_mm"]
+    mcu_pads = [pad(i+1, -11.59-2.54*i, 22.5-row_pitch/2, net, 1.3, 2.1) for i, net in enumerate(left_nets)]
+    mcu_pads += [pad(i+10, -11.59-2.54*i, 22.5+row_pitch/2, net, 1.3, 2.1) for i, net in enumerate(right_nets)]
+    module("J_MCU", "ESP32-S3 SuperMini 2x9", [-21.75, 22.5], mcu_pads,
+           [-33.5, -10], [13.5, 31.5], 8.1, "两排各9针直焊；固定原GPIO；5V孔仅作共享电源检测",
+           {str(i+1): name for i, name in enumerate(left+right)})
+    gy_left = ["3V3", "GND", "SCL", "SDA", "", "", "", ""]
+    gy_right = ["3V3", "GND", "", "", "", ""]
+    gy_pads = [pad(i+1, -42.504, 31-2.54*i, net, 1.1, 1.9) for i, net in enumerate(gy_left)]
+    gy_pads += [pad(14-i, -57.744, 28.46-2.54*i, net, 1.1, 1.9) for i, net in enumerate(gy_right)]
+    module("J_GY", "GY-601N1-LSM6DSV16X 8+6", [-50.0825, 22], gy_pads,
+           [-58.965, -41.2], [11.7, 32.3], 7, "重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网",
+           {str(i): name for i, name in enumerate(["VCC", "GND", "SCL", "SDA", "SA0", "CS", "INT1", "INT2", "PS", "INTOUT", "DT", "RC", "GND", "VCC"], 1)})
+    parts["SW1"] = {"ref": "SW1", "kind": "joystick", "value": "HW-504 34x26mm", "position_xz": [-51, 20],
+        "pads": [pad(i+1, -51, 25.08-2.54*i, net, 1.2, 2) for i, net in enumerate(["GND", "3V3", "JOY_X", "JOY_Y", "JOY_SW"])],
+        "npth": [], "populate": True, "mount_side": "bottom", "mount_face_y": -3.23,
+        "axis_direction_xyz": [-1, 0, 0], "module_board_xyz": [[-51.8, -50.2], [-38, -4], [7, 33]],
+        "envelope": {"x": [-51.8, -50.2], "z": [7, 33], "y_above_board": 34.77, "lead_below_board": 1},
+        "envelope_basis": "用户实测黑板34x26mm、五针2.54mm；按现有弯针垂直插入载板，模块向背面伸出",
+        "assembly": "五针从Z高到低：GND、3V3、VRX、VRY、SW；摇杆轴-X，接触按键逻辑和GPIO不变",
+        "purpose": "现有HW-504整块模块，供3.3V；保留原外部上拉及滤波，无额外限位"}
+    switch = parts["J_SWITCH"]
+    switch.update(value="SS12D10 G5", position_xz=[-41.5, -38.3],
+        pads=[pad(i+1, x, -38.3, net, 1.8, 3) for i, (x, net) in enumerate(zip([-46.2, -41.5, -36.8], ["BAT_RAW", "BAT_SW", ""]))],
+        envelope={"x": [-47.95, -35.05], "z": [-41.75, -34.85], "y_above_board": 11.9, "lead_below_board": 1},
+        envelope_basis="用户SS12D10 G5尺寸图：相邻4.7mm、首末9.4mm，扁脚1.3x0.8mm，采用1.8mm圆孔/3mm焊盘；柄5mm",
+        purpose="1=BAT_RAW、2=BAT_SW公共脚、3独立空网；拨向1脚侧为ON；电池两线永久焊板，不接外置开关线",
+        source="用户购买的SS12D10 G5商品尺寸图")
+    config["power"]["battery_switch"] = "BAT_RAW -> SS12D10 G5 pins 1-2 -> BAT_SW; pin3 isolated; toward pin1=ON"
+    for ref, coords in {"J_BAT": [(-55.7, -36), (-55.7, -38.54)],
+                        "J_MODULE_BAT": [(-19, 35), (-21.54, 35)]}.items():
+        part = parts[ref]
+        part["position_xz"] = list(coords[0])
+        for info, (x, z) in zip(part["pads"], coords): info["xz"] = [x, z]
+        part["envelope"]["x"] = [min(x for x, z in coords)-1, max(x for x, z in coords)+1]
+        part["envelope"]["z"] = [min(z for x, z in coords)-1, max(z for x, z in coords)+1]
+    parts.pop("J_MODULE_RAIL", None)
+    config["parts"] = list(parts.values())
+    # 保持板框和电路数量，把手焊区域的异网焊盘拉开。
+    positions = {
+        "R_JOY": [-47, -11], "R_RIGHT": [-35.6, -11],
+        "R_TRIG": [-47, -18], "R_TOUCH": [-35.6, -18],
+        "R_BAT_H": [-47, -25], "R_BAT_L": [-35.6, -25],
+        "R_RAIL_H": [-47, -32], "R_RAIL_L": [-35.6, -32],
+        "C_JOY_SW": [-42, -7.5], "C_RIGHT": [-32, -7.5],
+        "C_TRIG": [-42, -14.5], "C_BAT": [-42, -28.5], "C_RAIL": [-32.6, -28.5],
+        "C_JOY_X": [-42, -21.5], "C_JOY_Y": [-32, -21.5],
+    }
+    for part in config["parts"]:
+        if part["kind"] not in {"resistor", "capacitor"}:
             continue
-        fp = fps[info["ref"]]
+        old_x, old_z = part["position_xz"]
+        x, z = positions.get(part["ref"], part["position_xz"])
+        part["position_xz"] = [x, z]
+        for axis, delta in [("x", x-old_x), ("z", z-old_z)]:
+            part["envelope"][axis] = [round(v+delta, 4) for v in part["envelope"][axis]]
+        pitch = 7.62 if part["kind"] == "resistor" else 5.08
+        for i, pad in enumerate(part["pads"]):
+            pad["xz"] = [round(x+(-.5 if i == 0 else .5)*pitch, 4), z]
+        if part["kind"] == "capacitor":
+            part["envelope_basis"] = "采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距"
+    return config
+
+
+def relocate(board, config, env):
+    # 保留当前载板的原板框和四个安装孔，更新所有实装孔位；不恢复历史PCB。
+    for fp in list(board.GetFootprints()):
+        if fp.GetReference().startswith("H"):
+            continue
+        RETIRED.append(fp)
+        board.Remove(fp)
+    for info in config["parts"]:
+        fp = pcb.FOOTPRINT(board)
+        fp.SetReference(info["ref"])
+        fp.SetFPID(pcb.LIB_ID("GunMouseHandSolder", info["ref"]))
+        fp.SetAttributes(pcb.FP_THROUGH_HOLE)
+        fp.Reference().SetVisible(False)
+        fp.Value().SetVisible(False)
+        board.Add(fp)
         print(f"更新封装 {info['ref']}", flush=True)
+        if info.get("mount_side") == "bottom" and fp.GetLayer() != pcb.B_Cu:
+            fp.Flip(env["vec"](env["kxy"](info["position_xz"])), pcb.FLIP_DIRECTION_LEFT_RIGHT)
         fp.SetPosition(env["vec"](env["kxy"](info["position_xz"])))
         fp.SetValue(info["value"])
         numbered = {p.GetNumber(): p for p in fp.Pads() if p.GetNumber()}
@@ -126,6 +259,8 @@ def relocate(board, config, env):
             p.SetPosition(env["vec"](env["kxy"](pinfo["xz"])))
             p.SetSize(env["vec"](pinfo["size"]))
             p.SetDrillSize(env["vec"](pinfo["drill"]))
+            p.SetShape(pcb.PAD_SHAPE_OVAL if pinfo["shape"] == "oval" else pcb.PAD_SHAPE_CIRCLE)
+            p.SetDrillShape(pcb.PAD_DRILL_SHAPE_OBLONG if pinfo["drill"][0] != pinfo["drill"][1] else pcb.PAD_DRILL_SHAPE_CIRCLE)
             p.SetNet(board.FindNet(pinfo["net"]) if pinfo["net"] else board.FindNet(0))
         for p, pinfo in zip([p for p in fp.Pads() if not p.GetNumber()], info["npth"]):
             p.SetPosition(env["vec"](env["kxy"](pinfo["xz"])))
@@ -134,7 +269,8 @@ def relocate(board, config, env):
             fp.Remove(item)
         e = info["envelope"]
         a, b = env["kxy"]([max(e["x"]), max(e["z"])]), env["kxy"]([min(e["x"]), min(e["z"])])
-        for layer, margin, width in [(pcb.F_CrtYd, .25, .05), (pcb.F_Fab, 0, .1)]:
+        courtyard, fab = (pcb.B_CrtYd, pcb.B_Fab) if info.get("mount_side") == "bottom" else (pcb.F_CrtYd, pcb.F_Fab)
+        for layer, margin, width in [(courtyard, .25, .05), (fab, 0, .1)]:
             corners = [(a[0]-margin, a[1]-margin), (b[0]+margin, a[1]-margin),
                        (b[0]+margin, b[1]+margin), (a[0]-margin, b[1]+margin)]
             for start, end in zip(corners, corners[1:] + corners[:1]):
@@ -144,23 +280,53 @@ def relocate(board, config, env):
                 line.SetWidth(MM(width)); line.SetLayer(layer); fp.Add(line)
     for item in list(board.GetDrawings()):
         if isinstance(item, pcb.PCB_TEXT):
-            xy = [pcb.ToMM(item.GetPosition().x), pcb.ToMM(item.GetPosition().y)]
-            if item.GetText() == "S3 THT CARRIER v1":
-                item.SetText("S3 THT CARRIER v2")
-            elif 49 < xy[0] < 56.5 and 25 < xy[1] < 34:
-                RETIRED.append(item)
-                board.Remove(item)
-            elif item.GetText() == "C_RAIL":
-                item.SetPosition(env["vec"]([xy[0] + .6, xy[1]]))
-    # 此地焊盘的底层被信号走线包围；直接连接铜面，避免假热焊桥孤岛。
-    fps["C_JOY_Y"].FindPadByNumber("2").SetLocalZoneConnection(pcb.ZONE_CONNECTION_FULL)
-    env["add_text"](board, "PWR", [50.4, 27], .8)
-    env["add_text"](board, "ON", [50.5, 29], .8)
-    env["add_text"](board, "OFF", [50.5, 32.5], .8)
+            RETIRED.append(item)
+            board.Remove(item)
+    env["add_text"](board, "S3 MODULE CARRIER v2", env["kxy"]([-39, 38]), .8)
+    env["add_text"](board, "BAT OFF BEFORE PC USB", env["kxy"]([-41, 5]), .8)
+    env["add_text"](board, "ON", env["kxy"]([-49.8, -38.3]), .8)
+    env["add_text"](board, "OFF", env["kxy"]([-32.7, -38.3]), .8)
+    for part in config["parts"]:
+        for p in part["pads"]:
+            name = part.get("pin_labels", {}).get(p["number"], p["net"] or "NC")
+            env["add_text"](board, part["ref"]+"."+p["number"]+" "+name,
+                            env["kxy"](p["xz"]), .6, pcb.F_Fab)
 
 
-def generate():
+def antenna_keepout(board, config, env):
+    zone = pcb.ZONE(board)
+    zone.SetIsRuleArea(True)
+    layers = pcb.LSET()
+    layers.AddLayer(pcb.F_Cu)
+    layers.AddLayer(pcb.B_Cu)
+    zone.SetLayerSet(layers)
+    zone.SetDoNotAllowTracks(True)
+    zone.SetDoNotAllowVias(True)
+    zone.SetDoNotAllowCopperPour(True)
+    zone.SetDoNotAllowPads(True)
+    poly = zone.Outline()
+    poly.NewOutline()
+    for xy in map(env["kxy"], config["pcb"]["antenna_keepout_xz"]):
+        poly.Append(MM(xy[0]), MM(xy[1]))
+    board.Add(zone)
+
+
+def route_antenna_keepout(router, config, env):
+    points = [env["kxy"](p) for p in config["pcb"]["antenna_keepout_xz"]]
+    xs = router.x0+np.arange(router.w)*GRID
+    ys = router.y0+np.arange(router.h)*GRID
+    xx, yy = np.meshgrid(xs, ys)
+    margin = TRACK_W/2+CLEARANCE+.18
+    mask = ((xx >= min(p[0] for p in points)-margin) & (xx <= max(p[0] for p in points)+margin)
+            & (yy >= min(p[1] for p in points)-margin) & (yy <= max(p[1] for p in points)+margin))
+    router.owner[:, mask] = -1
+    router.hole_keepout[mask] = True
+
+
+def generate(geometry_only=False):
     config = configuration()
+    AFFECTED.update(p["net"] for part in config["parts"] if part["kind"] in {"resistor", "capacitor"}
+                    for p in part["pads"] if p["net"])
     env = legacy_functions()
     with tempfile.TemporaryDirectory(prefix="gun-mouse-gen2-") as tmp:
         stage = Path(tmp)
@@ -174,12 +340,19 @@ def generate():
         board = pcb.LoadBoard(str(board_path))
         relocate(board, config, env)
         for track in list(board.GetTracks()):
-            if track.GetNetname() in AFFECTED:
-                RETIRED.append(track)
-                board.Remove(track)
+            RETIRED.append(track)
+            board.Remove(track)
         for zone in list(board.Zones()):
             RETIRED.append(zone)
             board.Remove(zone)
+        antenna_keepout(board, config, env)
+        if geometry_only:
+            pcb.SaveBoard(str(board_path), board)
+            shutil.copy2(board_path, PCB_DIR / BOARD_NAME)
+            config["status"] = "装配预览用实际孔位板；新模块全部已放置、尚未完成重新布线，不可下单制造"
+            env["write_json"](PCB_DIR / CONFIG_NAME, config)
+            print("已更新真实模块孔位和原生PCB，尚未重新布线；用于装配预览。", flush=True)
+            return
         nets = {str(n.GetNetname()): n for n in board.GetNetsByNetcode().values()}
         pads = []
         for fp in board.GetFootprints():
@@ -189,6 +362,7 @@ def generate():
                              "drill": [pcb.ToMM(p.GetDrillSize().x), pcb.ToMM(p.GetDrillSize().y)]})
         outline = [env["kxy"](p) for p in config["pcb"]["outline_xz"]]
         router = env["Router"](board, nets, pads, outline)
+        route_antenna_keepout(router, config, env)
         for track in board.GetTracks():
             net = track.GetNetCode()
             if isinstance(track, pcb.PCB_VIA):
@@ -203,11 +377,8 @@ def generate():
                     xy = [a[i] + (b[i]-a[i])*step/steps for i in (0, 1)]
                     router.mark_disc(xy, pcb.ToMM(track.GetWidth())/2 + TRACK_W/2 + CLEARANCE + .18, net,
                                      [0 if track.GetLayer() == pcb.F_Cu else 1])
-        router.pads = [p for p in pads if p["net"] in AFFECTED]
         router.route()
         board = env["add_ground_zone"](board, nets, outline)
-        old_layout = json.loads((PCB_DIR / "carrier-layout.json").read_text(encoding="utf-8"))
-        router.route_records = [r for r in old_layout["routed_connections"] if r["net"] not in AFFECTED] + router.route_records
         router.via_count = sum(isinstance(t, pcb.PCB_VIA) for t in board.GetTracks())
         try:
             env["export_files"](config, board, router, pads)
@@ -226,4 +397,4 @@ def generate():
 
 
 if __name__ == "__main__":
-    generate()
+    generate(geometry_only="--geometry-only" in sys.argv)

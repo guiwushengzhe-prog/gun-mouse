@@ -1,4 +1,4 @@
-"""第二代开放样机：一件固定底座，不生成握把、扳机、帽子或摇杆限位。
+"""第二代开放样机：一件固定底座，不生成握把、塑料扳机或摇杆限位。
 
 运行：E:\\GunMouseCAD\\CadQuery\\python.exe tools/build_gen2_mount.py
 毫米；装配 X 朝前、Y 朝元件面、Z 朝上。载板尺寸取 pcb/carrier-config.json。
@@ -22,9 +22,17 @@ P = C["pcb"]
 TOP = P["top_face_y"]
 BACK = TOP - P["thickness"]
 BASE = (-18.8, -16.9)
-BATTERY = (-53.2, -22.2, -16.7, -8.7, -84.25, -31.75)
-SM = (-7.5, 16.0, -14.6, -13.0, 14.0, 32.0)
-GY = (-22.0, -1.4, 7.8, 9.0, 20.1, 37.9)
+BATTERY = tuple(v for c, length in zip(C["battery"]["center_xyz"], C["battery"]["size_xyz"])
+                for v in (c-length/2, c+length/2))
+SM_CFG, GY_CFG = C["modules"]["mcu"], C["modules"]["imu"]
+SM = (*SM_CFG["x"], SM_CFG["component_face_y"]-SM_CFG["board_thickness"],
+      SM_CFG["component_face_y"], *SM_CFG["z"])
+GY = (*GY_CFG["x"], GY_CFG["component_face_y"]-GY_CFG["board_thickness"],
+      GY_CFG["component_face_y"], *GY_CFG["z"])
+JOYSTICK = next(p for p in C["parts"] if p["ref"] == "SW1")
+JOY_BOARD = tuple(v for span in JOYSTICK["module_board_xyz"] for v in span)
+JOY_AXIS = (JOY_BOARD[0], (JOY_BOARD[2]+JOY_BOARD[3])/2,
+            (JOY_BOARD[4]+JOY_BOARD[5])/2)
 SS_HOLES = [(-14.2, -4.521), (-14.2, -14.021)]
 
 
@@ -34,6 +42,10 @@ def box(x0, x1, y0, y1, z0, z1):
 
 def cy(x, z, r, y0, y1):
     return cq.Solid.makeCylinder(r, y1-y0, V(x, y0, z), V(0, 1, 0))
+
+
+def cx(y, z, r, x0, x1):
+    return cq.Solid.makeCylinder(r, x1-x0, V(x0, y, z), V(1, 0, 0))
 
 
 def fuse(items):
@@ -58,51 +70,33 @@ def beam(a, b, width, y0=BASE[0], y1=BASE[1]):
 def build_mount():
     parts = []
     # Sparse carrier skeleton; the long lower portion is only a battery tray.
-    for a, b in [((-56, 36), (-12, 36)), ((-56, 36), (-51, -4)),
+    for a, b in [((-56, 36), (-12, 36)), ((-47.8, 36), (-47.8, -4)),
+                 ((-47.8, -4), (-51, -4)),
                  ((-51, -4), (-27, -27)), ((-12, 36), (-27, -27)),
-                 ((-51, -4), (-53, -32)), ((-27, -27), (-24, -32)),
-                 ((-56, 36), (-56, 42)), ((-56, 42), (17, 42)),
-                 ((17, 42), (17, 12)), ((17, 12), (-10, 12)),
-                 ((-10, 12), (-12, 36))]:
+                 ((-51, -4), (-49, -32)), ((-27, -27), (-26, -32)),
+                 ((-47.8, 5), (-46.8, 5))]:
         parts.append(beam(a, b, 3.6))
     for h in P["mount_holes"]:
         x, z = h["xz"]
         parts.append(cy(x, z, 3.2, BASE[0], BACK))
 
     # Smooth shallow floor and low fences; two straps carry the pouch retention.
-    floor = box(-56, -19.4, *BASE, -86, -30)
+    floor = box(-50.5, -24.9, *BASE, -113.8, -30.5)
     floor = cq.Workplane().add(floor).edges("|Y").fillet(0.8).val()
     parts.append(floor)
-    parts += [box(-54.7, -53.7, -17.1, -12.7, -85.8, -30.2),
-              box(-21.7, -20.7, -17.1, -12.7, -85.8, -30.2),
-              box(-54.7, -20.7, -17.1, -12.7, -85.8, -84.8),
-              box(-54.7, -20.7, -17.1, -12.7, -31.4, -30.4)]
+    # 602060 pouch + protection/lead allowance: 20 x 80 x 8 mm.
+    # The upper (+Z) end stays open so protection PCB and leads are not trapped.
+    parts += [box(-49.3, -48.3, -17.1, -12.7, -113.6, -30.4),
+              box(-27.1, -26.1, -17.1, -12.7, -113.6, -30.4),
+              box(-49.3, -26.1, -17.1, -12.7, -113.6, -112.6)]
 
-    # SuperMini: ledges on free short edges, USB pull/push stops, one narrow strap.
-    # Preserve the EVT-1 position, antenna -X, USB +X; no pin headers.
-    for z0, z1 in [(12.5, 13.8), (32.2, 33.5)]:
-        parts.append(box(-8.8, 18.0, -17.2, -12.6, z0, z1))
-    for z0, z1 in [(13.8, 14.6), (31.4, 32.2)]:
-        parts.append(box(-6.5, 15.0, -17.2, -14.6, z0, z1))
-    for z0, z1 in [(12.5, 17.6), (28.4, 33.5)]:
-        parts.append(box(16.2, 18.0, -17.2, -12.6, z0, z1))
-    # Ceramic antenna stays exposed. Rear corner stops touch only PCB corners.
-    for z0, z1 in [(12.5, 15.0), (31.0, 33.5)]:
-        parts.append(box(-8.8, -7.7, -17.2, -12.6, z0, z1))
-    parts += [box(10.7, 13.3, -18.0, -14.6, 11.0, 13.8),
-              box(10.7, 13.3, -18.0, -14.6, 32.2, 35.0)]
-
-    # GY edge cradle is integrated. It hangs from above the carrier's Z=40 edge;
-    # no post crosses the carrier, the joystick or SuperMini.
-    for x0, x1 in [(-20, -16), (-8, -4)]:
-        parts.append(box(x0, x1, -17.2, 7.8, 40.5, 43.5))
-        parts.append(box(x0, x1, 5.6, 7.8, 37.3, 41.0))
-    parts += [box(-22.9, -0.5, 5.6, 7.8, 37.3, 39.5),
-              box(-22.9, -21.6, 5.6, 7.8, 19.3, 39.5),
-              box(-2.2, -0.5, 5.6, 7.8, 19.3, 39.5),
-              box(-22.9, -0.5, 5.6, 7.8, 19.3, 20.7),
-              box(-22.9, -0.5, 7.6, 9.3, 38.2, 39.5),
-              box(-0.5, 0.6, 5.6, 9.3, 19.3, 39.5)]
+    # MCU and IMU now solder directly onto the carrier, so their former
+    # external cradles are gone. Only the joystick's header-side board edge
+    # needs a shallow shelf and a loose strap. The open side leaves allowance
+    # for the unmeasured bend offset of the existing header; no tight slot.
+    parts += [box(-48.0, -46.0, BASE[0], -5.0, 3.2, 7.0),
+              box(-54.0, -46.0, -9.0, -5.0, 5.0, 7.0),
+              box(-47.8, -45.8, -9.0, -5.0, 5.0, 35.0)]
 
     # SS-01GL screws locate the switch. A single-side integral plate replaces
     # the separate sliding holder; two M2x20 screws can be reused from EVT-1.
@@ -116,15 +110,15 @@ def build_mount():
     for h in P["mount_holes"]:
         x, z = h["xz"]
         cuts.append(cy(x, z, 1.2, -20, BACK+0.2))
-    for z in (-75, -45):
-        for x in (-54.65, -20.75):
+    # C_RAIL's outer solder tail is close to H4. Relieve the post edge
+    # locally instead of making the whole carrier sit higher.
+    tail = next(p for p in C["parts"] if p["ref"] == "C_RAIL")["pads"][1]
+    cuts.append(cy(*tail["xz"], 1.3, BACK-1.2, BACK+.1))
+    for z in (-98, -57):
+        for x in (-48.8, -26.6):
             cuts.append(box(x-.75, x+.75, -20, -10, z-2, z+2))
-    # SuperMini strap slots: no strap touches the antenna or the USB mouth.
-    for z0, z1 in [(11.8, 13.2), (32.8, 34.2)]:
-        cuts.append(box(10.9, 13.1, -19, -14.4, z0, z1))
-    # GY strap exits in open side notches; only board free-edge bands are loaded.
-    for x0, x1 in [(-23.1, -21.6), (-2.2, .8)]:
-        cuts.append(box(x0, x1, 5.4, 7.0, 27.2, 29.8))
+    for z in (9.0, 32.0):
+        cuts.append(box(-48.1, -45.5, -8.0, -6.0, z-1.3, z+1.3))
     for x, z in SS_HOLES:
         cuts.append(cy(x, z, 1.15, -17.0, -3.6))
         # Side-open nut slot; the deep shaft bore hides the surplus screw tip.
@@ -142,24 +136,47 @@ def references():
     for p in C["parts"]:
         if not p.get("populate", True):
             continue
+        if p["ref"] in {"SW1", "J_MCU", "J_GY"}:
+            continue
         envs = p.get("envelopes", [p["envelope"]] if "envelope" in p else [])
+        backside = p.get("mount_side") == "bottom"
         for i, e in enumerate(envs):
             ys = e.get("y_above_board", 0)
             a, b = ys if isinstance(ys, list) else (0, ys)
+            y0, y1 = (BACK-b, BACK-a) if backside else (TOP+a, TOP+b)
             if e.get("kind") == "cylinder_y":
-                s = cy(*e["xz"], e["radius"], TOP+a, TOP+b)
+                s = cy(*e["xz"], e["radius"], y0, y1)
             else:
-                s = box(*e["x"], TOP+a, TOP+b, *e["z"])
+                s = box(*e["x"], y0, y1, *e["z"])
             r[f"{p['ref']}-本体{i}"] = s
         for i, pad in enumerate(p.get("pads", [])):
             if pad.get("drill"):
                 rad = max(pad.get("size", [2, 2]))/2
-                r[f"{p['ref']}-焊脚{i}"] = cy(*pad["xz"], rad, BACK-1, BACK)
-    r.update({"开发板元件": box(-6.5, 15, -13, -9.5, 15, 31),
-              "开发板背线": box(-6.5, 15, -16.6, -14.6, 15.6, 30.4),
-              "USB接口": box(16, 18.5, -13, -9.5, 18.5, 27.5),
-              "陀螺仪元件": box(-21, -2.4, 9, 11.8, 21.1, 36.9),
-              "陀螺仪焊线": box(-12, -3, 11.8, 14, 20.1, 23.1)})
+                y0, y1 = (TOP, TOP+1) if backside else (BACK-1, BACK)
+                r[f"{p['ref']}-焊脚{i}"] = cy(*pad["xz"], rad, y0, y1)
+    r.update({"开发板元件": box(SM[0]+1, SM[1]-1, SM[3],
+                               SM[3]+SM_CFG["front_allowance"], SM[4]+1, SM[5]-1),
+              "USB接口": box(SM[1]-.5, SM[1]+1.5, SM[3], SM[3]+3.5,
+                              (SM[4]+SM[5])/2-4.5, (SM[4]+SM[5])/2+4.5),
+              "陀螺仪元件": box(GY[0]+1, GY[1]-1, GY[3],
+                                GY[3]+GY_CFG["front_allowance"], GY[4]+1, GY[5]-1)})
+    for ref, label, top_y in [("J_MCU", "开发板排针", SM[3]),
+                              ("J_GY", "陀螺仪排针", GY[3])]:
+        p = next(v for v in C["parts"] if v["ref"] == ref)
+        r[label] = fuse([cy(*pad["xz"], .32, BACK-1, top_y+.6)
+                         for pad in p["pads"]])
+    # The measured items are the 34 x 26 board and 2.54-pitch header. The
+    # unmeasured header bend and shaft-centre offset are schematic here;
+    # the support is intentionally open rather than an exact mating slot.
+    x, y, z = JOY_AXIS
+    r["SW1-模块黑板"] = box(*JOY_BOARD)
+    r["SW1-金属本体"] = box(x-14, x, y-10, y+10, z-10, z+10)
+    r["SW1-原生摇杆轴"] = cx(y, z, 2, x-25, x-13)
+    r["SW1-原生摇杆帽"] = fuse([
+        cx(y, z, 12, x-32, x-28),
+        cq.Solid.makeCone(10, 4, 8, V(x-28, y, z), V(1, 0, 0))])
+    r["SW1-五针示意"] = fuse([cy(*p["xz"], .32, -5, TOP+1)
+                                  for p in JOYSTICK["pads"]])
     ss = fuse([box(-17.1, -7.6, -3.2, 3.2, -19.221, .579),
                box(-7.6, -6.9, -3.2, 3.2, -7.421, .579)])
     for x, z in SS_HOLES:
@@ -171,9 +188,12 @@ def references():
     # Lever is shown as a conservative straight strip; it is not a measured
     # actuated supplier STEP. The entire finger/front corridor stays empty.
     r["SS金属摆杆示意"] = box(-3.6, -3.3, -2.5, 2.5, -20, -1)
-    r["摇杆全角度留空"] = cy(-33, 23, 9.0, TOP+12.45, TOP+21)
+    x, y, z = JOY_AXIS
+    r["摇杆全角度留空"] = cx(y, z, 17, x-39, x-14.5)
     r["SS手指操作留空"] = box(-6.5, 14, -6, 8, -23, 2)
-    r["USB插头留空"] = box(18.5, 44, -14.5, -8, 16.825, 29.175)
+    r["USB插头留空"] = box(SM[1]+1.5, SM[1]+27,
+                                SM[3]-1.5, SM[3]+5.0,
+                                (SM[4]+SM[5])/2-6.2, (SM[4]+SM[5])/2+6.2)
     return r
 
 
@@ -225,18 +245,19 @@ def verify(s, refs):
     overlaps = {k: round(s.intersect(v).Volume(), 6) for k, v in refs.items()}
     collisions = {k: v for k, v in overlaps.items() if v > 0.001}
     insertion = {}
-    groups = {"载板": [v for k, v in refs.items() if k == "载板" or "-本体" in k or "-焊脚" in k],
-              "开发板": [refs[k] for k in ["开发板", "开发板元件", "开发板背线", "USB接口"]],
-              "陀螺仪板": [refs[k] for k in ["陀螺仪板", "陀螺仪元件", "陀螺仪焊线"]],
+    groups = {"载板": [v for k, v in refs.items() if not k.startswith("SW1-") and (k == "载板" or "-本体" in k or "-焊脚" in k)],
+              "摇杆": [v for k, v in refs.items() if k.startswith("SW1-")],
+              "开发板": [refs[k] for k in ["开发板", "开发板元件", "开发板排针", "USB接口"]],
+              "陀螺仪板": [refs[k] for k in ["陀螺仪板", "陀螺仪元件", "陀螺仪排针"]],
               "电池": [refs["电池"]], "SS": [refs["SS金属扳机本体"]]}
-    # One-piece GY cradle overhangs the carrier. Use deliberate two-stage
-    # paths, with the SS/GY installed after the carrier. No flexing is assumed.
-    paths = [("载板高2mm从下边滑入", groups["载板"], (0, 2, 0), (0, 0, -110)),
-             ("载板落下2mm", groups["载板"], (0, 0, 0), (0, 2, 0)),
-             ("开发板高5mm从USB端滑入", groups["开发板"], (0, 5, 0), (35, 0, 0)),
-             ("开发板落下5mm", groups["开发板"], (0, 0, 0), (0, 5, 0)),
+    # Install the bare carrier on the four posts, then solder the modules.
+    # The joystick header enters from the back; its open shelf does not
+    # require the black board to slide through a precise mating slot.
+    paths = [("载板从正面落到四柱", groups["载板"], (0, 0, 0), (0, 32, 0)),
+             ("摇杆弯针由背面插入", groups["摇杆"], (0, 0, 0), (0, -32, 0)),
+             ("开发板排针由正面插入", groups["开发板"], (0, 0, 0), (0, 24, 0)),
              ("电池垂直放入", groups["电池"], (0, 0, 0), (0, 32, 0)),
-             ("GY最后垂直放入", groups["陀螺仪板"], (0, 0, 0), (0, 24, 0)),
+             ("GY排针由正面插入", groups["陀螺仪板"], (0, 0, 0), (0, 24, 0)),
              ("SS最后垂直放入", groups["SS"], (0, 0, 0), (0, 24, 0))]
     for label, shapes, offset, delta in paths:
         hit = max(s.intersect(swept_box(v.translate(V(*offset)), delta)).Volume() for v in shapes)
@@ -251,12 +272,12 @@ def verify(s, refs):
             hit = max(hit, v.intersect(shape).Volume())
         if hit > .001:
             hardware_hits[k] = round(hit, 6)
-    # Nut paths are from side at H1 (the GY cradle is overhead); otherwise
-    # before fitting the GY/module. Switch nuts slide in their open side slot.
+    # Fit the four carrier nuts from the exposed component side. Switch
+    # nuts slide into the same open side slots as the previous prototype.
     nut_paths = {}
     for h in P["mount_holes"]:
         k = h["id"]+"-螺母"
-        delta = (28, 0, 0) if h["id"] == "H1" else (0, 5, 0)
+        delta = (0, 5, 0)
         nut_paths[k] = round(s.intersect(swept_box(hw[k], delta)).Volume(), 6)
     for i in (1, 2):
         k = f"SS{i}-螺母"
@@ -282,17 +303,25 @@ def verify(s, refs):
             "axial_driver_access_overlaps_mm3": tool_access,
             "fasteners": seats,
             "all_pass": s.isValid() and len(s.Solids()) == 1 and not collisions and not hardware_hits and max(insertion.values()) < .001 and max(nut_paths.values()) < .001 and max(tool_access.values()) < .001,
-            "carrier_mount_holes": P["mount_holes"], "joystick_axis_xz_mm": [-33, 23],
+            "carrier_mount_holes": P["mount_holes"], "joystick_axis_xyz_mm": JOY_AXIS,
+            "joystick_axis_direction_xyz": joystick_direction(),
+            "battery_envelope_mm": bounds(refs["电池"]),
             "config_sha256": hashlib.sha256(CONFIG.read_bytes()).hexdigest(),
             "retention": {"载板": "4颗M2x20从底座向元件面穿入，正面M2螺母轻夹，不另加垫片",
                           "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
-                          "开发板": "端部止挡+边托+软绑带，USB朝+X，背线<=2mm",
-                          "GY": "集成边托+绝缘垫+软绑带，不压芯片、不允许模块晃动",
-                          "电池": "薄软垫+两条软绑带，不承担手掌握力"},
-            "limits": ["模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
+                          "开发板": "两排各9针由正面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线",
+                          "GY": "左8右6排针由正面直接焊在载板，板间留3mm；其他闲脚保持默认",
+                          "摇杆": "现有HW504弯针由背面插焊，黑板垂直载板、原生帽朝-X；靠排针空白板边薄托+一条软绑带，横向开放",
+                          "电池": "602060含保护板/出线预留20x80x8mm，出线端敞开；薄软垫+两条软绑带，不承担手掌握力"},
+            "limits": ["HW504仅黑板34x26和2.54排针实测；弯针偏移、轴心及原生帽为保守示意，薄托开放并留横向调整余地",
+                       "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
                        "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",
                        "绑带/绝缘软垫由实物固定；触摸、电池温升、无线性能需实测",
                        "右键帽原文件不变，但本底座不提供帽的防脱导向，默认直接按原生按钮"]}
+
+
+def joystick_direction():
+    return next(p for p in C["parts"] if p["ref"] == "SW1").get("axis_direction_xyz", [0, 1, 0])
 
 
 def render(s, refs):
@@ -378,7 +407,7 @@ def verify_mesh(path, cad_volume):
 
 
 def export_assembled_stl():
-    """合并现有底座、实际PCB网格、器件示意体和紧固件，供装配查看。"""
+    """同一组毫米几何导出装配STL和带色分组OBJ，仅供装配查看。"""
     import vtk
     base = cq.importers.importStep(str(OUT / "step" / "engineering_mount.step")).val()
     b = base.BoundingBox()
@@ -386,10 +415,12 @@ def export_assembled_stl():
     refs.pop("载板")
     refs.update(hardware()[0])
     geometry = vtk.vtkAppendPolyData()
+    meshes = []
     reader = vtk.vtkSTLReader()
     reader.SetFileName(str(OUT / "stl" / "engineering_mount.stl"))
     reader.Update()
     geometry.AddInputData(reader.GetOutput())
+    meshes.append(("一体底座", "底座", reader.GetOutput()))
     for name, shape in refs.items():
         if "留空" in name:
             continue
@@ -403,6 +434,11 @@ def export_assembled_stl():
         data.SetPoints(points)
         data.SetPolys(cells)
         geometry.AddInputData(data)
+        material = ("电池" if name == "电池" else "摇杆帽" if "摇杆帽" in name
+                    else "电路板" if name in {"开发板", "陀螺仪板", "SW1-模块黑板"}
+                    else "芯片" if "元件" in name or "金属本体" in name
+                    else "金属")
+        meshes.append((name, material, data))
     board = vtk.vtkOBJReader()
     board.SetFileName(str(ROOT / "pcb" / "3d" / "gun-mouse-gen2.obj"))
     board.Update()
@@ -417,6 +453,7 @@ def export_assembled_stl():
                                  middle_y+w-(z0+z1)/2-BASE[0])
     board_mesh.SetPoints(vertices)
     geometry.AddInputData(board_mesh)
+    meshes.append(("实际载板", "电路板", board_mesh))
     triangles = vtk.vtkTriangleFilter()
     triangles.SetInputConnection(geometry.GetOutputPort())
     triangles.Update()
@@ -427,8 +464,31 @@ def export_assembled_stl():
     writer.SetInputConnection(triangles.GetOutputPort())
     if writer.Write() != 1:
         raise RuntimeError("装配STL导出失败")
+    colors = {"底座": (.22, .48, .61), "电路板": (.10, .42, .20),
+              "电池": (.72, .74, .77), "摇杆帽": (.10, .10, .11),
+              "芯片": (.23, .25, .27), "金属": (.64, .66, .69)}
+    obj_path = OUT / "第二代完整装配.obj"
+    mtl_path = obj_path.with_suffix(".mtl")
+    with mtl_path.open("w", encoding="utf-8", newline="\n") as output:
+        for name, rgb in colors.items():
+            output.write(f"newmtl {name}\nKa 0.15 0.15 0.15\nKd {' '.join(map(str, rgb))}\n"
+                         "Ks 0.2 0.2 0.2\nNs 25\nd 1.0\nillum 2\n")
+    with obj_path.open("w", encoding="utf-8", newline="\n", buffering=1024*1024) as output:
+        output.write(f"# 毫米；与完整装配STL同坐标，仅供查看，不能整体打印\nmtllib {mtl_path.name}\n")
+        offset = 1
+        for name, material, mesh in meshes:
+            output.write(f"\no {name}\ng {name}\nusemtl {material}\n")
+            for i in range(mesh.GetNumberOfPoints()):
+                vx, vy, vz = mesh.GetPoint(i)
+                output.write(f"v {vx:.6f} {vy:.6f} {vz:.6f}\n")
+            for i in range(mesh.GetNumberOfCells()):
+                cell = mesh.GetCell(i)
+                ids = [str(offset+cell.GetPointId(j)) for j in range(cell.GetNumberOfPoints())]
+                output.write("f "+" ".join(ids)+"\n")
+            offset += mesh.GetNumberOfPoints()
     print(str(path), flush=True)
-    print("毫米；包含底座、PCB、器件外形示意及紧固件；不含运动留空体。", flush=True)
+    print(str(obj_path), flush=True)
+    print("毫米；STL与OBJ同坐标，含底座、实际PCB、器件外形示意及紧固件；仅供看装配，不能整体打印。", flush=True)
 
 
 def main():

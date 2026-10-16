@@ -1,26 +1,25 @@
-﻿Reference,Value / Type,Qty,Assembly,Purchase / Fit Requirement,Nets / Purpose
-SW1,RKJXV1224005,1,Hand-solder THT,"Static body and narrow shaft split using official drawing, upper bounds retained separately; shaft pivot/motion needs physical check",Top-side insertion; no added mechanical travel limit; verify all 16 holes using the 1:1 drawing and actual part before ordering
-SW2,D2FC-F-7N(20M),1,Hand-solder THT,Official 6.5+0.1 mm case and local movable plunger split; top recess must be checked on purchased sample,"THT hand solder; pin1 COM,GND; pin2 NO,BTN_R; pin3 dummy mechanical terminal, no circuit connection"
-J_MCU,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,One wire per functional net to the verified SuperMini pinmap; no plug/socket on the carrier
-J_GY,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,"GY-601N1 chip interface H2: VCC,GND,SCL,SDA; module already has I2C pullups"
-J_TRIG,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,Existing SS-01GL COM/NO wired trigger; no PCB slots
-J_TOUCH,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,"Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil"
-J_BAT,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,Protected single-cell LiPo input
-J_SWITCH,SS-12D01-G030,1,Hand-solder THT,"G-Switch SS-12D01-G030: body 8.8x3.9x3.5 mm, actuator 3 mm, three leads at 2.5 mm pitch; clip tails <=1 mm","Board-mounted battery-positive switch: 1=BAT_RAW, 2=BAT_SW common, 3=isolated; no external switch wire"
-J_MODULE_BAT,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,SuperMini dedicated B+ and B- pads only
-J_MODULE_RAIL,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,SuperMini 5V/shared VBUS rail monitor only; not an external battery input
-R_JOY,3.3k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",Joystick click external pullup
-R_RIGHT,3.3k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",Right button external pullup
-R_TRIG,3.3k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",SS-01GL closed contact current approx 1 mA at 3.3 V
-R_TOUCH,510,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Touch series resistor, no pullup or parallel capacitor"
-R_BAT_H,100k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm",Battery switched-side divider upper
-R_BAT_L,100k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Battery divider lower, scale=2"
-R_RAIL_H,100k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Shared rail divider upper; ADC inference, not digital USB state"
-R_RAIL_L,100k,1,Hand-solder THT,"Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Shared rail divider lower, scale=2"
-C_JOY_X,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
-C_JOY_Y,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
-C_JOY_SW,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
-C_RIGHT,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
-C_TRIG,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
-C_BAT,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
-C_RAIL,100n,1,Hand-solder THT,"Purchase ceramic THT 2.54 mm pitch <=6 mm wide, <=2 mm thick, <=7 mm installed height",ADC/contact filter
+﻿"Reference","Value / Type","Qty","Assembly","Purchase / Fit Requirement","Nets / Purpose"
+"SW1","HW-504 34x26mm","1","直插手工焊接","用户实测黑板34x26mm、五针2.54mm；按现有弯针垂直插入载板，模块向背面伸出","现有HW-504整块模块，供3.3V；保留原外部上拉及滤波，无额外限位"
+"SW2","D2FC-F-7N(20M)","1","直插手工焊接","Official 6.5+0.1 mm case and local movable plunger split; top recess must be checked on purchased sample","THT hand solder; pin1 COM,GND; pin2 NO,BTN_R; pin3 dummy mechanical terminal, no circuit connection"
+"J_MCU","ESP32-S3 SuperMini 2x9","1","现成模块两排针手焊到载板","用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定","两排各9针直焊；固定原GPIO；5V孔仅作共享电源检测"
+"J_GY","GY-601N1-LSM6DSV16X 8+6","1","现成模块两排针手焊到载板","用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定","重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网"
+"J_TRIG","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","Existing SS-01GL COM/NO wired trigger; no PCB slots"
+"J_TOUCH","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil"
+"J_BAT","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","Protected single-cell LiPo input"
+"J_SWITCH","SS12D10 G5","1","直插手工焊接","用户SS12D10 G5尺寸图：相邻4.7mm、首末9.4mm，扁脚1.3x0.8mm，采用1.8mm圆孔/3mm焊盘；柄5mm","1=BAT_RAW、2=BAT_SW公共脚、3独立空网；拨向1脚侧为ON；电池两线永久焊板，不接外置开关线"
+"J_MODULE_BAT","Labelled solder wires","1","导线直接焊接","Solder joint and wire end allowance; no module connector pitch is assumed","SuperMini dedicated B+ and B- pads only"
+"R_JOY","3.3k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Joystick click external pullup"
+"R_RIGHT","3.3k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Right button external pullup"
+"R_TRIG","3.3k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","SS-01GL closed contact current approx 1 mA at 3.3 V"
+"R_TOUCH","510","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Touch series resistor, no pullup or parallel capacitor"
+"R_BAT_H","100k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Battery switched-side divider upper"
+"R_BAT_L","100k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Battery divider lower, scale=2"
+"R_RAIL_H","100k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Shared rail divider upper; ADC inference, not digital USB state"
+"R_RAIL_L","100k","1","直插手工焊接","Purchase axial <=6.4x2.6 mm body, 7.62 mm formed lead pitch; clip tails <=1 mm","Shared rail divider lower, scale=2"
+"C_JOY_X","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
+"C_JOY_Y","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
+"C_JOY_SW","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
+"C_RIGHT","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
+"C_TRIG","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
+"C_BAT","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
+"C_RAIL","100n","1","直插手工焊接","采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距","ADC/contact filter"
