@@ -24,7 +24,8 @@ BACK = TOP - P["thickness"]
 MIDDLE_Y = (TOP+BACK)/2
 FACE_Y_SUM = TOP+BACK
 BASE = (-18.8, -16.9)
-PRINT_FLOOR_Y = FACE_Y_SUM-BASE[0]
+BATTERY_FLOOR_Y = -19.3
+PRINT_FLOOR_Y = FACE_Y_SUM-BATTERY_FLOOR_Y
 # 靠拇指进入方向的H2改为近板短柱，给手留出约11毫米。
 SHORT_POST_Y = -7.8
 BATTERY = tuple(v for c, length in zip(C["battery"]["center_xyz"], C["battery"]["size_xyz"])
@@ -81,6 +82,14 @@ def prism(points, y0, y1):
     return cq.Solid.extrudeLinear(cq.Face.makeFromWires(w), V(0, y1-y0, 0))
 
 
+def root_gusset(x0, x1, top_z):
+    """托架外缘的圆角三角筋，将握持载荷接入原支撑梁。"""
+    points = [(BATTERY_FLOOR_Y, -30.5), (-8.2, -30.5), (BASE[0], top_z)]
+    wire = cq.Wire.makePolygon([V(x0, y, z) for y, z in points], close=True)
+    shape = cq.Solid.extrudeLinear(cq.Face.makeFromWires(wire), V(x1-x0, 0, 0))
+    return cq.Workplane().add(shape).edges("|X").fillet(.8).val()
+
+
 def beam(a, b, width, y0=BASE[0], y1=BASE[1]):
     x, z = a
     dx, dz = b[0]-x, b[1]-z
@@ -111,15 +120,17 @@ def build_mount():
         start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
         parts.append(cy(x, z, 3.2, start_y, BACK))
 
-    # Smooth shallow floor and low fences; two straps carry the pouch retention.
-    floor = box(-50.5, -24.9, *BASE, -113.8, -30.5)
+    # 开窗框架保持平底，向外加厚0.5毫米，不侵占电池内腔。
+    floor = box(-50.5, -24.9, BATTERY_FLOOR_Y, BASE[1], -113.8, -30.5)
     floor = cq.Workplane().add(floor).edges("|Y").fillet(0.8).val()
     parts.append(floor)
-    # 602060 pouch + protection/lead allowance: 20 x 80 x 8 mm.
-    # The upper (+Z) end stays open so protection PCB and leads are not trapped.
-    parts += [box(-49.3, -48.3, -17.1, -12.7, -113.6, -30.4),
-              box(-27.1, -26.1, -17.1, -12.7, -113.6, -30.4),
-              box(-49.3, -26.1, -17.1, -12.7, -113.6, -112.6)]
+    # 两侧深梁高出电池名义表面0.5毫米；放入面与上端出线口敞开。
+    for x0, x1 in [(-50.5, -48.2), (-27.2, -24.9)]:
+        rail = box(x0, x1, BATTERY_FLOOR_Y, -8.2, -113.8, -30.4)
+        parts.append(cq.Workplane().add(rail).edges("|Z").fillet(.5).val())
+    parts += [box(-49.3, -26.1, -17.1, -12.7, -113.6, -112.6),
+              root_gusset(-51.4, -48.2, -10),
+              root_gusset(-27.2, -24.0, -24)]
 
     # Two short arms support the existing near-edge mounting holes. The
     # board stays horizontal and its native hat points up; no strap or stop.
@@ -139,12 +150,21 @@ def build_mount():
     for h in P["mount_holes"]:
         x, z = h["xz"]
         cuts.append(cy(x, z, 1.2, -20, BACK+0.2))
+    # 加强筋到达H4，保留原轴孔和螺钉头空间。
+    cuts += [cy(-27, -27, 1.2, -21, BACK+.2),
+             cy(-27, -27, 2.2, -21, BASE[0])]
     # 给右键焊脚留出空间，避免新增摇杆短臂顶到焊点。
     for tail in next(p for p in C["parts"] if p["ref"] == "SW2")["pads"]:
         cuts.append(cy(*tail["xz"], 1.5, BACK-1.2, BACK+.1))
     for z in (-98, -57):
-        for x in (-48.8, -26.6):
-            cuts.append(box(x-.75, x+.75, -20, -10, z-2, z+2))
+        for x0, x1 in [(-50.6, -48.1), (-27.3, -24.8)]:
+            cuts.append(box(x0, x1, -17.2, -14.4, z-2, z+2))
+    # 两列小窗减料，中央纵筋和绑带附近横筋连续；窗边圆角减小尖角。
+    for x0, x1 in [(-47.2, -40.4), (-35.0, -28.2)]:
+        for z0, z1 in [(-109.3, -101.2), (-94.8, -83), (-80.6, -68.8),
+                       (-66.4, -60.2), (-53.8, -41.2)]:
+            window = box(x0, x1, -21, -16.7, z0, z1)
+            cuts.append(cq.Workplane().add(window).edges("|Y").fillet(.8).val())
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES):
         if i == 0:
             cuts.append(cz(x, y, 1.2, -2.0, JOY_BOARD[4]+.1))
@@ -411,7 +431,13 @@ def verify(s, refs):
                           "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
                           "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
                           "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10从短柱底部向上穿，普通M2螺母在模块上方直接压原孔；塑料一孔2.4mm、一孔沿X为2.4x3.6mm，模块原孔3.3mm，保留弯针；实际载板新五孔后置",
-                          "电池": "602060含保护板/出线预留20x80x8mm，出线端敞开；薄软垫+两条软绑带，不承担手掌握力"},
+                          "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"},
+            "battery_structure": {"outer_width_mm": 25.6, "frame_thickness_mm": 2.4,
+                                  "side_beam_width_mm": 2.3, "side_beam_depth_mm": 11.1,
+                                  "battery_side_clearance_mm": .5, "rim_above_battery_mm": .5,
+                                  "window_count": 10, "window_width_mm": 6.8,
+                                  "window_corner_radius_mm": .8, "root_radius_mm": .8,
+                                  "note": "外缘承力，开放面与小窗不能提供全方向抗压保护；未做载荷实测"},
             "limits": ["精简小元件并加大手焊焊盘；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
                        "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
                        "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",

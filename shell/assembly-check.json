@@ -6,14 +6,14 @@
     -59.8,
     -8.8,
     -1.63,
-    13.94,
+    14.44,
     -113.8,
     45.8
   ],
-  "volume_mm3": 10018.671,
+  "volume_mm3": 12352.085,
   "mass_g": {
-    "树脂1.2": 12.02,
-    "尼龙1.01": 10.12
+    "树脂1.2": 14.82,
+    "尼龙1.01": 12.48
   },
   "new_printed_parts": 1,
   "overlaps_mm3": {},
@@ -198,7 +198,20 @@
     "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
     "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
     "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10从短柱底部向上穿，普通M2螺母在模块上方直接压原孔；塑料一孔2.4mm、一孔沿X为2.4x3.6mm，模块原孔3.3mm，保留弯针；实际载板新五孔后置",
-    "电池": "602060含保护板/出线预留20x80x8mm，出线端敞开；薄软垫+两条软绑带，不承担手掌握力"
+    "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"
+  },
+  "battery_structure": {
+    "outer_width_mm": 25.6,
+    "frame_thickness_mm": 2.4,
+    "side_beam_width_mm": 2.3,
+    "side_beam_depth_mm": 11.1,
+    "battery_side_clearance_mm": 0.5,
+    "rim_above_battery_mm": 0.5,
+    "window_count": 10,
+    "window_width_mm": 6.8,
+    "window_corner_radius_mm": 0.8,
+    "root_radius_mm": 0.8,
+    "note": "外缘承力，开放面与小窗不能提供全方向抗压保护；未做载荷实测"
   },
   "limits": [
     "精简小元件并加大手焊焊盘；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
@@ -214,13 +227,13 @@
     -0.0,
     159.6,
     -0.0,
-    15.57
+    16.07
   ],
   "stl_check": {
     "open_or_nonmanifold_edges": 0,
     "connected_bodies": 1,
-    "mesh_vs_cad_volume_relative_difference": 5.3e-05,
+    "mesh_vs_cad_volume_relative_difference": 4.2e-05,
     "pass": true
   },
-  "stl_sha256": "2ed0e0cebec6f1c58c1d1a8c75356349d20f5016d2056f5e983999fb6abd72c8"
+  "stl_sha256": "ba6c8af23b6f6c8deb40005932f395a1b95d752d4a9e10f6015d853f3ddec5d6"
 }
