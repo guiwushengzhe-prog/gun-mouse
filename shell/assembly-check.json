@@ -5,8 +5,8 @@
   "bounds_assembly_mm": [
     -59.8,
     -8.8,
-    -18.8,
-    -3.23,
+    -1.63,
+    13.94,
     -113.8,
     45.8
   ],
@@ -18,12 +18,12 @@
   "new_printed_parts": 1,
   "overlaps_mm3": {},
   "conservative_continuous_insertion_overlaps_mm3": {
-    "载板从正面落到四柱": 0.0,
-    "摇杆弯针由背面插入": 0.0,
-    "开发板排针由正面插入": 0.0,
-    "电池垂直放入": 0.0,
-    "GY排针由正面插入": 0.0,
-    "SS最后垂直放入": 0.0
+    "载板从元件面落到四柱": 0.0,
+    "摇杆弯针由拇指面插入": 0.0,
+    "开发板排针由元件面插入": 0.0,
+    "电池放入托内": 0.0,
+    "GY排针由元件面插入": 0.0,
+    "SS最后放入": 0.0
   },
   "fastener_overlaps_mm3": {},
   "nut_insertion_overlaps_mm3": {
@@ -79,8 +79,8 @@
       "id": "SS1",
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
-      "screw_tip_y_mm": -16.5,
-      "blind_bore_end_y_mm": -17,
+      "screw_tip_y_mm": 11.64,
+      "blind_bore_end_y_mm": 12.14,
       "tip_end_clearance_mm": 0.5,
       "projection_past_nut_mm": 8.9,
       "projection_protected_inside_mount": true
@@ -89,8 +89,8 @@
       "id": "SS2",
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
-      "screw_tip_y_mm": -16.5,
-      "blind_bore_end_y_mm": -17,
+      "screw_tip_y_mm": 11.64,
+      "blind_bore_end_y_mm": 12.14,
       "tip_end_clearance_mm": 0.5,
       "projection_past_nut_mm": 8.9,
       "projection_protected_inside_mount": true
@@ -108,7 +108,7 @@
       "projection_past_nut_mm": 0.8,
       "hole_center_xy_mm": [
         -43.45,
-        -7.3
+        2.4400000000000004
       ],
       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"
     },
@@ -125,7 +125,7 @@
       "projection_past_nut_mm": 0.8,
       "hole_center_xy_mm": [
         -23.950000000000003,
-        -7.3
+        2.4400000000000004
       ],
       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"
     }
@@ -167,7 +167,7 @@
   ],
   "joystick_axis_xyz_mm": [
     -33.7,
-    -20.5,
+    15.64,
     5.8
   ],
   "joystick_axis_direction_xyz": [
@@ -178,21 +178,26 @@
   "battery_envelope_mm": [
     -47.7,
     -27.7,
-    -16.7,
-    -8.7,
+    3.84,
+    11.84,
     -112.0,
     -32.0
   ],
   "config_sha256": "49e496f12f8057a79077871a96b9d3b58acb348efe574da30ad381d9441b197e",
+  "installation_faces": {
+    "拇指面+Y": "摇杆、电池托和一体底座",
+    "元件面-Y": "开发板、陀螺仪及其他主板元件"
+  },
   "retention": {
-    "载板": "4颗M2x20从底座向元件面穿入，正面M2螺母轻夹，不另加垫片",
+    "载板": "4颗M2x20从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
     "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
-    "开发板": "两排各9针由正面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线",
-    "GY": "左8右6排针由正面直接焊在载板，板间留3mm；其他闲脚保持默认",
+    "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
+    "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
     "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10从短柱底部向上穿，普通M2螺母在模块上方直接压原孔；塑料一孔2.4mm、一孔沿X为2.4x3.6mm，模块原孔3.3mm，保留弯针；实际载板新五孔后置",
     "电池": "602060含保护板/出线预留20x80x8mm，出线端敞开；薄软垫+两条软绑带，不承担手掌握力"
   },
   "limits": [
+    "本轮仅改安装面与装配模型；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
     "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
     "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
     "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",
@@ -213,5 +218,5 @@
     "mesh_vs_cad_volume_relative_difference": 5.9e-05,
     "pass": true
   },
-  "stl_sha256": "a8d177fd53871094329c18d331fd656000c99a08095b34ab45cb5530de19e3ee"
+  "stl_sha256": "c5c66055c0995648670e83ab8890ae272a8fe61df2b3323ba4a538e07ba9964c"
 }

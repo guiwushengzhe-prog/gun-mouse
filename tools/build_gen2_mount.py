@@ -1,7 +1,7 @@
 """第二代开放样机：一件固定底座，不生成握把、塑料扳机或摇杆限位。
 
 运行：E:\\GunMouseCAD\\CadQuery\\python.exe tools/build_gen2_mount.py
-毫米；装配 X 朝前、Y 朝元件面、Z 朝上。载板尺寸取 pcb/carrier-config.json。
+毫米；装配 X 朝前、Y 朝拇指/摇杆面、Z 朝上。载板尺寸取 pcb/carrier-config.json。
 STL 已转为底面朝下的打印方向；STEP 保留装配坐标。
 """
 from __future__ import annotations
@@ -21,7 +21,10 @@ C = json.loads(CONFIG.read_text(encoding="utf-8"))
 P = C["pcb"]
 TOP = P["top_face_y"]
 BACK = TOP - P["thickness"]
+MIDDLE_Y = (TOP+BACK)/2
+FACE_Y_SUM = TOP+BACK
 BASE = (-18.8, -16.9)
+PRINT_FLOOR_Y = FACE_Y_SUM-BASE[0]
 BATTERY = tuple(v for c, length in zip(C["battery"]["center_xyz"], C["battery"]["size_xyz"])
                 for v in (c-length/2, c+length/2))
 SM_CFG, GY_CFG = C["modules"]["mcu"], C["modules"]["imu"]
@@ -56,6 +59,15 @@ def cx(y, z, r, x0, x1):
 
 def cz(x, y, r, z0, z1):
     return cq.Solid.makeCylinder(r, z1-z0, V(x, y, z0), V(0, 0, 1))
+
+
+def opposite_face(shape):
+    """塑料支撑等按PCB中面换侧；实体器件在references中按刚体翻面。"""
+    return shape.mirror("XZ", (0, MIDDLE_Y, 0))
+
+
+def flip_about_x(shape, z):
+    return shape.rotate((0, MIDDLE_Y, z), (1, MIDDLE_Y, z), 180)
 
 
 def fuse(items):
@@ -149,7 +161,7 @@ def build_mount():
         cuts.append(box(-18.3, -11.7, -8.0, -6.0, z-2.15, z+2.15))
     for cut in cuts:
         s = s.cut(cut)
-    return s.clean()
+    return opposite_face(s.clean())
 
 
 def references():
@@ -172,12 +184,13 @@ def references():
                 s = cy(*e["xz"], e["radius"], y0, y1)
             else:
                 s = box(*e["x"], y0, y1, *e["z"])
-            r[f"{p['ref']}-本体{i}"] = s
+            r[f"{p['ref']}-本体{i}"] = flip_about_x(s, p["position_xz"][1])
         for i, pad in enumerate(p.get("pads", [])):
             if pad.get("drill"):
                 rad = max(pad.get("size", [2, 2]))/2
                 y0, y1 = (TOP, TOP+1) if backside else (BACK-1, BACK)
-                r[f"{p['ref']}-焊脚{i}"] = cy(*pad["xz"], rad, y0, y1)
+                r[f"{p['ref']}-焊脚{i}"] = flip_about_x(
+                    cy(*pad["xz"], rad, y0, y1), p["position_xz"][1])
     r.update({"开发板元件": box(SM[0]+1, SM[1]-1, SM[3],
                                SM[3]+SM_CFG["front_allowance"], SM[4]+1, SM[5]-1),
               "USB接口": box(SM[1]-.5, SM[1]+1.5, SM[3], SM[3]+3.5,
@@ -222,11 +235,22 @@ def references():
     r["USB插头留空"] = box(SM[1]+1.5, SM[1]+27,
                                 SM[3]-1.5, SM[3]+5.0,
                                 (SM[4]+SM[5])/2-6.2, (SM[4]+SM[5])/2+6.2)
+    # 整个模块按实体旋转换面；实际载板孔号尚未同步，不能用于下单。
+    for name, shape in list(r.items()):
+        if name.startswith("SW1-") or name == "摇杆全角度留空":
+            r[name] = shape.rotate((JOY_PIN_CENTER[0], MIDDLE_Y, 0),
+                                   (JOY_PIN_CENTER[0], MIDDLE_Y, 1), 180)
+        elif name.startswith("开发板") or name in {"USB接口", "USB插头留空"}:
+            r[name] = flip_about_x(shape, (SM[4]+SM[5])/2)
+        elif name.startswith("陀螺仪"):
+            r[name] = flip_about_x(shape, (GY[4]+GY[5])/2)
+        elif name == "电池" or name.startswith("SS"):
+            r[name] = opposite_face(shape)
     return r
 
 
 def preview_references():
-    """当前装配直接使用朝上的模块姿态，不再叠加旧姿态变换。"""
+    """摇杆在拇指面，主板元件在相反面，帽仍朝上。"""
     return references()
 
 
@@ -291,7 +315,14 @@ def hardware():
                       "projection_past_nut_mm": .8,
                       "hole_center_xy_mm": [x, y],
                       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"})
-    return r, seats
+    for seat in seats:
+        if "hole_center_xy_mm" in seat:
+            x, y = seat["hole_center_xy_mm"]
+            seat["hole_center_xy_mm"] = [x, FACE_Y_SUM-y]
+        for key in ("screw_tip_y_mm", "blind_bore_end_y_mm"):
+            if key in seat:
+                seat[key] = FACE_Y_SUM-seat[key]
+    return {name: opposite_face(shape) for name, shape in r.items()}, seats
 
 
 def verify(s, refs):
@@ -303,15 +334,13 @@ def verify(s, refs):
               "开发板": [refs[k] for k in ["开发板", "开发板元件", "开发板排针", "USB接口"]],
               "陀螺仪板": [refs[k] for k in ["陀螺仪板", "陀螺仪元件", "陀螺仪排针"]],
               "电池": [refs["电池"]], "SS": [refs["SS金属扳机本体"]]}
-    # Install the bare carrier on the four posts, then solder the modules.
-    # The joystick header enters from the back; its open shelf does not
-    # require the black board to slide through a precise mating slot.
-    paths = [("载板从正面落到四柱", groups["载板"], (0, 0, 0), (0, 32, 0)),
-             ("摇杆弯针由背面插入", groups["摇杆"], (0, 0, 0), (0, -32, 0)),
-             ("开发板排针由正面插入", groups["开发板"], (0, 0, 0), (0, 24, 0)),
-             ("电池垂直放入", groups["电池"], (0, 0, 0), (0, 32, 0)),
-             ("GY排针由正面插入", groups["陀螺仪板"], (0, 0, 0), (0, 24, 0)),
-             ("SS最后垂直放入", groups["SS"], (0, 0, 0), (0, 24, 0))]
+    # 安装面交换后，所有原有装配行程同步换向。
+    paths = [("载板从元件面落到四柱", groups["载板"], (0, 0, 0), (0, -32, 0)),
+             ("摇杆弯针由拇指面插入", groups["摇杆"], (0, 0, 0), (0, 32, 0)),
+             ("开发板排针由元件面插入", groups["开发板"], (0, 0, 0), (0, -24, 0)),
+             ("电池放入托内", groups["电池"], (0, 0, 0), (0, -32, 0)),
+             ("GY排针由元件面插入", groups["陀螺仪板"], (0, 0, 0), (0, -24, 0)),
+             ("SS最后放入", groups["SS"], (0, 0, 0), (0, -24, 0))]
     for label, shapes, offset, delta in paths:
         hit = max(s.intersect(swept_box(v.translate(V(*offset)), delta)).Volume() for v in shapes)
         insertion[label] = round(hit, 6)
@@ -330,7 +359,7 @@ def verify(s, refs):
     nut_paths = {}
     for h in P["mount_holes"]:
         k = h["id"]+"-螺母"
-        delta = (0, 5, 0)
+        delta = (0, -5, 0)
         nut_paths[k] = round(s.intersect(swept_box(hw[k], delta)).Volume(), 6)
     for i in (1, 2):
         k = f"SS{i}-螺母"
@@ -340,17 +369,17 @@ def verify(s, refs):
         nut_paths[k] = round(s.intersect(swept_box(hw[k], (0, 0, 12))).Volume(), 6)
     tool_access = {}
     for h in P["mount_holes"]:
-        driver = cy(*h["xz"], 1.5, -36, -20.91)
+        driver = opposite_face(cy(*h["xz"], 1.5, -36, -20.91))
         tool_access[h["id"]] = round(s.intersect(driver).Volume(), 6)
     for i, (x, z) in enumerate(SS_HOLES, 1):
-        driver = cy(x, z, 1.5, 5.61, 24)
+        driver = opposite_face(cy(x, z, 1.5, 5.61, 24))
         hit = s.intersect(driver).Volume()
         for n, shape in refs.items():
             if "留空" not in n and "摆杆示意" not in n:
                 hit = max(hit, driver.intersect(shape).Volume())
         tool_access[f"SS{i}"] = round(hit, 6)
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES, 1):
-        driver = cz(x, y, 1.5, -24, -3.91)
+        driver = opposite_face(cz(x, y, 1.5, -24, -3.91))
         hit = s.intersect(driver).Volume()
         for n, shape in refs.items():
             if "留空" not in n and "摆杆示意" not in n:
@@ -366,17 +395,20 @@ def verify(s, refs):
             "axial_driver_access_overlaps_mm3": tool_access,
             "fasteners": seats,
             "all_pass": s.isValid() and len(s.Solids()) == 1 and not collisions and not hardware_hits and max(insertion.values()) < .001 and max(nut_paths.values()) < .001 and max(tool_access.values()) < .001,
-            "carrier_mount_holes": P["mount_holes"], "joystick_axis_xyz_mm": JOY_AXIS,
+            "carrier_mount_holes": P["mount_holes"],
+            "joystick_axis_xyz_mm": [JOY_AXIS[0], FACE_Y_SUM-JOY_AXIS[1], JOY_AXIS[2]],
             "joystick_axis_direction_xyz": joystick_direction(),
             "battery_envelope_mm": bounds(refs["电池"]),
             "config_sha256": hashlib.sha256(CONFIG.read_bytes()).hexdigest(),
-            "retention": {"载板": "4颗M2x20从底座向元件面穿入，正面M2螺母轻夹，不另加垫片",
+            "installation_faces": {"拇指面+Y": "摇杆、电池托和一体底座", "元件面-Y": "开发板、陀螺仪及其他主板元件"},
+            "retention": {"载板": "4颗M2x20从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
                           "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
-                          "开发板": "两排各9针由正面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线",
-                          "GY": "左8右6排针由正面直接焊在载板，板间留3mm；其他闲脚保持默认",
+                          "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
+                          "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
                           "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10从短柱底部向上穿，普通M2螺母在模块上方直接压原孔；塑料一孔2.4mm、一孔沿X为2.4x3.6mm，模块原孔3.3mm，保留弯针；实际载板新五孔后置",
                           "电池": "602060含保护板/出线预留20x80x8mm，出线端敞开；薄软垫+两条软绑带，不承担手掌握力"},
-            "limits": ["HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
+            "limits": ["本轮仅改安装面与装配模型；实际载板翻面孔号、摇杆五针孔和布线尚未同步，旧打板包未更新",
+                       "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
                        "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
                        "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",
                        "绑带/绝缘软垫由实物固定；触摸、电池温升、无线性能需实测",
@@ -479,12 +511,8 @@ def export_assembled_stl():
     refs.update(hardware()[0])
     geometry = vtk.vtkAppendPolyData()
     meshes = []
-    reader = vtk.vtkSTLReader()
-    reader.SetFileName(str(OUT / "stl" / "engineering_mount.stl"))
-    reader.Update()
-    geometry.AddInputData(reader.GetOutput())
-    meshes.append(("一体底座", "底座", reader.GetOutput()))
-    for name, shape in refs.items():
+    # 完整装配固定使用原坐标，不跟随单件底座的打印摆放方向翻转。
+    for name, shape in [("一体底座", base), *refs.items()]:
         if "留空" in name:
             continue
         verts, tris = shape.tessellate(.05)
@@ -497,7 +525,7 @@ def export_assembled_stl():
         data.SetPoints(points)
         data.SetPolys(cells)
         geometry.AddInputData(data)
-        material = ("电池" if name == "电池" else "摇杆帽" if "摇杆帽" in name
+        material = ("底座" if name == "一体底座" else "电池" if name == "电池" else "摇杆帽" if "摇杆帽" in name
                     else "电路板" if name in {"开发板", "陀螺仪板", "SW1-模块黑板"}
                     else "芯片" if "元件" in name or "金属本体" in name
                     else "金属")
@@ -551,7 +579,7 @@ def export_assembled_stl():
             offset += mesh.GetNumberOfPoints()
     print(str(path), flush=True)
     print(str(obj_path), flush=True)
-    print("毫米；STL与OBJ同坐标。摇杆朝整机+Z，近边两孔螺丝固定；载板新五孔尚待调整，仅供看装配，不能整体打印。", flush=True)
+    print("毫米；STL与OBJ同坐标。摇杆与电池托在拇指面，主板元件在反面；摇杆帽仍朝+Z。实际载板孔号与布线待同步，仅供看装配，不能整体打印。", flush=True)
     render(base, preview_references())
 
 
@@ -566,7 +594,7 @@ def main():
         (OUT / folder).mkdir(parents=True, exist_ok=True)
     cq.exporters.export(s, str(OUT / "step" / "engineering_mount.step"))
     b = s.BoundingBox()
-    printed = s.rotate((0, 0, 0), (1, 0, 0), 90).translate(V(-b.xmin, b.zmax, -BASE[0]))
+    printed = s.rotate((0, 0, 0), (1, 0, 0), -90).translate(V(-b.xmin, -b.zmin, PRINT_FLOOR_Y))
     report["bounds_print_mm"] = bounds(printed)
     assert abs(printed.BoundingBox().zmin) < 1e-5, "打印底面必须落在Z=0"
     path = OUT / "stl" / "engineering_mount.stl"
