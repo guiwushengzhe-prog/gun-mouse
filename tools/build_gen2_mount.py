@@ -25,6 +25,8 @@ MIDDLE_Y = (TOP+BACK)/2
 FACE_Y_SUM = TOP+BACK
 BASE = (-18.8, -16.9)
 PRINT_FLOOR_Y = FACE_Y_SUM-BASE[0]
+# 靠拇指进入方向的H2改为近板短柱，给手留出约11毫米。
+SHORT_POST_Y = -7.8
 BATTERY = tuple(v for c, length in zip(C["battery"]["center_xyz"], C["battery"]["size_xyz"])
                 for v in (c-length/2, c+length/2))
 SM_CFG, GY_CFG = C["modules"]["mcu"], C["modules"]["imu"]
@@ -92,8 +94,7 @@ def beam(a, b, width, y0=BASE[0], y1=BASE[1]):
 def build_mount():
     parts = []
     # Sparse carrier skeleton; the long lower portion is only a battery tray.
-    for a, b in [((-56, 36), (-58, 44)), ((-58, 44), (-56, 44)),
-                 ((-12, 36), (-12, 44)),
+    for a, b in [((-12, 36), (-12, 44)),
                  ((-51, -4), (-27, -27)), ((-12, 36), (-15, 0)),
                  ((-15, 0), (-27, -27)),
                  ((-51, -4), (-49, -32)), ((-27, -27), (-26, -32)),
@@ -102,11 +103,13 @@ def build_mount():
         parts.append(beam(a, b, 3.6))
     # 上横梁靠主板布置，避开摇杆帽上方的拇指接近空间。
     parts.append(beam((-56, 44), (-12, 44), 3.6, -6.8, -3.8))
-    for x in (-56, -12):
-        parts.append(box(x-1.8, x+1.8, BASE[0], -3.8, 42.2, 45.8))
+    for a, b in [((-56, 36), (-58, 44)), ((-58, 44), (-56, 44))]:
+        parts.append(beam(a, b, 3.6, -6.8, -3.8))
+    parts.append(box(-13.8, -10.2, BASE[0], -3.8, 42.2, 45.8))
     for h in P["mount_holes"]:
         x, z = h["xz"]
-        parts.append(cy(x, z, 3.2, BASE[0], BACK))
+        start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
+        parts.append(cy(x, z, 3.2, start_y, BACK))
 
     # Smooth shallow floor and low fences; two straps carry the pouch retention.
     floor = box(-50.5, -24.9, *BASE, -113.8, -30.5)
@@ -287,11 +290,16 @@ def hardware():
     seats = []
     for h in P["mount_holes"]:
         x, z = h["xz"]
-        head = cy(x, z, 2, -20.9, -18.8).cut(hex_y(x, z, 1.5, -21, -19.9))
-        r[h["id"]+"-螺钉"] = head.fuse(cy(x, z, 1, -18.8, 1.2))
+        start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
+        length = 10 if h["id"] == "H2" else 20
+        tip_y = start_y+length
+        head = cy(x, z, 2, start_y-2.1, start_y).cut(
+            hex_y(x, z, 1.5, start_y-2.2, start_y-1.1))
+        r[h["id"]+"-螺钉"] = head.fuse(cy(x, z, 1, start_y, tip_y))
         r[h["id"]+"-螺母"] = hex_y(x, z, 4, TOP, TOP+1.6).cut(cy(x, z, 1.05, TOP-.1, TOP+1.7))
-        seats.append({"id": h["id"], "length_mm": 20, "nut_engagement_mm": 1.6,
-                      "projection_past_nut_mm": round(1.2-(TOP+1.6), 3),
+        seats.append({"id": h["id"], "length_mm": length, "nut_engagement_mm": 1.6,
+                      "projection_past_nut_mm": round(tip_y-(TOP+1.6), 3),
+                      "thumb_side_projection_mm": round(BACK-start_y+2.1, 3),
                       "driver": "底部1.5mm内六角；正面薄钳扶螺母"})
     for i, (x, z) in enumerate(SS_HOLES, 1):
         k = f"SS{i}"
@@ -369,7 +377,8 @@ def verify(s, refs):
         nut_paths[k] = round(s.intersect(swept_box(hw[k], (0, 0, 12))).Volume(), 6)
     tool_access = {}
     for h in P["mount_holes"]:
-        driver = opposite_face(cy(*h["xz"], 1.5, -36, -20.91))
+        start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
+        driver = opposite_face(cy(*h["xz"], 1.5, -36, start_y-2.11))
         tool_access[h["id"]] = round(s.intersect(driver).Volume(), 6)
     for i, (x, z) in enumerate(SS_HOLES, 1):
         driver = opposite_face(cy(x, z, 1.5, 5.61, 24))
@@ -401,7 +410,7 @@ def verify(s, refs):
             "battery_envelope_mm": bounds(refs["电池"]),
             "config_sha256": hashlib.sha256(CONFIG.read_bytes()).hexdigest(),
             "installation_faces": {"拇指面+Y": "摇杆、电池托和一体底座", "元件面-Y": "开发板、陀螺仪及其他主板元件"},
-            "retention": {"载板": "4颗M2x20从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
+            "retention": {"载板": "H2靠拇指侧改近板短柱+M2x10，其余3颗M2x20；均从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
                           "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
                           "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
                           "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",

@@ -10,10 +10,10 @@
     -113.8,
     45.8
   ],
-  "volume_mm3": 10455.86,
+  "volume_mm3": 10016.384,
   "mass_g": {
-    "树脂1.2": 12.55,
-    "尼龙1.01": 10.56
+    "树脂1.2": 12.02,
+    "尼龙1.01": 10.12
   },
   "new_printed_parts": 1,
   "overlaps_mm3": {},
@@ -52,13 +52,15 @@
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 1.23,
+      "thumb_side_projection_mm": 17.67,
       "driver": "底部1.5mm内六角；正面薄钳扶螺母"
     },
     {
       "id": "H2",
-      "length_mm": 20,
+      "length_mm": 10,
       "nut_engagement_mm": 1.6,
-      "projection_past_nut_mm": 1.23,
+      "projection_past_nut_mm": 2.23,
+      "thumb_side_projection_mm": 6.67,
       "driver": "底部1.5mm内六角；正面薄钳扶螺母"
     },
     {
@@ -66,6 +68,7 @@
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 1.23,
+      "thumb_side_projection_mm": 17.67,
       "driver": "底部1.5mm内六角；正面薄钳扶螺母"
     },
     {
@@ -73,6 +76,7 @@
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 1.23,
+      "thumb_side_projection_mm": 17.67,
       "driver": "底部1.5mm内六角；正面薄钳扶螺母"
     },
     {
@@ -189,7 +193,7 @@
     "元件面-Y": "开发板、陀螺仪及其他主板元件"
   },
   "retention": {
-    "载板": "4颗M2x20从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
+    "载板": "H2靠拇指侧改近板短柱+M2x10，其余3颗M2x20；均从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
     "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
     "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，实际孔号待同步",
     "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；实际孔号待同步",
@@ -215,8 +219,8 @@
   "stl_check": {
     "open_or_nonmanifold_edges": 0,
     "connected_bodies": 1,
-    "mesh_vs_cad_volume_relative_difference": 5.9e-05,
+    "mesh_vs_cad_volume_relative_difference": 5.1e-05,
     "pass": true
   },
-  "stl_sha256": "c5c66055c0995648670e83ab8890ae272a8fe61df2b3323ba4a538e07ba9964c"
+  "stl_sha256": "9fb1a571e5982c6fe823f2dc68c5d2847a08a02c3753b1c305fa82edeef8fd31"
 }
