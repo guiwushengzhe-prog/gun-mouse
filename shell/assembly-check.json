@@ -5,25 +5,26 @@
   "bounds_assembly_mm": [
     -59.8,
     -8.8,
-    -1.63,
-    14.44,
-    -113.8,
+    -19.3,
+    5.84,
+    -125.8,
     46.8
   ],
-  "volume_mm3": 12456.82,
+  "volume_mm3": 13721.253,
   "mass_g": {
-    "树脂1.2": 14.95,
-    "尼龙1.01": 12.58
+    "树脂1.2": 16.47,
+    "尼龙1.01": 13.86
   },
   "new_printed_parts": 1,
   "overlaps_mm3": {},
   "conservative_continuous_insertion_overlaps_mm3": {
-    "载板从元件面落到四柱": 0.0,
+    "裸载板从上方滑入支架": 0.0,
+    "小元件在敞开腔体内插入": 0.0,
     "摇杆弯针由拇指面插入": 0.0,
-    "开发板排针由元件面插入": 0.0,
+    "开发板在敞开腔体内插入": 0.0,
     "电池放入托内": 0.0,
-    "GY排针由元件面插入": 0.0,
-    "SS最后放入": 0.0
+    "GY在敞开腔体内插入": 0.0,
+    "SS从前方缺口放入": 0.0
   },
   "fastener_overlaps_mm3": {},
   "nut_insertion_overlaps_mm3": {
@@ -52,51 +53,51 @@
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 1.23,
-      "thumb_side_projection_mm": 17.67,
-      "driver": "底部1.5mm内六角；正面薄钳扶螺母"
+      "component_side_projection_mm": 17.67,
+      "driver": "元件面1.5mm内六角；拇指面薄钳扶螺母"
     },
     {
       "id": "H2",
       "length_mm": 10,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 2.23,
-      "thumb_side_projection_mm": 6.67,
-      "driver": "底部1.5mm内六角；正面薄钳扶螺母"
+      "component_side_projection_mm": 6.67,
+      "driver": "元件面1.5mm内六角；拇指面薄钳扶螺母"
     },
     {
       "id": "H3",
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 1.23,
-      "thumb_side_projection_mm": 17.67,
-      "driver": "底部1.5mm内六角；正面薄钳扶螺母"
+      "component_side_projection_mm": 17.67,
+      "driver": "元件面1.5mm内六角；拇指面薄钳扶螺母"
     },
     {
       "id": "H4",
       "length_mm": 20,
       "nut_engagement_mm": 1.6,
       "projection_past_nut_mm": 1.23,
-      "thumb_side_projection_mm": 17.67,
-      "driver": "底部1.5mm内六角；正面薄钳扶螺母"
+      "component_side_projection_mm": 17.67,
+      "driver": "元件面1.5mm内六角；拇指面薄钳扶螺母"
     },
     {
       "id": "SS1",
-      "length_mm": 20,
+      "length_mm": 10,
       "nut_engagement_mm": 1.6,
-      "screw_tip_y_mm": 11.64,
-      "blind_bore_end_y_mm": 12.14,
-      "tip_end_clearance_mm": 0.5,
-      "projection_past_nut_mm": 8.9,
+      "screw_tip_y_mm": -11.36,
+      "blind_bore_end_y_mm": -17.3,
+      "tip_end_clearance_mm": 5.94,
+      "projection_past_nut_mm": 0.11,
       "projection_protected_inside_mount": true
     },
     {
       "id": "SS2",
-      "length_mm": 20,
+      "length_mm": 10,
       "nut_engagement_mm": 1.6,
-      "screw_tip_y_mm": 11.64,
-      "blind_bore_end_y_mm": 12.14,
-      "tip_end_clearance_mm": 0.5,
-      "projection_past_nut_mm": 8.9,
+      "screw_tip_y_mm": -11.36,
+      "blind_bore_end_y_mm": -17.3,
+      "tip_end_clearance_mm": 5.94,
+      "projection_past_nut_mm": 0.11,
       "projection_protected_inside_mount": true
     },
     {
@@ -172,7 +173,7 @@
   "joystick_axis_xyz_mm": [
     -33.7,
     15.64,
-    7.8
+    3.8
   ],
   "joystick_axis_direction_xyz": [
     0,
@@ -182,22 +183,22 @@
   "battery_envelope_mm": [
     -47.7,
     -27.7,
-    3.84,
-    11.84,
-    -112.0,
-    -32.0
+    -16.7,
+    -8.7,
+    -124.0,
+    -44.0
   ],
-  "config_sha256": "b04fbf91bca0ae51f017b5a042b539b614c42efb68eabba66ef5f24bb7966397",
+  "config_sha256": "1553cb3e1354e523290cfa12735b32ea23b4432b49604ab974b1054f694d009a",
   "installation_faces": {
-    "拇指面+Y": "摇杆、电池托和一体底座",
-    "元件面-Y": "开发板、陀螺仪及其他主板元件"
+    "拇指面+Y": "摇杆及从主板缺口绕过的局部短臂",
+    "元件面-Y": "一体支架、电池托、八颗小件护板；上方两块模块仍敞开且位置不变"
   },
   "retention": {
-    "载板": "H2靠拇指侧改近板短柱+M2x10，其余3颗M2x20；均从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
-    "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
+    "载板": "元件面四柱固定；H2用M2x10，其余3颗M2x20，拇指面M2螺母轻夹，不另加垫片",
+    "SS": "原SS-01GL两孔，改用2颗已有M2x10；原垫片填0.6mm名义间隙，元件面侧插M2螺母",
     "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，孔号与网络已同步",
     "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；孔号与网络已同步",
-    "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10，头部内收2mm；黑板抬高2mm容纳原弯针，横排五孔已同步；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
+    "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z；模块降低4mm，让原有弯针和塑料条在小板上面；主板五孔不变。两孔19.5mm间距，用2颗M2x10，头部内收；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
     "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"
   },
   "battery_structure": {
@@ -217,25 +218,25 @@
     "八颗手焊小元件，实际载板翻面孔号、摇杆横排五针孔和布线已同步；仍需实物插装与通电验证",
     "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
     "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
-    "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",
-    "绑带/绝缘软垫由实物固定；触摸、电池温升、无线性能需实测",
+    "裸板轮廓与最终直插行程已检查；模块先从侧面送入敞开腔体的转向动作未作刚体全程仿真",
+    "手焊线为可行建议路径；绑带/绝缘软垫由实物固定，触摸、电池温升、无线性能需实测",
     "右键帽原文件不变，但本底座不提供帽的防脱导向，默认直接按原生按钮"
   ],
   "bounds_print_mm": [
     -0.0,
     51.0,
     -0.0,
-    160.6,
+    172.6,
     -0.0,
-    16.07
+    25.14
   ],
   "stl_check": {
     "open_or_nonmanifold_edges": 0,
     "connected_bodies": 1,
-    "mesh_vs_cad_volume_relative_difference": 4.4e-05,
+    "mesh_vs_cad_volume_relative_difference": 4.1e-05,
     "pass": true
   },
-  "stl_sha256": "b22fe591a0ca5acda3f551cc60b963b941c4c0fc6dcfdfca33edcac462a459dd",
+  "stl_sha256": "26cc0e1a5b831b6c58ba9fbc39c45c8a602f37d59880a1eaa9e9105f820412e7",
   "assembled_model": {
     "object_count": 134,
     "invalid_shapes": [],
@@ -244,7 +245,7 @@
       {
         "name": "电池正极线",
         "net": "BAT_RAW",
-        "centreline_length_mm": 53.03,
+        "centreline_length_mm": 94.31,
         "insulation_diameter_mm": 1.1,
         "endpoints_xyz_mm": [
           [
@@ -254,8 +255,8 @@
           ],
           [
             -39,
-            7.84,
-            -31.8
+            -12.7,
+            -43.8
           ]
         ],
         "path_xyz_mm": [
@@ -266,50 +267,40 @@
           ],
           [
             -55.7,
-            -4.1,
+            -5,
             -36
           ],
           [
-            -55.7,
-            -4.8,
-            -40.5
+            -57,
+            -5,
+            -38
           ],
           [
-            -53.5,
-            -4.8,
-            -43.5
+            -57,
+            -12.7,
+            -38
           ],
           [
-            -53.5,
-            1.2,
-            -43.5
-          ],
-          [
-            -53.5,
-            1.2,
-            -28.8
+            -57,
+            -12.7,
+            -8.5
           ],
           [
             -39,
-            1.2,
-            -28.8
+            -12.7,
+            -8.5
           ],
           [
             -39,
-            7.84,
-            -28.8
-          ],
-          [
-            -39,
-            7.84,
-            -31.8
+            -12.7,
+            -43.8
           ]
         ]
       },
       {
         "name": "电池负极线",
         "net": "GND",
-        "centreline_length_mm": 66.51,
+        "centreline_length_mm": 95.01,
         "insulation_diameter_mm": 1.1,
         "endpoints_xyz_mm": [
           [
@@ -319,8 +310,8 @@
           ],
           [
             -36.5,
-            7.84,
-            -31.8
+            -12.7,
+            -43.8
           ]
         ],
         "path_xyz_mm": [
@@ -331,43 +322,38 @@
           ],
           [
             -55.7,
-            -4.1,
+            -6.8,
             -33.46
           ],
           [
-            -57.2,
-            -6.2,
-            -35
+            -58.4,
+            -6.8,
+            -35.5
           ],
           [
-            -54.8,
-            -6.2,
-            -44.8
+            -58.4,
+            -14.2,
+            -35.5
           ],
           [
-            -54.8,
-            2.4,
-            -44.8
-          ],
-          [
-            -54.8,
-            2.4,
-            -27.6
+            -58.4,
+            -14.2,
+            -10
           ],
           [
             -36.5,
-            2.4,
-            -27.6
+            -14.2,
+            -10
           ],
           [
             -36.5,
-            7.84,
-            -27.6
+            -12.7,
+            -28
           ],
           [
             -36.5,
-            7.84,
-            -31.8
+            -12.7,
+            -43.8
           ]
         ]
       },
@@ -429,7 +415,7 @@
       {
         "name": "开发板负极短线",
         "net": "GND",
-        "centreline_length_mm": 31.06,
+        "centreline_length_mm": 30.81,
         "insulation_diameter_mm": 1.1,
         "endpoints_xyz_mm": [
           [
@@ -457,12 +443,12 @@
           [
             -21.54,
             -5.55,
-            33
+            32.05
           ],
           [
             -8,
             -5.55,
-            33
+            32.05
           ],
           [
             -8,
@@ -584,7 +570,7 @@
       {
         "name": "触摸铜箔线",
         "net": "TOUCH_ELECTRODE",
-        "centreline_length_mm": 63.94,
+        "centreline_length_mm": 71.55,
         "insulation_diameter_mm": 0.8,
         "endpoints_xyz_mm": [
           [
@@ -617,17 +603,17 @@
           [
             -22.5,
             -14.5,
-            3.5
+            7.5
           ],
           [
             -5.5,
             -14.5,
-            3.5
+            7.5
           ],
           [
             -5.5,
             -8,
-            3.5
+            7.5
           ],
           [
             -4.5,
@@ -652,16 +638,16 @@
       "触摸铜箔线-绝缘皮": 0.0
     },
     "wire_insulation_pair_overlaps_mm3": {},
-    "pcb_sha256": "da0dced819ce5a30149c48fd4d8e8c5c5d458f3fff83800da109ca9293247d9a",
+    "pcb_sha256": "81539a78c034282642b0e65407d0929fcf4531d730ea2439b89b666fb7e64a2d",
     "real_copper_materials": [
       "载板-基材",
       "载板-绿色保护层",
       "载板-丝印",
       "载板-真实铜层焊盘",
-      "载板-孔壁金属"
+      "载板-mtl51691"
     ],
     "appearance_basis": "开发板为本地官方器件参考外形；其余小件和线弯曲为名义外形。B焊盘和铜箔尾按照片比读，未实测。",
-    "stl_sha256": "b847eff80ebc22ead219a62055f268846389a838c46cb2bd610f0a5f8bdaae75",
-    "obj_sha256": "4489ae4793a7e921a2f71b0718d51bc61cc344610d62cc59bfad5786d53c1047"
+    "stl_sha256": "9d9bf513e27d21d0cd1d633b302bf9fac4da2661c29610024f307eb1a3432ee5",
+    "obj_sha256": "99d760d11b9a16cf4d1dcbc55a5768f4bc8cdde9867bbdd3b3e523928462b8e5"
   }
 }

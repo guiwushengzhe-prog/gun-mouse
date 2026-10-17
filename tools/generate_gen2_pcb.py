@@ -164,10 +164,10 @@ def simplify_hand_solder(config):
         power.pop(key, None)
     power.update(low_battery_shutdown_enabled=False, external_power_detection_enabled=False,
                  battery_voltage_display_enabled=True)
-    positions = {"R_TRIG": [-48, -10], "R_TOUCH": [-34, -10],
-                 "C_TRIG": [-48, -18], "C_JOY_X": [-34, -18],
-                 "R_BAT_H": [-48, -26], "R_BAT_L": [-36, -26],
-                 "C_BAT": [-48, -32], "C_JOY_Y": [-34, -32]}
+    positions = {"R_TRIG": [-40, -8], "R_TOUCH": [-45.08, -11.5],
+                 "C_TRIG": [-40, -15], "C_JOY_X": [-45.08, -18.5],
+                 "R_BAT_H": [-40, -22], "R_BAT_L": [-45.08, -25.5],
+                 "C_BAT": [-40, -29], "C_JOY_Y": [-45.08, -32.5]}
     for part in config["parts"]:
         if part["ref"] == "J_MCU":
             for pad in part["pads"]:
@@ -183,14 +183,17 @@ def simplify_hand_solder(config):
         part["position_xz"] = [x, z]
         for axis, delta in (("x", x-old_x), ("z", z-old_z)):
             part["envelope"][axis] = [round(v+delta, 4) for v in part["envelope"][axis]]
-        pitch = 7.62 if part["kind"] == "resistor" else 5.08
+        # 每行只放一颗，所有引脚向外成形至10.16毫米；交错行留出烙铁操作间隔。
+        pitch = 10.16
         for i, pad in enumerate(part["pads"]):
             pad.update(xz=[round(x+(-.5 if i == 0 else .5)*pitch, 4), z],
                        drill=[1.1, 1.1], size=[2.6, 2.6], shape="circle")
         part["envelope_basis"] = (
-            "轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米"
+            "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米"
             if part["kind"] == "resistor" else
-            "直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米")
+            "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米")
+        part["model_reference_pads"] = copy.deepcopy(part["pads"])
+        part["model_reference_position_xz"] = [x, z]
     config["status"] = "八颗电阻电容的手焊结构预览板；保留电量显示，取消低电自动休眠及外部供电识别；模块翻面孔号、摇杆新孔及重新布线待完成，不可下单制造"
     return config
 
@@ -541,6 +544,12 @@ def generate(geometry_only=False, reset_layout=False):
                     router.mark_disc(xy, pcb.ToMM(track.GetWidth())/2 + TRACK_W/2 + CLEARANCE + .18, net,
                                      [0 if track.GetLayer() == pcb.F_Cu else 1])
         router.route()
+        # 摇杆接地脚周围被横向信号分隔，补一条实际地线接至板侧宽阔地铜，
+        # 不依赖孤立小块覆铜的热焊盘细辐条。
+        ground_start = next(p["xy"] for p in pads if p["ref"] == "SW1" and p["number"] == "1")
+        ground_end = [55.0, ground_start[1]]
+        router.apply_path(router.astar(ground_start, ground_end, nets["GND"].GetNetCode()),
+                          ground_start, ground_end, "GND")
         board = env["add_ground_zone"](board, nets, outline)
         router.via_count = sum(isinstance(t, pcb.PCB_VIA) for t in board.GetTracks())
         config["status"] = "八颗手焊电阻电容；模块翻面孔号与摇杆横排五孔已同步，板上网络已布线；实物插装和通电待验证"

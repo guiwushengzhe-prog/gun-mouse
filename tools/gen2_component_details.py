@@ -132,18 +132,17 @@ def gy_photo_shapes(m):
 
 WIRE_ROUTES = [
     ("电池正极线", "BAT_RAW", "红线", .55, .20,
-     [(-55.7,-1.03,-36),(-55.7,-4.1,-36),(-55.7,-4.8,-40.5),
-      (-53.5,-4.8,-43.5),(-53.5,1.2,-43.5),(-53.5,1.2,-28.8),
-      (-39,1.2,-28.8),(-39,7.84,-28.8),(-39,7.84,-31.8)]),
+     [(-55.7,-1.03,-36),(-55.7,-5,-36),(-57,-5,-38),
+      (-57,-12.7,-38),(-57,-12.7,-8.5),(-39,-12.7,-8.5),(-39,-12.7,-31.8)]),
     ("电池负极线", "GND", "黑线", .55, .20,
-     [(-55.7,-1.03,-33.46),(-55.7,-4.1,-33.46),(-57.2,-6.2,-35),
-      (-54.8,-6.2,-44.8),(-54.8,2.4,-44.8),(-54.8,2.4,-27.6),
-      (-36.5,2.4,-27.6),(-36.5,7.84,-27.6),(-36.5,7.84,-31.8)]),
+     [(-55.7,-1.03,-33.46),(-55.7,-6.8,-33.46),(-58.4,-6.8,-35.5),
+      (-58.4,-14.2,-35.5),(-58.4,-14.2,-10),(-36.5,-14.2,-10),
+      (-36.5,-12.7,-28),(-36.5,-12.7,-31.8)]),
     ("开发板正极短线", "BAT_SW", "红线", .55, .20,
      [(-19,-1.03,35),(-19,-4.35,35),(-19,-4.35,32),(-9,-4.35,32),
       (-9,-4.35,21.2),(-11.7,-5.5,21.2),(-11.7,-6.23,21.2)]),
     ("开发板负极短线", "GND", "黑线", .55, .20,
-     [(-21.54,-1.03,35),(-21.54,-5.55,35),(-21.54,-5.55,33),(-8,-5.55,33),
+     [(-21.54,-1.03,35),(-21.54,-5.55,35),(-21.54,-5.55,32.05),(-8,-5.55,32.05),
       (-8,-5.55,24.7),(-11.7,-5.5,24.7),(-11.7,-6.23,24.7)]),
     # 用户按实物指出扳机端两线对调：黑线到常开端，蓝线到公共端。
     # 两个触点只是闭合导通，板端地/信号网络保留，常闭端仍不连接。
@@ -155,7 +154,7 @@ WIRE_ROUTES = [
       (-22.5,-7,1),(-19.1,-4.86,1),(-19.1,-4.86,-1.021)]),
     ("触摸铜箔线", "TOUCH_ELECTRODE", "黄线", .40, .125,
      [(-25.5,-1.03,-18),(-25.5,-4.8,-18),(-23.5,-14.5,-18),
-      (-22.5,-14.5,3.5),(-5.5,-14.5,3.5),(-5.5,-8,3.5),
+      (-22.5,-14.5,7.5),(-5.5,-14.5,7.5),(-5.5,-8,7.5),
       (-4.5,-8,1),(-3.1,-7.1,-2)]),
 ]
 
@@ -251,7 +250,10 @@ def assembled_details(m, refs):
             put(p["ref"]+"-陶瓷电容",m.cz(x,m.BACK-4,2.7,z-.75,z+.75),(.69,.37,.15))
             for pad in p["pads"]:
                 px,pz=pad["xz"]
-                leads.append(m.cy(px,pz,.25,m.BACK-4,m.TOP+.8))
+                inner=x+math.copysign(2.1,px-x)
+                lead,_=tube(m,[(inner,m.BACK-4,z),(px,m.BACK-2.6,z),
+                               (px,m.TOP+.8,pz)],.25,.6)
+                leads.append(lead)
         put(p["ref"]+"-金属脚",compound(leads),silver)
         put(p["ref"]+"-焊点",compound([solder(m,*pad["xz"],1.05) for pad in p["pads"]]),silver)
 
@@ -274,7 +276,7 @@ def assembled_details(m, refs):
                                            q["xz"][1]-.4,q["xz"][1]+.4) for q in p["pads"]]),silver)
     put("电源开关-焊点",compound([solder(m,*q["xz"],1.3) for q in p["pads"]]),silver)
 
-    # 水平HW504：板在Z=6.2以上，排针Z=5水平进入，随后90度上折穿黑板。
+    # 原弯排针在摇杆元件面：板顶Z=3.8，水平针Z=5进入后向下穿黑板。
     x=m.JOY_AXIS[0]; y=m.FACE_Y_SUM-m.JOY_AXIS[1]; floor=m.JOY_BOARD[5]
     cage=m.box(x-9.8,x+9.8,y-9.8,y+9.8,floor,floor+11)
     cage=cage.cut(m.box(x-8.8,x+8.8,y-8.8,y+8.8,floor-.1,floor+10))
@@ -289,11 +291,13 @@ def assembled_details(m, refs):
         px,pz=q["xz"]
         hy=1.44
         b=b.cut(m.cz(px,hy,.55,m.JOY_BOARD[4]-.1,floor+.1))
-        metal,_=tube(m,[(px,m.BACK-.8,pz),(px,hy,pz),(px,hy,floor+.65)],.32,.6)
+        metal,_=tube(m,[(px,m.BACK-.8,pz),(px,hy,pz),(px,hy,m.JOY_BOARD[4]-.65)],.32,.6)
         bends.append(metal)
         joints.append(solder(m,px,pz,.8,face=m.BACK,direction=-1))
-        joints.append(m.cq.Solid.makeCone(.85,.32,.5,m.V(px,hy,floor),m.V(0,0,1)))
+        joints.append(m.cq.Solid.makeCone(.85,.32,.5,m.V(px,hy,m.JOY_BOARD[4]),m.V(0,0,-1)))
         rings.append(m.cz(px,hy,.95,floor+.005,floor+.04).cut(m.cz(px,hy,.55,floor-.01,floor+.05)))
+        rings.append(m.cz(px,hy,.95,m.JOY_BOARD[4]-.04,m.JOY_BOARD[4]-.005).cut(
+            m.cz(px,hy,.55,m.JOY_BOARD[4]-.05,m.JOY_BOARD[4]+.01)))
     put("SW1-模块黑板",b,black)
     put("摇杆-五根弯排针",compound(bends),gold)
     put("摇杆-排针塑料条",m.box(-40.05,-27.35,-.5,1.1,3.9,6.1),black)
@@ -334,13 +338,16 @@ def assembled_details(m, refs):
     # 602060电芯与保护/出线余量分段表示，仍在20x80x8的已接受包络内。
     r.pop("电池",None)
     cell=m.box(-47.7,-27.7,4.84,10.84,-112,-52)
-    put("电池-602060软包",m.cq.Workplane().add(cell).edges("|Z").fillet(.7).val(),(.72,.74,.77))
-    put("电池-保护端绝缘包",m.box(-47.5,-27.9,3.94,11.74,-52,-32),(.78,.57,.14))
+    put("电池-602060软包",m.opposite_face(m.cq.Workplane().add(cell).edges("|Z").fillet(.7).val()),(.72,.74,.77))
+    put("电池-保护端绝缘包",m.opposite_face(m.box(-47.5,-27.9,3.94,11.74,-52,-32)),(.78,.57,.14))
     # 两条软带跨过侧梁而不是勒在软电芯上，侧窗口穿回底面。
     for zz in (-98,-57):
         outer=m.box(-50.8,-24.6,2.9,14.85,zz-1.6,zz+1.6)
         inner=m.box(-50.55,-24.85,3.25,14.5,zz-1.7,zz+1.7)
-        put(f"电池-软绑带{abs(zz)}",outer.cut(inner),(.07,.075,.08))
+        put(f"电池-软绑带{abs(zz)}",m.opposite_face(outer.cut(inner)),(.07,.075,.08))
+    for name in list(r):
+        if name.startswith("电池-"):
+            r[name]=r[name].translate((0,0,-m.BATTERY_DROP_Z))
 
     # 七线为建议实装路径，端点按当前孔表；模块B焊盘/铜箔尾位置为图比值。
     routes=[]
@@ -348,6 +355,8 @@ def assembled_details(m, refs):
                 "蓝线":(.035,.18,.65),"黄线":(.91,.68,.025)}
     for name,net,color,ins_r,core_r,raw_points in WIRE_ROUTES:
         points=list(raw_points)
+        if name.startswith("电池"):
+            points[-1]=(points[-1][0],points[-1][1],points[-1][2]-m.BATTERY_DROP_Z)
         if name=="触摸铜箔线":
             points[-1]=(-6.45,-7.8,-3.4)
         core,length=tube(m,points,core_r)

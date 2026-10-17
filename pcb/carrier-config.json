@@ -2461,15 +2461,15 @@
       "kind": "resistor",
       "value": "3.3k",
       "position_xz": [
-        -48,
-        -10
+        -40,
+        -8
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -51.81,
-            -10
+            -45.08,
+            -8
           ],
           "net": "3V3",
           "drill": [
@@ -2485,8 +2485,8 @@
         {
           "number": "2",
           "xz": [
-            -44.19,
-            -10
+            -34.92,
+            -8
           ],
           "net": "TRIG",
           "drill": [
@@ -2503,25 +2503,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -51.2,
-          -44.8
+          -43.2,
+          -36.8
         ],
         "z": [
-          -11.3,
-          -8.7
+          -9.3,
+          -6.7
         ],
         "y_above_board": 2.7,
         "lead_below_board": 1.0
       },
-      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
       "purpose": "SS-01GL closed contact current approx 1 mA at 3.3 V",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -51.81,
-            -10
+            -45.08,
+            -8
           ],
           "net": "3V3",
           "drill": [
@@ -2537,8 +2537,8 @@
         {
           "number": "2",
           "xz": [
-            -44.19,
-            -10
+            -34.92,
+            -8
           ],
           "net": "TRIG",
           "drill": [
@@ -2554,18 +2554,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -48,
-        -10
+        -40,
+        -8
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -51.2,
-          -44.8
+          -43.2,
+          -36.8
         ],
         "z": [
-          -11.3,
-          -8.7
+          -9.3,
+          -6.7
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -2575,15 +2575,15 @@
       "kind": "resistor",
       "value": "510",
       "position_xz": [
-        -34,
-        -10
+        -45.08,
+        -11.5
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -37.81,
-            -10
+            -50.16,
+            -11.5
           ],
           "net": "TOUCH_ELECTRODE",
           "drill": [
@@ -2599,8 +2599,8 @@
         {
           "number": "2",
           "xz": [
-            -30.19,
-            -10
+            -40.0,
+            -11.5
           ],
           "net": "TOUCH",
           "drill": [
@@ -2617,25 +2617,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -37.2,
-          -30.8
+          -48.28,
+          -41.88
         ],
         "z": [
-          -11.3,
-          -8.7
+          -12.8,
+          -10.2
         ],
         "y_above_board": 2.7,
         "lead_below_board": 1.0
       },
-      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
       "purpose": "Touch series resistor, no pullup or parallel capacitor",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -37.81,
-            -10
+            -50.16,
+            -11.5
           ],
           "net": "TOUCH_ELECTRODE",
           "drill": [
@@ -2651,8 +2651,8 @@
         {
           "number": "2",
           "xz": [
-            -30.19,
-            -10
+            -40.0,
+            -11.5
           ],
           "net": "TOUCH",
           "drill": [
@@ -2668,18 +2668,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -34,
-        -10
+        -45.08,
+        -11.5
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -37.2,
-          -30.8
+          -48.28,
+          -41.88
         ],
         "z": [
-          -11.3,
-          -8.7
+          -12.8,
+          -10.2
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -2689,15 +2689,15 @@
       "kind": "resistor",
       "value": "100k",
       "position_xz": [
-        -48,
-        -26
+        -40,
+        -22
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -51.81,
-            -26
+            -45.08,
+            -22
           ],
           "net": "BAT_SW",
           "drill": [
@@ -2713,8 +2713,8 @@
         {
           "number": "2",
           "xz": [
-            -44.19,
-            -26
+            -34.92,
+            -22
           ],
           "net": "VBAT_ADC",
           "drill": [
@@ -2731,25 +2731,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -51.2,
-          -44.8
+          -43.2,
+          -36.8
         ],
         "z": [
-          -27.3,
-          -24.7
+          -23.3,
+          -20.7
         ],
         "y_above_board": 2.7,
         "lead_below_board": 1.0
       },
-      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
       "purpose": "Battery switched-side divider upper",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -51.81,
-            -26
+            -45.08,
+            -22
           ],
           "net": "BAT_SW",
           "drill": [
@@ -2765,8 +2765,8 @@
         {
           "number": "2",
           "xz": [
-            -44.19,
-            -26
+            -34.92,
+            -22
           ],
           "net": "VBAT_ADC",
           "drill": [
@@ -2782,18 +2782,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -48,
-        -26
+        -40,
+        -22
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -51.2,
-          -44.8
+          -43.2,
+          -36.8
         ],
         "z": [
-          -27.3,
-          -24.7
+          -23.3,
+          -20.7
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -2803,15 +2803,15 @@
       "kind": "resistor",
       "value": "100k",
       "position_xz": [
-        -36,
-        -26
+        -45.08,
+        -25.5
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -39.81,
-            -26
+            -50.16,
+            -25.5
           ],
           "net": "VBAT_ADC",
           "drill": [
@@ -2827,8 +2827,8 @@
         {
           "number": "2",
           "xz": [
-            -32.19,
-            -26
+            -40.0,
+            -25.5
           ],
           "net": "GND",
           "drill": [
@@ -2845,25 +2845,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -39.2,
-          -32.8
+          -48.28,
+          -41.88
         ],
         "z": [
-          -27.3,
-          -24.7
+          -26.8,
+          -24.2
         ],
         "y_above_board": 2.7,
         "lead_below_board": 1.0
       },
-      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
       "purpose": "Battery divider lower, scale=2",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -39.81,
-            -26
+            -50.16,
+            -25.5
           ],
           "net": "VBAT_ADC",
           "drill": [
@@ -2879,8 +2879,8 @@
         {
           "number": "2",
           "xz": [
-            -32.19,
-            -26
+            -40.0,
+            -25.5
           ],
           "net": "GND",
           "drill": [
@@ -2896,18 +2896,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -36,
-        -26
+        -45.08,
+        -25.5
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -39.2,
-          -32.8
+          -48.28,
+          -41.88
         ],
         "z": [
-          -27.3,
-          -24.7
+          -26.8,
+          -24.2
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -2917,15 +2917,15 @@
       "kind": "capacitor",
       "value": "100n",
       "position_xz": [
-        -34,
-        -18
+        -45.08,
+        -18.5
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -36.54,
-            -18
+            -50.16,
+            -18.5
           ],
           "net": "JOY_X",
           "drill": [
@@ -2941,8 +2941,8 @@
         {
           "number": "2",
           "xz": [
-            -31.46,
-            -18
+            -40.0,
+            -18.5
           ],
           "net": "GND",
           "drill": [
@@ -2959,25 +2959,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -37,
-          -31
+          -48.08,
+          -42.08
         ],
         "z": [
-          -19.0,
-          -17.0
+          -19.5,
+          -17.5
         ],
         "y_above_board": 7,
         "lead_below_board": 1
       },
-      "envelope_basis": "直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米",
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
       "purpose": "ADC/contact filter",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -36.54,
-            -18
+            -50.16,
+            -18.5
           ],
           "net": "JOY_X",
           "drill": [
@@ -2993,8 +2993,8 @@
         {
           "number": "2",
           "xz": [
-            -31.46,
-            -18
+            -40.0,
+            -18.5
           ],
           "net": "GND",
           "drill": [
@@ -3010,18 +3010,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -34,
-        -18
+        -45.08,
+        -18.5
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -37,
-          -31
+          -48.08,
+          -42.08
         ],
         "z": [
-          -19.0,
-          -17.0
+          -19.5,
+          -17.5
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -3031,15 +3031,15 @@
       "kind": "capacitor",
       "value": "100n",
       "position_xz": [
-        -34,
-        -32
+        -45.08,
+        -32.5
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -36.54,
-            -32
+            -50.16,
+            -32.5
           ],
           "net": "JOY_Y",
           "drill": [
@@ -3055,8 +3055,8 @@
         {
           "number": "2",
           "xz": [
-            -31.46,
-            -32
+            -40.0,
+            -32.5
           ],
           "net": "GND",
           "drill": [
@@ -3073,25 +3073,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -37,
-          -31
+          -48.08,
+          -42.08
         ],
         "z": [
-          -33.0,
-          -31.0
+          -33.5,
+          -31.5
         ],
         "y_above_board": 7,
         "lead_below_board": 1
       },
-      "envelope_basis": "直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米",
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
       "purpose": "ADC/contact filter",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -36.54,
-            -32
+            -50.16,
+            -32.5
           ],
           "net": "JOY_Y",
           "drill": [
@@ -3107,8 +3107,8 @@
         {
           "number": "2",
           "xz": [
-            -31.46,
-            -32
+            -40.0,
+            -32.5
           ],
           "net": "GND",
           "drill": [
@@ -3124,18 +3124,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -34,
-        -32
+        -45.08,
+        -32.5
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -37,
-          -31
+          -48.08,
+          -42.08
         ],
         "z": [
-          -33.0,
-          -31.0
+          -33.5,
+          -31.5
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -3145,15 +3145,15 @@
       "kind": "capacitor",
       "value": "100n",
       "position_xz": [
-        -48,
-        -18
+        -40,
+        -15
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -50.54,
-            -18
+            -45.08,
+            -15
           ],
           "net": "TRIG",
           "drill": [
@@ -3169,8 +3169,8 @@
         {
           "number": "2",
           "xz": [
-            -45.46,
-            -18
+            -34.92,
+            -15
           ],
           "net": "GND",
           "drill": [
@@ -3187,25 +3187,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -51,
-          -45
+          -43,
+          -37
         ],
         "z": [
-          -19.0,
-          -17.0
+          -16.0,
+          -14.0
         ],
         "y_above_board": 7,
         "lead_below_board": 1
       },
-      "envelope_basis": "直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米",
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
       "purpose": "ADC/contact filter",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -50.54,
-            -18
+            -45.08,
+            -15
           ],
           "net": "TRIG",
           "drill": [
@@ -3221,8 +3221,8 @@
         {
           "number": "2",
           "xz": [
-            -45.46,
-            -18
+            -34.92,
+            -15
           ],
           "net": "GND",
           "drill": [
@@ -3238,18 +3238,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -48,
-        -18
+        -40,
+        -15
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -51,
-          -45
+          -43,
+          -37
         ],
         "z": [
-          -19.0,
-          -17.0
+          -16.0,
+          -14.0
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
@@ -3259,15 +3259,15 @@
       "kind": "capacitor",
       "value": "100n",
       "position_xz": [
-        -48,
-        -32
+        -40,
+        -29
       ],
       "pads": [
         {
           "number": "1",
           "xz": [
-            -50.54,
-            -32
+            -45.08,
+            -29
           ],
           "net": "VBAT_ADC",
           "drill": [
@@ -3283,8 +3283,8 @@
         {
           "number": "2",
           "xz": [
-            -45.46,
-            -32
+            -34.92,
+            -29
           ],
           "net": "GND",
           "drill": [
@@ -3301,25 +3301,25 @@
       "npth": [],
       "envelope": {
         "x": [
-          -51,
-          -45
+          -43,
+          -37
         ],
         "z": [
-          -33.0,
-          -31.0
+          -30.0,
+          -28.0
         ],
         "y_above_board": 7,
         "lead_below_board": 1
       },
-      "envelope_basis": "直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米",
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
       "purpose": "ADC/contact filter",
       "populate": true,
       "model_reference_pads": [
         {
           "number": "1",
           "xz": [
-            -50.54,
-            -32
+            -45.08,
+            -29
           ],
           "net": "VBAT_ADC",
           "drill": [
@@ -3335,8 +3335,8 @@
         {
           "number": "2",
           "xz": [
-            -45.46,
-            -32
+            -34.92,
+            -29
           ],
           "net": "GND",
           "drill": [
@@ -3352,18 +3352,18 @@
       ],
       "model_reference_mount_side": "top",
       "model_reference_position_xz": [
-        -48,
-        -32
+        -40,
+        -29
       ],
       "mount_side": "bottom",
       "fabrication_envelope": {
         "x": [
-          -51,
-          -45
+          -43,
+          -37
         ],
         "z": [
-          -33.0,
-          -31.0
+          -30.0,
+          -28.0
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"

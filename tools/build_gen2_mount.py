@@ -25,11 +25,13 @@ MIDDLE_Y = (TOP+BACK)/2
 FACE_Y_SUM = TOP+BACK
 BASE = (-18.8, -16.9)
 BATTERY_FLOOR_Y = -19.3
-PRINT_FLOOR_Y = FACE_Y_SUM-BATTERY_FLOOR_Y
-# 靠拇指进入方向的H2改为近板短柱，给手留出约11毫米。
+PRINT_FLOOR_Y = -BATTERY_FLOOR_Y
+BATTERY_DROP_Z = 12.0
+# 支架在元件面，H2保留短柱；摇杆通过板边缺口跨到拇指面。
 SHORT_POST_Y = -7.8
 BATTERY = tuple(v for c, length in zip(C["battery"]["center_xyz"], C["battery"]["size_xyz"])
                 for v in (c-length/2, c+length/2))
+BATTERY = (*BATTERY[:4], BATTERY[4]-BATTERY_DROP_Z, BATTERY[5]-BATTERY_DROP_Z)
 SM_CFG, GY_CFG = C["modules"]["mcu"], C["modules"]["imu"]
 SM = (*SM_CFG["x"], SM_CFG["component_face_y"]-SM_CFG["board_thickness"],
       SM_CFG["component_face_y"], *SM_CFG["z"])
@@ -40,7 +42,7 @@ JOYSTICK = next(p for p in C["parts"] if p["ref"] == "SW1")
 # 器件外形使用原始模块坐标，载板孔与网络使用配置中的最终装配坐标。
 JOY_PIN_CENTER = (C["battery"]["center_xyz"][0]+4.0, 5.0)
 JOY_BOARD = (JOY_PIN_CENTER[0]-13.5, JOY_PIN_CENTER[0]+13.5,
-             -37.0, -4.0, 6.2, 7.8)
+             -37.0, -4.0, 2.2, 3.8)
 JOY_AXIS = (JOY_PIN_CENTER[0], -20.5, JOY_BOARD[5])
 JOY_HOLES = [(JOY_PIN_CENTER[0]+dx, y)
              for y in (-7.3, -33.7) for dx in (-9.75, 9.75)]
@@ -84,7 +86,8 @@ def prism(points, y0, y1):
 
 def root_gusset(x0, x1, top_z):
     """托架外缘的圆角三角筋，将握持载荷接入原支撑梁。"""
-    points = [(BATTERY_FLOOR_Y, -30.5), (-8.2, -30.5), (BASE[0], top_z)]
+    points = [(BATTERY_FLOOR_Y, -30.5-BATTERY_DROP_Z),
+              (-8.2, -30.5-BATTERY_DROP_Z), (BASE[0], top_z)]
     wire = cq.Wire.makePolygon([V(x0, y, z) for y, z in points], close=True)
     shape = cq.Solid.extrudeLinear(cq.Face.makeFromWires(wire), V(x1-x0, 0, 0))
     return cq.Workplane().add(shape).edges("|X").fillet(.8).val()
@@ -121,28 +124,33 @@ def build_mount():
         parts.append(cy(x, z, 3.2, start_y, BACK))
 
     # 开窗框架保持平底，向外加厚0.5毫米，不侵占电池内腔。
-    floor = box(-50.5, -24.9, BATTERY_FLOOR_Y, BASE[1], -113.8, -30.5)
+    floor = box(-50.5, -24.9, BATTERY_FLOOR_Y, BASE[1], -113.8-BATTERY_DROP_Z, -30.5-BATTERY_DROP_Z)
     floor = cq.Workplane().add(floor).edges("|Y").fillet(0.8).val()
     parts.append(floor)
     # 两侧深梁高出电池名义表面0.5毫米；放入面与上端出线口敞开。
     for x0, x1 in [(-50.5, -48.2), (-27.2, -24.9)]:
-        rail = box(x0, x1, BATTERY_FLOOR_Y, -8.2, -113.8, -30.4)
+        rail = box(x0, x1, BATTERY_FLOOR_Y, -8.2, -113.8-BATTERY_DROP_Z, -30.4-BATTERY_DROP_Z)
         parts.append(cq.Workplane().add(rail).edges("|Z").fillet(.5).val())
-    parts += [box(-49.3, -26.1, -17.1, -12.7, -113.6, -112.6),
+    parts += [box(-49.3, -26.1, -17.1, -12.7, -113.6-BATTERY_DROP_Z, -112.6-BATTERY_DROP_Z),
               root_gusset(-51.4, -48.2, -10),
               root_gusset(-27.2, -24.0, -24)]
+    # 沿外缘延长两根连接筋，避开板底的电源开关和电池出线端。
+    parts += [beam((-50,-32),(-50,-44),3.6), beam((-26,-32),(-26,-44),3.6)]
 
-    # Two short arms support the existing near-edge mounting holes. The
-    # board stays horizontal and its native hat points up; no strap or stop.
-    for x, y in JOY_MOUNT_HOLES:
-        parts.append(box(x-3.4, x+3.4, BASE[0], y+3.4, -1.8, 1.8))
-        parts.append(cz(x, y, 3.4, -1.8, JOY_BOARD[4]))
+    # 下部薄护板挡住八颗手焊小件；上方两块模块保持敞开。
+    parts.append(box(-54.5, -23.6, BASE[0], BASE[1], -34, -7.2))
+    # 从主板前方的原有缺口绕过，短臂仍托住摇杆靠板的两个孔。
+    parts += [box(-19.4, -15.8, BASE[0], 4.24, 2, 4.2),
+              box(-19.4, -15.8, .64, 4.24, -5.8, 4.2),
+              box(-46.85, -15.8, .64, 4.24, -5.8, -2.2)]
+    for x, original_y in JOY_MOUNT_HOLES:
+        y = FACE_Y_SUM-original_y
+        parts.append(cz(x, y, 3.4, -5.8, JOY_BOARD[4]))
 
-    # SS-01GL screws locate the switch. A single-side integral plate replaces
-    # the separate sliding holder; two M2x20 screws can be reused from EVT-1.
+    # SS位置保持，支承移到其背面；缩短到M2x10，不让螺钉伸出支架。
     for x, z in SS_HOLES:
-        parts.append(cy(x, z, 3.4, -17.2, -3.8))
-    parts += [box(-17.6, -10.8, -17.2, -6.0, -17.4, -1.1),
+        parts.append(cy(x, z, 3.4, -17.2, -8.66))
+    parts += [box(-17.6, -10.8, -17.2, -8.66, -17.4, -1.1),
               beam((-14.2, -5), (-12, 12), 4.5),
               beam((-14.2, -14), (-27, -27), 4.5)]
     s = fuse(parts)
@@ -153,36 +161,49 @@ def build_mount():
     # 加强筋到达H4，保留原轴孔和螺钉头空间。
     cuts += [cy(-27, -27, 1.2, -21, BACK+.2),
              cy(-27, -27, 2.2, -21, BASE[0])]
+    # 根筋避开小件本体，并给元件插入时的3.5毫米行程留空间。
+    for p in C["parts"]:
+        if p["kind"] in {"resistor", "capacitor"}:
+            e=p["envelope"]
+            cuts.append(box(e["x"][0]-.8,e["x"][1]+.8,
+                            BACK-e["y_above_board"]-4.3,BACK+.1,
+                            e["z"][0]-.8,e["z"][1]+.8))
     # 给右键焊脚留出空间，避免新增摇杆短臂顶到焊点。
     for tail in next(p for p in C["parts"] if p["ref"] == "SW2")["pads"]:
         cuts.append(cy(*tail["xz"], 1.5, BACK-1.2, BACK+.1))
     for z in (-98, -57):
+        z -= BATTERY_DROP_Z
         for x0, x1 in [(-50.6, -48.1), (-27.3, -24.8)]:
             cuts.append(box(x0, x1, -17.2, -14.4, z-2, z+2))
     # 两列小窗减料，中央纵筋和绑带附近横筋连续；窗边圆角减小尖角。
     for x0, x1 in [(-47.2, -40.4), (-35.0, -28.2)]:
         for z0, z1 in [(-109.3, -101.2), (-94.8, -83), (-80.6, -68.8),
                        (-66.4, -60.2), (-53.8, -41.2)]:
+            z0,z1 = z0-BATTERY_DROP_Z,z1-BATTERY_DROP_Z
             window = box(x0, x1, -21, -16.7, z0, z1)
             cuts.append(cq.Workplane().add(window).edges("|Y").fillet(.8).val())
-    for i, (x, y) in enumerate(JOY_MOUNT_HOLES):
-        # 弯针水平段Z=5，黑板抬高2毫米给90度弯折留空间；螺钉头内收2毫米，仍用M2x10。
-        cuts.append(cz(x, y, 2.15, -2, .2))
+    for i, (x, original_y) in enumerate(JOY_MOUNT_HOLES):
+        y = FACE_Y_SUM-original_y
+        # 原弯针在板上面；模块降4毫米，螺钉及短柱跟随，仍用M2x10。
+        cuts.append(cz(x, y, 2.15, -6, -3.8))
         if i == 0:
-            cuts.append(cz(x, y, 1.2, -2.0, JOY_BOARD[4]+.1))
+            cuts.append(cz(x, y, 1.2, -6, JOY_BOARD[4]+.1))
         else:
             # 2.4 x 3.6mm short slot along X accommodates the drawing's
             # stated tolerance while the other hole locates the module.
-            cuts.append(fuse([cz(x-.6, y, 1.2, -2.0, JOY_BOARD[4]+.1),
-                              cz(x+.6, y, 1.2, -2.0, JOY_BOARD[4]+.1),
-                              box(x-.6, x+.6, y-1.2, y+1.2, -2.0, JOY_BOARD[4]+.1)]))
+            cuts.append(fuse([cz(x-.6, y, 1.2, -6, JOY_BOARD[4]+.1),
+                              cz(x+.6, y, 1.2, -6, JOY_BOARD[4]+.1),
+                              box(x-.6, x+.6, y-1.2, y+1.2, -6, JOY_BOARD[4]+.1)]))
     for x, z in SS_HOLES:
-        cuts.append(cy(x, z, 1.15, -17.0, -3.6))
-        # Side-open nut slot; the deep shaft bore hides the surplus screw tip.
-        cuts.append(box(-18.3, -11.7, -8.0, -6.0, z-2.15, z+2.15))
+        cuts.append(cy(x, z, 1.15, -17.3, -8.5))
+        cuts.append(box(-21, -11.7, -11.45, -9.45, z-2.15, z+2.15))
+        cuts.append(cy(x,z,2.2,-1.5,.95))
+    # 给扳机信号孔的露脚留空间，不削薄摇杆支柱本身。
+    for pad in next(p for p in C["parts"] if p["ref"]=="J_TRIG")["pads"]:
+        cuts.append(cy(*pad["xz"],1.3,TOP-.1,TOP+1.15))
     for cut in cuts:
         s = s.cut(cut)
-    return opposite_face(s.clean())
+    return s.clean()
 
 
 def references():
@@ -265,7 +286,7 @@ def references():
             r[name] = flip_about_x(shape, (SM[4]+SM[5])/2)
         elif name.startswith("陀螺仪"):
             r[name] = flip_about_x(shape, (GY[4]+GY[5])/2)
-        elif name == "电池" or name.startswith("SS"):
+        elif name.startswith("SS"):
             r[name] = opposite_face(shape)
     return r
 
@@ -319,23 +340,24 @@ def hardware():
         r[h["id"]+"-螺母"] = hex_y(x, z, 4, TOP, TOP+1.6).cut(cy(x, z, 1.05, TOP-.1, TOP+1.7))
         seats.append({"id": h["id"], "length_mm": length, "nut_engagement_mm": 1.6,
                       "projection_past_nut_mm": round(tip_y-(TOP+1.6), 3),
-                      "thumb_side_projection_mm": round(BACK-start_y+2.1, 3),
-                      "driver": "底部1.5mm内六角；正面薄钳扶螺母"})
+                      "component_side_projection_mm": round(BACK-start_y+2.1, 3),
+                      "driver": "元件面1.5mm内六角；拇指面薄钳扶螺母"})
     for i, (x, z) in enumerate(SS_HOLES, 1):
         k = f"SS{i}"
-        r[k+"-螺钉"] = cy(x, z, 2, 3.5, 5.6).fuse(cy(x, z, 1, -16.5, 3.5))
-        r[k+"-头侧垫片"] = cy(x, z, 2.5, 3.2, 3.5).cut(cy(x, z, 1.1, 3.1, 3.6))
-        r[k+"-支承垫片"] = cy(x, z, 2.5, -3.8, -3.2).cut(cy(x, z, 1.1, -3.9, -3.1))
-        r[k+"-螺母"] = hex_y(x, z, 4, -7.6, -6).cut(cy(x, z, 1.05, -7.7, -5.9))
-        seats.append({"id": k, "length_mm": 20, "nut_engagement_mm": 1.6,
-                      "screw_tip_y_mm": -16.5, "blind_bore_end_y_mm": -17,
-                      "tip_end_clearance_mm": .5, "projection_past_nut_mm": 8.9,
+        r[k+"-螺钉"] = cy(x, z, 2, -1.36, .74).cut(
+            hex_y(x,z,1.5,-.46,.85)).fuse(cy(x, z, 1, -11.36, -1.36))
+        r[k+"-头侧垫片"] = cy(x, z, 2.5, -1.66, -1.36).cut(cy(x, z, 1.1, -1.76, -1.26))
+        r[k+"-支承垫片"] = cy(x, z, 2.5, -8.66, -8.06).cut(cy(x, z, 1.1, -8.76, -7.96))
+        r[k+"-螺母"] = hex_y(x, z, 4, -11.25, -9.65).cut(cy(x, z, 1.05, -11.35, -9.55))
+        seats.append({"id": k, "length_mm": 10, "nut_engagement_mm": 1.6,
+                      "screw_tip_y_mm": -11.36, "blind_bore_end_y_mm": -17.3,
+                      "tip_end_clearance_mm": 5.94, "projection_past_nut_mm": .11,
                       "projection_protected_inside_mount": True})
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES, 1):
         k = f"摇杆{i}"
         top = JOY_BOARD[5]
-        head = cz(x, y, 2, -1.9, .2).cut(hex_z(x, y, 1.5, -2, -.6))
-        r[k+"-螺钉"] = head.fuse(cz(x, y, 1, .2, 10.2))
+        head = cz(x, y, 2, -5.9, -3.8).cut(hex_z(x, y, 1.5, -6, -4.6))
+        r[k+"-螺钉"] = head.fuse(cz(x, y, 1, -3.8, 6.2))
         r[k+"-螺母"] = hex_z(x, y, 4, top, top+1.6).cut(
             cz(x, y, 1.05, top-.1, top+1.7))
         seats.append({"id": k, "thread": "M2", "length_mm": 10,
@@ -347,28 +369,31 @@ def hardware():
         if "hole_center_xy_mm" in seat:
             x, y = seat["hole_center_xy_mm"]
             seat["hole_center_xy_mm"] = [x, FACE_Y_SUM-y]
-        for key in ("screw_tip_y_mm", "blind_bore_end_y_mm"):
-            if key in seat:
-                seat[key] = FACE_Y_SUM-seat[key]
-    return {name: opposite_face(shape) for name, shape in r.items()}, seats
+    # 只有摇杆紧固件留在拇指面；主板四柱及SS支承均在元件面。
+    return {name: opposite_face(shape) if name.startswith("摇杆") else shape
+            for name, shape in r.items()}, seats
 
 
 def verify(s, refs):
     overlaps = {k: round(s.intersect(v).Volume(), 6) for k, v in refs.items()}
     collisions = {k: v for k, v in overlaps.items() if v > 0.001}
     insertion = {}
-    groups = {"载板": [v for k, v in refs.items() if not k.startswith("SW1-") and (k == "载板" or "-本体" in k or "-焊脚" in k)],
+    groups = {"载板小件": [v for k, v in refs.items() if not k.startswith("SW1-") and ("-本体" in k or "-焊脚" in k)],
               "摇杆": [v for k, v in refs.items() if k.startswith("SW1-")],
               "开发板": [refs[k] for k in ["开发板", "开发板元件", "开发板排针", "USB接口"]],
               "陀螺仪板": [refs[k] for k in ["陀螺仪板", "陀螺仪元件", "陀螺仪排针"]],
               "电池": [refs["电池"]], "SS": [refs["SS金属扳机本体"]]}
-    # 安装面交换后，所有原有装配行程同步换向。
-    paths = [("载板从元件面落到四柱", groups["载板"], (0, 0, 0), (0, -32, 0)),
+    # 裸板从上方滑入，避开跨板短臂；随后由侧面把模块送入敞开腔体，再完成3.5mm直插。
+    # L形板轮廓沿+Z的连续扫掠保持缺口，不能用整板矩形包围盒填掉缺口。
+    max_z=max(z for _,z in P["outline_xz"])
+    bare_sweep=prism([(x,z+120 if z==max_z else z) for x,z in P["outline_xz"]],BACK,TOP)
+    insertion["裸载板从上方滑入支架"]=round(s.intersect(bare_sweep).Volume(),6)
+    paths = [("小元件在敞开腔体内插入", groups["载板小件"], (0, 0, 0), (0, -3.5, 0)),
              ("摇杆弯针由拇指面插入", groups["摇杆"], (0, 0, 0), (0, 32, 0)),
-             ("开发板排针由元件面插入", groups["开发板"], (0, 0, 0), (0, -24, 0)),
-             ("电池放入托内", groups["电池"], (0, 0, 0), (0, -32, 0)),
-             ("GY排针由元件面插入", groups["陀螺仪板"], (0, 0, 0), (0, -24, 0)),
-             ("SS最后放入", groups["SS"], (0, 0, 0), (0, -24, 0))]
+             ("开发板在敞开腔体内插入", groups["开发板"], (0, 0, 0), (0, -3.5, 0)),
+             ("电池放入托内", groups["电池"], (0, 0, 0), (0, 32, 0)),
+             ("GY在敞开腔体内插入", groups["陀螺仪板"], (0, 0, 0), (0, -3.5, 0)),
+             ("SS从前方缺口放入", groups["SS"], (0, 0, 0), (25, 0, 0))]
     for label, shapes, offset, delta in paths:
         hit = max(s.intersect(swept_box(v.translate(V(*offset)), delta)).Volume() for v in shapes)
         insertion[label] = round(hit, 6)
@@ -387,7 +412,7 @@ def verify(s, refs):
     nut_paths = {}
     for h in P["mount_holes"]:
         k = h["id"]+"-螺母"
-        delta = (0, -5, 0)
+        delta = (0, 5, 0)
         nut_paths[k] = round(s.intersect(swept_box(hw[k], delta)).Volume(), 6)
     for i in (1, 2):
         k = f"SS{i}-螺母"
@@ -398,17 +423,17 @@ def verify(s, refs):
     tool_access = {}
     for h in P["mount_holes"]:
         start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
-        driver = opposite_face(cy(*h["xz"], 1.5, -36, start_y-2.11))
+        driver = cy(*h["xz"], 1.5, -36, start_y-2.11)
         tool_access[h["id"]] = round(s.intersect(driver).Volume(), 6)
     for i, (x, z) in enumerate(SS_HOLES, 1):
-        driver = opposite_face(cy(x, z, 1.5, 5.61, 24))
+        driver = cy(x, z, 1.5, .75, 24)
         hit = s.intersect(driver).Volume()
         for n, shape in refs.items():
             if "留空" not in n and "摆杆示意" not in n:
                 hit = max(hit, driver.intersect(shape).Volume())
         tool_access[f"SS{i}"] = round(hit, 6)
     for i, (x, y) in enumerate(JOY_MOUNT_HOLES, 1):
-        driver = opposite_face(cz(x, y, 1.5, -24, -1.91))
+        driver = opposite_face(cz(x, y, 1.5, -24, -5.91))
         hit = s.intersect(driver).Volume()
         for n, shape in refs.items():
             if "留空" not in n and "摆杆示意" not in n:
@@ -429,12 +454,12 @@ def verify(s, refs):
             "joystick_axis_direction_xyz": joystick_direction(),
             "battery_envelope_mm": bounds(refs["电池"]),
             "config_sha256": hashlib.sha256(CONFIG.read_bytes()).hexdigest(),
-            "installation_faces": {"拇指面+Y": "摇杆、电池托和一体底座", "元件面-Y": "开发板、陀螺仪及其他主板元件"},
-            "retention": {"载板": "H2靠拇指侧改近板短柱+M2x10，其余3颗M2x20；均从底座向元件面穿入，元件面M2螺母轻夹，不另加垫片",
-                          "SS": "原SS-01GL两孔，2颗M2x20；单侧垫片填0.6mm名义间隙，侧插M2螺母",
+            "installation_faces": {"拇指面+Y": "摇杆及从主板缺口绕过的局部短臂", "元件面-Y": "一体支架、电池托、八颗小件护板；上方两块模块仍敞开且位置不变"},
+            "retention": {"载板": "元件面四柱固定；H2用M2x10，其余3颗M2x20，拇指面M2螺母轻夹，不另加垫片",
+                          "SS": "原SS-01GL两孔，改用2颗已有M2x10；原垫片填0.6mm名义间隙，元件面侧插M2螺母",
                           "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，孔号与网络已同步",
                           "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；孔号与网络已同步",
-                          "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z，整体相对握持中心向+X偏4mm；靠主板两孔19.5mm间距，用2颗M2x10，头部内收2mm；黑板抬高2mm容纳原弯针，横排五孔已同步；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
+                          "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z；模块降低4mm，让原有弯针和塑料条在小板上面；主板五孔不变。两孔19.5mm间距，用2颗M2x10，头部内收；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
                           "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"},
             "battery_structure": {"outer_width_mm": 25.6, "frame_thickness_mm": 2.4,
                                   "side_beam_width_mm": 2.3, "side_beam_depth_mm": 11.1,
@@ -445,8 +470,8 @@ def verify(s, refs):
             "limits": ["八颗手焊小元件，实际载板翻面孔号、摇杆横排五针孔和布线已同步；仍需实物插装与通电验证",
                        "HW504板33x27、孔距26.4x19.5及孔径3.3来自DZYJ标称图；图注误差0.5-1mm，弯针偏移、轴心及帽仍为示意",
                        "模块、SS和电池为保守包络，购入实物尺寸/树脂收缩需试装",
-                       "直线插入使用包围盒连续扫掠；未模拟柔性线缆、绑带、手指及工具转动",
-                       "绑带/绝缘软垫由实物固定；触摸、电池温升、无线性能需实测",
+                       "裸板轮廓与最终直插行程已检查；模块先从侧面送入敞开腔体的转向动作未作刚体全程仿真",
+                       "手焊线为可行建议路径；绑带/绝缘软垫由实物固定，触摸、电池温升、无线性能需实测",
                        "右键帽原文件不变，但本底座不提供帽的防脱导向，默认直接按原生按钮"]}
 
 
@@ -715,7 +740,7 @@ def main():
         (OUT / folder).mkdir(parents=True, exist_ok=True)
     cq.exporters.export(s, str(OUT / "step" / "engineering_mount.step"))
     b = s.BoundingBox()
-    printed = s.rotate((0, 0, 0), (1, 0, 0), -90).translate(V(-b.xmin, -b.zmin, PRINT_FLOOR_Y))
+    printed = s.rotate((0, 0, 0), (1, 0, 0), 90).translate(V(-b.xmin, b.zmax, PRINT_FLOOR_Y))
     report["bounds_print_mm"] = bounds(printed)
     assert abs(printed.BoundingBox().zmin) < 1e-5, "打印底面必须落在Z=0"
     path = OUT / "stl" / "engineering_mount.stl"

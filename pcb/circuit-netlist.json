@@ -1,5 +1,5 @@
 {
-  "config_sha256": "b04fbf91bca0ae51f017b5a042b539b614c42efb68eabba66ef5f24bb7966397",
+  "config_sha256": "1553cb3e1354e523290cfa12735b32ea23b4432b49604ab974b1054f694d009a",
   "nets": {
     "3V3": [
       "SW1.2",

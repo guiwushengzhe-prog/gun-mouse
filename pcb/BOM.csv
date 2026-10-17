@@ -8,11 +8,11 @@ J_TOUCH,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end 
 J_BAT,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,Protected single-cell LiPo input
 J_SWITCH,SS12D10 G5,1,Hand-solder THT,用户SS12D10 G5尺寸图：相邻4.7mm、首末9.4mm，扁脚1.3x0.8mm，采用1.8mm圆孔/3mm焊盘；柄5mm,1=BAT_RAW、2=BAT_SW公共脚、3独立空网；拨向1脚侧为ON；电池两线永久焊板，不接外置开关线
 J_MODULE_BAT,Labelled solder wires,1,Solder labelled wires,Solder joint and wire end allowance; no module connector pitch is assumed,SuperMini dedicated B+ and B- pads only
-R_TRIG,3.3k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,SS-01GL closed contact current approx 1 mA at 3.3 V
-R_TOUCH,510,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,"Touch series resistor, no pullup or parallel capacitor"
-R_BAT_H,100k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,Battery switched-side divider upper
-R_BAT_L,100k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，脚距7.62毫米；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,"Battery divider lower, scale=2"
-C_JOY_X,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
-C_JOY_Y,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
-C_TRIG,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
-C_BAT,100n,1,Hand-solder THT,直插陶瓷电容脚距5.08毫米，本体宽不超过6毫米、厚2毫米、焊后高7毫米；通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+R_TRIG,3.3k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,SS-01GL closed contact current approx 1 mA at 3.3 V
+R_TOUCH,510,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,"Touch series resistor, no pullup or parallel capacitor"
+R_BAT_H,100k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,Battery switched-side divider upper
+R_BAT_L,100k,1,Hand-solder THT,轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米,"Battery divider lower, scale=2"
+C_JOY_X,100n,1,Hand-solder THT,直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+C_JOY_Y,100n,1,Hand-solder THT,直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+C_TRIG,100n,1,Hand-solder THT,直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米,ADC/contact filter
+C_BAT,100n,1,Hand-solder THT,直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米,ADC/contact filter

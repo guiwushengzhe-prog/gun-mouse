@@ -102,8 +102,8 @@
       "ref": "C_BAT",
       "number": "2",
       "xy": [
-        42.46,
-        77.0
+        31.92,
+        74.0
       ],
       "net": "GND",
       "net_code": 5,
@@ -120,8 +120,8 @@
       "ref": "C_BAT",
       "number": "1",
       "xy": [
-        47.54,
-        77.0
+        42.08,
+        74.0
       ],
       "net": "VBAT_ADC",
       "net_code": 14,
@@ -138,8 +138,8 @@
       "ref": "C_TRIG",
       "number": "2",
       "xy": [
-        42.46,
-        63.0
+        31.92,
+        60.0
       ],
       "net": "GND",
       "net_code": 5,
@@ -156,8 +156,8 @@
       "ref": "C_TRIG",
       "number": "1",
       "xy": [
-        47.54,
-        63.0
+        42.08,
+        60.0
       ],
       "net": "TRIG",
       "net_code": 13,
@@ -174,8 +174,8 @@
       "ref": "C_JOY_Y",
       "number": "2",
       "xy": [
-        28.46,
-        77.0
+        37.0,
+        77.5
       ],
       "net": "GND",
       "net_code": 5,
@@ -192,8 +192,8 @@
       "ref": "C_JOY_Y",
       "number": "1",
       "xy": [
-        33.54,
-        77.0
+        47.16,
+        77.5
       ],
       "net": "JOY_Y",
       "net_code": 8,
@@ -210,8 +210,8 @@
       "ref": "C_JOY_X",
       "number": "2",
       "xy": [
-        28.46,
-        63.0
+        37.0,
+        63.5
       ],
       "net": "GND",
       "net_code": 5,
@@ -228,8 +228,8 @@
       "ref": "C_JOY_X",
       "number": "1",
       "xy": [
-        33.54,
-        63.0
+        47.16,
+        63.5
       ],
       "net": "JOY_X",
       "net_code": 7,
@@ -246,8 +246,8 @@
       "ref": "R_BAT_L",
       "number": "2",
       "xy": [
-        29.189999,
-        71.0
+        37.0,
+        70.5
       ],
       "net": "GND",
       "net_code": 5,
@@ -264,8 +264,8 @@
       "ref": "R_BAT_L",
       "number": "1",
       "xy": [
-        36.81,
-        71.0
+        47.16,
+        70.5
       ],
       "net": "VBAT_ADC",
       "net_code": 14,
@@ -282,8 +282,8 @@
       "ref": "R_BAT_H",
       "number": "2",
       "xy": [
-        41.19,
-        71.0
+        31.92,
+        67.0
       ],
       "net": "VBAT_ADC",
       "net_code": 14,
@@ -300,8 +300,8 @@
       "ref": "R_BAT_H",
       "number": "1",
       "xy": [
-        48.81,
-        71.0
+        42.08,
+        67.0
       ],
       "net": "BAT_SW",
       "net_code": 3,
@@ -318,8 +318,8 @@
       "ref": "R_TOUCH",
       "number": "2",
       "xy": [
-        27.19,
-        55.0
+        37.0,
+        56.5
       ],
       "net": "TOUCH",
       "net_code": 11,
@@ -336,8 +336,8 @@
       "ref": "R_TOUCH",
       "number": "1",
       "xy": [
-        34.81,
-        55.0
+        47.16,
+        56.5
       ],
       "net": "TOUCH_ELECTRODE",
       "net_code": 12,
@@ -354,8 +354,8 @@
       "ref": "R_TRIG",
       "number": "2",
       "xy": [
-        41.19,
-        55.0
+        31.92,
+        53.0
       ],
       "net": "TRIG",
       "net_code": 13,
@@ -372,8 +372,8 @@
       "ref": "R_TRIG",
       "number": "1",
       "xy": [
-        48.81,
-        55.0
+        42.08,
+        53.0
       ],
       "net": "3V3",
       "net_code": 1,
@@ -1377,19 +1377,19 @@
       ]
     }
   ],
-  "config_sha256": "b04fbf91bca0ae51f017b5a042b539b614c42efb68eabba66ef5f24bb7966397",
+  "config_sha256": "1553cb3e1354e523290cfa12735b32ea23b4432b49604ab974b1054f694d009a",
   "routed_connections": [
     {
       "net": "TOUCH",
       "start_mm": [
-        27.19,
-        55.0
+        37.0,
+        56.5
       ],
       "end_mm": [
         28.91,
         14.879999
       ],
-      "grid_steps": 169
+      "grid_steps": 175
     },
     {
       "net": "SDA",
@@ -1413,7 +1413,7 @@
         26.37,
         14.879999
       ],
-      "grid_steps": 75
+      "grid_steps": 114
     },
     {
       "net": "JOY_SW",
@@ -1430,62 +1430,62 @@
     {
       "net": "VBAT_ADC",
       "start_mm": [
-        47.54,
-        77.0
+        42.08,
+        74.0
       ],
       "end_mm": [
-        41.19,
-        71.0
+        47.16,
+        70.5
       ],
-      "grid_steps": 26
+      "grid_steps": 21
     },
     {
       "net": "VBAT_ADC",
       "start_mm": [
-        41.19,
-        71.0
+        42.08,
+        74.0
       ],
       "end_mm": [
-        36.81,
-        71.0
+        31.92,
+        67.0
       ],
-      "grid_steps": 18
+      "grid_steps": 47
     },
     {
       "net": "VBAT_ADC",
       "start_mm": [
-        36.81,
-        71.0
+        31.92,
+        67.0
       ],
       "end_mm": [
         26.37,
         30.119999
       ],
-      "grid_steps": 171
+      "grid_steps": 146
     },
     {
       "net": "TRIG",
       "start_mm": [
-        47.54,
-        63.0
+        42.08,
+        60.0
       ],
       "end_mm": [
-        41.19,
-        55.0
+        31.92,
+        53.0
       ],
-      "grid_steps": 32
+      "grid_steps": 47
     },
     {
       "net": "TRIG",
       "start_mm": [
-        41.19,
-        55.0
+        31.92,
+        53.0
       ],
       "end_mm": [
         22.5,
         51.46
       ],
-      "grid_steps": 75
+      "grid_steps": 38
     },
     {
       "net": "TRIG",
@@ -1497,7 +1497,7 @@
         28.91,
         30.119999
       ],
-      "grid_steps": 85
+      "grid_steps": 89
     },
     {
       "net": "BTN_R",
@@ -1514,14 +1514,14 @@
     {
       "net": "JOY_X",
       "start_mm": [
-        33.54,
-        63.0
+        47.16,
+        63.5
       ],
       "end_mm": [
         30.7,
         40.0
       ],
-      "grid_steps": 91
+      "grid_steps": 93
     },
     {
       "net": "JOY_X",
@@ -1538,14 +1538,14 @@
     {
       "net": "JOY_Y",
       "start_mm": [
-        33.54,
-        77.0
+        47.16,
+        77.5
       ],
       "end_mm": [
         28.16,
         40.0
       ],
-      "grid_steps": 146
+      "grid_steps": 148
     },
     {
       "net": "JOY_Y",
@@ -1557,19 +1557,19 @@
         16.21,
         14.879999
       ],
-      "grid_steps": 230
+      "grid_steps": 236
     },
     {
       "net": "TOUCH_ELECTRODE",
       "start_mm": [
-        34.81,
-        55.0
+        47.16,
+        56.5
       ],
       "end_mm": [
         22.5,
         63.0
       ],
-      "grid_steps": 49
+      "grid_steps": 103
     },
     {
       "net": "BAT_RAW",
@@ -1586,38 +1586,38 @@
     {
       "net": "BAT_SW",
       "start_mm": [
-        48.81,
-        71.0
+        42.08,
+        67.0
       ],
       "end_mm": [
         38.5,
         83.3
       ],
-      "grid_steps": 52
+      "grid_steps": 65
     },
     {
       "net": "BAT_SW",
       "start_mm": [
-        48.81,
-        71.0
+        42.08,
+        67.0
       ],
       "end_mm": [
         16.0,
         10.0
       ],
-      "grid_steps": 334
+      "grid_steps": 319
     },
     {
       "net": "3V3",
       "start_mm": [
-        48.81,
-        55.0
+        42.08,
+        53.0
       ],
       "end_mm": [
         33.24,
         40.0
       ],
-      "grid_steps": 62
+      "grid_steps": 52
     },
     {
       "net": "3V3",
@@ -1629,7 +1629,7 @@
         39.504,
         32.0
       ],
-      "grid_steps": 37
+      "grid_steps": 43
     },
     {
       "net": "3V3",
@@ -1641,7 +1641,7 @@
         54.744,
         29.46
       ],
-      "grid_steps": 82
+      "grid_steps": 108
     },
     {
       "net": "3V3",
@@ -1653,8 +1653,20 @@
         13.67,
         30.119999
       ],
-      "grid_steps": 321
+      "grid_steps": 329
+    },
+    {
+      "net": "GND",
+      "start_mm": [
+        35.78,
+        40.0
+      ],
+      "end_mm": [
+        55.0,
+        40.0
+      ],
+      "grid_steps": 78
     }
   ],
-  "vias": 5
+  "vias": 11
 }
