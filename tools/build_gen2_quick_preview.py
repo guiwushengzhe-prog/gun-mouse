@@ -6,10 +6,13 @@ import build_gen2_mount as m
 import gen2_component_details as detail
 from preview_split_support import split_support
 from preview_right_button_cradle import move_right_button_cradle
+from preview_local_joystick_mount import local_support, local_hardware
 
 
 OUT = m.ROOT / "shell" / "快速结构预览"
 ORIGINAL_DETAILS = detail.assembled_details
+ORIGINAL_HARDWARE = m.hardware
+ORIGINAL_BOARD_MESHES = m.routed_pcb_meshes
 
 
 def preview_details(module, refs):
@@ -18,7 +21,7 @@ def preview_details(module, refs):
     for name in ("右键-黑色外壳", "右键-原生按钮", "右键-扁脚"):
         refs[name] = refs[name].rotate(
             pivot, (pivot[0], pivot[1], pivot[2] + 1), 90
-        ).translate((13.85, -4.32, -23))
+        ).translate((13.85, -4.32, -29))
 
     # 第三脚为空脚；原板仅使用已有右键信号和地两个焊盘。
     pads = next(p for p in m.C["parts"] if p["ref"] == "SW2")["pads"]
@@ -27,15 +30,16 @@ def preview_details(module, refs):
     ])
     routes = [
         ("右键信号短线", "BTN_R", (.16, .55, .18), [
-            (-33, m.TOP + .6, -2), (-33, -5.2, -2),
-            (-31, -5.2, -5.5), (-31, -10.8, -5.5),
-            (-31, -10.8, -21.5), (-23.2, -10.8, -21.5),
-            (-23.2, -10.8, -25),
+            (-33, m.TOP + .6, -2), (-33, -7, -2),
+            (-33, -10.8, -5.5), (-33, -10.8, -31.8),
+            (-23.2, -10.8, -31.8),
+            (-23.2, -10.8, -31),
         ]),
         ("右键地线短线", "GND", (.025, .027, .03), [
-            (-27.92, m.TOP + .6, -2), (-27.92, -5.72, -2),
-            (-28.5, -5.72, -5.5), (-28.5, -5.72, -21.5),
-            (-23.2, -5.72, -21.5), (-23.2, -5.72, -25),
+            (-27.92, m.TOP + .6, -2), (-27.92, -7, -2),
+            (-31, -7, -5.5), (-31, -7, -31.8),
+            (-25.5, -7, -31.8), (-25.5, -5.72, -31.8),
+            (-23.2, -5.72, -31.8), (-23.2, -5.72, -31),
         ]),
     ]
     for name, net, rgb, points in routes:
@@ -43,7 +47,8 @@ def preview_details(module, refs):
         insulated = list(points)
         insulated[0] = (points[0][0], -4.5, points[0][2])
         # 线尾留下露铜段，与扁脚搭焊。
-        insulated[-1] = (points[-1][0], points[-1][1], -24.2)
+        end, before = m.V(*points[-1]), m.V(*points[-2])
+        insulated[-1] = (end+(before-end).normalized()*.4).toTuple()
         jacket, _ = detail.tube(m, insulated, .4, .8)
         refs[name + "-铜芯"] = core
         refs[name + "-绝缘皮"] = jacket
@@ -61,6 +66,13 @@ def preview_details(module, refs):
     return refs, colors, wires
 
 
+def preview_hardware():
+    refs, seats = ORIGINAL_HARDWARE()
+    refs = {n: s for n, s in refs.items() if not n.startswith("共用锚点")}
+    refs.update(local_hardware(m))
+    return refs, seats
+
+
 def print_part(shape, name):
     printed = shape.rotate((0, 0, 0), (1, 0, 0), 90)
     b = printed.BoundingBox()
@@ -73,7 +85,7 @@ def main():
     global SUPPORT
     base = m.cq.importers.importStep(str(m.ROOT / "shell/step/engineering_mount.step")).val()
     parts = split_support(m, base)
-    SUPPORT = parts["独立摇杆支座"]
+    SUPPORT = local_support(m)
     base = move_right_button_cradle(m, parts["主体底座"])
     for name, shape in (("主体底座", base), ("独立摇杆支座", SUPPORT)):
         if not shape.isValid() or len(shape.Solids()) != 1:
@@ -87,6 +99,8 @@ def main():
     print_part(SUPPORT, "独立摇杆支座_预览")
     m.OUT = OUT
     detail.assembled_details = preview_details
+    m.hardware = preview_hardware
+    m.routed_pcb_meshes = lambda b: ORIGINAL_BOARD_MESHES(b, OUT / "pcb/preview-local-mount.obj")
     report_path = OUT / "assembly-check.json"
     report_path.write_text(json.dumps({"preview": True}, ensure_ascii=False), encoding="utf-8")
     m.export_assembled_stl()

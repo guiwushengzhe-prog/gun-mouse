@@ -627,10 +627,10 @@ def verify_mesh(path, cad_volume):
     return result
 
 
-def routed_pcb_meshes(b):
+def routed_pcb_meshes(b, source=None):
     """保留实际板的分材质铜层、绿油、丝印，避免OBJ读取后整板变单色。"""
     import vtk
-    source = ROOT / "pcb" / "3d" / "gun-mouse-gen2.obj"
+    source = source or ROOT / "pcb" / "3d" / "gun-mouse-gen2.obj"
     material_data, current = {}, None
     for line in source.with_suffix(".mtl").read_text(encoding="utf-8").splitlines():
         words=line.split()
