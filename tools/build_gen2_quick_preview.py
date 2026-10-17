@@ -8,6 +8,8 @@ from preview_split_support import split_support
 from preview_right_button_cradle import move_right_button_cradle
 from preview_local_joystick_mount import local_support, local_hardware
 from preview_ss01_right import build_right_switch, right_hardware
+from preview_straight_frame import reshape_frame
+from preview_layout import POWER_TRANSLATION, IMU_TRANSLATION_Z, body_hardware
 
 
 OUT = m.ROOT / "shell" / "快速结构预览"
@@ -21,6 +23,11 @@ def preview_details(module, refs):
     right_refs, right_colors, terminals = build_right_switch(m)
     refs.update(right_refs)
     colors.update(right_colors)
+    for name in refs:
+        if name.startswith("电源开关-"):
+            refs[name] = refs[name].translate(POWER_TRANSLATION)
+        elif name.startswith("陀螺仪"):
+            refs[name] = refs[name].translate((0, 0, IMU_TRANSLATION_Z))
 
     # 第三脚为空脚；原板仅使用已有右键信号和地两个焊盘。
     pads = next(p for p in m.C["parts"] if p["ref"] == "SW2")["pads"]
@@ -69,9 +76,11 @@ def preview_details(module, refs):
 
 def preview_hardware():
     refs, seats = ORIGINAL_HARDWARE()
-    refs = {n: s for n, s in refs.items() if not n.startswith("共用锚点")}
+    refs = {n: s for n, s in refs.items()
+            if not n.startswith(("共用锚点", "H1-", "H2-"))}
     refs.update(local_hardware(m))
     refs.update(right_hardware(m))
+    refs.update(body_hardware(m))
     return refs, seats
 
 
@@ -88,7 +97,7 @@ def main():
     base = m.cq.importers.importStep(str(m.ROOT / "shell/step/engineering_mount.step")).val()
     parts = split_support(m, base)
     SUPPORT = local_support(m)
-    base = move_right_button_cradle(m, parts["主体底座"])
+    base = move_right_button_cradle(m, reshape_frame(m, parts["主体底座"]))
     for name, shape in (("主体底座", base), ("独立摇杆支座", SUPPORT)):
         if not shape.isValid() or len(shape.Solids()) != 1:
             raise RuntimeError(name + "未形成有效的单件实体")

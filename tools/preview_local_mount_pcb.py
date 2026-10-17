@@ -1,4 +1,4 @@
-"""仅在快速预览目录增加摇杆支座的两个就近穿板孔。"""
+"""仅更新快速预览板：就近固定孔、惯性模块孔、壳体孔及移位电源开关。"""
 from pathlib import Path
 import math
 import json
@@ -10,12 +10,15 @@ from collections import defaultdict
 import pcbnew as pcb
 import generate_gen2_pcb as generator
 from preview_local_joystick_mount import LOCAL_HOLES as HOLES
+from preview_layout import BODY_MOUNT_HOLE, IMU_MOUNT_HOLES, IMU_TRANSLATION_Z, POWER_TRANSLATION
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "pcb/gun-mouse-supermini-carrier.kicad_pcb"
 OUT = ROOT / "shell/快速结构预览/pcb"
 MM = pcb.FromMM
 RETIRED = []
+MOUNT_HOLES = [(f"H_JOY_LOCAL_{i}", point) for i, point in enumerate(HOLES, 1)] + [
+    (f"H_IMU_{i}", point) for i, point in enumerate(IMU_MOUNT_HOLES, 1)] + [("H_BODY_5", BODY_MOUNT_HOLE)]
 
 
 def xy(point):
@@ -33,7 +36,7 @@ def segment_distance(point, a, b):
 
 
 def inspect(board):
-    for hole in HOLES:
+    for _, hole in MOUNT_HOLES:
         center = xy(hole)
         pads = []
         for fp in board.GetFootprints():
@@ -55,11 +58,11 @@ def key(point):
     return tuple(round(v, 6) for v in point)
 
 
-def inside_intervals(a, b, centers, radius):
+def inside_intervals(a, b, areas):
     dx, dy = b[0]-a[0], b[1]-a[1]
     length = dx*dx+dy*dy
     intervals = []
-    for center in centers:
+    for center, _, radius in areas:
         ax, ay = a[0]-center[0], a[1]-center[1]
         bb = 2*(ax*dx+ay*dy)
         cc = ax*ax+ay*ay-radius*radius
@@ -87,22 +90,47 @@ def generate():
                     assert not pad.GetNetname()
                     RETIRED.append(pad)
                     fp.Remove(pad)
+    switch = next(fp for fp in board.GetFootprints() if fp.GetReference() == "J_SWITCH")
+    movement = pcb.VECTOR2I(MM(-POWER_TRANSLATION[0]), MM(-POWER_TRANSLATION[2]))
+    switch.Move(movement)
+    imu = next(fp for fp in board.GetFootprints() if fp.GetReference() == "J_GY")
+    old_imu_pads = {key(position(p.GetPosition())): p.GetNetname() for p in imu.Pads()}
+    imu_movement = pcb.VECTOR2I(0, MM(-IMU_TRANSLATION_Z))
+    imu.Move(imu_movement)
+    # ON/OFF及开关引脚标注跟随实体移位，避免旧位置留着误导性丝印。
+    for drawing in board.GetDrawings():
+        if isinstance(drawing, pcb.PCB_TEXT) and (drawing.GetText() in {"ON", "OFF"} or drawing.GetText().startswith("J_SWITCH.")):
+            drawing.Move(movement)
+        elif isinstance(drawing, pcb.PCB_TEXT) and drawing.GetText().startswith("J_GY."):
+            drawing.Move(imu_movement)
     inspect(board)
-    centers = [xy(h) for h in HOLES]
+    centers = [xy(h) for _, h in MOUNT_HOLES]
     for fp in board.GetFootprints():
         for pad in fp.Pads():
             if pad.GetAttribute() != pcb.PAD_ATTRIB_NPTH:
                 radius = max(position(pad.GetSize()))/2
                 assert all(math.dist(c, position(pad.GetPosition())) > 2.31+radius+.05 for c in centers), (fp.GetReference(), pad.GetNumber())
+    # 开关迁移仅重连其两条供电网络；其它网络只改孔和新焊盘附近短段。
+    power_nets = {"BAT_RAW", "BAT_SW"}
+    for track in list(board.GetTracks()):
+        if track.GetNetname() in power_nets:
+            RETIRED.append(track)
+            board.Remove(track)
+    areas = [(center, 3.05, 3.7) for center in centers] + [(position(p.GetPosition()), 2.1, 2.7) for p in switch.Pads()]
+    for point in IMU_MOUNT_HOLES:
+        center = xy(point)
+        areas += [([center[0], center[1]+offset], 3.05, 3.7) for offset in (-.6, .6)]
+    areas += [(point, 1.6, 2.0) for point in old_imu_pads]
+    areas += [(position(p.GetPosition()), 1.6, 2.0) for p in imu.Pads()]
     old = list(board.GetTracks())
     removed = [t for t in old if not isinstance(t, pcb.PCB_VIA)
-               and any(segment_distance(c, position(t.GetStart()), position(t.GetEnd())) < 3.05 for c in centers)]
+               and any(segment_distance(c, position(t.GetStart()), position(t.GetEnd())) < radius for c, radius, _ in areas)]
     groups = defaultdict(list)
     for track in removed:
         RETIRED.append(track)
         board.Remove(track)
         a, b = position(track.GetStart()), position(track.GetEnd())
-        intervals = inside_intervals(a, b, centers, 3.7)
+        intervals = inside_intervals(a, b, areas)
         at = lambda t: [a[i]+(b[i]-a[i])*t for i in (0, 1)]
         previous = 0
         for lo, hi in intervals:
@@ -142,24 +170,28 @@ def generate():
                         stack.append(node)
             ends = [p for p in component if len(adjacency[p]) == 1]
             assert len(ends) == 2, (net, ends)
+            ends = [(p[0], round(p[1]-IMU_TRANSLATION_Z, 6)) if old_imu_pads.get(p) == net else p for p in ends]
             jobs.append((net, layer, *ends))
-    for i, center in enumerate(centers, 1):
+    for name, location in MOUNT_HOLES:
+        center = xy(location)
         fp = pcb.FOOTPRINT(board)
-        fp.SetReference(f"H_JOY_LOCAL_{i}")
+        fp.SetReference(name)
         fp.SetPosition(pcb.VECTOR2I(*[MM(v) for v in center]))
         fp.Reference().SetVisible(False)
         fp.Value().SetVisible(False)
         pad = pcb.PAD(fp)
         pad.SetAttribute(pcb.PAD_ATTRIB_NPTH)
         pad.SetLayerSet(pcb.PAD.UnplatedHoleMask())
-        pad.SetShape(pcb.PAD_SHAPE_CIRCLE)
-        pad.SetSize(pcb.VECTOR2I(MM(2.4), MM(2.4)))
-        pad.SetDrillSize(pcb.VECTOR2I(MM(2.4), MM(2.4)))
+        imu_slot = name.startswith("H_IMU_")
+        pad.SetShape(pcb.PAD_SHAPE_OVAL if imu_slot else pcb.PAD_SHAPE_CIRCLE)
+        pad.SetDrillShape(pcb.PAD_DRILL_SHAPE_OBLONG if imu_slot else pcb.PAD_DRILL_SHAPE_CIRCLE)
+        pad.SetSize(pcb.VECTOR2I(MM(2.4), MM(3.6 if imu_slot else 2.4)))
+        pad.SetDrillSize(pcb.VECTOR2I(MM(2.4), MM(3.6 if imu_slot else 2.4)))
         pad.SetPosition(pcb.VECTOR2I(*[MM(v) for v in center]))
         fp.Add(pad)
         board.Add(fp)
         zone = pcb.ZONE(board)
-        zone.SetZoneName(f"JOY_LOCAL_SCREW_{i}")
+        zone.SetZoneName("SCREW_CLEAR_"+name)
         zone.SetIsRuleArea(True)
         layers = pcb.LSET()
         layers.AddLayer(pcb.F_Cu)
@@ -173,9 +205,16 @@ def generate():
         poly = zone.Outline()
         poly.NewOutline()
         radius = 2.56/math.cos(math.pi/32)
-        for j in range(32):
-            angle = j*math.tau/32
-            poly.Append(MM(center[0]+radius*math.cos(angle)), MM(center[1]+radius*math.sin(angle)))
+        # 惯性模块板边端距仅图比读：短槽给上下各0.6毫米调整量，金属禁铜区随之延伸。
+        if imu_slot:
+            for sign, first in ((1, 0), (-1, math.pi)):
+                for j in range(17):
+                    angle = first+j*math.pi/16
+                    poly.Append(MM(center[0]+radius*math.cos(angle)), MM(center[1]+radius*math.sin(angle)+sign*.6))
+        else:
+            for j in range(32):
+                angle = j*math.tau/32
+                poly.Append(MM(center[0]+radius*math.cos(angle)), MM(center[1]+radius*math.sin(angle)))
         board.Add(zone)
     env = generator.legacy_functions()
     nets = {str(n.GetNetname()): n for n in board.GetNetsByNetcode().values()}
@@ -244,6 +283,15 @@ def generate():
         if all(node[2] == layer_i for node in path):
             router.owner[1-layer_i] = opposite
         print("局部绕线", net, board.GetLayerName(layer), start, end, flush=True)
+    for name in ("BAT_RAW", "BAT_SW"):
+        terminals = [position(p.GetPosition()) for fp in board.GetFootprints() for p in fp.Pads() if p.GetNetname() == name]
+        connected = {0}
+        while len(connected) < len(terminals):
+            a, b = min(((a, b) for a in connected for b in range(len(terminals)) if b not in connected),
+                       key=lambda pair: math.dist(terminals[pair[0]], terminals[pair[1]]))
+            router.apply_path(router.astar(terminals[a], terminals[b], nets[name].GetNetCode()), terminals[a], terminals[b], name)
+            connected.add(b)
+        print("移位开关网络", name, len(terminals), flush=True)
     OUT.mkdir(parents=True, exist_ok=True)
     target = OUT/"preview-local-mount.kicad_pcb"
     project = target.with_suffix(".kicad_pro")
