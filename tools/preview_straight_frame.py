@@ -60,3 +60,17 @@ def reshape_frame(m, base):
     for cut in cuts:
         result = result.cut(cut)
     return result.clean()
+
+
+def level_outer_face(m, base):
+    """外表面统一到电池托底面；内腔、螺钉承压面和孔位保持原位。"""
+    extra = m.BASE[0] - m.BATTERY_FLOOR_Y
+    # 沿原外形向外补0.5毫米，保留原有开窗与外轮廓，不填充内腔。
+    skin = base.translate((0, -extra, 0)).intersect(
+        m.box(-100, 100, m.BATTERY_FLOOR_Y, m.BASE[0]+.01, -200, 100))
+    result = m.fuse([base, skin])
+    holes = [h["xz"] for h in m.P["mount_holes"] if h["id"] in {"H3", "H4"}]
+    for x, z in [*holes, BODY_MOUNT_HOLE]:
+        # 螺丝头在新表面内浅沉0.5毫米，螺杆有效长度仍与上一版相同。
+        result = result.cut(m.cy(x, z, 2.2, -24, m.BASE[0]))
+    return result.clean()

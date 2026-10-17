@@ -8,7 +8,7 @@ from preview_split_support import split_support
 from preview_right_button_cradle import move_right_button_cradle
 from preview_local_joystick_mount import local_support, local_hardware
 from preview_ss01_right import build_right_switch, right_hardware
-from preview_straight_frame import reshape_frame
+from preview_straight_frame import reshape_frame, level_outer_face
 from preview_layout import POWER_TRANSLATION, IMU_TRANSLATION_Z, body_hardware
 
 
@@ -97,7 +97,7 @@ def main(export_print_parts=True):
     base = m.cq.importers.importStep(str(m.ROOT / "shell/step/engineering_mount.step")).val()
     parts = split_support(m, base)
     SUPPORT = local_support(m)
-    base = move_right_button_cradle(m, reshape_frame(m, parts["主体底座"]))
+    base = level_outer_face(m, move_right_button_cradle(m, reshape_frame(m, parts["主体底座"])))
     for name, shape in (("主体底座", base), ("独立摇杆支座", SUPPORT)):
         if not shape.isValid() or len(shape.Solids()) != 1:
             raise RuntimeError(name + "未形成有效的单件实体")
