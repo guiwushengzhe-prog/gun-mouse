@@ -92,7 +92,7 @@ def print_part(shape, name):
                           tolerance=.03, angularTolerance=.1)
 
 
-def main():
+def main(export_print_parts=True):
     global SUPPORT
     base = m.cq.importers.importStep(str(m.ROOT / "shell/step/engineering_mount.step")).val()
     parts = split_support(m, base)
@@ -106,8 +106,9 @@ def main():
         (OUT / folder).mkdir(parents=True, exist_ok=True)
     m.cq.exporters.export(base, str(OUT / "step/engineering_mount.step"))
     m.cq.exporters.export(SUPPORT, str(OUT / "step/独立摇杆支座.step"))
-    print_part(base, "主体底座_预览")
-    print_part(SUPPORT, "独立摇杆支座_预览")
+    if export_print_parts:
+        print_part(base, "主体底座_预览")
+        print_part(SUPPORT, "独立摇杆支座_预览")
     m.OUT = OUT
     detail.assembled_details = preview_details
     m.hardware = preview_hardware

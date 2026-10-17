@@ -4,13 +4,30 @@ LOCAL_HOLES = [(-39.4, -4.4), (-30.5, -6.2)]
 
 
 def local_support(m):
-    # 横条恢复原3.6毫米高度；仅在穿板孔周围保留局部圆柱。
+    # 不改变承托高度和螺钉承压面；扩大穿板孔座并连成宽底板。
     pieces = [m.box(-46.85, -20.55, *m.JOY_ARM_Y, -5.8, -2.2)]
     for x, old_y in m.JOY_MOUNT_HOLES:
-        pieces.append(m.cz(x, m.FACE_Y_SUM-old_y, 3.4, -5.8, m.JOY_BOARD[4]))
-    for x, z in LOCAL_HOLES:
-        pieces.append(m.cy(x, z, 2.6, m.TOP, m.JOY_ARM_Y[1]))
+        pieces.append(m.cz(x, m.FACE_Y_SUM-old_y, 3.6, -5.8, m.JOY_BOARD[4]))
+    web = m.fuse([
+        m.box(-39.4, -30.5, m.TOP, m.JOY_ARM_Y[1], -7.8, -3.1),
+        *[m.cy(x, z, 3.7, m.TOP, m.JOY_ARM_Y[1]) for x, z in LOCAL_HOLES],
+    ])
+    # 侧轮廓圆角延续到整个板厚，不削薄沉孔口。
+    web = m.cq.Workplane().add(web).edges("|Y").fillet(.8).val()
+    pieces.append(web)
+    # 短筋只在两端承托柱根部；中间五针和焊点下方保持敞开。
+    for x, old_y in m.JOY_MOUNT_HOLES:
+        y = m.FACE_Y_SUM-old_y
+        inward = 1 if x < -33.7 else -1
+        rib = m.prism([(x, -3.0), (x+inward*5.8, -3.0),
+                       (x, .8)], y-1.8, y+1.8)
+        rib = m.cq.Workplane().add(rib).edges("|Y").fillet(.8).val()
+        pieces.append(rib)
     result = m.fuse(pieces)
+    # 加宽底板靠近R_TRIG剪脚，背面留局部焊点凹槽，不改变主板孔。
+    resistor = next(p for p in m.C["parts"] if p["ref"] == "R_TRIG")
+    for pad in resistor["pads"]:
+        result = result.cut(m.cy(*pad["xz"], 1.55, m.TOP-.1, .3))
     for i, (x, old_y) in enumerate(m.JOY_MOUNT_HOLES):
         y = m.FACE_Y_SUM-old_y
         result = result.cut(m.cz(x, y, 2.15, -8.9, -3.8))

@@ -30,6 +30,9 @@ def reshape_frame(m, base):
         m.beam((-14.2, -14), (-27, -27), 4.5),
         m.cy(x5, z5, 3.2, m.BASE[0], m.BACK),
         m.beam((x5, z5), (x5, -31), 4.0),
+        # 原开关窗口封成连续护板；1.9毫米厚度沿用上方护板。
+        # 电池引线在内侧空腔通过，H5穿孔在下方统一重新切出。
+        m.box(-50.5, -24.9, *m.BASE, -42.9, -33.8),
     ]
     for x, z in m.SS_HOLES:
         additions.append(m.cy(x, z, 3.4, -17.2, -8.66))
@@ -50,7 +53,8 @@ def reshape_frame(m, base):
     # 重建SS背座时同步恢复原孔、侧面螺母槽和工具入口。
     for x, z in m.SS_HOLES:
         cuts += [m.cy(x, z, 1.15, -17.3, -8.5),
-                 m.box(-21, -11.7, -11.45, -9.45, z-2.15, z+2.15),
+                 # 螺母位置不变，仅收回槽前壁0.1毫米，薄壁由0.79增至0.89。
+                 m.box(-21, -11.7, -11.45, -9.55, z-2.15, z+2.15),
                  m.cy(x, z, 2.2, -1.5, .95)]
     cuts.append(m.cy(-27, -27, 2.2, -21, m.BASE[0]))
     for cut in cuts:
