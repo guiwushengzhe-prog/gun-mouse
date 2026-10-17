@@ -10,10 +10,10 @@
     -125.8,
     46.8
   ],
-  "volume_mm3": 13732.868,
+  "volume_mm3": 16127.202,
   "mass_g": {
-    "树脂1.2": 16.48,
-    "尼龙1.01": 13.87
+    "树脂1.2": 19.35,
+    "尼龙1.01": 16.29
   },
   "new_printed_parts": 1,
   "overlaps_mm3": {},
@@ -35,7 +35,9 @@
     "SS1-螺母": 0.0,
     "SS2-螺母": 0.0,
     "摇杆1-螺母": 0.0,
-    "摇杆2-螺母": 0.0
+    "摇杆2-螺母": 0.0,
+    "共用锚点1-螺母": 0.0,
+    "共用锚点2-螺母": 0.0
   },
   "axial_driver_access_overlaps_mm3": {
     "H1": 0.0,
@@ -45,7 +47,9 @@
     "SS1": 0.0,
     "SS2": 0.0,
     "摇杆1": 0.0,
-    "摇杆2": 0.0
+    "摇杆2": 0.0,
+    "共用锚点1": 0.0,
+    "共用锚点2": 0.0
   },
   "fasteners": [
     {
@@ -133,6 +137,54 @@
         3.84
       ],
       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"
+    },
+    {
+      "id": "JOY_SHARED_FAR_L",
+      "thread": "M2",
+      "length_mm": 10,
+      "hole_center_xz_mm": [
+        -46.25,
+        37.3
+      ],
+      "axis_direction_xyz": [
+        0,
+        -1,
+        0
+      ],
+      "nut_engagement_mm": 1.6,
+      "nut_y_mm": [
+        -6.2,
+        -4.6
+      ],
+      "screw_tip_y_mm": -11.63,
+      "blind_bore_end_y_mm": -12.1,
+      "tip_end_clearance_mm": 0.47,
+      "future_straight_screw_projection_past_nut_mm": 0.83,
+      "driver": "拇指面1.5毫米内六角；普通M2螺母从两锚点之间的上部间隙滑入背侧锚座"
+    },
+    {
+      "id": "JOY_SHARED_FAR_R",
+      "thread": "M2",
+      "length_mm": 10,
+      "hole_center_xz_mm": [
+        -26.75,
+        37.3
+      ],
+      "axis_direction_xyz": [
+        0,
+        -1,
+        0
+      ],
+      "nut_engagement_mm": 1.6,
+      "nut_y_mm": [
+        -6.2,
+        -4.6
+      ],
+      "screw_tip_y_mm": -11.63,
+      "blind_bore_end_y_mm": -12.1,
+      "tip_end_clearance_mm": 0.47,
+      "future_straight_screw_projection_past_nut_mm": 0.83,
+      "driver": "拇指面1.5毫米内六角；普通M2螺母从两锚点之间的上部间隙滑入背侧锚座"
     }
   ],
   "all_pass": true,
@@ -198,7 +250,7 @@
     -124.0,
     -44.0
   ],
-  "config_sha256": "ee69f9d458f187c73adbaf3facf03e5e4c29287c20fb38bd1f66c96ab791adc6",
+  "config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
   "installation_faces": {
     "拇指面+Y": "摇杆及从主板缺口绕过的局部短臂",
     "元件面-Y": "一体支架、电池托、八颗小件护板；上方两块模块仍敞开且位置不变"
@@ -208,7 +260,7 @@
     "SS": "原SS-01GL两孔，改用2颗已有M2x10；原垫片填0.6mm名义间隙，元件面侧插M2螺母",
     "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，孔号与网络已同步",
     "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；孔号与网络已同步",
-    "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z；模块降低4mm，让原有弯针和塑料条在小板上面；主板五孔不变。两孔19.5mm间距，用2颗M2x10，头部内收；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
+    "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z；模块降低4mm，让原有弯针和塑料条在小板上面；主板五孔不变。模块近侧两孔用2颗M2x10固定在原短柱；另用2颗M2x10经主板远侧共用孔固定背侧深梁，将原L臂背部支到主板附近，均用普通M2螺母、不新增垫片；未来直针模式可用共用孔固定模块另两角",
     "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"
   },
   "battery_structure": {
@@ -243,12 +295,12 @@
   "stl_check": {
     "open_or_nonmanifold_edges": 0,
     "connected_bodies": 1,
-    "mesh_vs_cad_volume_relative_difference": 4.2e-05,
+    "mesh_vs_cad_volume_relative_difference": 4.6e-05,
     "pass": true
   },
-  "stl_sha256": "2f12d72e8458105d3557d2e48033764904d775ff0bae6e57666e6ccd84a4b5ed",
+  "stl_sha256": "91df00fb0ce8e54741cebbf07b84449d6d43fe2a45a3bbec7b13c48534efb3e2",
   "assembled_model": {
-    "object_count": 133,
+    "object_count": 137,
     "invalid_shapes": [],
     "manual_wire_count": 7,
     "wires": [
@@ -648,15 +700,15 @@
       "触摸铜箔线-绝缘皮": 0.0
     },
     "wire_insulation_pair_overlaps_mm3": {},
-    "pcb_sha256": "0433f5f2210065c64fdf33b7f5008a94edd4b40a81760f477468dfea2ed4e9b9",
+    "pcb_sha256": "eb257ed914c68cbff02850534fcb2ed276da2b9197cdf648a6123080c3debeb4",
     "real_copper_materials": [
       "载板-基材",
-      "载板-mtl8619",
-      "载板-mtl12407",
-      "载板-mtl14463"
+      "载板-mtl8829",
+      "载板-mtl12721",
+      "载板-mtl14777"
     ],
     "appearance_basis": "开发板为本地官方器件参考外形；其余小件和线弯曲为名义外形。B焊盘和铜箔尾按照片比读，未实测。",
-    "stl_sha256": "b64dd6784cf8d8586407ca8c5d0d38c5115f3b60c53308a1c8e2714b41f93899",
-    "obj_sha256": "536b55349f827a83b7156b6537e879772f801c06ccd7028d7b8fc9d113d435d6"
+    "stl_sha256": "2d82494e200c3a558e90b21a9ee61d4e023eb05560355017b1ca044e3d85a90e",
+    "obj_sha256": "385363a8911a737a3bf0d15ba050759de585401bb7ef59cf4afd651d23609a89"
   }
 }

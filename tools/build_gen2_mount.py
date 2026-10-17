@@ -52,6 +52,9 @@ JOY_AXIS = (JOY_PIN_CENTER[0], -20.5-JOY_OUTWARD_SHIFT, JOY_BOARD[5])
 JOY_HOLES = [(JOY_PIN_CENTER[0]+dx, y)
              for y in (-7.3-JOY_OUTWARD_SHIFT, -33.7-JOY_OUTWARD_SHIFT) for dx in (-9.75, 9.75)]
 JOY_MOUNT_HOLES = JOY_HOLES[:2]
+JOY_SHARED_HOLES = [(h["id"], *h["xz"])
+                    for h in next(p for p in C["parts"] if p["ref"] == "SW1_ALT")["npth"]
+                    if h["id"].startswith("JOY_SHARED_FAR_")]
 SS_HOLES = [(-14.2, -4.521), (-14.2, -14.021)]
 
 
@@ -147,10 +150,19 @@ def build_mount():
     # 从主板前方的原有缺口绕过，短臂仍托住摇杆靠板的两个孔。
     parts += [box(-19.4, -15.8, BASE[0], JOY_ARM_Y[1], 2, 4.2),
               box(-19.4, -15.8, *JOY_ARM_Y, -5.8, 4.2),
-              box(-46.85, -15.8, *JOY_ARM_Y, -5.8, -2.2)]
+              box(-46.85, -15.8, *JOY_ARM_Y, -8.8, -2.2)]
     for x, original_y in JOY_MOUNT_HOLES:
         y = FACE_Y_SUM-original_y
         parts.append(cz(x, y, 3.4, -5.8, JOY_BOARD[4]))
+
+    # 直针备用位的远侧两孔兼作弯针支座穿板锚点。
+    # 中央深梁只走两模块之间的空隙，再将原L臂背侧托到载板附近。
+    for _, x, z in JOY_SHARED_HOLES:
+        parts += [cy(x, z, 3.4, -12.8, BACK),
+                  beam((x, z), (-37.5, 35), 4.5, -10, BACK)]
+    parts += [box(-39.75, -35.25, -10, BACK, 6.7, 35),
+              box(-39.75, -15.8, -10, BACK, 6.7, 9.5),
+              box(-19.4, -15.8, -10, BACK, 2, 9.5)]
 
     # SS位置保持，支承移到其背面；缩短到M2x10，不让螺钉伸出支架。
     for x, z in SS_HOLES:
@@ -163,6 +175,11 @@ def build_mount():
     for h in P["mount_holes"]:
         x, z = h["xz"]
         cuts.append(cy(x, z, 1.2, -20, BACK+0.2))
+    for i, (_, x, z) in enumerate(JOY_SHARED_HOLES):
+        cuts.append(cy(x, z, 1.2, -12.1, BACK+.1))
+        # 外侧有原主板固定柱；螺母改从两锚点之间的上部间隙滑入。
+        x0, x1 = (x-2.35, x+8.5) if i == 0 else (x-8.5, x+2.35)
+        cuts.append(box(x0, x1, -6.3, -4.5, z-2.1, z+2.1))
     # 加强筋到达H4，保留原轴孔和螺钉头空间。
     cuts += [cy(-27, -27, 1.2, -21, BACK+.2),
              cy(-27, -27, 2.2, -21, BASE[0])]
@@ -190,7 +207,7 @@ def build_mount():
     for i, (x, original_y) in enumerate(JOY_MOUNT_HOLES):
         y = FACE_Y_SUM-original_y
         # 原弯针在板上面；模块降4毫米，螺钉及短柱跟随，仍用M2x10。
-        cuts.append(cz(x, y, 2.15, -6, -3.8))
+        cuts.append(cz(x, y, 2.15, -8.9, -3.8))
         if i == 0:
             cuts.append(cz(x, y, 1.2, -6, JOY_BOARD[4]+.1))
         else:
@@ -384,6 +401,20 @@ def hardware():
                       "projection_past_nut_mm": .8,
                       "hole_center_xy_mm": [x, y],
                       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"})
+    for i, (hole_id, x, z) in enumerate(JOY_SHARED_HOLES, 1):
+        k = f"共用锚点{i}"
+        head = cy(x, z, 2, TOP, TOP+2.1).cut(
+            hex_y(x, z, 1.5, TOP+1.0, TOP+2.2))
+        r[k+"-螺钉"] = head.fuse(cy(x, z, 1, TOP-10, TOP))
+        r[k+"-螺母"] = hex_y(x, z, 4, -6.2, -4.6).cut(
+            cy(x, z, 1.05, -6.3, -4.5))
+        seats.append({"id": hole_id, "thread": "M2", "length_mm": 10,
+                      "hole_center_xz_mm": [x, z], "axis_direction_xyz": [0, -1, 0],
+                      "nut_engagement_mm": 1.6, "nut_y_mm": [-6.2, -4.6],
+                      "screw_tip_y_mm": round(TOP-10, 3), "blind_bore_end_y_mm": -12.1,
+                      "tip_end_clearance_mm": round(TOP-10+12.1, 3),
+                      "future_straight_screw_projection_past_nut_mm": .83,
+                      "driver": "拇指面1.5毫米内六角；普通M2螺母从两锚点之间的上部间隙滑入背侧锚座"})
     for seat in seats:
         if "hole_center_xy_mm" in seat:
             x, y = seat["hole_center_xy_mm"]
@@ -439,6 +470,14 @@ def verify(s, refs):
     for i in (1, 2):
         k = f"摇杆{i}-螺母"
         nut_paths[k] = round(s.intersect(swept_box(hw[k], (0, 0, 12))).Volume(), 6)
+    for i, _ in enumerate(JOY_SHARED_HOLES, 1):
+        k = f"共用锚点{i}-螺母"
+        path = swept_box(hw[k], (6 if i == 1 else -6, 0, 0))
+        hit = s.intersect(path).Volume()
+        for n, shape in refs.items():
+            if "留空" not in n and "摆杆示意" not in n:
+                hit = max(hit, path.intersect(shape).Volume())
+        nut_paths[k] = round(hit, 6)
     tool_access = {}
     for h in P["mount_holes"]:
         start_y = SHORT_POST_Y if h["id"] == "H2" else BASE[0]
@@ -458,6 +497,13 @@ def verify(s, refs):
             if "留空" not in n and "摆杆示意" not in n:
                 hit = max(hit, driver.intersect(shape).Volume())
         tool_access[f"摇杆{i}"] = round(hit, 6)
+    for i, (_, x, z) in enumerate(JOY_SHARED_HOLES, 1):
+        driver = cy(x, z, 1.5, TOP+2.11, 30)
+        hit = s.intersect(driver).Volume()
+        for n, shape in refs.items():
+            if "留空" not in n and "摆杆示意" not in n:
+                hit = max(hit, driver.intersect(shape).Volume())
+        tool_access[f"共用锚点{i}"] = round(hit, 6)
     return {"scope": "第二代名义几何与保守包络；不是实物试装", "valid": s.isValid(),
             "solids": len(s.Solids()), "bounds_assembly_mm": bounds(s),
             "volume_mm3": round(s.Volume(), 3),
@@ -479,7 +525,7 @@ def verify(s, refs):
                           "SS": "原SS-01GL两孔，改用2颗已有M2x10；原垫片填0.6mm名义间隙，元件面侧插M2螺母",
                           "开发板": "两排各9针由摇杆相反面直接焊在载板，板间留3mm，USB朝+X；电池B+/B-接两根短线，孔号与网络已同步",
                           "GY": "左8右6排针由摇杆相反面直接焊在载板，板间留3mm；孔号与网络已同步",
-                          "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z；模块降低4mm，让原有弯针和塑料条在小板上面；主板五孔不变。两孔19.5mm间距，用2颗M2x10，头部内收；一孔2.4mm、另一孔沿X为2.4x3.6mm，模块原孔3.3mm",
+                          "摇杆": "DZYJ黑板33x27标称，原生帽朝+Z；模块降低4mm，让原有弯针和塑料条在小板上面；主板五孔不变。模块近侧两孔用2颗M2x10固定在原短柱；另用2颗M2x10经主板远侧共用孔固定背侧深梁，将原L臂背部支到主板附近，均用普通M2螺母、不新增垫片；未来直针模式可用共用孔固定模块另两角",
                           "电池": "602060含保护板/出线预留20x80x8mm；2.4mm开窗框筋、深侧梁及圆角根筋承担握持载荷，放入面与出线端敞开；两条软绑带经侧壁窗口仅作防脱，不勒紧软包"},
             "battery_structure": {"outer_width_mm": 25.6, "frame_thickness_mm": 2.4,
                                   "side_beam_width_mm": 2.3, "side_beam_depth_mm": 11.1,

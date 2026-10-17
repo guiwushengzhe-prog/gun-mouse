@@ -1,7 +1,7 @@
 {
   "status": "pass",
-  "config_sha256": "ee69f9d458f187c73adbaf3facf03e5e4c29287c20fb38bd1f66c96ab791adc6",
-  "actual_board_sha256": "0433f5f2210065c64fdf33b7f5008a94edd4b40a81760f477468dfea2ed4e9b9",
+  "config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
+  "actual_board_sha256": "eb257ed914c68cbff02850534fcb2ed276da2b9197cdf648a6123080c3debeb4",
   "actual_pth_count": 72,
   "net_count": 14,
   "actual_pad_net_position_drill_errors": 0,
@@ -9,7 +9,7 @@
   "capacitors": 4,
   "mount_holes_verified": 4,
   "reserved_joystick_pth": 5,
-  "reserved_joystick_npth": 2,
+  "reserved_joystick_npth": 4,
   "reserved_joystick_populate": false,
   "module_terminal_pose": "实际孔号已随完整装配中的实体旋转同步",
   "divider_adc_v_at_4_2v_battery": 2.1,

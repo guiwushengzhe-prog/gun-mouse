@@ -241,5 +241,7 @@
 <circle cx="23.42" cy="31.5" r="0.6" fill="white" stroke="#555" stroke-width=".08"/>
 <rect x="37.05" y="27.900000000000002" width="2.4" height="2.4" rx="1.2" fill="white" stroke="#555" stroke-width=".12"/>
 <rect x="16.95" y="27.900000000000002" width="3.6" height="2.4" rx="1.2" fill="white" stroke="#555" stroke-width=".12"/>
+<rect x="37.05" y="1.5000000000000029" width="2.4" height="2.4" rx="1.2" fill="white" stroke="#555" stroke-width=".12"/>
+<rect x="16.95" y="1.5000000000000029" width="3.6" height="2.4" rx="1.2" fill="white" stroke="#555" stroke-width=".12"/>
 </g>
 </svg>

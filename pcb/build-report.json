@@ -1,13 +1,13 @@
 {
-  "config_sha256": "ee69f9d458f187c73adbaf3facf03e5e4c29287c20fb38bd1f66c96ab791adc6",
-  "board_sha256": "0433f5f2210065c64fdf33b7f5008a94edd4b40a81760f477468dfea2ed4e9b9",
+  "config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
+  "board_sha256": "eb257ed914c68cbff02850534fcb2ed276da2b9197cdf648a6123080c3debeb4",
   "pcb_size_mm": [
     52,
     82
   ],
   "factory_smt": false,
-  "pads": 78,
-  "routed_connections": 307,
+  "pads": 80,
+  "routed_connections": 311,
   "route_record_unit": "实际铜线段",
   "vias": 9,
   "drc_violations": 0,

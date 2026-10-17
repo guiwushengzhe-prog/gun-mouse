@@ -184,11 +184,17 @@ def straight_joystick_reserve(config):
         "npth": [{"id": "JOY_STRAIGHT_L", "xz": [-46.25, 10.9], "drill": [2.4, 2.4],
                   "size": [2.4, 2.4], "shape": "circle"},
                  {"id": "JOY_STRAIGHT_R", "xz": [-26.75, 10.9], "drill": [3.6, 2.4],
+                  "size": [3.6, 2.4], "shape": "oval"},
+                 {"id": "JOY_SHARED_FAR_L", "xz": [-46.25, 37.3], "drill": [2.4, 2.4],
+                  "size": [2.4, 2.4], "shape": "circle"},
+                 {"id": "JOY_SHARED_FAR_R", "xz": [-26.75, 37.3], "drill": [3.6, 2.4],
                   "size": [3.6, 2.4], "shape": "oval"}],
+        "screw_head_keepouts": [{"hole_id": "JOY_SHARED_FAR_L", "radius_mm": 2.3, "x_travel_mm": 0},
+                                 {"hole_id": "JOY_SHARED_FAR_R", "radius_mm": 2.3, "x_travel_mm": .6}],
         "envelope": {"x": [-50, -23], "z": [7.6, 40.6], "y_above_board": 30},
         "envelope_basis": "黑板27x33毫米为资料标称；排针到近侧孔行约2.4毫米为用户实测，模块外框位置沿用估算模型，并非板边到针实测",
-        "assembly": "备用换装建议：M2x10从元件面朝+Y穿入，普通直径4毫米螺钉头朝元件面、螺母在摇杆面；控制螺纹伸出量，本版不增加这些紧固件",
-        "purpose": "仅预留，不装第二个摇杆；与原SW1二选一。直排针换装前核实实物，两个M2固定孔不作为现框架安装孔"}
+        "assembly": "四个M2固定孔组成19.5x26.4毫米孔阵列。当前弯针底座通过远侧两孔穿主板固定，M2x10头在+Y、背面打印支座内装螺母；未来直针换装时这两孔改作摇杆远侧固定，与原近侧两孔合用",
+        "purpose": "五针直插位与原SW1二选一；近侧两孔预留、远侧两孔共用当前弯针支座与未来直针摇杆固定。+Y远孔螺钉头覆盖区禁止铺铜和布线，-Y由塑料支座隔开原线路"}
     config["parts"] = [part for part in config["parts"] if part["ref"] != "SW1_ALT"] + [reserve]
     return config
 
@@ -433,7 +439,7 @@ def relocate(board, config, env):
         if isinstance(item, pcb.PCB_TEXT):
             RETIRED.append(item)
             board.Remove(item)
-    env["add_text"](board, "S3 MODULE CARRIER v2", env["kxy"]([-39, 38]), .8)
+    env["add_text"](board, "S3 MODULE CARRIER v2", env["kxy"]([-39, 34.4]), .8)
     env["add_text"](board, "BAT OFF BEFORE PC USB", env["kxy"]([-41, 1.5]), .8)
     env["add_text"](board, "ON", env["kxy"]([-49.8, -38.3]), .8)
     env["add_text"](board, "OFF", env["kxy"]([-32.7, -38.3]), .8)
@@ -472,6 +478,99 @@ def route_antenna_keepout(router, config, env):
             & (yy >= min(p[1] for p in points)-margin) & (yy <= max(p[1] for p in points)+margin))
     router.owner[:, mask] = -1
     router.hole_keepout[mask] = True
+    reserved = next(p for p in config["parts"] if p["ref"] == "SW1_ALT")
+    for keepout in reserved["screw_head_keepouts"]:
+        hole = next(h for h in reserved["npth"] if h["id"] == keepout["hole_id"])
+        x, y = env["kxy"](hole["xz"])
+        dx = np.maximum(np.abs(xx-x)-keepout["x_travel_mm"], 0)
+        mask = dx*dx+(yy-y)**2 <= (keepout["radius_mm"]+margin)**2
+        router.owner[0, mask] = -1
+        router.hole_keepout[mask] = True
+
+
+def screw_head_keepouts(board, config, env):
+    """远侧共用孔的金属螺钉头在+Y面，隔开铜层并容纳长孔横向调整。"""
+    for old in list(board.Zones()):
+        if old.GetIsRuleArea() and old.GetZoneName().startswith("JOY_SCREW_HEAD_"):
+            RETIRED.append(old)
+            board.Remove(old)
+    part = next(p for p in config["parts"] if p["ref"] == "SW1_ALT")
+    for keepout in part["screw_head_keepouts"]:
+        hole = next(h for h in part["npth"] if h["id"] == keepout["hole_id"])
+        x, y = env["kxy"](hole["xz"])
+        travel = keepout["x_travel_mm"]
+        # 32边形外切于名义圆，最小净空不因多边形离散而缩小。
+        radius = keepout["radius_mm"]/math.cos(math.pi/32)
+        zone = pcb.ZONE(board)
+        zone.SetZoneName("JOY_SCREW_HEAD_"+hole["id"])
+        zone.SetIsRuleArea(True)
+        zone.SetLayer(pcb.F_Cu)
+        zone.SetDoNotAllowTracks(True)
+        zone.SetDoNotAllowVias(True)
+        zone.SetDoNotAllowCopperPour(True)
+        zone.SetDoNotAllowPads(False)
+        zone.SetDoNotAllowFootprints(False)
+        poly = zone.Outline()
+        poly.NewOutline()
+        for sign, first in ((1, -90), (-1, 90)):
+            for step in range(17):
+                angle = math.radians(first+step*180/16)
+                poly.Append(MM(x+sign*travel+radius*math.cos(angle)), MM(y+radius*math.sin(angle)))
+        board.Add(zone)
+
+
+def sync_reserved_holes(board, config, env):
+    """只补不存在的备用机械孔，不重建封装或改动现有线路和旧孔。"""
+    info = next(p for p in config["parts"] if p["ref"] == "SW1_ALT")
+    fp = next(f for f in board.GetFootprints() if f.GetReference() == info["ref"])
+    for hole in info["npth"]:
+        point = env["kxy"](hole["xz"])
+        if any(math.dist([pcb.ToMM(p.GetPosition().x), pcb.ToMM(p.GetPosition().y)], point) < .002
+               for p in fp.Pads() if p.GetAttribute() == pcb.PAD_ATTRIB_NPTH):
+            continue
+        pad = pcb.PAD(fp)
+        pad.SetAttribute(pcb.PAD_ATTRIB_NPTH)
+        pad.SetLayerSet(pcb.PAD.UnplatedHoleMask())
+        pad.SetShape(pcb.PAD_SHAPE_OVAL if hole["shape"] == "oval" else pcb.PAD_SHAPE_CIRCLE)
+        pad.SetDrillShape(pcb.PAD_DRILL_SHAPE_OBLONG if hole["drill"][0] != hole["drill"][1] else pcb.PAD_DRILL_SHAPE_CIRCLE)
+        pad.SetPosition(env["vec"](point))
+        pad.SetSize(env["vec"](hole["size"]))
+        pad.SetDrillSize(env["vec"](hole["drill"]))
+        fp.Add(pad)
+    screw_head_keepouts(board, config, env)
+
+
+def clear_shared_hole_adjacent_copper(board, env):
+    """远侧右长孔局部让开0.5毫米孔边规则，保留其它全部实际线路。"""
+    paths = {
+        ("JOY_SW", (19.986, 9.318), (27.606, 9.318)):
+            [(19.986, 9.318), (20.368, 9.7), (27.224, 9.7), (27.606, 9.318)],
+        ("GND", (27.2252, 10.0), (18.54, 10.0)):
+            [(27.2252, 10.35), (19.54, 10.35), (18.54, 10.0)],
+        ("GND", (37.2397, 20.0145), (27.2252, 10.0)):
+            [(37.2397, 20.0145), (27.5752, 10.35), (27.2252, 10.35)]}
+    for track in list(board.GetTracks()):
+        if isinstance(track, pcb.PCB_VIA) or track.GetLayer() != pcb.B_Cu:
+            continue
+        start = tuple(pcb.ToMM(v) for v in (track.GetStart().x, track.GetStart().y))
+        end = tuple(pcb.ToMM(v) for v in (track.GetEnd().x, track.GetEnd().y))
+        for (net, old_start, old_end), path in paths.items():
+            if track.GetNetname() != net or math.dist(start, old_start) > .002 or math.dist(end, old_end) > .002:
+                continue
+            track.SetStart(env["vec"](path[0]))
+            track.SetEnd(env["vec"](path[1]))
+            for a, b in zip(path[1:], path[2:]):
+                extra = pcb.PCB_TRACK(board)
+                extra.SetStart(env["vec"](a))
+                extra.SetEnd(env["vec"](b))
+                extra.SetLayer(track.GetLayer())
+                extra.SetWidth(track.GetWidth())
+                extra.SetNetCode(track.GetNetCode())
+                board.Add(extra)
+            break
+    for drawing in board.GetDrawings():
+        if isinstance(drawing, pcb.PCB_TEXT) and drawing.GetText() == "S3 MODULE CARRIER v2":
+            drawing.SetPosition(env["vec"]((36, 10.6)))
 
 
 def assembly_map_with_reserves(config, original_map, env):
@@ -544,8 +643,8 @@ def validate_current_electrical(config, board, env):
         errors.append("备用摇杆直排针次序不符")
     reserved_fp = next(fp for fp in board.GetFootprints() if fp.GetReference() == "SW1_ALT")
     reserve_holes = [pad for pad in reserved_fp.Pads() if pad.GetAttribute() == pcb.PAD_ATTRIB_NPTH]
-    if len(reserve_holes) != 2:
-        errors.append("备用摇杆非金属固定孔不是两个")
+    if len(reserve_holes) != 4:
+        errors.append("备用摇杆非金属固定孔不是四个")
     for info in reserved["npth"]:
         matches = [pad for pad in reserve_holes if math.dist(
             [pcb.ToMM(pad.GetPosition().x), pcb.ToMM(pad.GetPosition().y)], env["kxy"](info["xz"])) < .002]
@@ -566,7 +665,7 @@ def validate_current_electrical(config, board, env):
               "actual_board_sha256": env["digest"](env["BOARD_FILE"]), "actual_pth_count": len(actual),
               "net_count": len(nets), "actual_pad_net_position_drill_errors": 0,
               "resistors": 4, "capacitors": 4, "mount_holes_verified": 4,
-              "reserved_joystick_pth": 5, "reserved_joystick_npth": 2,
+              "reserved_joystick_pth": 5, "reserved_joystick_npth": 4,
               "reserved_joystick_populate": False,
               "module_terminal_pose": "实际孔号已随完整装配中的实体旋转同步",
               "divider_adc_v_at_4_2v_battery": 2.1, "battery_voltage_display_enabled": True,
@@ -599,7 +698,7 @@ def publish_checked(env):
 def validate_existing():
     """保留源板上的实际布线，重填铜、核对全部孔与网络，再同名导出。"""
     config = configuration()
-    config["status"] = "八颗手焊电阻电容及直排针备用五孔、两固定孔；板上网络已布线；实物插装和通电待验证"
+    config["status"] = "八颗手焊电阻电容及直排针备用五孔、四固定孔；远侧两孔共用弯针支架固定，实物插装和通电待验证"
     env = legacy_functions()
     with tempfile.TemporaryDirectory(prefix="gun-mouse-checked-") as tmp:
         stage = Path(tmp)
@@ -609,6 +708,8 @@ def validate_existing():
         env["write_json"](env["CONFIG"], config)
         shutil.copy2((PCB_DIR / BOARD_NAME).with_suffix(".kicad_pro"), env["BOARD_FILE"].with_suffix(".kicad_pro"))
         board = pcb.LoadBoard(str(PCB_DIR / BOARD_NAME))
+        sync_reserved_holes(board, config, env)
+        clear_shared_hole_adjacent_copper(board, env)
         for zone in list(board.Zones()):
             if not zone.GetIsRuleArea():
                 RETIRED.append(zone)
@@ -629,7 +730,13 @@ def validate_existing():
                   for track in board.GetTracks() if not isinstance(track, pcb.PCB_VIA)]
         router = SimpleNamespace(route_records=routes, record_unit="实际铜线段",
                                  via_count=sum(isinstance(track, pcb.PCB_VIA) for track in board.GetTracks()))
-        env["export_files"](config, board, router, pads)
+        try:
+            env["export_files"](config, board, router, pads)
+        except RuntimeError:
+            report = env["OUT"] / "drc-report.json"
+            if report.exists():
+                print(report.read_text(encoding="utf-8"), flush=True)
+            raise
         publish_checked(env)
         print("已保留实际布线并更新同名检查及制造输出。", flush=True)
 
@@ -657,6 +764,7 @@ def generate(geometry_only=False, reset_layout=False):
             RETIRED.append(zone)
             board.Remove(zone)
         antenna_keepout(board, config, env)
+        screw_head_keepouts(board, config, env)
         if geometry_only:
             pcb.SaveBoard(str(board_path), board)
             shutil.copy2(board_path, PCB_DIR / BOARD_NAME)
