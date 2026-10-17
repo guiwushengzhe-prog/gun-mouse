@@ -7,6 +7,7 @@ import gen2_component_details as detail
 from preview_split_support import split_support
 from preview_right_button_cradle import move_right_button_cradle
 from preview_local_joystick_mount import local_support, local_hardware
+from preview_ss01_right import build_right_switch, right_hardware
 
 
 OUT = m.ROOT / "shell" / "快速结构预览"
@@ -17,42 +18,42 @@ ORIGINAL_BOARD_MESHES = m.routed_pcb_meshes
 
 def preview_details(module, refs):
     refs, colors, wires = ORIGINAL_DETAILS(module, refs)
-    pivot = (-33, m.BACK - 3.25, -2)
-    for name in ("右键-黑色外壳", "右键-原生按钮", "右键-扁脚"):
-        refs[name] = refs[name].rotate(
-            pivot, (pivot[0], pivot[1], pivot[2] + 1), 90
-        ).translate((13.85, -4.32, -29))
+    right_refs, right_colors, terminals = build_right_switch(m)
+    refs.update(right_refs)
+    colors.update(right_colors)
 
     # 第三脚为空脚；原板仅使用已有右键信号和地两个焊盘。
     pads = next(p for p in m.C["parts"] if p["ref"] == "SW2")["pads"]
     refs["右键-焊点"] = m.cq.Compound.makeCompound([
         detail.solder(m, *p["xz"], .7) for p in pads if p["net"]
     ])
+    signal_end = (*terminals["NO"][:2], terminals["NO"][2]-.4)
+    ground_end = (*terminals["COM"][:2], terminals["COM"][2]-.4)
     routes = [
         ("右键信号短线", "BTN_R", (.16, .55, .18), [
             (-33, m.TOP + .6, -2), (-33, -7, -2),
-            (-33, -10.8, -5.5), (-33, -10.8, -31.8),
-            (-23.2, -10.8, -31.8),
-            (-23.2, -10.8, -31),
+            (-33, -10.8, -5.5), (-33, -10.8, -31.6),
+            (-24, -10.8, -31.6), (-22, -10.8, -32.5), signal_end,
         ]),
         ("右键地线短线", "GND", (.025, .027, .03), [
             (-27.92, m.TOP + .6, -2), (-27.92, -7, -2),
-            (-31, -7, -5.5), (-31, -7, -31.8),
-            (-25.5, -7, -31.8), (-25.5, -5.72, -31.8),
-            (-23.2, -5.72, -31.8), (-23.2, -5.72, -31),
+            (-31, -7, -5.5), (-31, -7, -21.5),
+            (-24, -7, -21.5), (-24, -10.8, -21.5),
+            (-22, -10.8, -23.7), ground_end,
         ]),
     ]
     for name, net, rgb, points in routes:
         core, length = detail.tube(m, points, .125, .8)
         insulated = list(points)
         insulated[0] = (points[0][0], -4.5, points[0][2])
-        # 线尾留下露铜段，与扁脚搭焊。
+        # 露铜穿入端子的1.6毫米焊孔，焊锡填住孔并接到金属片。
         end, before = m.V(*points[-1]), m.V(*points[-2])
-        insulated[-1] = (end+(before-end).normalized()*.4).toTuple()
+        insulated[-1] = (end+(before-end).normalized()*1.2).toTuple()
         jacket, _ = detail.tube(m, insulated, .4, .8)
         refs[name + "-铜芯"] = core
         refs[name + "-绝缘皮"] = jacket
-        refs[name + "-扁脚焊锡"] = m.cq.Solid.makeSphere(.55, m.V(*points[-1]))
+        terminal = terminals["NO" if net == "BTN_R" else "COM"]
+        refs[name + "-扁脚焊锡"] = m.cq.Solid.makeSphere(1.0, m.V(*terminal))
         colors[name + "-铜芯"] = (.72, .39, .16)
         colors[name + "-绝缘皮"] = rgb
         colors[name + "-扁脚焊锡"] = (.69, .71, .73)
@@ -70,6 +71,7 @@ def preview_hardware():
     refs, seats = ORIGINAL_HARDWARE()
     refs = {n: s for n, s in refs.items() if not n.startswith("共用锚点")}
     refs.update(local_hardware(m))
+    refs.update(right_hardware(m))
     return refs, seats
 
 
