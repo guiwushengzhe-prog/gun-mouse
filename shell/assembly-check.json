@@ -6,14 +6,14 @@
     -59.8,
     -8.8,
     -19.3,
-    5.84,
+    7.24,
     -125.8,
     46.8
   ],
-  "volume_mm3": 13721.253,
+  "volume_mm3": 13732.868,
   "mass_g": {
-    "树脂1.2": 16.47,
-    "尼龙1.01": 13.86
+    "树脂1.2": 16.48,
+    "尼龙1.01": 13.87
   },
   "new_printed_parts": 1,
   "overlaps_mm3": {},
@@ -113,7 +113,7 @@
       "projection_past_nut_mm": 0.8,
       "hole_center_xy_mm": [
         -43.45,
-        2.4400000000000004
+        3.84
       ],
       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"
     },
@@ -130,7 +130,7 @@
       "projection_past_nut_mm": 0.8,
       "hole_center_xy_mm": [
         -23.950000000000003,
-        2.4400000000000004
+        3.84
       ],
       "driver": "下方1.5mm内六角；上方薄钳扶普通M2螺母，直接压模块原孔"
     }
@@ -172,7 +172,7 @@
   ],
   "joystick_axis_xyz_mm": [
     -33.7,
-    15.64,
+    17.04,
     3.8
   ],
   "joystick_axis_direction_xyz": [
@@ -180,6 +180,16 @@
     0,
     1
   ],
+  "joystick_dimension_basis": {
+    "pin_to_near_mount_row_mm": 2.4,
+    "mount_pitch_mm": [
+      19.5,
+      26.4
+    ],
+    "mount_pitch_basis": "DZYJ商品图明确标注，未实测",
+    "pin_to_row_basis": "图中未标该尺寸，以用户实测约2.4毫米补充",
+    "dimension_precedence": "商品图明确尺寸优先，未标尺寸使用实测补充；旧模型1.0毫米为估算，不作为厂家尺寸"
+  },
   "battery_envelope_mm": [
     -47.7,
     -27.7,
@@ -188,7 +198,7 @@
     -124.0,
     -44.0
   ],
-  "config_sha256": "1553cb3e1354e523290cfa12735b32ea23b4432b49604ab974b1054f694d009a",
+  "config_sha256": "ee69f9d458f187c73adbaf3facf03e5e4c29287c20fb38bd1f66c96ab791adc6",
   "installation_faces": {
     "拇指面+Y": "摇杆及从主板缺口绕过的局部短臂",
     "元件面-Y": "一体支架、电池托、八颗小件护板；上方两块模块仍敞开且位置不变"
@@ -228,17 +238,17 @@
     -0.0,
     172.6,
     -0.0,
-    25.14
+    26.54
   ],
   "stl_check": {
     "open_or_nonmanifold_edges": 0,
     "connected_bodies": 1,
-    "mesh_vs_cad_volume_relative_difference": 4.1e-05,
+    "mesh_vs_cad_volume_relative_difference": 4.2e-05,
     "pass": true
   },
-  "stl_sha256": "26cc0e1a5b831b6c58ba9fbc39c45c8a602f37d59880a1eaa9e9105f820412e7",
+  "stl_sha256": "2f12d72e8458105d3557d2e48033764904d775ff0bae6e57666e6ccd84a4b5ed",
   "assembled_model": {
-    "object_count": 134,
+    "object_count": 133,
     "invalid_shapes": [],
     "manual_wire_count": 7,
     "wires": [
@@ -638,16 +648,15 @@
       "触摸铜箔线-绝缘皮": 0.0
     },
     "wire_insulation_pair_overlaps_mm3": {},
-    "pcb_sha256": "81539a78c034282642b0e65407d0929fcf4531d730ea2439b89b666fb7e64a2d",
+    "pcb_sha256": "0433f5f2210065c64fdf33b7f5008a94edd4b40a81760f477468dfea2ed4e9b9",
     "real_copper_materials": [
       "载板-基材",
-      "载板-绿色保护层",
-      "载板-丝印",
-      "载板-真实铜层焊盘",
-      "载板-mtl51691"
+      "载板-mtl8619",
+      "载板-mtl12407",
+      "载板-mtl14463"
     ],
     "appearance_basis": "开发板为本地官方器件参考外形；其余小件和线弯曲为名义外形。B焊盘和铜箔尾按照片比读，未实测。",
-    "stl_sha256": "9d9bf513e27d21d0cd1d633b302bf9fac4da2661c29610024f307eb1a3432ee5",
-    "obj_sha256": "99d760d11b9a16cf4d1dcbc55a5768f4bc8cdde9867bbdd3b3e523928462b8e5"
+    "stl_sha256": "b64dd6784cf8d8586407ca8c5d0d38c5115f3b60c53308a1c8e2714b41f93899",
+    "obj_sha256": "536b55349f827a83b7156b6537e879772f801c06ccd7028d7b8fc9d113d435d6"
   }
 }

@@ -1,12 +1,13 @@
 {
-  "config_sha256": "1553cb3e1354e523290cfa12735b32ea23b4432b49604ab974b1054f694d009a",
+  "config_sha256": "ee69f9d458f187c73adbaf3facf03e5e4c29287c20fb38bd1f66c96ab791adc6",
   "nets": {
     "3V3": [
       "SW1.2",
       "J_MCU.12",
       "J_GY.1",
       "J_GY.14",
-      "R_TRIG.1"
+      "R_TRIG.1",
+      "SW1_ALT.4"
     ],
     "BAT_RAW": [
       "J_BAT.1",
@@ -35,21 +36,25 @@
       "C_JOY_X.2",
       "C_JOY_Y.2",
       "C_TRIG.2",
-      "C_BAT.2"
+      "C_BAT.2",
+      "SW1_ALT.5"
     ],
     "JOY_SW": [
       "SW1.5",
-      "J_MCU.6"
+      "J_MCU.6",
+      "SW1_ALT.1"
     ],
     "JOY_X": [
       "SW1.3",
       "J_MCU.3",
-      "C_JOY_X.1"
+      "C_JOY_X.1",
+      "SW1_ALT.3"
     ],
     "JOY_Y": [
       "SW1.4",
       "J_MCU.4",
-      "C_JOY_Y.1"
+      "C_JOY_Y.1",
+      "SW1_ALT.2"
     ],
     "SCL": [
       "J_MCU.8",
@@ -265,6 +270,18 @@
       "pins": {
         "1": "VBAT_ADC",
         "2": "GND"
+      }
+    },
+    {
+      "ref": "SW1_ALT",
+      "kind": "joystick",
+      "value": "HW-504直排针备用位",
+      "pins": {
+        "1": "JOY_SW",
+        "2": "JOY_Y",
+        "3": "JOY_X",
+        "4": "3V3",
+        "5": "GND"
       }
     }
   ],

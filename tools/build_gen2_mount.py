@@ -38,14 +38,19 @@ SM = (*SM_CFG["x"], SM_CFG["component_face_y"]-SM_CFG["board_thickness"],
 GY = (*GY_CFG["x"], GY_CFG["component_face_y"]-GY_CFG["board_thickness"],
       GY_CFG["component_face_y"], *GY_CFG["z"])
 JOYSTICK = next(p for p in C["parts"] if p["ref"] == "SW1")
+JOY_PIN_TO_MOUNT = C.get("joystick_mounting", {}).get("pin_to_near_mount_row_mm", 2.4)
+# 旧名义模型按1毫米放置；用补充尺寸修正模块位置，主板五孔与弯针水平段不动。
+JOY_OUTWARD_SHIFT = JOY_PIN_TO_MOUNT-1.0
+JOY_NEAR_Y = FACE_Y_SUM+7.3+JOY_OUTWARD_SHIFT
+JOY_ARM_Y = (JOY_NEAR_Y-1.8, JOY_NEAR_Y+1.8)
 # DZYJ标称图：黑板33x27，孔距26.4x19.5，孔径3.3；图注尺寸误差0.5-1mm。
 # 器件外形使用原始模块坐标，载板孔与网络使用配置中的最终装配坐标。
 JOY_PIN_CENTER = (C["battery"]["center_xyz"][0]+4.0, 5.0)
 JOY_BOARD = (JOY_PIN_CENTER[0]-13.5, JOY_PIN_CENTER[0]+13.5,
-             -37.0, -4.0, 2.2, 3.8)
-JOY_AXIS = (JOY_PIN_CENTER[0], -20.5, JOY_BOARD[5])
+             -37.0-JOY_OUTWARD_SHIFT, -4.0-JOY_OUTWARD_SHIFT, 2.2, 3.8)
+JOY_AXIS = (JOY_PIN_CENTER[0], -20.5-JOY_OUTWARD_SHIFT, JOY_BOARD[5])
 JOY_HOLES = [(JOY_PIN_CENTER[0]+dx, y)
-             for y in (-7.3, -33.7) for dx in (-9.75, 9.75)]
+             for y in (-7.3-JOY_OUTWARD_SHIFT, -33.7-JOY_OUTWARD_SHIFT) for dx in (-9.75, 9.75)]
 JOY_MOUNT_HOLES = JOY_HOLES[:2]
 SS_HOLES = [(-14.2, -4.521), (-14.2, -14.021)]
 
@@ -140,9 +145,9 @@ def build_mount():
     # 下部薄护板挡住八颗手焊小件；上方两块模块保持敞开。
     parts.append(box(-54.5, -23.6, BASE[0], BASE[1], -34, -7.2))
     # 从主板前方的原有缺口绕过，短臂仍托住摇杆靠板的两个孔。
-    parts += [box(-19.4, -15.8, BASE[0], 4.24, 2, 4.2),
-              box(-19.4, -15.8, .64, 4.24, -5.8, 4.2),
-              box(-46.85, -15.8, .64, 4.24, -5.8, -2.2)]
+    parts += [box(-19.4, -15.8, BASE[0], JOY_ARM_Y[1], 2, 4.2),
+              box(-19.4, -15.8, *JOY_ARM_Y, -5.8, 4.2),
+              box(-46.85, -15.8, *JOY_ARM_Y, -5.8, -2.2)]
     for x, original_y in JOY_MOUNT_HOLES:
         y = FACE_Y_SUM-original_y
         parts.append(cz(x, y, 3.4, -5.8, JOY_BOARD[4]))
@@ -211,6 +216,20 @@ def references():
     r["载板"] = prism(P["outline_xz"], BACK, TOP)
     for h in P["mount_holes"]:
         r["载板"] = r["载板"].cut(cy(*h["xz"], h["d"]/2, BACK-.1, TOP+.1))
+    for part in C["parts"]:
+        if not part.get("reserve", False):
+            continue
+        for pad in part.get("npth", []):
+            x,z=pad["xz"]
+            dx,dz=pad["drill"]
+            if dx==dz:
+                bore=cy(x,z,dx/2,BACK-.1,TOP+.1)
+            else:
+                offset=(dx-dz)/2
+                bore=fuse([cy(x-offset,z,dz/2,BACK-.1,TOP+.1),
+                           cy(x+offset,z,dz/2,BACK-.1,TOP+.1),
+                           box(x-offset,x+offset,BACK-.1,TOP+.1,z-dz/2,z+dz/2)])
+            r["载板"]=r["载板"].cut(bore)
     for p in C["parts"]:
         if not p.get("populate", True):
             continue
@@ -258,7 +277,7 @@ def references():
         cq.Solid.makeCone(4, 10, 8, V(x, y, z+16.4), V(0, 0, 1))])
     old_z = JOYSTICK.get("model_reference_position_xz", JOYSTICK["position_xz"])[1]
     r["SW1-五针示意"] = fuse([cy(x+p["xz"][1]-old_z, JOY_PIN_CENTER[1],
-                                    .32, -5, TOP+1)
+                                    .32, FACE_Y_SUM-1.44, TOP+1)
                                   for p in JOYSTICK.get("model_reference_pads", JOYSTICK["pads"])])
     ss = fuse([box(-17.1, -7.6, -3.2, 3.2, -19.221, .579),
                box(-7.6, -6.9, -3.2, 3.2, -7.421, .579)])
@@ -452,6 +471,7 @@ def verify(s, refs):
             "carrier_mount_holes": P["mount_holes"],
             "joystick_axis_xyz_mm": [JOY_AXIS[0], FACE_Y_SUM-JOY_AXIS[1], JOY_AXIS[2]],
             "joystick_axis_direction_xyz": joystick_direction(),
+            "joystick_dimension_basis": C.get("joystick_mounting", {}),
             "battery_envelope_mm": bounds(refs["电池"]),
             "config_sha256": hashlib.sha256(CONFIG.read_bytes()).hexdigest(),
             "installation_faces": {"拇指面+Y": "摇杆及从主板缺口绕过的局部短臂", "元件面-Y": "一体支架、电池托、八颗小件护板；上方两块模块仍敞开且位置不变"},

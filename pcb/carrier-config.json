@@ -1,7 +1,7 @@
 {
   "version": "supermini-tht-carrier-v2",
   "units": "mm",
-  "status": "八颗手焊电阻电容；模块翻面孔号与摇杆横排五孔已同步，板上网络已布线；实物插装和通电待验证",
+  "status": "八颗手焊电阻电容及直排针备用五孔、两固定孔；板上网络已布线；实物插装和通电待验证",
   "pcb": {
     "outline_xz": [
       [
@@ -3367,10 +3367,167 @@
         ]
       },
       "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "SW1_ALT",
+      "kind": "joystick",
+      "value": "HW-504直排针备用位",
+      "position_xz": [
+        -36.5,
+        8.5
+      ],
+      "populate": false,
+      "reserve": true,
+      "mount_side": "top",
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -41.58,
+            8.5
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -39.04,
+            8.5
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -36.5,
+            8.5
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -33.96,
+            8.5
+          ],
+          "net": "3V3",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -31.42,
+            8.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [
+        {
+          "id": "JOY_STRAIGHT_L",
+          "xz": [
+            -46.25,
+            10.9
+          ],
+          "drill": [
+            2.4,
+            2.4
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        },
+        {
+          "id": "JOY_STRAIGHT_R",
+          "xz": [
+            -26.75,
+            10.9
+          ],
+          "drill": [
+            3.6,
+            2.4
+          ],
+          "size": [
+            3.6,
+            2.4
+          ],
+          "shape": "oval"
+        }
+      ],
+      "envelope": {
+        "x": [
+          -50,
+          -23
+        ],
+        "z": [
+          7.6,
+          40.6
+        ],
+        "y_above_board": 30
+      },
+      "envelope_basis": "黑板27x33毫米为资料标称；排针到近侧孔行约2.4毫米为用户实测，模块外框位置沿用估算模型，并非板边到针实测",
+      "assembly": "备用换装建议：M2x10从元件面朝+Y穿入，普通直径4毫米螺钉头朝元件面、螺母在摇杆面；控制螺纹伸出量，本版不增加这些紧固件",
+      "purpose": "仅预留，不装第二个摇杆；与原SW1二选一。直排针换装前核实实物，两个M2固定孔不作为现框架安装孔"
     }
   ],
   "source_sha256": {
     "config/pcb-shell-v1.json": "7fe80e1e2e066cec1c183877b920eb5e2993332164d19e1b66ddfe4d19ce390b",
     "config/pcb-parts-geometry.json": "68eef13f2e0565452a7f5501419544a84462694704475a6c1a5aa992f4a3112b"
+  },
+  "joystick_mounting": {
+    "pin_to_near_mount_row_mm": 2.4,
+    "mount_pitch_mm": [
+      19.5,
+      26.4
+    ],
+    "mount_pitch_basis": "DZYJ商品图明确标注，未实测",
+    "pin_to_row_basis": "图中未标该尺寸，以用户实测约2.4毫米补充",
+    "dimension_precedence": "商品图明确尺寸优先，未标尺寸使用实测补充；旧模型1.0毫米为估算，不作为厂家尺寸"
   }
 }

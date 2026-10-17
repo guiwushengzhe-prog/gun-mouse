@@ -2,6 +2,7 @@
 
 运行环境：KiCad 9 的 Python、NumPy、SciPy。不会改动 E 盘嘉立创工程。
 仅在临时目录中修改、填铜和检查；检查成功后更新 pcb/ 中的同名文件。
+保留现有实际走线重导：python3 tools/generate_gen2_pcb.py --validate-existing。
 """
 from __future__ import annotations
 
@@ -20,6 +21,7 @@ import tempfile
 import zipfile
 from collections import defaultdict
 from pathlib import Path
+from types import SimpleNamespace
 from xml.sax.saxutils import escape
 
 import numpy as np
@@ -34,7 +36,7 @@ AFFECTED = {"JOY_SW", "JOY_X", "JOY_Y", "3V3", "BAT_RAW", "BAT_SW", "VBUS_DET", 
 SOURCE_COMMIT = "e2848bd"
 SOURCE_PATH = "experiments/30g-onepiece-test-shell/build_carrier_pcb.py"
 MM = pcb.FromMM
-GRID, TRACK_W, CLEARANCE, VIA_D, VIA_DRILL = .254, .30, .25, .70, .30
+GRID, TRACK_W, CLEARANCE, VIA_D, VIA_DRILL = .127, .30, .25, .70, .30
 # KiCad 9 的移除接口把所有权交给 Python；保留对象到导出结束，规避绑定析构问题。
 RETIRED = []
 
@@ -42,6 +44,13 @@ RETIRED = []
 def legacy_functions():
     """读取指定历史版本，避免恢复旧目录或复制整套旧交付。"""
     source = subprocess.check_output(["git", "show", f"{SOURCE_COMMIT}:{SOURCE_PATH}"], cwd=ROOT, text=True)
+    # 障碍图已含走线半宽0.15毫米，换层只需再加过孔半径差0.20毫米；
+    # 不重复叠加整个0.35毫米半径，保留原0.25毫米铜间距及0.18毫米搜索余量。
+    source = source.replace('*GRID>.35', '*GRID>.20')
+    source = source.replace('+.18', '+.10')
+    source = source.replace('"pcb","export","drill","--output"',
+                            '"pcb","export","drill","--excellon-separate-th","--output"')
+    source = source.replace('len(z.namelist())!=9', 'len(z.namelist())!=10')
     source = source.replace('"wirebank":8,"joystick":1,"microswitch":1',
                             '"wirebank":4,"module":2,"joystick":1,"microswitch":1,"power_switch":1')
     source = source.replace('bank("J_SWITCH",["BAT_RAW","BAT_SW"])',
@@ -54,7 +63,7 @@ def legacy_functions():
                             'bank("J_GY",["3V3","GND","SCL","SDA","","","","","3V3","GND","","","",""])')
     source = source.replace('        a=next(p["xy"] for p in self.pads if p["ref"]=="J_GY" and p["number"]=="2")\n        b=[55.0,a[1]]\n        self.apply_path(self.astar(a,b,self.nets["GND"].GetNetCode()),a,b,"GND")', '')
     source = source.replace('("JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH","TOUCH_ELECTRODE","SDA","SCL","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")',
-                            '("TOUCH","SDA","SCL","JOY_SW","VBUS_DET","VBAT_ADC","TRIG","BTN_R","JOY_X","JOY_Y","TOUCH_ELECTRODE","VBUS_SHARED","BAT_RAW","BAT_SW","3V3")')
+                            '("TOUCH","SDA","SCL","JOY_X","JOY_Y","JOY_SW","BAT_SW","3V3","VBUS_DET","VBAT_ADC","TRIG","BTN_R","TOUCH_ELECTRODE","VBUS_SHARED","BAT_RAW")')
     source = source.replace('if part["kind"]!="wirebank":continue', 'if part["kind"] not in {"wirebank","module"}:continue')
     source = source.replace('elif part["ref"]=="J_GY":destination={"3V3":"GY-601N1 H2 VCC","GND":"GY-601N1 H2 GND","SCL":"GY-601N1 H2 SCL","SDA":"GY-601N1 H2 SDA"}[n]',
                             'elif part["ref"]=="J_GY":destination="GY-601N1 直接焊接；闲脚独立不接线"')
@@ -73,6 +82,10 @@ def legacy_functions():
                             '            if part["kind"] in {"wirebank", "module"} or part["ref"] in {"SW1", "J_SWITCH"}:')
     source = source.replace('escape(part["ref"])',
                             'escape(part["ref"] + ("(B)" if part.get("mount_side") == "bottom" else ""))')
+    source = source.replace('            writer.writerow([part["ref"],part["value"],1,',
+                            '            if not part.get("populate", True):continue\n            writer.writerow([part["ref"],part["value"],1,')
+    source = source.replace('"routed_connections":len(router.route_records),',
+                            '"routed_connections":len(router.route_records),"route_record_unit":getattr(router,"record_unit","连接路径"),')
     names = {"write_json", "digest", "kxy", "vec", "add_text", "line", "configure_default_netclass",
              "Router", "add_ground_zone", "validate_electrical", "assembly_map", "export_files"}
     tree = ast.parse(source)
@@ -81,6 +94,8 @@ def legacy_functions():
     exec(compile(selected, SOURCE_PATH, "exec"), env)
     env["render_previews"] = lambda: None
     env["validate_electrical"] = lambda config, board: validate_current_electrical(config, board, env)
+    original_map = env["assembly_map"]
+    env["assembly_map"] = lambda config: assembly_map_with_reserves(config, original_map, env)
     return env
 
 
@@ -124,6 +139,8 @@ def base_configuration():
 def apply_assembly_pose(config):
     """实体装配中的旋转只计算一次；基准模型数据与最终制板孔分开保存。"""
     for part in config["parts"]:
+        if part.get("reserve"):
+            continue
         part.setdefault("model_reference_pads", copy.deepcopy(part["pads"]))
         part.setdefault("model_reference_mount_side", part.get("mount_side", "top"))
         part.setdefault("model_reference_position_xz", copy.deepcopy(part["position_xz"]))
@@ -149,6 +166,30 @@ def apply_assembly_pose(config):
     config["pcb"]["antenna_keepout_xz"] = [[-35, 17], [-27, 17], [-27, 28], [-35, 28]]
     config["pcb"]["antenna_keepout_basis"] = "开发板绕X轴、Z=22.5毫米翻转；原Z=17..28毫米禁铜区关于22.5对称，变换后范围相同"
     config["status"] = "八颗手焊电阻电容；真实模块翻面孔号和摇杆横排五孔已同步，正在重新布线检查"
+    return config
+
+
+def straight_joystick_reserve(config):
+    """增加二选一直排针孔；保持现装弯针孔和全部旧元件坐标。"""
+    config["joystick_mounting"] = {
+        "pin_to_near_mount_row_mm": 2.4, "mount_pitch_mm": [19.5, 26.4],
+        "mount_pitch_basis": "DZYJ商品图明确标注，未实测", "pin_to_row_basis": "图中未标该尺寸，以用户实测约2.4毫米补充",
+        "dimension_precedence": "商品图明确尺寸优先，未标尺寸使用实测补充；旧模型1.0毫米为估算，不作为厂家尺寸"}
+    reserve = {"ref": "SW1_ALT", "kind": "joystick", "value": "HW-504直排针备用位",
+        "position_xz": [-36.5, 8.5], "populate": False, "reserve": True, "mount_side": "top",
+        "pads": [{"number": str(i+1), "xz": [x, 8.5], "net": net,
+                  "drill": [1.2, 1.2], "size": [2, 2], "shape": "circle"}
+                 for i, (x, net) in enumerate(zip([-41.58, -39.04, -36.5, -33.96, -31.42],
+                                                  ["JOY_SW", "JOY_Y", "JOY_X", "3V3", "GND"]))],
+        "npth": [{"id": "JOY_STRAIGHT_L", "xz": [-46.25, 10.9], "drill": [2.4, 2.4],
+                  "size": [2.4, 2.4], "shape": "circle"},
+                 {"id": "JOY_STRAIGHT_R", "xz": [-26.75, 10.9], "drill": [3.6, 2.4],
+                  "size": [3.6, 2.4], "shape": "oval"}],
+        "envelope": {"x": [-50, -23], "z": [7.6, 40.6], "y_above_board": 30},
+        "envelope_basis": "黑板27x33毫米为资料标称；排针到近侧孔行约2.4毫米为用户实测，模块外框位置沿用估算模型，并非板边到针实测",
+        "assembly": "备用换装建议：M2x10从元件面朝+Y穿入，普通直径4毫米螺钉头朝元件面、螺母在摇杆面；控制螺纹伸出量，本版不增加这些紧固件",
+        "purpose": "仅预留，不装第二个摇杆；与原SW1二选一。直排针换装前核实实物，两个M2固定孔不作为现框架安装孔"}
+    config["parts"] = [part for part in config["parts"] if part["ref"] != "SW1_ALT"] + [reserve]
     return config
 
 
@@ -201,7 +242,7 @@ def simplify_hand_solder(config):
 def configuration(reset_layout=False):
     config = json.loads((PCB_DIR / CONFIG_NAME).read_text(encoding="utf-8"))
     if not reset_layout:
-        return apply_assembly_pose(simplify_hand_solder(config))
+        return straight_joystick_reserve(apply_assembly_pose(simplify_hand_solder(config)))
     config["version"] = "supermini-tht-carrier-v2"
     config["pcb"]["kicad_mapping"] = "(Kx,Ky)=(-X-3,45-Z); MCU/GY components face +Y; HW504 PCB is perpendicular, shaft points -X"
     config["pcb"]["antenna_keepout_xz"] = [[-35, 17], [-27, 17], [-27, 28], [-35, 28]]
@@ -304,7 +345,7 @@ def configuration(reset_layout=False):
             pad["xz"] = [round(x+(-.5 if i == 0 else .5)*pitch, 4), z]
         if part["kind"] == "capacitor":
             part["envelope_basis"] = "采购直插陶瓷电容，脚距5.08mm，本体宽<=6mm、厚<=2mm、焊后高<=7mm；不采用2.54mm脚距"
-    return apply_assembly_pose(simplify_hand_solder(config))
+    return straight_joystick_reserve(apply_assembly_pose(simplify_hand_solder(config)))
 
 
 def write_bom(config):
@@ -333,6 +374,8 @@ def relocate(board, config, env):
         fp.SetReference(info["ref"])
         fp.SetFPID(pcb.LIB_ID("GunMouseHandSolder", info["ref"]))
         fp.SetAttributes(pcb.FP_THROUGH_HOLE)
+        if not info.get("populate", True):
+            fp.SetAttributes(pcb.FP_THROUGH_HOLE | pcb.FP_DNP | pcb.FP_EXCLUDE_FROM_BOM | pcb.FP_EXCLUDE_FROM_POS_FILES)
         fp.Reference().SetVisible(False)
         fp.Value().SetVisible(False)
         board.Add(fp)
@@ -357,11 +400,24 @@ def relocate(board, config, env):
             p.SetShape(pcb.PAD_SHAPE_OVAL if pinfo["shape"] == "oval" else pcb.PAD_SHAPE_CIRCLE)
             p.SetDrillShape(pcb.PAD_DRILL_SHAPE_OBLONG if pinfo["drill"][0] != pinfo["drill"][1] else pcb.PAD_DRILL_SHAPE_CIRCLE)
             p.SetNet(board.FindNet(pinfo["net"]) if pinfo["net"] else board.FindNet(0))
-        for p, pinfo in zip([p for p in fp.Pads() if not p.GetNumber()], info["npth"]):
+        for pinfo in info["npth"]:
+            p = pcb.PAD(fp)
+            p.SetNumber("")
+            p.SetAttribute(pcb.PAD_ATTRIB_NPTH)
+            p.SetNetCode(0)
+            p.SetLayerSet(pcb.PAD.UnplatedHoleMask())
+            p.SetOrientationDegrees(0)
+            p.SetShape(pcb.PAD_SHAPE_OVAL if pinfo["shape"] == "oval" else pcb.PAD_SHAPE_CIRCLE)
+            p.SetDrillShape(pcb.PAD_DRILL_SHAPE_OBLONG if pinfo["drill"][0] != pinfo["drill"][1] else pcb.PAD_DRILL_SHAPE_CIRCLE)
             p.SetPosition(env["vec"](env["kxy"](pinfo["xz"])))
+            p.SetSize(env["vec"](pinfo["size"]))
+            p.SetDrillSize(env["vec"](pinfo["drill"]))
+            fp.Add(p)
         for item in list(fp.GraphicalItems()):
             RETIRED.append(item)
             fp.Remove(item)
+        if info.get("reserve"):
+            continue
         e = info.get("fabrication_envelope", info["envelope"])
         a, b = env["kxy"]([max(e["x"]), max(e["z"])]), env["kxy"]([min(e["x"]), min(e["z"])])
         courtyard, fab = (pcb.B_CrtYd, pcb.B_Fab) if info.get("mount_side") == "bottom" else (pcb.F_CrtYd, pcb.F_Fab)
@@ -378,7 +434,7 @@ def relocate(board, config, env):
             RETIRED.append(item)
             board.Remove(item)
     env["add_text"](board, "S3 MODULE CARRIER v2", env["kxy"]([-39, 38]), .8)
-    env["add_text"](board, "BAT OFF BEFORE PC USB", env["kxy"]([-41, 8]), .8)
+    env["add_text"](board, "BAT OFF BEFORE PC USB", env["kxy"]([-41, 1.5]), .8)
     env["add_text"](board, "ON", env["kxy"]([-49.8, -38.3]), .8)
     env["add_text"](board, "OFF", env["kxy"]([-32.7, -38.3]), .8)
     for part in config["parts"]:
@@ -416,6 +472,32 @@ def route_antenna_keepout(router, config, env):
             & (yy >= min(p[1] for p in points)-margin) & (yy <= max(p[1] for p in points)+margin))
     router.owner[:, mask] = -1
     router.hole_keepout[mask] = True
+
+
+def assembly_map_with_reserves(config, original_map, env):
+    """备用只标真实孔，不画第二套器件本体或占位庭院。"""
+    view = copy.deepcopy(config)
+    view["parts"] = [p for p in view["parts"] if p.get("populate", True)]
+    for part in view["parts"]:
+        part["envelope"] = part.get("fabrication_envelope", part["envelope"])
+    original_map(view)
+    additions = ['<g id="reserved-joystick-holes">']
+    for part in config["parts"]:
+        if not part.get("reserve"):
+            continue
+        for pad in part["pads"]:
+            x, y = env["kxy"](pad["xz"])
+            x, y = x-5, y-5
+            additions.append(f'<circle cx="{x}" cy="{y}" r="{pad["size"][0]/2}" fill="#b89148"/>')
+            additions.append(f'<circle cx="{x}" cy="{y}" r="{pad["drill"][0]/2}" fill="white" stroke="#555" stroke-width=".08"/>')
+        for hole in part["npth"]:
+            x, y = env["kxy"](hole["xz"])
+            x, y = x-5, y-5
+            w, h = hole["drill"]
+            additions.append(f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="{min(w,h)/2}" fill="white" stroke="#555" stroke-width=".12"/>')
+    additions.append('</g>')
+    target = env["OUT"] / "carrier-assembly-map.svg"
+    target.write_text(target.read_text(encoding="utf-8").replace('</svg>', '\n'.join(additions)+'\n</svg>'), encoding="utf-8")
 
 
 def validate_current_electrical(config, board, env):
@@ -457,6 +539,18 @@ def validate_current_electrical(config, board, env):
         fp = next(fp for fp in board.GetFootprints() if fp.GetReference() == ref)
         if fp.GetLayer() != pcb.B_Cu:
             errors.append(f"{ref}安装面不符")
+    reserved = parts["SW1_ALT"]
+    if [p["net"] for p in reserved["pads"]] != ["JOY_SW", "JOY_Y", "JOY_X", "3V3", "GND"]:
+        errors.append("备用摇杆直排针次序不符")
+    reserved_fp = next(fp for fp in board.GetFootprints() if fp.GetReference() == "SW1_ALT")
+    reserve_holes = [pad for pad in reserved_fp.Pads() if pad.GetAttribute() == pcb.PAD_ATTRIB_NPTH]
+    if len(reserve_holes) != 2:
+        errors.append("备用摇杆非金属固定孔不是两个")
+    for info in reserved["npth"]:
+        matches = [pad for pad in reserve_holes if math.dist(
+            [pcb.ToMM(pad.GetPosition().x), pcb.ToMM(pad.GetPosition().y)], env["kxy"](info["xz"])) < .002]
+        if len(matches) != 1 or any(abs(pcb.ToMM(matches[0].GetDrillSize()[i])-info["drill"][i]) > .002 for i in (0, 1)):
+            errors.append(f"{info['id']}固定孔坐标或槽尺寸不符")
     if errors:
         raise RuntimeError("电路核对失败："+"；".join(errors))
     nets = defaultdict(list)
@@ -472,6 +566,8 @@ def validate_current_electrical(config, board, env):
               "actual_board_sha256": env["digest"](env["BOARD_FILE"]), "actual_pth_count": len(actual),
               "net_count": len(nets), "actual_pad_net_position_drill_errors": 0,
               "resistors": 4, "capacitors": 4, "mount_holes_verified": 4,
+              "reserved_joystick_pth": 5, "reserved_joystick_npth": 2,
+              "reserved_joystick_populate": False,
               "module_terminal_pose": "实际孔号已随完整装配中的实体旋转同步",
               "divider_adc_v_at_4_2v_battery": 2.1, "battery_voltage_display_enabled": True,
               "low_battery_shutdown_enabled": False, "external_power_detection_enabled": False,
@@ -487,6 +583,55 @@ def validate_current_electrical(config, board, env):
             for pad in part["pads"]:
                 writer.writerow([part["ref"], pad["number"], pad["net"], part.get("purpose", ""), *pad["xz"]])
     return report
+
+
+def publish_checked(env):
+    for item in env["OUT"].rglob("*"):
+        if (item.is_file() and "Gerber" not in item.relative_to(env["OUT"]).parts
+                and "GunMouseHandSolder.pretty" not in item.relative_to(env["OUT"]).parts
+                and item.name != "fp-lib-table" and item.suffix != ".kicad_prl"):
+            dest = PCB_DIR / item.relative_to(env["OUT"])
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(item, dest)
+    shutil.copy2(env["CONFIG"], PCB_DIR / CONFIG_NAME)
+
+
+def validate_existing():
+    """保留源板上的实际布线，重填铜、核对全部孔与网络，再同名导出。"""
+    config = configuration()
+    config["status"] = "八颗手焊电阻电容及直排针备用五孔、两固定孔；板上网络已布线；实物插装和通电待验证"
+    env = legacy_functions()
+    with tempfile.TemporaryDirectory(prefix="gun-mouse-checked-") as tmp:
+        stage = Path(tmp)
+        env.update(HERE=stage, OUT=stage / "pcb", CONFIG=stage / CONFIG_NAME,
+                   BOARD_FILE=stage / "pcb" / BOARD_NAME)
+        env["OUT"].mkdir()
+        env["write_json"](env["CONFIG"], config)
+        shutil.copy2((PCB_DIR / BOARD_NAME).with_suffix(".kicad_pro"), env["BOARD_FILE"].with_suffix(".kicad_pro"))
+        board = pcb.LoadBoard(str(PCB_DIR / BOARD_NAME))
+        for zone in list(board.Zones()):
+            if not zone.GetIsRuleArea():
+                RETIRED.append(zone)
+                board.Remove(zone)
+        nets = {str(n.GetNetname()): n for n in board.GetNetsByNetcode().values()}
+        outline = [env["kxy"](point) for point in config["pcb"]["outline_xz"]]
+        board = env["add_ground_zone"](board, nets, outline)
+        pads = [{"ref": fp.GetReference(), "number": pad.GetNumber(),
+                 "xy": [pcb.ToMM(pad.GetPosition().x), pcb.ToMM(pad.GetPosition().y)],
+                 "net": pad.GetNetname(), "net_code": pad.GetNetCode(),
+                 "size": [pcb.ToMM(pad.GetSize().x), pcb.ToMM(pad.GetSize().y)],
+                 "drill": [pcb.ToMM(pad.GetDrillSize().x), pcb.ToMM(pad.GetDrillSize().y)]}
+                for fp in board.GetFootprints() for pad in fp.Pads()]
+        routes = [{"net": track.GetNetname(), "layer": board.GetLayerName(track.GetLayer()),
+                   "start_mm": [pcb.ToMM(track.GetStart().x), pcb.ToMM(track.GetStart().y)],
+                   "end_mm": [pcb.ToMM(track.GetEnd().x), pcb.ToMM(track.GetEnd().y)],
+                   "width_mm": pcb.ToMM(track.GetWidth())}
+                  for track in board.GetTracks() if not isinstance(track, pcb.PCB_VIA)]
+        router = SimpleNamespace(route_records=routes, record_unit="实际铜线段",
+                                 via_count=sum(isinstance(track, pcb.PCB_VIA) for track in board.GetTracks()))
+        env["export_files"](config, board, router, pads)
+        publish_checked(env)
+        print("已保留实际布线并更新同名检查及制造输出。", flush=True)
 
 
 def generate(geometry_only=False, reset_layout=False):
@@ -529,6 +674,10 @@ def generate(geometry_only=False, reset_layout=False):
         outline = [env["kxy"](p) for p in config["pcb"]["outline_xz"]]
         router = env["Router"](board, nets, pads, outline)
         route_antenna_keepout(router, config, env)
+        for pad in pads:
+            if not pad["number"]:
+                # 非金属孔也是铜边界，沿用工程0.5毫米边缘间距，不能只按0.25铜间距绕开。
+                router.mark_disc(pad["xy"], max(pad["size"])/2+TRACK_W/2+.5+.18, -1, [0, 1])
         for track in board.GetTracks():
             net = track.GetNetCode()
             if isinstance(track, pcb.PCB_VIA):
@@ -543,13 +692,27 @@ def generate(geometry_only=False, reset_layout=False):
                     xy = [a[i] + (b[i]-a[i])*step/steps for i in (0, 1)]
                     router.mark_disc(xy, pcb.ToMM(track.GetWidth())/2 + TRACK_W/2 + CLEARANCE + .18, net,
                                      [0 if track.GetLayer() == pcb.F_Cu else 1])
+        # 二选一摇杆孔号反向，先在两组排针之间逐网扇出；常规布线只从
+        # 原摇杆孔继续连向控制器，避免最小生成树重复穿过该交叉扇出区。
+        for name in ("JOY_X", "JOY_Y", "JOY_SW", "3V3", "GND"):
+            start = next(p["xy"] for p in pads if p["ref"] == "SW1" and p["net"] == name)
+            end = next(p["xy"] for p in pads if p["ref"] == "SW1_ALT" and p["net"] == name)
+            router.apply_path(router.astar(start, end, nets[name].GetNetCode()), start, end, name)
+        for name, target_ref, target_pin in [("VBAT_ADC", "R_BAT_H", "2"), ("TRIG", "R_TRIG", "2")]:
+            start = next(p["xy"] for p in pads if p["ref"] == "J_MCU" and p["net"] == name)
+            end = next(p["xy"] for p in pads if p["ref"] == target_ref and p["number"] == target_pin)
+            router.apply_path(router.astar(start, end, nets[name].GetNetCode()), start, end, name)
+        for (start_ref, start_pin), end_point in [
+                (("J_GY", "2"), ("J_GY", "13")),
+                (("SW2", "1"), [22.0, 47.0]),
+                (("J_MODULE_BAT", "2"), [18.54, 7.0])]:
+            start = next(p["xy"] for p in pads if p["ref"] == start_ref and p["number"] == start_pin)
+            end = (next(p["xy"] for p in pads if p["ref"] == end_point[0] and p["number"] == end_point[1])
+                   if isinstance(end_point, tuple) else end_point)
+            router.apply_path(router.astar(start, end, nets["GND"].GetNetCode()), start, end, "GND")
+        router.pads = [p for p in pads if p["ref"] != "SW1_ALT"
+                       and not (p["ref"] == "J_MCU" and p["net"] in {"VBAT_ADC", "TRIG"})]
         router.route()
-        # 摇杆接地脚周围被横向信号分隔，补一条实际地线接至板侧宽阔地铜，
-        # 不依赖孤立小块覆铜的热焊盘细辐条。
-        ground_start = next(p["xy"] for p in pads if p["ref"] == "SW1" and p["number"] == "1")
-        ground_end = [55.0, ground_start[1]]
-        router.apply_path(router.astar(ground_start, ground_end, nets["GND"].GetNetCode()),
-                          ground_start, ground_end, "GND")
         board = env["add_ground_zone"](board, nets, outline)
         router.via_count = sum(isinstance(t, pcb.PCB_VIA) for t in board.GetTracks())
         config["status"] = "八颗手焊电阻电容；模块翻面孔号与摇杆横排五孔已同步，板上网络已布线；实物插装和通电待验证"
@@ -561,16 +724,12 @@ def generate(geometry_only=False, reset_layout=False):
             if report.exists():
                 print(report.read_text(encoding="utf-8"), flush=True)
             raise
-        for item in env["OUT"].rglob("*"):
-            if (item.is_file() and "Gerber" not in item.relative_to(env["OUT"]).parts
-                    and "GunMouseHandSolder.pretty" not in item.relative_to(env["OUT"]).parts
-                    and item.name != "fp-lib-table" and item.suffix != ".kicad_prl"):
-                dest = PCB_DIR / item.relative_to(env["OUT"])
-                dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(item, dest)
-        shutil.copy2(env["CONFIG"], PCB_DIR / CONFIG_NAME)
+        publish_checked(env)
         print("第二代载板及同名制造文件已更新；未进行实物插装或通电验收。", flush=True)
 
 
 if __name__ == "__main__":
-    generate(geometry_only="--geometry-only" in sys.argv, reset_layout="--reset-layout" in sys.argv)
+    if "--validate-existing" in sys.argv:
+        validate_existing()
+    else:
+        generate(geometry_only="--geometry-only" in sys.argv, reset_layout="--reset-layout" in sys.argv)

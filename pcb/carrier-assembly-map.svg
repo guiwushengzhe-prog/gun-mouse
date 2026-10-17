@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="52mm" height="82mm" viewBox="0 0 52 82">
 <rect width="52" height="82" fill="white"/>
 <polygon points="52.0,82.0 15.0,82.0 15.0,30.0 0.0,30.0 0.0,0.0 52.0,0.0" fill="#fafaf7" stroke="#222" stroke-width=".12"/>
-<rect x="42.2" y="7.0" width="1.5999999999999943" height="26.0" fill="#d9d9df" stroke="#777" stroke-width=".08"/>
+<rect x="12.2" y="5.799999999999997" width="27.000000000000004" height="30.0" fill="#d9d9df" stroke="#777" stroke-width=".08"/>
 <text x="43.0" y="20.3" font-family="sans-serif" font-size="0.85" text-anchor="middle">SW1</text>
 <ellipse cx="30.78" cy="35.0" rx="1.0" ry="1.0" fill="#b89148"/>
 <ellipse cx="30.78" cy="35.0" rx="0.6" ry="0.6" fill="white" stroke="#333" stroke-width=".08"/>
@@ -126,7 +126,7 @@
 <ellipse cx="49.744" cy="11.760000000000002" rx="0.95" ry="0.95" fill="#b89148"/>
 <ellipse cx="49.744" cy="11.760000000000002" rx="0.55" ry="0.55" fill="white" stroke="#333" stroke-width=".08"/>
 <text x="50.844" y="12.010000000000002" font-family="sans-serif" font-size=".65">9</text>
-<rect x="16.5" y="48.0" width="2.0" height="4.539999999999999" fill="#d7ead2" stroke="#777" stroke-width=".08"/>
+<rect x="16.5" y="45.46" width="2.0" height="4.539999999999999" fill="#d7ead2" stroke="#777" stroke-width=".08"/>
 <text x="16.1" y="47.6" font-family="sans-serif" font-size="0.85" text-anchor="end">J_TRIG(B)</text>
 <ellipse cx="17.5" cy="49.0" rx="0.9" ry="0.9" fill="#b89148"/>
 <ellipse cx="17.5" cy="49.0" rx="0.5" ry="0.5" fill="white" stroke="#333" stroke-width=".08"/>
@@ -134,7 +134,7 @@
 <ellipse cx="17.5" cy="46.46" rx="0.9" ry="0.9" fill="#b89148"/>
 <ellipse cx="17.5" cy="46.46" rx="0.5" ry="0.5" fill="white" stroke="#333" stroke-width=".08"/>
 <text x="18.6" y="46.71" font-family="sans-serif" font-size=".65">2</text>
-<rect x="16.5" y="57.0" width="2.0" height="4.539999999999992" fill="#d7ead2" stroke="#777" stroke-width=".08"/>
+<rect x="16.5" y="54.46" width="2.0" height="4.539999999999999" fill="#d7ead2" stroke="#777" stroke-width=".08"/>
 <text x="16.1" y="56.6" font-family="sans-serif" font-size="0.85" text-anchor="end">J_TOUCH(B)</text>
 <ellipse cx="17.5" cy="58.0" rx="0.9" ry="0.9" fill="#b89148"/>
 <ellipse cx="17.5" cy="58.0" rx="0.5" ry="0.5" fill="white" stroke="#333" stroke-width=".08"/>
@@ -142,7 +142,7 @@
 <ellipse cx="17.5" cy="55.46" rx="0.9" ry="0.9" fill="#b89148"/>
 <ellipse cx="17.5" cy="55.46" rx="0.5" ry="0.5" fill="white" stroke="#333" stroke-width=".08"/>
 <text x="18.6" y="55.71" font-family="sans-serif" font-size=".65">2</text>
-<rect x="46.7" y="75.0" width="2.0" height="4.539999999999992" fill="#d7ead2" stroke="#777" stroke-width=".08"/>
+<rect x="46.7" y="72.46000000000001" width="2.0" height="4.539999999999992" fill="#d7ead2" stroke="#777" stroke-width=".08"/>
 <text x="46.300000000000004" y="74.6" font-family="sans-serif" font-size="0.85" text-anchor="end">J_BAT(B)</text>
 <ellipse cx="47.7" cy="76.0" rx="0.9" ry="0.9" fill="#b89148"/>
 <ellipse cx="47.7" cy="76.0" rx="0.5" ry="0.5" fill="white" stroke="#333" stroke-width=".08"/>
@@ -228,4 +228,18 @@
 <text x="29" y="77.2" font-family="sans-serif" font-size="1.1" text-anchor="middle">FR4 1.6mm | 52x82mm</text>
 <path d="M24 79H34M24 78.5V79.5M34 78.5V79.5" stroke="#222" stroke-width=".12"/>
 <text x="29" y="80.5" font-family="sans-serif" font-size=".8" text-anchor="middle">10mm ruler | print 100%</text>
+<g id="reserved-joystick-holes">
+<circle cx="33.58" cy="31.5" r="1.0" fill="#b89148"/>
+<circle cx="33.58" cy="31.5" r="0.6" fill="white" stroke="#555" stroke-width=".08"/>
+<circle cx="31.04" cy="31.5" r="1.0" fill="#b89148"/>
+<circle cx="31.04" cy="31.5" r="0.6" fill="white" stroke="#555" stroke-width=".08"/>
+<circle cx="28.5" cy="31.5" r="1.0" fill="#b89148"/>
+<circle cx="28.5" cy="31.5" r="0.6" fill="white" stroke="#555" stroke-width=".08"/>
+<circle cx="25.96" cy="31.5" r="1.0" fill="#b89148"/>
+<circle cx="25.96" cy="31.5" r="0.6" fill="white" stroke="#555" stroke-width=".08"/>
+<circle cx="23.42" cy="31.5" r="1.0" fill="#b89148"/>
+<circle cx="23.42" cy="31.5" r="0.6" fill="white" stroke="#555" stroke-width=".08"/>
+<rect x="37.05" y="27.900000000000002" width="2.4" height="2.4" rx="1.2" fill="white" stroke="#555" stroke-width=".12"/>
+<rect x="16.95" y="27.900000000000002" width="3.6" height="2.4" rx="1.2" fill="white" stroke="#555" stroke-width=".12"/>
+</g>
 </svg>

@@ -7,30 +7,23 @@ Ks 0 0 0
 Ns 1
 d 1
 illum 3
-newmtl mtl7037
+newmtl mtl8619
 Ka 0 0 0
 Kd 0.07999999821186066 0.20000000298023224 0.14000000059604645
 Ks 0 0 0
 Ns 1
 d 0.8299999833106995
 illum 3
-newmtl mtl10481
+newmtl mtl12407
 Ka 0 0 0
 Kd 1 1 1
 Ks 0 0 0
 Ns 1
 d 0.8999999761581421
 illum 3
-newmtl mtl12537
+newmtl mtl14463
 Ka 0 0 0
 Kd 0.699999988079071 0.6100000143051147 0
-Ks 0 0 0
-Ns 1
-d 1
-illum 3
-newmtl mtl51691
-Ka 0 0 0
-Kd 0.5 0.5 0.5
 Ks 0 0 0
 Ns 1
 d 1
