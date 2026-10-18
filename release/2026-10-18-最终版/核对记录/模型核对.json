@@ -18,11 +18,11 @@
     "独立摇杆支座": {
       "有效单体": true,
       "交叠": {},
-      "体积立方毫米": 2582.72,
+      "体积立方毫米": 3008.569,
       "单件网格": {
         "open_or_nonmanifold_edges": 0,
         "connected_bodies": 1,
-        "mesh_vs_cad_volume_relative_difference": 5.2e-05,
+        "mesh_vs_cad_volume_relative_difference": 5.1e-05,
         "pass": true
       }
     }
@@ -221,6 +221,12 @@
       -40.0,
       -36.5
     ]
+  },
+  "支座底面补平": {
+    "取消旧凹槽深度毫米": 2.03,
+    "平面坐标Y毫米": -1.63,
+    "核对区域缺料立方毫米": 0.0,
+    "保留避让": "摇杆小板五处短脚3毫米空间及原有螺丝孔"
   },
   "主板装配孔位交叉核对": {
     "核对孔组": [
@@ -772,8 +778,8 @@
       "载板-mtl61970"
     ],
     "appearance_basis": "开发板为本地官方器件参考外形；其余小件和线弯曲为名义外形。B焊盘和铜箔尾按照片比读，未实测。",
-    "stl_sha256": "c309f0e83704c5d6e953f61fc623b6d255adee252a8a67a24a8020711b519609",
-    "obj_sha256": "1b3e3ea69f665406fdfb8fc7a5c01d9fcdd20f4a9639ac4bf521e2dfd239ac0b"
+    "stl_sha256": "15737e1098ce272c8a4584fb431fd1bd9ed532e8c537b6eeffada7e67d40033b",
+    "obj_sha256": "4645e0b2843a6bf89c63758acab1a825647c9d8bb10f430d22904ca3edc5214a"
   },
   "检查边界": "模型几何、焊点包络和主板静态规则检查；未完成实物装配与通电。"
 }

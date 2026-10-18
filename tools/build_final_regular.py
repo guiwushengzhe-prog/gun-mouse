@@ -16,8 +16,8 @@ BASE_HARDWARE = formal.concept.preview_hardware
 
 
 def support_shape():
-    # 安装带已无小元件焊点，内侧用一道规则开口腔，保留三条承力竖带。
-    result = formal.concept.rectangular_support(m, xmin=-55.2, pocket_left=-48.1, xmax=-23.2)
+    # 安装带已无小元件焊点，底面补平；只保留实际引脚和螺丝的功能避让。
+    result = formal.concept.rectangular_support(m, xmin=-55.2, xmax=-23.2, relieve_bottom=False)
     x, z = LOCAL
     # 还原旧10毫米短螺丝的较深头座，两处统一改为20毫米螺丝的承压深度。
     seat = m.cy(x, z, 2.2, 4.6, SEAT_Y).cut(m.cy(x, z, 1.2, 4.5, SEAT_Y+.1))
@@ -63,6 +63,16 @@ def verify(base, support, refs):
                               "螺杆超出螺母毫米": round(NUT_Y[0]-(SEAT_Y-20), 3),
                               "螺母入口": "侧面畅通", "支承截面平方毫米": round(seat.Volume()/.1, 3)}
     report["八颗小元件中心毫米"] = PASSIVE_CENTERS
+    # 检查原大凹槽中间区域已经形成连续平面；保留穿过该区域的螺丝通孔。
+    flat = m.box(-48.1, -23.7, m.TOP, m.TOP+.2, -9.4, -1.0)
+    flat = flat.cut(m.cy(*LOCAL, 1.2, m.TOP-.1, m.TOP+.3))
+    missing = flat.cut(support).Volume()
+    if missing > .001:
+        raise RuntimeError(("支座底面仍有多余凹槽", missing))
+    report["支座底面补平"] = {"取消旧凹槽深度毫米": round(.4-m.TOP, 3),
+                              "平面坐标Y毫米": m.TOP,
+                              "核对区域缺料立方毫米": round(missing, 6),
+                              "保留避让": "摇杆小板五处短脚3毫米空间及原有螺丝孔"}
     return report
 
 

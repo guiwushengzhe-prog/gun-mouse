@@ -26,9 +26,9 @@
     "封闭网格": {
       "open_or_nonmanifold_edges": 0,
       "connected_bodies": 1,
-      "mesh_vs_cad_volume_relative_difference": 5.2e-05,
+      "mesh_vs_cad_volume_relative_difference": 5.1e-05,
       "pass": true
     },
-    "SHA256": "1e6f58499eaec53f5efe68e98ba787d62ab7b97f78f024803d53d5662be8426b"
+    "SHA256": "04661e69b9298d6afe45294b14ee7854e4ca7da1fa3ba889b9e57490852c0170"
   }
 }
