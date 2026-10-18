@@ -1,0 +1,1987 @@
+{
+  "origin": "嘉立创原生新建工程；坐标仅按确认过的板级机械基准重放",
+  "components": [
+    {
+      "reference": "SW1_ALT",
+      "name": "HW-504 直插备用焊孔",
+      "x": 1318.8976,
+      "y": -1437.0079,
+      "rotation": 0,
+      "layer": 1,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1518.9,
+          "y": -1437,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_SW",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1418.9,
+          "y": -1437,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_Y",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1318.9,
+          "y": -1437,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_X",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 1218.9,
+          "y": -1437,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "3V3",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 1118.9,
+          "y": -1437,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "4efbe7981c8f4e46a12c78f5bdf11db7"
+    },
+    {
+      "reference": "SW1",
+      "name": "HW-504 双轴摇杆模块",
+      "x": 2015.748,
+      "y": -984.252,
+      "rotation": 0,
+      "layer": 1,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1534.6,
+          "y": -1574.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1434.6,
+          "y": -1574.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "3V3",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1334.6,
+          "y": -1574.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_X",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 1234.6,
+          "y": -1574.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_Y",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 1134.6,
+          "y": -1574.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_SW",
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "4efbe7981c8f4e46a12c78f5bdf11db7"
+    },
+    {
+      "reference": "J_MCU",
+      "name": "ESP32-S3 SuperMini（超迷你）双排 9 针接口",
+      "x": 738.189,
+      "y": -885.8268,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 338.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 438.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 538.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "JOY_X",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 638.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "JOY_Y",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 738.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "6",
+          "x": 838.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "JOY_SW",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "7",
+          "x": 938.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "SDA",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "8",
+          "x": 1038.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "SCL",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "9",
+          "x": 1138.2,
+          "y": -585.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "TOUCH",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "10",
+          "x": 338.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "11",
+          "x": 438.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "12",
+          "x": 538.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "3V3",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "13",
+          "x": 638.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "14",
+          "x": 738.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "BTN_R",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "15",
+          "x": 838.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "16",
+          "x": 938.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "17",
+          "x": 1038.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "VBAT_ADC",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "18",
+          "x": 1138.2,
+          "y": -1185.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "TRIG",
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "0dc1fc46095244d9afb24c5db57c0090"
+    },
+    {
+      "reference": "J_GY",
+      "name": "GY-601N1（LSM6DSV16X）8+6 针接口",
+      "x": 1853.6417000000001,
+      "y": -818.8976,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1555.3,
+          "y": -1173.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "3V3",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1555.3,
+          "y": -1073.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1555.3,
+          "y": -973.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "SCL",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 1555.3,
+          "y": -873.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "SDA",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 1555.3,
+          "y": -773.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "6",
+          "x": 1555.3,
+          "y": -673.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "7",
+          "x": 1555.3,
+          "y": -573.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "8",
+          "x": 1555.3,
+          "y": -473.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "9",
+          "x": 2155.3,
+          "y": -573.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "10",
+          "x": 2155.3,
+          "y": -673.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "11",
+          "x": 2155.3,
+          "y": -773.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "12",
+          "x": 2155.3,
+          "y": -873.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "13",
+          "x": 2155.3,
+          "y": -973.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "14",
+          "x": 2155.3,
+          "y": -1073.2,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "3V3",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "cd3072a178254aba92d44f64e9ef5fe5"
+    },
+    {
+      "reference": "C_BAT",
+      "name": "100 纳法电容",
+      "x": 1456.6929,
+      "y": -3208.6614,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -3208.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "VBAT_ADC",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -3208.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "ff8480c1170c4ddfbf5ae09830d3b6e5"
+    },
+    {
+      "reference": "R_BAT_L",
+      "name": "100 千欧电阻",
+      "x": 1456.693,
+      "y": -2657.4803,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -2657.5,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "VBAT_ADC",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -2657.5,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "2138e23c1365470fadb41d2e69cc5c38"
+    },
+    {
+      "reference": "J_TOUCH",
+      "name": "触摸电极接线",
+      "x": 885.8268,
+      "y": -2637.7953,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 885.8,
+          "y": -2637.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 885.8,
+          "y": -2537.8,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "34126ab3c4a84e67a313db2403794949"
+    },
+    {
+      "reference": "R_TRIG",
+      "name": "3.3 千欧电阻",
+      "x": 1656.6929,
+      "y": -2244.0945,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -2244.1,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "3V3",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -2244.1,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TRIG",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "2138e23c1365470fadb41d2e69cc5c38"
+    },
+    {
+      "reference": "C_TRIG",
+      "name": "100 纳法电容",
+      "x": 1656.6929,
+      "y": -3070.8661,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -3070.9,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TRIG",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -3070.9,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "ff8480c1170c4ddfbf5ae09830d3b6e5"
+    },
+    {
+      "reference": "R_BAT_H",
+      "name": "100 千欧电阻",
+      "x": 1656.6929,
+      "y": -2519.685,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -2519.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "BAT_SW",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -2519.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "VBAT_ADC",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "2138e23c1365470fadb41d2e69cc5c38"
+    },
+    {
+      "reference": "J_SWITCH",
+      "name": "SS12D10/G5 拨动开关",
+      "x": 1968.5039000000002,
+      "y": -1456.6929,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 2153.5,
+          "y": -1456.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            118.1,
+            118.1
+          ],
+          "net": "BAT_RAW",
+          "hole": [
+            "ROUND",
+            70.86614
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1968.5,
+          "y": -1456.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            118.1,
+            118.1
+          ],
+          "net": "BAT_SW",
+          "hole": [
+            "ROUND",
+            70.86614
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1783.5,
+          "y": -1456.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            118.1,
+            118.1
+          ],
+          "net": "",
+          "hole": [
+            "ROUND",
+            70.86614
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "d33e88c6a93049f891f49e08679c6f7e"
+    },
+    {
+      "reference": "J_BAT",
+      "name": "电池接线",
+      "x": 2074.8031,
+      "y": -3188.9764000000005,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 2074.8,
+          "y": -3189,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "BAT_RAW",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 2074.8,
+          "y": -3089,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "34126ab3c4a84e67a313db2403794949"
+    },
+    {
+      "reference": "J_TRIG",
+      "name": "扳机接线",
+      "x": 885.8268,
+      "y": -2344.0945,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 885.8,
+          "y": -2344.1,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 885.8,
+          "y": -2244.1,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "TRIG",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "34126ab3c4a84e67a313db2403794949"
+    },
+    {
+      "reference": "C_JOY_Y",
+      "name": "100 纳法电容",
+      "x": 1456.693,
+      "y": -2933.0709,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -2933.1,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "JOY_Y",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -2933.1,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "ff8480c1170c4ddfbf5ae09830d3b6e5"
+    },
+    {
+      "reference": "SW2",
+      "name": "右键微动开关接线",
+      "x": 1062.9921,
+      "y": -2294.0944,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1063,
+          "y": -2344.1,
+          "rotation": 0,
+          "pad": [
+            "OVAL",
+            59.1,
+            78.7
+          ],
+          "net": "GND",
+          "hole": [
+            "SLOT",
+            27.55906,
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1063,
+          "y": -2244.1,
+          "rotation": 0,
+          "pad": [
+            "OVAL",
+            59.1,
+            78.7
+          ],
+          "net": "BTN_R",
+          "hole": [
+            "SLOT",
+            27.55906,
+            47.24409
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "34126ab3c4a84e67a313db2403794949"
+    },
+    {
+      "reference": "J_MODULE_BAT",
+      "name": "模块电源接线",
+      "x": 629.9213,
+      "y": -393.7008,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 629.9,
+          "y": -393.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "BAT_SW",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 729.9,
+          "y": -393.7,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            39.37008
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "34126ab3c4a84e67a313db2403794949"
+    },
+    {
+      "reference": "R_TOUCH",
+      "name": "510 欧电阻",
+      "x": 1456.693,
+      "y": -2381.8898,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -2381.9,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -2381.9,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TOUCH",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "2138e23c1365470fadb41d2e69cc5c38"
+    },
+    {
+      "reference": "C_JOY_X",
+      "name": "100 纳法电容",
+      "x": 1656.6929,
+      "y": -2795.2756,
+      "rotation": 180,
+      "layer": 2,
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -2795.3,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "JOY_X",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -2795.3,
+          "rotation": 0,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "hole": [
+            "ROUND",
+            43.30709
+          ],
+          "holeRotation": 90,
+          "holeOffsetX": 0,
+          "holeOffsetY": 0,
+          "plated": true
+        }
+      ],
+      "deviceUuid": "ff8480c1170c4ddfbf5ae09830d3b6e5"
+    }
+  ],
+  "mechanicalPads": [
+    {
+      "reference": "H4",
+      "x": 944.9,
+      "y": -3267.7,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H_IMU_2",
+      "x": 2001.9,
+      "y": -525.9,
+      "rotation": 0,
+      "pad": [
+        "OVAL",
+        94.5,
+        141.7
+      ],
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H1",
+      "x": 354.3,
+      "y": -354.3,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H2",
+      "x": 2086.6,
+      "y": -354.3,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H_JOY_LOCAL_2",
+      "x": 1318.9,
+      "y": -1929.1,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H_IMU_1",
+      "x": 2001.9,
+      "y": -1126,
+      "rotation": 0,
+      "pad": [
+        "OVAL",
+        94.5,
+        141.7
+      ],
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "x": 935,
+      "y": -303.1,
+      "rotation": 0,
+      "pad": [
+        "OVAL",
+        141.7,
+        94.5
+      ],
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "holeRotation": 0,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "x": 935,
+      "y": -1342.5,
+      "rotation": 0,
+      "pad": [
+        "OVAL",
+        141.7,
+        94.5
+      ],
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "holeRotation": 0,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "x": 1702.8,
+      "y": -303.1,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "x": 1702.8,
+      "y": -1342.5,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H3",
+      "x": 1889.8,
+      "y": -1929.1,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    },
+    {
+      "reference": "H_BODY_5",
+      "x": 1889.8,
+      "y": -3267.7,
+      "rotation": 0,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "holeRotation": 90,
+      "holeOffsetX": 0,
+      "holeOffsetY": 0,
+      "plated": false
+    }
+  ],
+  "nets": {
+    "3V3": [
+      "SW1.2",
+      "J_MCU.12",
+      "J_GY.1",
+      "J_GY.14",
+      "R_TRIG.1",
+      "SW1_ALT.4"
+    ],
+    "BAT_RAW": [
+      "J_BAT.1",
+      "J_SWITCH.1"
+    ],
+    "BAT_SW": [
+      "J_SWITCH.2",
+      "J_MODULE_BAT.1",
+      "R_BAT_H.1"
+    ],
+    "BTN_R": [
+      "SW2.2",
+      "J_MCU.14"
+    ],
+    "GND": [
+      "SW1.1",
+      "SW2.1",
+      "J_MCU.11",
+      "J_GY.2",
+      "J_GY.13",
+      "J_TRIG.1",
+      "J_TOUCH.2",
+      "J_BAT.2",
+      "J_MODULE_BAT.2",
+      "R_BAT_L.2",
+      "C_JOY_X.2",
+      "C_JOY_Y.2",
+      "C_TRIG.2",
+      "C_BAT.2",
+      "SW1_ALT.5"
+    ],
+    "JOY_SW": [
+      "SW1.5",
+      "J_MCU.6",
+      "SW1_ALT.1"
+    ],
+    "JOY_X": [
+      "SW1.3",
+      "J_MCU.3",
+      "C_JOY_X.1",
+      "SW1_ALT.3"
+    ],
+    "JOY_Y": [
+      "SW1.4",
+      "J_MCU.4",
+      "C_JOY_Y.1",
+      "SW1_ALT.2"
+    ],
+    "SCL": [
+      "J_MCU.8",
+      "J_GY.3"
+    ],
+    "SDA": [
+      "J_MCU.7",
+      "J_GY.4"
+    ],
+    "TOUCH": [
+      "J_MCU.9",
+      "R_TOUCH.2"
+    ],
+    "TOUCH_ELECTRODE": [
+      "J_TOUCH.1",
+      "R_TOUCH.1"
+    ],
+    "TRIG": [
+      "J_MCU.18",
+      "J_TRIG.2",
+      "R_TRIG.2",
+      "C_TRIG.1"
+    ],
+    "VBAT_ADC": [
+      "J_MCU.17",
+      "R_BAT_H.2",
+      "R_BAT_L.1",
+      "C_BAT.1"
+    ]
+  },
+  "outline": [
+    [
+      5,
+      5
+    ],
+    [
+      57,
+      5
+    ],
+    [
+      57,
+      87
+    ],
+    [
+      20,
+      87
+    ],
+    [
+      20,
+      35
+    ],
+    [
+      5,
+      35
+    ]
+  ],
+  "boardThicknessMm": 1.6,
+  "copperLayerCount": 2,
+  "rulesMm": {
+    "trackDefault": 0.3,
+    "trackMinimum": 0.25,
+    "copperClearance": 0.25,
+    "boardEdgeClearance": 0.5,
+    "viaOuter": 0.7,
+    "viaDrill": 0.3
+  },
+  "counts": {
+    "components": 18,
+    "nets": 14,
+    "platedThroughHoles": 71,
+    "nonPlatedHoles": 12,
+    "totalDrills": 83
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "name": "枪型飞鼠纯嘉立创重绘版",
+  "owner_uuid": "da8a7e0d60e34e73a26d54481ccd2cfa",
+  "creator_uuid": "da8a7e0d60e34e73a26d54481ccd2cfa",
+  "created_at": "2026-10-18 18:10:46",
+  "updated_at": "2026-10-18 18:10:46",
+  "modifier_uuid": "da8a7e0d60e34e73a26d54481ccd2cfa",
+  "content": "从空白板原生放置和重新布线；复用封装库；机械接口沿用已确认外壳。",
+  "archive": false,
+  "cbb_project": 0,
+  "thumb": "",
+  "ticket": 1,
+  "g_ticket": 1,
+  "boards": [],
+  "block_symbol_attrs_groups": {},
+  "default_sheet": "",
+  "branch_uuid": "",
+  "pcb_count": 0,
+  "format": "folder",
+  "profile": {
+    "boards": {
+      "6b2ca8e4c440551c": {
+        "uuid": "6b2ca8e4c440551c",
+        "title": "Board1",
+        "zIndex": 1
+      }
+    },
+    "schematics": {
+      "2601dd1e3b776a6e": {
+        "uuid": "2601dd1e3b776a6e",
+        "name": "Schematic1",
+        "board": "6b2ca8e4c440551c",
+        "source": "",
+        "version": "1792326374876",
+        "updateTime": 1792326374876
+      }
+    },
+    "sheets": {
+      "73691559e673a557": {
+        "uuid": "73691559e673a557",
+        "title": "P1",
+        "schematic_uuid": "2601dd1e3b776a6e",
+        "zIndex": 1,
+        "source": "",
+        "version": "1792318711128",
+        "updateTime": 1792318711128
+      }
+    },
+    "pcbs": {
+      "befdaaec922aac24": {
+        "uuid": "befdaaec922aac24",
+        "title": "PCB1",
+        "board": "6b2ca8e4c440551c",
+        "parent_uuid": "",
+        "source": "",
+        "version": "1792326623135",
+        "updateTime": 1792326623135
+      },
+      "73272541a15dfdf7": {
+        "uuid": "73272541a15dfdf7",
+        "title": "PCB2",
+        "board": "",
+        "parent_uuid": "",
+        "source": "",
+        "version": "1792327821208",
+        "updateTime": 1792327821208
+      }
+    },
+    "panels": {},
+    "blockSymbols": {},
+    "owner": {
+      "uuid": "da8a7e0d60e34e73a26d54481ccd2cfa"
+    },
+    "simSchematics": {},
+    "simulations": {}
+  }
+}
