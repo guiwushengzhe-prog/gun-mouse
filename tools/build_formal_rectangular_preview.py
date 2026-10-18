@@ -161,7 +161,8 @@ def verify(base, support, refs):
             raise RuntimeError((pad["number"], "原生小板短脚空间被遮挡"))
     report["摇杆小板五处短脚空间"] = "3毫米包络与主体、支座及五金无交叠"
     tools = {"共用H3": m.cy(*BODY_MOUNT_HOLES["H3"], .9, 7.45, 35),
-             "支座固定": m.cy(*concept.PREVIEW_LOCAL, .9, 6.8, 35)}
+             "支座固定": m.cy(*concept.PREVIEW_LOCAL, .9,
+                              refs["支座固定-螺钉"].BoundingBox().ymax+.01, 35)}
     for name in ("H4", "H5"):
         tools[name] = m.cy(*BODY_MOUNT_HOLES[name], .9, -35, m.BASE[0]-2.11)
     for i, (x, z) in enumerate(m.SS_HOLES, 1):

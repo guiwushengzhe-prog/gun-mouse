@@ -1,0 +1,34 @@
+{
+  "主体底座": {
+    "数量": 1,
+    "单位": "毫米",
+    "尺寸毫米": [
+      43.701,
+      125.0,
+      16.071
+    ],
+    "封闭网格": {
+      "open_or_nonmanifold_edges": 0,
+      "connected_bodies": 1,
+      "mesh_vs_cad_volume_relative_difference": 8e-06,
+      "pass": true
+    },
+    "SHA256": "80bfdb21c74d12bf65a1252c561c1237276a3766eca3a60d7897dbf7b87a0276"
+  },
+  "摇杆支座": {
+    "数量": 1,
+    "单位": "毫米",
+    "尺寸毫米": [
+      32.0,
+      12.101,
+      9.071
+    ],
+    "封闭网格": {
+      "open_or_nonmanifold_edges": 0,
+      "connected_bodies": 1,
+      "mesh_vs_cad_volume_relative_difference": 5.2e-05,
+      "pass": true
+    },
+    "SHA256": "1e6f58499eaec53f5efe68e98ba787d62ab7b97f78f024803d53d5662be8426b"
+  }
+}

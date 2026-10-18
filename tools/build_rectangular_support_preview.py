@@ -12,9 +12,9 @@ SHARED_SEAT_Y = 5.34
 SHARED_NUT_Y = (-14.06, -12.46)
 
 
-def rectangular_support(m, xmin=-54.3, pocket_left=-49):
+def rectangular_support(m, xmin=-54.3, pocket_left=-49, xmax=None):
     """整体矩形包络；功能避让只从螺孔和内侧凹腔进入。"""
-    block = m.box(xmin, -20.35+SHIFT_X, m.TOP, 7.44, -9.9, m.JOY_BOARD[4])
+    block = m.box(xmin, -20.35+SHIFT_X if xmax is None else xmax, m.TOP, 7.44, -9.9, m.JOY_BOARD[4])
     block = m.cq.Workplane().add(block).edges("|Y").fillet(.5).val()
     # 内侧共用凹腔避开已焊引脚，螺丝处保留完整的压板支承面。
     pocket = m.box(pocket_left, -23.45, m.TOP-.1, .4, -10, -.5)

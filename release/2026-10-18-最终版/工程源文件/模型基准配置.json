@@ -1,0 +1,3577 @@
+{
+  "version": "supermini-tht-carrier-v2",
+  "units": "mm",
+  "status": "八颗手焊电阻电容及直排针备用五孔、四固定孔；远侧两孔共用弯针支架固定，实物插装和通电待验证",
+  "pcb": {
+    "outline_xz": [
+      [
+        -60,
+        -42
+      ],
+      [
+        -23,
+        -42
+      ],
+      [
+        -23,
+        10
+      ],
+      [
+        -8,
+        10
+      ],
+      [
+        -8,
+        40
+      ],
+      [
+        -60,
+        40
+      ]
+    ],
+    "thickness": 1.6,
+    "top_face_y": -1.63,
+    "max_size_mm": [
+      52,
+      82
+    ],
+    "layers": 2,
+    "copper_oz": 1,
+    "mount_holes": [
+      {
+        "id": "H1",
+        "xz": [
+          -12,
+          36
+        ],
+        "d": 2.4
+      },
+      {
+        "id": "H2",
+        "xz": [
+          -56,
+          36
+        ],
+        "d": 2.4
+      },
+      {
+        "id": "H3",
+        "xz": [
+          -51,
+          -4
+        ],
+        "d": 2.4
+      },
+      {
+        "id": "H4",
+        "xz": [
+          -27,
+          -27
+        ],
+        "d": 2.4
+      }
+    ],
+    "mount_contact_radius": 3.3,
+    "trace_width_mm": 0.3,
+    "clearance_mm": 0.25,
+    "via_d_drill_mm": [
+      0.7,
+      0.3
+    ],
+    "factory_smt": false,
+    "kicad_mapping": "(Kx,Ky)=(-X-3,45-Z)；摇杆在+Y拇指面，开发板、陀螺仪和其他元件在-Y；模型基准数据只用于原始实体构造",
+    "antenna_keepout_xz": [
+      [
+        -35,
+        17
+      ],
+      [
+        -27,
+        17
+      ],
+      [
+        -27,
+        28
+      ],
+      [
+        -35,
+        28
+      ]
+    ],
+    "antenna_keepout_basis": "开发板绕X轴、Z=22.5毫米翻转；原Z=17..28毫米禁铜区关于22.5对称，变换后范围相同"
+  },
+  "firmware_pins": {
+    "JOY_X": 1,
+    "JOY_Y": 2,
+    "JOY_SW": 4,
+    "BTN_R": 12,
+    "TRIG": 8,
+    "SDA": 5,
+    "SCL": 6,
+    "TOUCH": 7,
+    "VBAT_ADC": 9,
+    "VBUS_DET": 10
+  },
+  "mcu": {
+    "name": "TENSTAR-style ESP32-S3 SuperMini, USB-C, two 9-pad sides",
+    "chip": "ESP32-S3FH4R2",
+    "flash_mb": 4,
+    "psram_mb": 2,
+    "psram_mode": "qspi",
+    "flash_size_mb": 4,
+    "native_usb_gpio": [
+      19,
+      20
+    ],
+    "reserved_gpio": [
+      3,
+      43,
+      44
+    ],
+    "source": "TENSTAR product physical pin diagram; family circuit reference NOLOGO S3 schematic, do not substitute C3/ordinary ESP32"
+  },
+  "modules": {
+    "mcu": {
+      "name": "TENSTAR-style S3 SuperMini",
+      "x": [
+        -33.5,
+        -10
+      ],
+      "z": [
+        13.5,
+        31.5
+      ],
+      "component_face_y": 2.97,
+      "board_thickness": 1.6,
+      "front_allowance": 3.5,
+      "back_wire_allowance": 0,
+      "source": "TENSTAR family product diagram: 23.5x18 mm board; assembled allowance requires first-sample check",
+      "limits": "两排各9针直焊，USB朝+X；背面B+/B-仍用两根短线，天线中央区双面禁铜、走线和过孔",
+      "row_pitch_mm": 15.24,
+      "row_pitch_status": "用户同意先按15.24mm；不把其他批次15.46mm当成本实物尺寸",
+      "carrier_gap_mm": 3
+    },
+    "imu": {
+      "name": "GY-601N1-LSM6DSV16X",
+      "x": [
+        -58.965,
+        -41.2
+      ],
+      "z": [
+        11.7,
+        32.3
+      ],
+      "component_face_y": 2.57,
+      "board_thickness": 1.2,
+      "front_allowance": 2.8,
+      "back_wire_allowance": 0,
+      "source": "config/economy-mechanical.json; manufacturer GY-601N1 module manual 17.8x20.6x2.8",
+      "limits": "左8右6，右排首末孔分别对齐左排第2和第7孔；两排全焊，闲脚独立不接线",
+      "row_pitch_mm": 15.24,
+      "carrier_gap_mm": 3
+    }
+  },
+  "battery": {
+    "name": "602060 单节带保护锂电池",
+    "center_xyz": [
+      -37.7,
+      -12.7,
+      -72
+    ],
+    "size_xyz": [
+      20,
+      8,
+      80
+    ],
+    "source": "用户电芯602060；含保护板总长约70-80mm，按80mm包络、厚8mm容纳；保护板出线朝整机+Z，实际外皮宽厚待试放",
+    "cell_size_mm": [
+      6,
+      20,
+      60
+    ]
+  },
+  "power": {
+    "logic_v": 3.3,
+    "battery_net": "BAT_SW",
+    "battery_switch": "BAT_RAW -> SS12D10 G5 pins 1-2 -> BAT_SW; pin3 isolated; toward pin1=ON",
+    "battery_divider": {
+      "upper_ohm": 100000,
+      "lower_ohm": 100000,
+      "capacitor_f": 1e-07,
+      "scale": 2
+    },
+    "module_reference": "BAT -> BAT60B diode -> shared USB VBUS/5V rail; TP4054-style charger; not XIAO load-sharing circuit",
+    "charge_current_ma": 100,
+    "charge_current_boost": "Keep BOOST open; do not assume 300 mA is appropriate",
+    "safety_limits": [
+      "Protected battery mandatory; family diagram has no protection IC",
+      "Battery OFF before connecting computer USB; only powered wall chargers during battery operation",
+      "Battery OFF disables battery charging but USB can keep the MCU running",
+      "Check actual purchased module against B+/B-, diode OR and charger reference before wiring",
+      "Shared 5V pin is also battery-powered below 4.2 V; never use it as a digital USB-present input"
+    ],
+    "low_battery_shutdown_enabled": false,
+    "external_power_detection_enabled": false,
+    "battery_voltage_display_enabled": true
+  },
+  "parts": [
+    {
+      "ref": "SW1",
+      "kind": "joystick",
+      "value": "HW-504 34x26mm",
+      "position_xz": [
+        -51,
+        20
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -38.78,
+            5
+          ],
+          "net": "GND",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -36.24,
+            5
+          ],
+          "net": "3V3",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -33.7,
+            5
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -31.16,
+            5
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -28.62,
+            5
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "populate": true,
+      "mount_side": "top",
+      "mount_face_y": -3.23,
+      "axis_direction_xyz": [
+        -1,
+        0,
+        0
+      ],
+      "module_board_xyz": [
+        [
+          -51.8,
+          -50.2
+        ],
+        [
+          -38,
+          -4
+        ],
+        [
+          7,
+          33
+        ]
+      ],
+      "envelope": {
+        "x": [
+          -51.8,
+          -50.2
+        ],
+        "z": [
+          7,
+          33
+        ],
+        "y_above_board": 34.77,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "用户实测黑板34x26mm、五针2.54mm；按现有弯针垂直插入载板，模块向背面伸出",
+      "assembly": "五针从整机X小到大：GND、3V3、VRX、VRY、SW；按下使用内部上拉，电气引脚不变",
+      "purpose": "现有HW-504整块模块，供3.3V；按下使用内部上拉和软件消抖，两轴保留滤波，无额外限位",
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -51,
+            25.08
+          ],
+          "net": "GND",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -51,
+            22.54
+          ],
+          "net": "3V3",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -51,
+            20.0
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -51,
+            17.46
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -51,
+            14.92
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "bottom",
+      "model_reference_position_xz": [
+        -51,
+        20
+      ],
+      "assembly_pose": "拇指面+Y，摇杆帽朝+Z，五针横排；原弯针直接插入载板",
+      "fabrication_envelope": {
+        "x": [
+          -47.2,
+          -20.2
+        ],
+        "z": [
+          4.2,
+          34.2
+        ]
+      }
+    },
+    {
+      "ref": "SW2",
+      "kind": "microswitch",
+      "value": "D2FC-F-7N(20M)",
+      "position_xz": [
+        -33.0,
+        -2.0
+      ],
+      "pads": [
+        {
+          "number": "3",
+          "xz": [
+            -38.08,
+            -2.0
+          ],
+          "net": "",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -30.0,
+            -12.0
+          ],
+          "net": "BTN_R",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        },
+        {
+          "number": "1",
+          "xz": [
+            -30.0,
+            -14.54
+          ],
+          "net": "GND",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -39.4,
+          -26.6
+        ],
+        "z": [
+          -4.904999999999999,
+          0.9049999999999998
+        ],
+        "y_above_board": 7.45,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Official 6.5+0.1 mm case and local movable plunger split; top recess must be checked on purchased sample",
+      "source": "config/pcb-parts-geometry.json, config/pcb-shell-v1.json",
+      "assembly": "THT hand solder; pin1 COM,GND; pin2 NO,BTN_R; pin3 dummy mechanical terminal, no circuit connection",
+      "populate": true,
+      "envelopes": [
+        {
+          "kind": "box",
+          "x": [
+            -39.4,
+            -26.6
+          ],
+          "z": [
+            -4.904999999999999,
+            0.9049999999999998
+          ],
+          "y_above_board": [
+            0,
+            6.6
+          ],
+          "source": "Omron D2FC official case height6.5+0.1 mm; recess beside plunger requires sample check"
+        },
+        {
+          "kind": "box",
+          "x": [
+            -31.65,
+            -30.45
+          ],
+          "z": [
+            -3.45,
+            -0.55
+          ],
+          "y_above_board": [
+            6.5,
+            7.45
+          ],
+          "source": "Omron D2FC drawing: plunger1.2x2.9 mm at globalX=-31.05,Z=-2; source tip-high7.45 mm"
+        }
+      ],
+      "model_reference_pads": [
+        {
+          "number": "3",
+          "xz": [
+            -38.08,
+            -2.0
+          ],
+          "net": "",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -33.0,
+            -2.0
+          ],
+          "net": "BTN_R",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        },
+        {
+          "number": "1",
+          "xz": [
+            -27.92,
+            -2.0
+          ],
+          "net": "GND",
+          "drill": [
+            0.7,
+            1.2
+          ],
+          "size": [
+            1.5,
+            2.0
+          ],
+          "shape": "oval"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -33.0,
+        -2.0
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -39.4,
+          -26.6
+        ],
+        "z": [
+          -4.905,
+          0.905
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_MCU",
+      "kind": "module",
+      "value": "ESP32-S3 SuperMini 2x9",
+      "position_xz": [
+        -21.75,
+        22.5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -11.59,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -14.13,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -16.67,
+            30.12
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -19.21,
+            30.12
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -21.75,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "6",
+          "xz": [
+            -24.29,
+            30.12
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "7",
+          "xz": [
+            -26.83,
+            30.12
+          ],
+          "net": "SDA",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "8",
+          "xz": [
+            -29.37,
+            30.12
+          ],
+          "net": "SCL",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "9",
+          "xz": [
+            -31.91,
+            30.12
+          ],
+          "net": "TOUCH",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "10",
+          "xz": [
+            -11.59,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "11",
+          "xz": [
+            -14.13,
+            14.88
+          ],
+          "net": "GND",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "12",
+          "xz": [
+            -16.67,
+            14.88
+          ],
+          "net": "3V3",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "13",
+          "xz": [
+            -19.21,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "14",
+          "xz": [
+            -21.75,
+            14.88
+          ],
+          "net": "BTN_R",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "15",
+          "xz": [
+            -24.29,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "16",
+          "xz": [
+            -26.83,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "17",
+          "xz": [
+            -29.37,
+            14.88
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "18",
+          "xz": [
+            -31.91,
+            14.88
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "populate": true,
+      "mount_side": "bottom",
+      "pin_labels": {
+        "1": "TX43",
+        "2": "RX44",
+        "3": "1",
+        "4": "2",
+        "5": "3",
+        "6": "4",
+        "7": "5",
+        "8": "6",
+        "9": "7",
+        "10": "5V",
+        "11": "GND",
+        "12": "3V3",
+        "13": "13",
+        "14": "12",
+        "15": "11",
+        "16": "10",
+        "17": "9",
+        "18": "8"
+      },
+      "envelope": {
+        "x": [
+          -33.5,
+          -10
+        ],
+        "z": [
+          13.5,
+          31.5
+        ],
+        "y_above_board": 8.1,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定",
+      "purpose": "两排各9针直焊；保留原控制引脚和电量显示；5V及GPIO10仅机械固定、不接载板电路",
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -11.59,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -14.13,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -16.67,
+            14.88
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -19.21,
+            14.88
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -21.75,
+            14.88
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "6",
+          "xz": [
+            -24.29,
+            14.88
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "7",
+          "xz": [
+            -26.83,
+            14.88
+          ],
+          "net": "SDA",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "8",
+          "xz": [
+            -29.37,
+            14.88
+          ],
+          "net": "SCL",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "9",
+          "xz": [
+            -31.91,
+            14.88
+          ],
+          "net": "TOUCH",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "10",
+          "xz": [
+            -11.59,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "11",
+          "xz": [
+            -14.13,
+            30.12
+          ],
+          "net": "GND",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "12",
+          "xz": [
+            -16.67,
+            30.12
+          ],
+          "net": "3V3",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "13",
+          "xz": [
+            -19.21,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "14",
+          "xz": [
+            -21.75,
+            30.12
+          ],
+          "net": "BTN_R",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "15",
+          "xz": [
+            -24.29,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "16",
+          "xz": [
+            -26.83,
+            30.12
+          ],
+          "net": "",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "17",
+          "xz": [
+            -29.37,
+            30.12
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "18",
+          "xz": [
+            -31.91,
+            30.12
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.3,
+            1.3
+          ],
+          "size": [
+            2.1,
+            2.1
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -21.75,
+        22.5
+      ],
+      "fabrication_envelope": {
+        "x": [
+          -33.5,
+          -10
+        ],
+        "z": [
+          13.5,
+          31.5
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_GY",
+      "kind": "module",
+      "value": "GY-601N1-LSM6DSV16X 8+6",
+      "position_xz": [
+        -50.0825,
+        22
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -42.504,
+            13.0
+          ],
+          "net": "3V3",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -42.504,
+            15.54
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -42.504,
+            18.08
+          ],
+          "net": "SCL",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -42.504,
+            20.62
+          ],
+          "net": "SDA",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -42.504,
+            23.16
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "6",
+          "xz": [
+            -42.504,
+            25.7
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "7",
+          "xz": [
+            -42.504,
+            28.24
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "8",
+          "xz": [
+            -42.504,
+            30.78
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "14",
+          "xz": [
+            -57.744,
+            15.54
+          ],
+          "net": "3V3",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "13",
+          "xz": [
+            -57.744,
+            18.08
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "12",
+          "xz": [
+            -57.744,
+            20.62
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "11",
+          "xz": [
+            -57.744,
+            23.16
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "10",
+          "xz": [
+            -57.744,
+            25.7
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "9",
+          "xz": [
+            -57.744,
+            28.24
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "populate": true,
+      "mount_side": "bottom",
+      "pin_labels": {
+        "1": "VCC",
+        "2": "GND",
+        "3": "SCL",
+        "4": "SDA",
+        "5": "SA0",
+        "6": "CS",
+        "7": "INT1",
+        "8": "INT2",
+        "9": "PS",
+        "10": "INTOUT",
+        "11": "DT",
+        "12": "RC",
+        "13": "GND",
+        "14": "VCC"
+      },
+      "envelope": {
+        "x": [
+          -58.965,
+          -41.2
+        ],
+        "z": [
+          11.7,
+          32.3
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "用户确认排针间距2.54mm，模块与载板间隙3mm；SuperMini排距15.24mm暂定",
+      "purpose": "重复VCC/GND同网，SCL/SDA接原GPIO6/5；其他脚保持模块默认配置、各自空网",
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -42.504,
+            31.0
+          ],
+          "net": "3V3",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -42.504,
+            28.46
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -42.504,
+            25.92
+          ],
+          "net": "SCL",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -42.504,
+            23.38
+          ],
+          "net": "SDA",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -42.504,
+            20.84
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "6",
+          "xz": [
+            -42.504,
+            18.3
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "7",
+          "xz": [
+            -42.504,
+            15.76
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "8",
+          "xz": [
+            -42.504,
+            13.22
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "14",
+          "xz": [
+            -57.744,
+            28.46
+          ],
+          "net": "3V3",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "13",
+          "xz": [
+            -57.744,
+            25.92
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "12",
+          "xz": [
+            -57.744,
+            23.38
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "11",
+          "xz": [
+            -57.744,
+            20.84
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "10",
+          "xz": [
+            -57.744,
+            18.3
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "9",
+          "xz": [
+            -57.744,
+            15.76
+          ],
+          "net": "",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            1.9,
+            1.9
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -50.0825,
+        22
+      ],
+      "fabrication_envelope": {
+        "x": [
+          -58.965,
+          -41.2
+        ],
+        "z": [
+          11.7,
+          32.3
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_TRIG",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -25.5,
+        -13.27
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -25.5,
+            -14.54
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -25.5,
+            -12.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -26.5,
+          -24.5
+        ],
+        "z": [
+          -16.81,
+          -12.27
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "Existing SS-01GL COM/NO wired trigger; no PCB slots",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -25.5,
+            -13.27
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -25.5,
+            -15.809999999999999
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -25.5,
+        -13.27
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -26.5,
+          -24.5
+        ],
+        "z": [
+          -14.27,
+          -9.73
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_TOUCH",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -25.5,
+        -20.73
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -25.5,
+            -22.0
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -25.5,
+            -19.46
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -26.5,
+          -24.5
+        ],
+        "z": [
+          -24.27,
+          -19.73
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "Insulated foil to TOUCH_ELECTRODE; second pad only optional cable shield, never the same foil",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -25.5,
+            -20.73
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -25.5,
+            -23.27
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -25.5,
+        -20.73
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -26.5,
+          -24.5
+        ],
+        "z": [
+          -21.73,
+          -17.19
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_BAT",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -55.7,
+        -36
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -55.7,
+            -36
+          ],
+          "net": "BAT_RAW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -55.7,
+            -33.46
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -56.7,
+          -54.7
+        ],
+        "z": [
+          -39.54,
+          -35
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "Protected single-cell LiPo input",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -55.7,
+            -36
+          ],
+          "net": "BAT_RAW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -55.7,
+            -38.54
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -55.7,
+        -36
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -56.7,
+          -54.7
+        ],
+        "z": [
+          -37,
+          -32.46
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_SWITCH",
+      "kind": "power_switch",
+      "value": "SS12D10 G5",
+      "position_xz": [
+        -41.5,
+        -38.3
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -46.2,
+            -38.3
+          ],
+          "net": "BAT_RAW",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            3,
+            3
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -41.5,
+            -38.3
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            3,
+            3
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -36.8,
+            -38.3
+          ],
+          "net": "",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            3,
+            3
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -47.95,
+          -35.05
+        ],
+        "z": [
+          -41.75,
+          -34.85
+        ],
+        "y_above_board": 11.9,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "用户SS12D10 G5尺寸图：相邻4.7mm、首末9.4mm，扁脚1.3x0.8mm，采用1.8mm圆孔/3mm焊盘；柄5mm",
+      "purpose": "1=BAT_RAW、2=BAT_SW公共脚、3独立空网；拨向1脚侧为ON；电池两线永久焊板，不接外置开关线",
+      "populate": true,
+      "source": "用户购买的SS12D10 G5商品尺寸图",
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -46.2,
+            -38.3
+          ],
+          "net": "BAT_RAW",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            3,
+            3
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -41.5,
+            -38.3
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            3,
+            3
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -36.8,
+            -38.3
+          ],
+          "net": "",
+          "drill": [
+            1.8,
+            1.8
+          ],
+          "size": [
+            3,
+            3
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -41.5,
+        -38.3
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -47.95,
+          -35.05
+        ],
+        "z": [
+          -41.75,
+          -34.85
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "J_MODULE_BAT",
+      "kind": "wirebank",
+      "value": "Labelled solder wires",
+      "position_xz": [
+        -19,
+        35
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -19,
+            35
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -21.54,
+            35
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -22.54,
+          -18
+        ],
+        "z": [
+          34,
+          36
+        ],
+        "y_above_board": 2.0,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "Solder joint and wire end allowance; no module connector pitch is assumed",
+      "purpose": "SuperMini dedicated B+ and B- pads only",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -19,
+            35
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -21.54,
+            35
+          ],
+          "net": "GND",
+          "drill": [
+            1.0,
+            1.0
+          ],
+          "size": [
+            1.8,
+            1.8
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -19,
+        35
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -22.54,
+          -18
+        ],
+        "z": [
+          34,
+          36
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "R_TRIG",
+      "kind": "resistor",
+      "value": "3.3k",
+      "position_xz": [
+        -45.08,
+        -12.0
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -12.0
+          ],
+          "net": "3V3",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -12.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -48.28,
+          -41.879999999999995
+        ],
+        "z": [
+          -13.3,
+          -10.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "purpose": "SS-01GL closed contact current approx 1 mA at 3.3 V",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -12.0
+          ],
+          "net": "3V3",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -12.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -45.08,
+        -12.0
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -48.28,
+          -41.879999999999995
+        ],
+        "z": [
+          -13.3,
+          -10.7
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "R_TOUCH",
+      "kind": "resistor",
+      "value": "510",
+      "position_xz": [
+        -40.0,
+        -15.5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -15.5
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -15.5
+          ],
+          "net": "TOUCH",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -43.2,
+          -36.800000000000004
+        ],
+        "z": [
+          -16.8,
+          -14.2
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "purpose": "Touch series resistor, no pullup or parallel capacitor",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -15.5
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -15.5
+          ],
+          "net": "TOUCH",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -40.0,
+        -15.5
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -43.2,
+          -36.800000000000004
+        ],
+        "z": [
+          -16.8,
+          -14.2
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "R_BAT_H",
+      "kind": "resistor",
+      "value": "100k",
+      "position_xz": [
+        -45.08,
+        -19.0
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -19.0
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -19.0
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -48.28,
+          -41.879999999999995
+        ],
+        "z": [
+          -20.3,
+          -17.7
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "purpose": "Battery switched-side divider upper",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -19.0
+          ],
+          "net": "BAT_SW",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -19.0
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -45.08,
+        -19.0
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -48.28,
+          -41.879999999999995
+        ],
+        "z": [
+          -20.3,
+          -17.7
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "R_BAT_L",
+      "kind": "resistor",
+      "value": "100k",
+      "position_xz": [
+        -40.0,
+        -22.5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -22.5
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -22.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -43.2,
+          -36.800000000000004
+        ],
+        "z": [
+          -23.8,
+          -21.2
+        ],
+        "y_above_board": 2.7,
+        "lead_below_board": 1.0
+      },
+      "envelope_basis": "轴向电阻本体不超过6.4x2.6毫米，引脚向外成形至10.16毫米孔距；通孔1.1毫米、焊盘2.6毫米，剪脚后不超过1毫米",
+      "purpose": "Battery divider lower, scale=2",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -22.5
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -22.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -40.0,
+        -22.5
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -43.2,
+          -36.800000000000004
+        ],
+        "z": [
+          -23.8,
+          -21.2
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "C_JOY_X",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -45.08,
+        -26.0
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -26.0
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -26.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -48.08,
+          -42.08
+        ],
+        "z": [
+          -27.0,
+          -25.0
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
+      "purpose": "ADC/contact filter",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -26.0
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -26.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -45.08,
+        -26.0
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -48.08,
+          -42.08
+        ],
+        "z": [
+          -27.0,
+          -25.0
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "C_JOY_Y",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -40.0,
+        -29.5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -29.5
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -29.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -43.0,
+          -37.0
+        ],
+        "z": [
+          -30.5,
+          -28.5
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
+      "purpose": "ADC/contact filter",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -29.5
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -29.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -40.0,
+        -29.5
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -43.0,
+          -37.0
+        ],
+        "z": [
+          -30.5,
+          -28.5
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "C_TRIG",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -45.08,
+        -33.0
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -33.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -33.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -48.08,
+          -42.08
+        ],
+        "z": [
+          -34.0,
+          -32.0
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
+      "purpose": "ADC/contact filter",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -50.16,
+            -33.0
+          ],
+          "net": "TRIG",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -40.0,
+            -33.0
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -45.08,
+        -33.0
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -48.08,
+          -42.08
+        ],
+        "z": [
+          -34.0,
+          -32.0
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "C_BAT",
+      "kind": "capacitor",
+      "value": "100n",
+      "position_xz": [
+        -40.0,
+        -36.5
+      ],
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -36.5
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -36.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [],
+      "envelope": {
+        "x": [
+          -43.0,
+          -37.0
+        ],
+        "z": [
+          -37.5,
+          -35.5
+        ],
+        "y_above_board": 7,
+        "lead_below_board": 1
+      },
+      "envelope_basis": "直插陶瓷电容本体宽不超过6毫米、厚2毫米、焊后高7毫米；原引脚向外张开至10.16毫米孔距，通孔1.1毫米、焊盘2.6毫米",
+      "purpose": "ADC/contact filter",
+      "populate": true,
+      "model_reference_pads": [
+        {
+          "number": "1",
+          "xz": [
+            -45.08,
+            -36.5
+          ],
+          "net": "VBAT_ADC",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -34.92,
+            -36.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.1,
+            1.1
+          ],
+          "size": [
+            2.6,
+            2.6
+          ],
+          "shape": "circle"
+        }
+      ],
+      "model_reference_mount_side": "top",
+      "model_reference_position_xz": [
+        -40.0,
+        -36.5
+      ],
+      "mount_side": "bottom",
+      "fabrication_envelope": {
+        "x": [
+          -43.0,
+          -37.0
+        ],
+        "z": [
+          -37.5,
+          -35.5
+        ]
+      },
+      "assembly_pose": "元件面-Y，按完整装配模型绕X轴翻面；孔号与电气网络跟随实体端子"
+    },
+    {
+      "ref": "SW1_ALT",
+      "kind": "joystick",
+      "value": "HW-504直排针备用位",
+      "position_xz": [
+        -36.5,
+        8.5
+      ],
+      "populate": false,
+      "reserve": true,
+      "mount_side": "top",
+      "pads": [
+        {
+          "number": "1",
+          "xz": [
+            -41.58,
+            8.5
+          ],
+          "net": "JOY_SW",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "2",
+          "xz": [
+            -39.04,
+            8.5
+          ],
+          "net": "JOY_Y",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "3",
+          "xz": [
+            -36.5,
+            8.5
+          ],
+          "net": "JOY_X",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "4",
+          "xz": [
+            -33.96,
+            8.5
+          ],
+          "net": "3V3",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        },
+        {
+          "number": "5",
+          "xz": [
+            -31.42,
+            8.5
+          ],
+          "net": "GND",
+          "drill": [
+            1.2,
+            1.2
+          ],
+          "size": [
+            2,
+            2
+          ],
+          "shape": "circle"
+        }
+      ],
+      "npth": [
+        {
+          "id": "JOY_STRAIGHT_L",
+          "xz": [
+            -46.25,
+            10.9
+          ],
+          "drill": [
+            2.4,
+            2.4
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        },
+        {
+          "id": "JOY_STRAIGHT_R",
+          "xz": [
+            -26.75,
+            10.9
+          ],
+          "drill": [
+            3.6,
+            2.4
+          ],
+          "size": [
+            3.6,
+            2.4
+          ],
+          "shape": "oval"
+        },
+        {
+          "id": "JOY_SHARED_FAR_L",
+          "xz": [
+            -46.25,
+            37.3
+          ],
+          "drill": [
+            2.4,
+            2.4
+          ],
+          "size": [
+            2.4,
+            2.4
+          ],
+          "shape": "circle"
+        },
+        {
+          "id": "JOY_SHARED_FAR_R",
+          "xz": [
+            -26.75,
+            37.3
+          ],
+          "drill": [
+            3.6,
+            2.4
+          ],
+          "size": [
+            3.6,
+            2.4
+          ],
+          "shape": "oval"
+        }
+      ],
+      "screw_head_keepouts": [
+        {
+          "hole_id": "JOY_SHARED_FAR_L",
+          "radius_mm": 2.3,
+          "x_travel_mm": 0
+        },
+        {
+          "hole_id": "JOY_SHARED_FAR_R",
+          "radius_mm": 2.3,
+          "x_travel_mm": 0.6
+        }
+      ],
+      "envelope": {
+        "x": [
+          -50,
+          -23
+        ],
+        "z": [
+          7.6,
+          40.6
+        ],
+        "y_above_board": 30
+      },
+      "envelope_basis": "黑板27x33毫米为资料标称；排针到近侧孔行约2.4毫米为用户实测，模块外框位置沿用估算模型，并非板边到针实测",
+      "assembly": "四个M2固定孔组成19.5x26.4毫米孔阵列。当前弯针底座通过远侧两孔穿主板固定，M2x10头在+Y、背面打印支座内装螺母；未来直针换装时这两孔改作摇杆远侧固定，与原近侧两孔合用",
+      "purpose": "五针直插位与原SW1二选一；近侧两孔预留、远侧两孔共用当前弯针支座与未来直针摇杆固定。+Y远孔螺钉头覆盖区禁止铺铜和布线，-Y由塑料支座隔开原线路"
+    }
+  ],
+  "source_sha256": {
+    "config/pcb-shell-v1.json": "7fe80e1e2e066cec1c183877b920eb5e2993332164d19e1b66ddfe4d19ce390b",
+    "config/pcb-parts-geometry.json": "68eef13f2e0565452a7f5501419544a84462694704475a6c1a5aa992f4a3112b"
+  },
+  "joystick_mounting": {
+    "pin_to_near_mount_row_mm": 2.4,
+    "mount_pitch_mm": [
+      19.5,
+      26.4
+    ],
+    "mount_pitch_basis": "DZYJ商品图明确标注，未实测",
+    "pin_to_row_basis": "图中未标该尺寸，以用户实测约2.4毫米补充",
+    "dimension_precedence": "商品图明确尺寸优先，未标尺寸使用实测补充；旧模型1.0毫米为估算，不作为厂家尺寸"
+  }
+}
