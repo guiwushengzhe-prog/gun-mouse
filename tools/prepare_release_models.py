@@ -5,9 +5,12 @@ import json
 import shutil
 
 import build_gen2_quick_preview as preview
+from preview_layout import BODY_MOUNT_HOLES, SHARED_SCREW_SEAT_Y, SHARED_EAR_THICKNESS
+from preview_local_joystick_mount import ACTIVE_LOCAL_HOLES
+from preview_ss01_right import MOUNT_HOLES
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "release/2026-10-18/三维打印"
+OUT = ROOT / "release/2026-10-18-结构简化版/三维打印"
 
 
 def main():
@@ -17,6 +20,42 @@ def main():
     refs.update(preview.preview_hardware()[0])
     parts = (("主体底座", base), ("独立摇杆支座", support))
     report = {"单位": "毫米", "打印比例": "1:1", "打印件": []}
+    tools = {}
+    for name, (x, z) in BODY_MOUNT_HOLES.items():
+        seat = SHARED_SCREW_SEAT_Y if name == "H3" else m.BASE[0]
+        tools[name] = m.cy(x, z, 1.1, -35, seat-2.11)
+    for i, (x, old_y) in enumerate(m.JOY_MOUNT_HOLES, 1):
+        tools[f"摇杆小板{i}"] = m.cz(x, m.FACE_Y_SUM-old_y, 1.1, -24, -5.91)
+    for i, (x, z) in enumerate(ACTIVE_LOCAL_HOLES, 2):
+        tools[f"支座{i}"] = m.cy(x, z, 1.1, 6.71, 30)
+    for i, (x, z) in enumerate(m.SS_HOLES, 1):
+        tools[f"扳机{i}"] = m.cy(x, z, 1.1, .45, 30)
+    for i, (x, z) in enumerate(MOUNT_HOLES, 1):
+        tools[f"右键{i}"] = m.cy(x, z, 1.1, -5.49, 30)
+    all_shapes = {**refs, "主体底座": base}
+    accesses = {}
+    for name, tool in tools.items():
+        collisions = {other: round(tool.intersect(shape).Volume(), 5)
+                      for other, shape in all_shapes.items()
+                      if "留空" not in other and tool.intersect(shape).Volume() > .001}
+        if collisions:
+            raise RuntimeError((name, "工具入口阻挡", collisions))
+        accesses[name] = 0
+    nut_paths = {}
+    for name, nut in refs.items():
+        if not name.endswith("螺母") or not name.startswith(("SS", "右键")):
+            continue
+        path = m.swept_box(nut, (-12, 0, 0) if name.startswith("SS") else (12, 0, 0))
+        hits = {part: round(path.intersect(shape).Volume(), 5) for part, shape in parts
+                if path.intersect(shape).Volume() > .001}
+        if hits:
+            raise RuntimeError((name, "螺母侧插阻挡", hits))
+        nut_paths[name] = 0
+    report["工具通道交叠"] = accesses
+    report["按键螺母侧插交叠"] = nut_paths
+    report["共用H3"] = {"连接耳厚度毫米": SHARED_EAR_THICKNESS,
+                      "M2螺丝长度毫米": 20,
+                      "螺杆超出螺母毫米": round(SHARED_SCREW_SEAT_Y+20-(m.TOP+SHARED_EAR_THICKNESS+1.6), 3)}
     for name, shape in parts:
         collisions = {}
         for other, component in refs.items():

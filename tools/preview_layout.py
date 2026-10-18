@@ -13,16 +13,19 @@ IMU_MOUNT_HOLES = ((-53.849, 14.2+IMU_TRANSLATION_Z),
                    (-53.849, 29.442+IMU_TRANSLATION_Z))
 
 # 电源开关移走后，在原位置增加第三个下部主板固定点。
-BODY_MOUNT_HOLE = (-43.5, -38.0)
+BODY_MOUNT_HOLE = (-51.0, -38.0)
+BODY_MOUNT_HOLES = {"H3": (-51.0, -4.0), "H4": (-27.0, -38.0), "H5": BODY_MOUNT_HOLE}
+SHARED_SCREW_SEAT_Y = -18.0
+SHARED_EAR_THICKNESS = 1.3
 
 
 def body_hardware(m):
-    """新增下部固定点使用已有M2×20螺丝和普通M2螺母。"""
-    x, z = BODY_MOUNT_HOLE
-    head = m.cy(x, z, 2, m.BASE[0]-2.1, m.BASE[0]).cut(
-        m.hex_y(x, z, 1.5, m.BASE[0]-2.2, m.BASE[0]-1.1))
-    return {
-        "H5-螺钉": head.fuse(m.cy(x, z, 1, m.BASE[0], m.BASE[0]+20)),
-        "H5-螺母": m.hex_y(x, z, 4, m.TOP, m.TOP+1.6).cut(
-            m.cy(x, z, 1.05, m.TOP-.1, m.TOP+1.7)),
-    }
+    """三个主体点均用M2×20；H3同时夹紧摇杆支座的薄连接耳。"""
+    result = {}
+    for name, (x, z) in BODY_MOUNT_HOLES.items():
+        seat = SHARED_SCREW_SEAT_Y if name == "H3" else m.BASE[0]
+        nut = m.TOP + (SHARED_EAR_THICKNESS if name == "H3" else 0)
+        head = m.cy(x, z, 2, seat-2.1, seat).cut(m.hex_y(x, z, 1.5, seat-2.2, seat-1.1))
+        result[name+"-螺钉"] = head.fuse(m.cy(x, z, 1, seat, seat+20))
+        result[name+"-螺母"] = m.hex_y(x, z, 4, nut, nut+1.6).cut(m.cy(x, z, 1.05, nut-.1, nut+1.7))
+    return result

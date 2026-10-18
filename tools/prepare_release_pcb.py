@@ -16,13 +16,13 @@ import zipfile
 
 import pcbnew as pcb
 
-from preview_layout import BODY_MOUNT_HOLE, IMU_MOUNT_HOLES, IMU_TRANSLATION_Z, POWER_CENTER_XZ
-from preview_local_joystick_mount import LOCAL_HOLES
+from preview_layout import BODY_MOUNT_HOLE, BODY_MOUNT_HOLES, IMU_MOUNT_HOLES, IMU_TRANSLATION_Z, POWER_CENTER_XZ
+from preview_local_joystick_mount import ACTIVE_LOCAL_HOLES
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "shell/快速结构预览/pcb/preview-local-mount.kicad_pcb"
-OUT = ROOT / "release/2026-10-18/电路板"
-NAME = "gunmouse-v2-20261018"
+SOURCE = ROOT / "shell/快速结构预览/pcb/preview-regular-mount.kicad_pcb"
+OUT = ROOT / "release/2026-10-18-结构简化版/电路板"
+NAME = "gunmouse-v2-20261018-regular"
 
 
 def digest(path):
@@ -46,11 +46,11 @@ def board_audit(board):
     assert board.GetCopperLayerCount() == 2
     assert abs(pcb.ToMM(board.GetDesignSettings().GetBoardThickness())-1.6) < 1e-6
     actual = {}
-    holes = [(f"H_JOY_LOCAL_{i}", point, [2.4, 2.4]) for i, point in enumerate(LOCAL_HOLES, 1)]
+    holes = [(f"H_JOY_LOCAL_{i}", point, [2.4, 2.4]) for i, point in enumerate(ACTIVE_LOCAL_HOLES, 2)]
     holes += [(f"H_IMU_{i}", point, [2.4, 3.6]) for i, point in enumerate(IMU_MOUNT_HOLES, 1)]
     holes += [("H_BODY_5", BODY_MOUNT_HOLE, [2.4, 2.4])]
     config = json.loads((ROOT / "pcb/carrier-config.json").read_text(encoding="utf-8"))
-    holes += [(hole["id"], hole["xz"], [hole["d"], hole["d"]]) for hole in config["pcb"]["mount_holes"]]
+    holes += [(hole["id"], BODY_MOUNT_HOLES.get(hole["id"], hole["xz"]), [hole["d"], hole["d"]]) for hole in config["pcb"]["mount_holes"]]
     for reference, point, size in holes:
         fp = footprints[reference]
         pads = list(fp.Pads())
@@ -163,7 +163,7 @@ def main():
     assert copper == [.035, .035], copper
     inspection["铜厚微米"] = [35, 35]
     inspection["制造说明"] = "双层FR4裸板，1.6毫米板厚、双面1盎司铜；不含钢网或工厂贴片文件。表面处理在下单页面选择，文件不替代实物插装及通电验证。"
-    archive = OUT / "枪型飞鼠_新版电路板_上传打板.zip"
+    archive = OUT / "枪型飞鼠_结构简化版_上传打板.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as target:
         for path in outputs:
             target.write(path, path.name)

@@ -4,16 +4,18 @@ import json
 
 import build_gen2_mount as m
 import gen2_component_details as detail
-from preview_split_support import split_support
-from preview_right_button_cradle import move_right_button_cradle
+from preview_clean_body import build_body
 from preview_local_joystick_mount import local_support, local_hardware
 from preview_ss01_right import build_right_switch, right_hardware
-from preview_straight_frame import reshape_frame, level_outer_face
-from preview_layout import POWER_TRANSLATION, IMU_TRANSLATION_Z, body_hardware
+from preview_layout import POWER_TRANSLATION, IMU_TRANSLATION_Z, BODY_MOUNT_HOLES, body_hardware
 from preview_release_hardware import release_hardware
 
 
 OUT = m.ROOT / "shell" / "快速结构预览"
+m.P = dict(m.P)
+m.P["mount_holes"] = [{**hole, "xz": list(BODY_MOUNT_HOLES.get(hole["id"], hole["xz"]))}
+                      for hole in m.P["mount_holes"] if hole["id"] != "H5"] + [
+                          {"id": "H5", "xz": list(BODY_MOUNT_HOLES["H5"]), "d": 2.4}]
 ORIGINAL_DETAILS = detail.assembled_details
 ORIGINAL_HARDWARE = m.hardware
 ORIGINAL_BOARD_MESHES = m.routed_pcb_meshes
@@ -97,10 +99,8 @@ def print_part(shape, name):
 
 def main(export_print_parts=True):
     global SUPPORT
-    base = m.cq.importers.importStep(str(m.ROOT / "shell/step/engineering_mount.step")).val()
-    parts = split_support(m, base)
     SUPPORT = local_support(m)
-    base = level_outer_face(m, move_right_button_cradle(m, reshape_frame(m, parts["主体底座"])))
+    base = build_body(m)
     for name, shape in (("主体底座", base), ("独立摇杆支座", SUPPORT)):
         if not shape.isValid() or len(shape.Solids()) != 1:
             raise RuntimeError(name + "未形成有效的单件实体")
@@ -115,10 +115,10 @@ def main(export_print_parts=True):
     m.OUT = OUT
     detail.assembled_details = preview_details
     m.hardware = preview_hardware
-    m.routed_pcb_meshes = lambda b: ORIGINAL_BOARD_MESHES(b, OUT / "pcb/preview-local-mount.obj")
+    m.routed_pcb_meshes = lambda b: ORIGINAL_BOARD_MESHES(b, OUT / "pcb/preview-regular-mount.obj")
     report_path = OUT / "assembly-check.json"
     report_path.write_text(json.dumps({"preview": True}, ensure_ascii=False), encoding="utf-8")
-    m.export_assembled_stl()
+    m.export_assembled_stl(render_preview=False)
     report = json.loads(report_path.read_text(encoding="utf-8"))["assembled_model"]
     print(json.dumps({"线与底座交叠": report["wire_insulation_vs_mount_mm3"],
                       "线与线交叠": report["wire_insulation_pair_overlaps_mm3"]},

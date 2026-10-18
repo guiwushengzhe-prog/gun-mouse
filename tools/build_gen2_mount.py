@@ -680,7 +680,7 @@ def routed_pcb_meshes(b, source=None):
     return meshes,colors
 
 
-def export_assembled_stl():
+def export_assembled_stl(render_preview=True):
     """同一组毫米几何导出装配STL和带色分组OBJ，仅供装配查看。"""
     import vtk
     import sys
@@ -776,6 +776,8 @@ def export_assembled_stl():
                                "obj_sha256":hashlib.sha256(obj_path.read_bytes()).hexdigest()}
     report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(f"毫米；{len(meshes)}组实体、{len(wires)}根手焊线；包含实际铜层及焊点。仅供装配查看，不能整体打印。",flush=True)
+    if not render_preview:
+        return
     # 使用完整导出网格离屏渲染，不打开任何软件窗口。
     renderer=vtk.vtkRenderer()
     renderer.SetBackground(.92,.94,.96)

@@ -1,13 +1,17 @@
 """摇杆支座根部直接穿板固定，省去远端锚座和绕行长梁。"""
+from preview_layout import BODY_MOUNT_HOLES, SHARED_EAR_THICKNESS
 
 LOCAL_HOLES = [(-39.4, -4.4), (-30.5, -6.2)]
+ACTIVE_LOCAL_HOLES = LOCAL_HOLES[1:]
 
 
 def local_support(m):
     # 横托靠近小板背面；两端承托面、各孔位和螺钉承压面不动。
     y0, y1 = m.JOY_NEAR_Y-3.6, m.JOY_NEAR_Y+3.6
     pieces = [m.box(-47.05, -20.35, y0, y1, -5.8, 1.1),
-              m.box(-43.1, -26.8, m.TOP, m.JOY_ARM_Y[1], -9.9, -.7)]
+              m.box(-47.05, -26.8, m.TOP, m.JOY_ARM_Y[1], -9.9, -.7),
+              # 共用H3只需1.3毫米连接耳，螺母从正面接近，不加厚整个孔座。
+              m.box(-54.3, -42.5, m.TOP, m.TOP+SHARED_EAR_THICKNESS, -7.3, -.7)]
     for x, old_y in m.JOY_MOUNT_HOLES:
         pieces.append(m.box(x-3.6, x+3.6, y0, y1, 1.1, m.JOY_BOARD[4]))
     result = m.fuse(pieces)
@@ -33,16 +37,17 @@ def local_support(m):
                 m.cz(x+.6, y, 1.2, -6, m.JOY_BOARD[4]+.1),
                 m.box(x-.6, x+.6, y-1.2, y+1.2, -6, m.JOY_BOARD[4]+.1),
             ]))
-    for x, z in LOCAL_HOLES:
+    for x, z in ACTIVE_LOCAL_HOLES:
         result = result.cut(m.cy(x, z, 1.2, m.TOP-.1, m.JOY_ARM_Y[1]+.1))
         # M2×10螺钉头下沉1.04毫米，穿过塑料和板后可完整咬合普通螺母。
         result = result.cut(m.cy(x, z, 2.2, 4.6, y1+.1))
+    result = result.cut(m.cy(*BODY_MOUNT_HOLES["H3"], 1.2, m.TOP-.1, m.TOP+SHARED_EAR_THICKNESS+.1))
     return result.clean()
 
 
 def local_hardware(m):
     result = {}
-    for i, (x, z) in enumerate(LOCAL_HOLES, 1):
+    for i, (x, z) in enumerate(ACTIVE_LOCAL_HOLES, 2):
         name = f"摇杆就近固定{i}"
         head = m.cy(x, z, 2, 4.6, 6.7).cut(m.hex_y(x, z, 1.5, 5.6, 6.8))
         result[name+"-螺钉"] = head.fuse(m.cy(x, z, 1, -5.4, 4.6))
