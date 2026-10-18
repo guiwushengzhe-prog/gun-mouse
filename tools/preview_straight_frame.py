@@ -3,6 +3,23 @@
 from preview_layout import BODY_MOUNT_HOLE
 
 
+def outer_cover(m):
+    """规整的薄护板：直边主体、圆角收肩，不侵占内部走线空间。"""
+    outline = [(-54.5, -.8), (-10.8, -.8), (-10.8, -42.9),
+               (-24.9, -49), (-24.9, -52), (-50.5, -52),
+               (-50.5, -49), (-54.5, -42.5)]
+    plate = m.prism(outline, m.BATTERY_FLOOR_Y, m.BASE[1])
+    # 收肩用较大圆角，主体外角用小圆角；不滚圆打印接触面。
+    shoulders = [e for e in plate.Edges() if e.geomType() == "LINE"
+                 and abs(e.tangentAt().y) > .99
+                 and any(abs(e.Center().z-z) < .001 for z in (-42.9, -42.5, -49))]
+    plate = m.cq.Workplane().add(plate).newObject(shoulders).fillet(1.5).val()
+    corners = [e for e in plate.Edges() if e.geomType() == "LINE"
+               and abs(e.tangentAt().y) > .99
+               and any(abs(e.Center().z-z) < .001 for z in (-.8, -52))]
+    return m.cq.Workplane().add(plate).newObject(corners).fillet(1.0).val()
+
+
 def reshape_frame(m, base):
     """去掉H1/H2上部支承；H3/H4与新增H5承接下部主体。"""
     # 原中横筋、上横框与MCU外侧长梁全部删除，不再换成另一根梁。
@@ -30,9 +47,9 @@ def reshape_frame(m, base):
         m.beam((-14.2, -14), (-27, -27), 4.5),
         m.cy(x5, z5, 3.2, m.BASE[0], m.BACK),
         m.beam((x5, z5), (x5, -31), 4.0),
-        # 原开关窗口封成连续护板；1.9毫米厚度沿用上方护板。
-        # 电池引线在内侧空腔通过，H5穿孔在下方统一重新切出。
-        m.box(-50.5, -24.9, *m.BASE, -42.9, -33.8),
+        # H3周围凹折角和左侧短台阶统一补平，再圆滑收至电池托。
+        # 仅补2.4毫米薄护板，电池引线仍从内侧空腔通过。
+        outer_cover(m),
     ]
     for x, z in m.SS_HOLES:
         additions.append(m.cy(x, z, 3.4, -17.2, -8.66))
@@ -69,6 +86,9 @@ def level_outer_face(m, base):
     skin = base.translate((0, -extra, 0)).intersect(
         m.box(-100, 100, m.BATTERY_FLOOR_Y, m.BASE[0]+.01, -200, 100))
     result = m.fuse([base, skin])
+    # 清除旧拼接块伸出规整轮廓的薄边；内腔与深支承保持原形。
+    outer_layer = m.box(-100, 100, m.BATTERY_FLOOR_Y, m.BASE[1], -50, 0)
+    result = result.cut(outer_layer.cut(outer_cover(m)))
     holes = [h["xz"] for h in m.P["mount_holes"] if h["id"] in {"H3", "H4"}]
     for x, z in [*holes, BODY_MOUNT_HOLE]:
         # 螺丝头在新表面内浅沉0.5毫米，螺杆有效长度仍与上一版相同。
