@@ -1,3 +1,7 @@
 * text=auto eol=lf
 # 自动导出的三维交换文件按原字节保存
 *.step binary
+# 已核对交付文件按原字节保存，避免换行转换使文件校验清单失效
+/release/2026-10-18-最终版/** -text
+/pcb/嘉立创最终复绘/核对输入/** -text
+*.eprj2 binary

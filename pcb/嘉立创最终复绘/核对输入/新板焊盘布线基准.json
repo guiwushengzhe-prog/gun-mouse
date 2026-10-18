@@ -1,0 +1,1551 @@
+{
+  "components": [
+    {
+      "reference": "SW1_ALT",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1518.9,
+          "y": -1437,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_SW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1418.9,
+          "y": -1437,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_Y",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1318.9,
+          "y": -1437,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_X",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 1218.9,
+          "y": -1437,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "3V3",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 1118.9,
+          "y": -1437,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "SW1",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1534.6,
+          "y": -1574.8,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1434.6,
+          "y": -1574.8,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "3V3",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1334.6,
+          "y": -1574.8,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_X",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 1234.6,
+          "y": -1574.8,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_Y",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 1134.6,
+          "y": -1574.8,
+          "pad": [
+            "ELLIPSE",
+            78.7,
+            78.7
+          ],
+          "net": "JOY_SW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            47.24409
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_MCU",
+      "pads": [
+        {
+          "number": "1",
+          "x": 338.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 438.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 538.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "JOY_X",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 638.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "JOY_Y",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 738.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "6",
+          "x": 838.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "JOY_SW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "7",
+          "x": 938.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "SDA",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "8",
+          "x": 1038.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "SCL",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "9",
+          "x": 1138.2,
+          "y": -585.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "TOUCH",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "10",
+          "x": 338.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "11",
+          "x": 438.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "12",
+          "x": 538.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "3V3",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "13",
+          "x": 638.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "14",
+          "x": 738.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "BTN_R",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "15",
+          "x": 838.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "16",
+          "x": 938.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "17",
+          "x": 1038.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "VBAT_ADC",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        },
+        {
+          "number": "18",
+          "x": 1138.2,
+          "y": -1185.8,
+          "pad": [
+            "ELLIPSE",
+            82.7,
+            82.7
+          ],
+          "net": "TRIG",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            51.1811
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_GY",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1555.3,
+          "y": -1173.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "3V3",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1555.3,
+          "y": -1073.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1555.3,
+          "y": -973.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "SCL",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "4",
+          "x": 1555.3,
+          "y": -873.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "SDA",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "5",
+          "x": 1555.3,
+          "y": -773.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "6",
+          "x": 1555.3,
+          "y": -673.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "7",
+          "x": 1555.3,
+          "y": -573.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "8",
+          "x": 1555.3,
+          "y": -473.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "9",
+          "x": 2155.3,
+          "y": -573.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "10",
+          "x": 2155.3,
+          "y": -673.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "11",
+          "x": 2155.3,
+          "y": -773.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "12",
+          "x": 2155.3,
+          "y": -873.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "13",
+          "x": 2155.3,
+          "y": -973.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "14",
+          "x": 2155.3,
+          "y": -1073.2,
+          "pad": [
+            "ELLIPSE",
+            74.8,
+            74.8
+          ],
+          "net": "3V3",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "C_BAT",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -3208.7,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "VBAT_ADC",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -3208.7,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "R_BAT_L",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -2657.5,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "VBAT_ADC",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -2657.5,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_TOUCH",
+      "pads": [
+        {
+          "number": "1",
+          "x": 885.8,
+          "y": -2637.8,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 885.8,
+          "y": -2537.8,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "R_TRIG",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -2244.1,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "3V3",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -2244.1,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TRIG",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "C_TRIG",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -3070.9,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TRIG",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -3070.9,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "R_BAT_H",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -2519.7,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "BAT_SW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -2519.7,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "VBAT_ADC",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_SWITCH",
+      "pads": [
+        {
+          "number": "1",
+          "x": 2153.5,
+          "y": -1456.7,
+          "pad": [
+            "ELLIPSE",
+            118.1,
+            118.1
+          ],
+          "net": "BAT_RAW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            70.8661
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1968.5,
+          "y": -1456.7,
+          "pad": [
+            "ELLIPSE",
+            118.1,
+            118.1
+          ],
+          "net": "BAT_SW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            70.8661
+          ],
+          "plated": true
+        },
+        {
+          "number": "3",
+          "x": 1783.5,
+          "y": -1456.7,
+          "pad": [
+            "ELLIPSE",
+            118.1,
+            118.1
+          ],
+          "net": "",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            70.8661
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_BAT",
+      "pads": [
+        {
+          "number": "1",
+          "x": 2074.8,
+          "y": -3189,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "BAT_RAW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 2074.8,
+          "y": -3089,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_TRIG",
+      "pads": [
+        {
+          "number": "1",
+          "x": 885.8,
+          "y": -2344.1,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 885.8,
+          "y": -2244.1,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "TRIG",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "C_JOY_Y",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -2933.1,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "JOY_Y",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -2933.1,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "SW2",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1063,
+          "y": -2344.1,
+          "pad": [
+            "OVAL",
+            59.1,
+            78.7
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "SLOT",
+            27.5591,
+            47.2441
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1063,
+          "y": -2244.1,
+          "pad": [
+            "OVAL",
+            59.1,
+            78.7
+          ],
+          "net": "BTN_R",
+          "rotation": 0,
+          "hole": [
+            "SLOT",
+            27.5591,
+            47.2441
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "J_MODULE_BAT",
+      "pads": [
+        {
+          "number": "1",
+          "x": 629.9,
+          "y": -393.7,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "BAT_SW",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 729.9,
+          "y": -393.7,
+          "pad": [
+            "ELLIPSE",
+            70.9,
+            70.9
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            39.3701
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "R_TOUCH",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1656.7,
+          "y": -2381.9,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TOUCH_ELECTRODE",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1256.7,
+          "y": -2381.9,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "TOUCH",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    },
+    {
+      "reference": "C_JOY_X",
+      "pads": [
+        {
+          "number": "1",
+          "x": 1856.7,
+          "y": -2795.3,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "JOY_X",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        },
+        {
+          "number": "2",
+          "x": 1456.7,
+          "y": -2795.3,
+          "pad": [
+            "ELLIPSE",
+            102.4,
+            102.4
+          ],
+          "net": "GND",
+          "rotation": 0,
+          "hole": [
+            "ROUND",
+            43.3071
+          ],
+          "plated": true
+        }
+      ]
+    }
+  ],
+  "mechanicalPads": [
+    {
+      "reference": "H4",
+      "number": "",
+      "x": 944.9,
+      "y": -3267.7,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H_IMU_2",
+      "number": "",
+      "x": 2001.9,
+      "y": -525.9,
+      "pad": [
+        "OVAL",
+        94.5,
+        141.7
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H1",
+      "number": "",
+      "x": 354.3,
+      "y": -354.3,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H2",
+      "number": "",
+      "x": 2086.6,
+      "y": -354.3,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H_JOY_LOCAL_2",
+      "number": "",
+      "x": 1318.9,
+      "y": -1929.1,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H_IMU_1",
+      "number": "",
+      "x": 2001.9,
+      "y": -1126,
+      "pad": [
+        "OVAL",
+        94.5,
+        141.7
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "number": "",
+      "x": 935,
+      "y": -303.1,
+      "pad": [
+        "OVAL",
+        141.7,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "number": "",
+      "x": 935,
+      "y": -1342.5,
+      "pad": [
+        "OVAL",
+        141.7,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "SLOT",
+        94.48819,
+        141.73228
+      ],
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "number": "",
+      "x": 1702.8,
+      "y": -303.1,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "SW1_ALT",
+      "number": "",
+      "x": 1702.8,
+      "y": -1342.5,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H3",
+      "number": "",
+      "x": 1889.8,
+      "y": -1929.1,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    },
+    {
+      "reference": "H_BODY_5",
+      "number": "",
+      "x": 1889.8,
+      "y": -3267.7,
+      "pad": [
+        "ELLIPSE",
+        94.5,
+        94.5
+      ],
+      "net": "",
+      "rotation": 0,
+      "hole": [
+        "ROUND",
+        94.48819
+      ],
+      "plated": false
+    }
+  ],
+  "outline": [
+    [
+      5,
+      5
+    ],
+    [
+      57,
+      5
+    ],
+    [
+      57,
+      87
+    ],
+    [
+      20,
+      87
+    ],
+    [
+      20,
+      35
+    ],
+    [
+      5,
+      35
+    ]
+  ]
+}

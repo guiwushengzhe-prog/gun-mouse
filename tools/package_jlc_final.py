@@ -139,6 +139,8 @@ def move_history(source, target):
 
 
 def main():
+    if (ROOT/"pcb/嘉立创最终复绘/枪型飞鼠最终原生复绘.eprj2").exists():
+        raise RuntimeError("当前主板已经重新绘制，请使用tools/package_jlc_rebuilt.py；禁止旧整板迁移脚本覆盖交付。")
     contents, report = audit()
     assert read(LOG/"关闭最终原生会话.json")["value"]["status"] == "closed"
     for name in ("gunmouse-final.kicad_pcb", "gunmouse-final.kicad_pro", "制造核对.json", "制造文件"):
