@@ -20,7 +20,8 @@ def local_support(m):
     for pad in resistor["pads"]:
         result = result.cut(m.cy(*pad["xz"], 1.55, m.TOP-.1, .3))
     for x in (-33, -27.92):
-        result = result.cut(m.cy(x, -2, 1.3, m.TOP-.1, .3))
+        # 槽顶越过Z=-0.7的根部顶边0.1毫米，避免恰好相切形成零厚边。
+        result = result.cut(m.cy(x, -2, 1.4, m.TOP-.1, .3))
     for i, (x, old_y) in enumerate(m.JOY_MOUNT_HOLES):
         y = m.FACE_Y_SUM-old_y
         result = result.cut(m.cz(x, y, 2.15, -10, -3.8))

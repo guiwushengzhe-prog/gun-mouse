@@ -1,0 +1,43 @@
+{
+  "单位": "毫米",
+  "打印比例": "1:1",
+  "打印件": [
+    {
+      "文件": "主体底座.stl",
+      "实体数": 1,
+      "体积_立方毫米": 15338.124,
+      "打印尺寸_毫米": [
+        43.7,
+        125.0,
+        16.07
+      ],
+      "器件导线五金交叠": {},
+      "三角网格检查": {
+        "open_or_nonmanifold_edges": 0,
+        "connected_bodies": 1,
+        "mesh_vs_cad_volume_relative_difference": 2.4e-05,
+        "pass": true
+      },
+      "SHA256": "de12af1e96cb4a41a5ade77ea57ecefec94ff16ae5c5bc160b639a754dbdae83"
+    },
+    {
+      "文件": "独立摇杆支座.stl",
+      "实体数": 1,
+      "体积_立方毫米": 1750.501,
+      "打印尺寸_毫米": [
+        26.7,
+        12.1,
+        9.07
+      ],
+      "器件导线五金交叠": {},
+      "三角网格检查": {
+        "open_or_nonmanifold_edges": 0,
+        "connected_bodies": 1,
+        "mesh_vs_cad_volume_relative_difference": 6.2e-05,
+        "pass": true
+      },
+      "SHA256": "57519222f8b7f01ad1419e3548831ec1f17f85e1037b7d8a0909e528095674ba"
+    }
+  ],
+  "检查边界": "静态模型和网格检查；未完成实物试装、承压及通电验证。"
+}

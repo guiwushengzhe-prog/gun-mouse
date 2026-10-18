@@ -10,6 +10,7 @@ from preview_local_joystick_mount import local_support, local_hardware
 from preview_ss01_right import build_right_switch, right_hardware
 from preview_straight_frame import reshape_frame, level_outer_face
 from preview_layout import POWER_TRANSLATION, IMU_TRANSLATION_Z, body_hardware
+from preview_release_hardware import release_hardware
 
 
 OUT = m.ROOT / "shell" / "快速结构预览"
@@ -77,10 +78,12 @@ def preview_details(module, refs):
 def preview_hardware():
     refs, seats = ORIGINAL_HARDWARE()
     refs = {n: s for n, s in refs.items()
-            if not n.startswith(("共用锚点", "H1-", "H2-"))}
+            if not n.startswith(("共用锚点", "H1-", "H2-"))
+            and not (n.startswith("SS") and n.endswith("垫片"))}
     refs.update(local_hardware(m))
     refs.update(right_hardware(m))
     refs.update(body_hardware(m))
+    refs.update(release_hardware(m))
     return refs, seats
 
 
@@ -122,6 +125,7 @@ def main(export_print_parts=True):
                      ensure_ascii=False), flush=True)
     # 正式记录不生成预览中间报告，只交付模型和效果图。
     report_path.unlink()
+    return base, SUPPORT
 
 
 if __name__ == "__main__":

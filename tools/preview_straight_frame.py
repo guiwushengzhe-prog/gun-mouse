@@ -1,6 +1,7 @@
 """快速预览：去掉上部框架，主体仅保留下部三个穿板固定点。"""
 
 from preview_layout import BODY_MOUNT_HOLE
+from preview_release_hardware import TRIGGER_NUT_POCKET_Y, TRIGGER_SUPPORT_FACE_Y
 
 
 def outer_cover(m):
@@ -43,7 +44,7 @@ def reshape_frame(m, base):
     additions = [
         # 恢复与旧梁相交的下部支承，保留护板、电池托和SS背座。
         m.beam((-51, -4), (-27, -27), 3.6),
-        m.box(-17.6, -10.8, -17.2, -8.66, -17.4, -1.1),
+        m.box(-17.6, -10.8, -17.2, TRIGGER_SUPPORT_FACE_Y, -17.4, -1.1),
         m.beam((-14.2, -14), (-27, -27), 4.5),
         m.cy(x5, z5, 3.2, m.BASE[0], m.BACK),
         m.beam((x5, z5), (x5, -31), 4.0),
@@ -52,7 +53,7 @@ def reshape_frame(m, base):
         outer_cover(m),
     ]
     for x, z in m.SS_HOLES:
-        additions.append(m.cy(x, z, 3.4, -17.2, -8.66))
+        additions.append(m.cy(x, z, 3.4, -17.2, TRIGGER_SUPPORT_FACE_Y))
     for hole in m.P["mount_holes"]:
         if hole["id"] not in {"H3", "H4"}:
             continue
@@ -69,9 +70,9 @@ def reshape_frame(m, base):
         cuts.append(m.cy(x, z, 1.2, -21, m.BACK + .2))
     # 重建SS背座时同步恢复原孔、侧面螺母槽和工具入口。
     for x, z in m.SS_HOLES:
-        cuts += [m.cy(x, z, 1.15, -17.3, -8.5),
-                 # 螺母位置不变，仅收回槽前壁0.1毫米，薄壁由0.79增至0.89。
-                 m.box(-21, -11.7, -11.45, -9.55, z-2.15, z+2.15),
+        cuts += [m.cy(x, z, 1.15, -17.3, TRIGGER_SUPPORT_FACE_Y+.1),
+                 # 支座直接托住开关，M2×10无垫片；槽前承力壁保留1.3毫米。
+                 m.box(-21, -11.7, *TRIGGER_NUT_POCKET_Y, z-2.15, z+2.15),
                  m.cy(x, z, 2.2, -1.5, .95)]
     cuts.append(m.cy(-27, -27, 2.2, -21, m.BASE[0]))
     for cut in cuts:

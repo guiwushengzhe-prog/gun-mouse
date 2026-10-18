@@ -8,6 +8,10 @@
 BODY_BOUNDS = (-18.5, -9.0, -14.0, -7.6, -43.7, -23.9)
 MOUNT_HOLES = ((-15.6, -29.0), (-15.6, -38.5))
 PLUNGER_CENTER = (-7.9, -10.8, -31.0)
+NUT_Y = (-16.9, -15.3)
+NUT_POCKET_Y = (-17.1, -15.3)
+SCREW_TIP_Y = -17.6
+BLIND_END_Y = -18.0
 
 
 def right_hardware(m):
@@ -17,9 +21,9 @@ def right_hardware(m):
         name = f"右键固定{i}"
         head = m.cy(x, z, 2, -7.6, -5.5).cut(
             m.hex_y(x, z, 1.5, -6.6, -5.4))
-        refs[name+"-螺钉"] = head.fuse(m.cy(x, z, 1, -17.6, -7.6))
-        refs[name+"-螺母"] = m.hex_y(x, z, 4, -17.3, -15.7).cut(
-            m.cy(x, z, 1.05, -17.4, -15.6))
+        refs[name+"-螺钉"] = head.fuse(m.cy(x, z, 1, SCREW_TIP_Y, -7.6))
+        refs[name+"-螺母"] = m.hex_y(x, z, 4, *NUT_Y).cut(
+            m.cy(x, z, 1.05, NUT_Y[0]-.1, NUT_Y[1]+.1))
     return refs
 
 
