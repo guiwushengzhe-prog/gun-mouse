@@ -12,6 +12,8 @@ def digest(path):
 
 
 def main():
+    if (ROOT/"pcb/嘉立创最终版/枪型飞鼠最终版.eprj3").exists():
+        raise RuntimeError("主板已切换嘉立创，请用tools/package_jlc_final.py，避免旧制造文件覆盖当前交付。")
     records = RELEASE/"核对记录"
     records.mkdir(parents=True, exist_ok=True)
     for source in (OUT/"模型核对.json", OUT/"pcb/孔位与布线核对.json", OUT/"pcb/规则检查.json"):

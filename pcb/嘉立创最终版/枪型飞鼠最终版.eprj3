@@ -1,0 +1,43 @@
+{
+  "name": "枪型飞鼠最终版",
+  "owner_uuid": "da8a7e0d60e34e73a26d54481ccd2cfa",
+  "creator_uuid": "da8a7e0d60e34e73a26d54481ccd2cfa",
+  "created_at": "2026-10-18 16:34:17",
+  "updated_at": "2026-10-18 16:34:17",
+  "modifier_uuid": "da8a7e0d60e34e73a26d54481ccd2cfa",
+  "content": "与2026-10-18最终打印件配套；后续在嘉立创专业版维护。",
+  "archive": false,
+  "cbb_project": 0,
+  "thumb": "",
+  "ticket": 1,
+  "g_ticket": 1,
+  "boards": [],
+  "block_symbol_attrs_groups": {},
+  "default_sheet": "",
+  "branch_uuid": "",
+  "pcb_count": 0,
+  "format": "folder",
+  "profile": {
+    "boards": {},
+    "schematics": {},
+    "sheets": {},
+    "pcbs": {
+      "d7b364010113a027": {
+        "uuid": "d7b364010113a027",
+        "title": "枪型飞鼠最终主板",
+        "board": "",
+        "parent_uuid": "",
+        "source": "",
+        "version": "1792314136480",
+        "updateTime": 1792314136480
+      }
+    },
+    "panels": {},
+    "blockSymbols": {},
+    "owner": {
+      "uuid": "da8a7e0d60e34e73a26d54481ccd2cfa"
+    },
+    "simSchematics": {},
+    "simulations": {}
+  }
+}

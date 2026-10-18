@@ -1,0 +1,32 @@
+{
+  "铜层数": 2,
+  "板厚毫米": 1.6,
+  "铜厚微米": [
+    35,
+    35
+  ],
+  "钻孔核对": {
+    "PTH": {
+      "总孔数": 89,
+      "槽孔数": 2
+    },
+    "NPTH": {
+      "总孔数": 12,
+      "槽孔数": 4
+    }
+  },
+  "主板SHA256": "a7a060940900c47d3eb286d31788ff028f052f04c224ae5957dba878f40c54bd",
+  "打板压缩包SHA256": "f08f620fecbe0333585c4f566ce1cc9144add182cb918a7579edcbe54f1aaaea",
+  "文件SHA256": {
+    "gunmouse-final-B_Cu.gbl": "ff97b66c962779343985b3b93fd4770d2c836900d8a470a7a7eebb76fd86ff06",
+    "gunmouse-final-B_Mask.gbs": "66b07695139df2086e21d36ffeb78704aef6fc77a1da0d23297d3d32ed0e82f8",
+    "gunmouse-final-B_Silkscreen.gbo": "ba6e584088fe7f5b261734a521fea452b60b20de0d707ffc5b50f0923588d755",
+    "gunmouse-final-Edge_Cuts.gm1": "d57e9327bfa87ba05e07e20bcc070d586b73b8353fcd00ab9464e5c763d3f66f",
+    "gunmouse-final-F_Cu.gtl": "f5cb8cce3df034bf3f54c4484e927ce3d276565abd99aa014c93ab51961b928a",
+    "gunmouse-final-F_Mask.gts": "b4831e17ddae61681eb86c7d9b71225048d8f56d7d2e2853c12f6e4e4c7148ad",
+    "gunmouse-final-F_Silkscreen.gto": "102a8bd51150169c9d569fc1a0beecdd2e26ea2f1baa66355eca5a180e46fa88",
+    "gunmouse-final-NPTH.drl": "98214fd5e855e1bb72f7646533bb6b593cf1b61f24197c48cce74984a47e626b",
+    "gunmouse-final-PTH.drl": "11a03238d3770bc0bf3229ea673fe727c3a396cbc7d80c5b5c1f06af2c3bb7a3",
+    "gunmouse-final-job.gbrjob": "621171490e2a07f54cbade728d59b506361df04f065482efdc10ca414db51d65"
+  }
+}
