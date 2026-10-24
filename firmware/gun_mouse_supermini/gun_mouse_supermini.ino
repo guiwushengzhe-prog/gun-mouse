@@ -36,6 +36,13 @@ using namespace GunMouse;
 namespace Fw {
 constexpr char kVersion[] = "30g SuperMini 实验固件 1";
 constexpr char kBleName[] = "GunMouse SuperMini";
+#if defined(CONFIG_NIMBLE_ENABLED)
+constexpr char kBleStack[] = "轻量";
+#elif defined(CONFIG_BLUEDROID_ENABLED)
+constexpr char kBleStack[] = "传统";
+#else
+#error "需要启用受支持的蓝牙实现"
+#endif
 constexpr uint8_t kImuAddr = 0x6A;  // SA0 接地
 constexpr uint32_t kI2cHz = 400000;
 constexpr uint32_t kReportMinUs = 7500;
@@ -118,6 +125,10 @@ std::atomic<bool> mouseNotifyAccepted{false};
 std::atomic<bool> bleAuthenticated{false};
 std::atomic<bool> pairingExchangedKeys{false};
 std::atomic<bool> pendingSubscriptionSave{false};
+std::atomic<bool> subscriptionWrittenThisConnection{false};
+std::atomic<uint32_t> subscriptionWriteCount{0};
+std::atomic<int> bleAuthMode{-1};
+std::atomic<int> bleAuthReason{-1};
 portMUX_TYPE authenticatedPeerMux = portMUX_INITIALIZER_UNLOCKED;
 char subscriptionKey[14] = {};
 std::atomic<uint32_t> bleRevision{0};
@@ -145,6 +156,10 @@ class ServerCallbacks : public BLEServerCallbacks {
     bleAuthenticated = false;
     pairingExchangedKeys = false;
     pendingSubscriptionSave = false;
+    subscriptionWrittenThisConnection = false;
+    subscriptionWriteCount = 0;
+    mouseSubscribed = false;
+    bleAuthMode = bleAuthReason = -1;
     bleRevision.fetch_add(1);
   }
   void onDisconnect(BLEServer*) override {
@@ -160,6 +175,14 @@ class ServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer* server, esp_ble_gatts_cb_param_t* param) override {
     server->updateConnParams(param->connect.remote_bda, 6, 6, 0, 400);  // Arduino ESP32 3.3.2 API；请求 7.5ms
   }
+#elif defined(CONFIG_NIMBLE_ENABLED)
+  void onConnect(BLEServer* server, ble_gap_conn_desc* desc) override {
+    bleIntervalUs = (uint32_t)desc->conn_itvl * 1250UL;
+    server->updateConnParams(desc->conn_handle, 6, 6, 0, 400);
+  }
+  void onConnParamsUpdate(uint16_t, uint16_t interval, uint16_t, uint16_t, uint8_t status) override {
+    if (status == 0 && interval >= 6) bleIntervalUs = (uint32_t)interval * 1250UL;
+  }
 #endif
 };
 
@@ -167,6 +190,8 @@ class MouseSubscriptionCallbacks : public BLEDescriptorCallbacks {
  public:
   void onWrite(BLEDescriptor* descriptor) override {
     const bool subscribed = static_cast<BLE2902*>(descriptor)->getNotifications();
+    subscriptionWrittenThisConnection = true;
+    subscriptionWriteCount.fetch_add(1);
     if (mouseSubscribed.exchange(subscribed) != subscribed) bleRevision.fetch_add(1);
     pendingSubscriptionSave = true;
   }
@@ -178,7 +203,29 @@ class MouseReportCallbacks : public BLECharacteristicCallbacks {
     // ESP32 core 3.3.2 的 notify() 在调用栈内报告是否被 GATT 接收；不是主机应用层确认。
     mouseNotifyAccepted = status == SUCCESS_NOTIFY;
   }
+#if defined(CONFIG_NIMBLE_ENABLED)
+  void onSubscribe(BLECharacteristic*, ble_gap_conn_desc* desc, uint16_t value) override {
+    const bool subscribed = (value & 1) != 0;
+    subscriptionWrittenThisConnection = true;
+    subscriptionWriteCount.fetch_add(1);
+    if (mouseSubscribed.exchange(subscribed) != subscribed) bleRevision.fetch_add(1);
+    bleIntervalUs = (uint32_t)desc->conn_itvl * 1250UL;
+  }
+#endif
 };
+
+#if defined(CONFIG_NIMBLE_ENABLED)
+class MouseSecurityCallbacks : public BLESecurityCallbacks {
+ public:
+  bool onSecurityRequest() override { return true; }
+  void onAuthenticationComplete(ble_gap_conn_desc* desc, int status) override {
+    bleAuthMode = desc ? ((desc->sec_state.bonded ? 1 : 0) | (desc->sec_state.authenticated ? 4 : 0)) : -1;
+    bleAuthReason = status;
+    bleAuthenticated = status == 0 && desc && desc->sec_state.encrypted && desc->sec_state.bonded;
+    if (desc) bleIntervalUs = (uint32_t)desc->conn_itvl * 1250UL;
+  }
+};
+#endif
 
 #if defined(CONFIG_BLUEDROID_ENABLED)
 void onGapEvent(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t* param) {
@@ -189,6 +236,8 @@ void onGapEvent(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t* param) {
   if (event == ESP_GAP_BLE_KEY_EVT) pairingExchangedKeys = true;
   if (event == ESP_GAP_BLE_AUTH_CMPL_EVT) {
     const auto& auth = param->ble_security.auth_cmpl;
+    bleAuthMode = auth.auth_mode;
+    bleAuthReason = auth.success ? 0 : auth.fail_reason;
     const bool bonded = auth.success && (auth.auth_mode & ESP_LE_AUTH_BOND);
     if (bonded) {
       char key[sizeof(subscriptionKey)];
@@ -196,7 +245,12 @@ void onGapEvent(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t* param) {
                auth.bd_addr[2], auth.bd_addr[3], auth.bd_addr[4], auth.bd_addr[5]);
       // GAP/CCCD 回调由同一个 BLE 事件任务串行调用；在认证完成时恢复，后续主机写入始终优先。
       // 此处只读已初始化的 NVS；Preferences 的底层 nvs_get 使用 SDK 的 NVS 锁。
-      const bool subscribed = !pairingExchangedKeys.load() && prefs.getBool(key, false);
+      // 主机可能在认证完成前已写入订阅；保留本次连接的真实写入。
+      // 新核心也会先恢复描述符，不能再用旧的应用存储值覆盖它。
+      const bool subscribed = subscriptionWrittenThisConnection.load()
+                                  ? mouseSubscribed.load()
+                                  : (!pairingExchangedKeys.load() &&
+                                     ((mouseCccd && mouseCccd->getNotifications()) || prefs.getBool(key, false)));
       if (mouseCccd) mouseCccd->setNotifications(subscribed);
       if (mouseSubscribed.exchange(subscribed) != subscribed) bleRevision.fetch_add(1);
       portENTER_CRITICAL(&authenticatedPeerMux);
@@ -240,6 +294,9 @@ void initBle() {
   BLESecurity* security = new BLESecurity();
   security->setAuthenticationMode(ESP_LE_AUTH_BOND);
   security->setCapability(ESP_IO_CAP_NONE);
+#if defined(CONFIG_NIMBLE_ENABLED)
+  BLEDevice::setSecurityCallbacks(new MouseSecurityCallbacks());
+#endif
   BLEAdvertising* adv = BLEDevice::getAdvertising();
   adv->setAppearance(HID_MOUSE);
   adv->addServiceUUID(hid->hidService()->getUUID());
@@ -466,6 +523,9 @@ void printStatus() {
                 bleConnected ? "已连接" : "等待连接", mouseSubscribed ? "已启用" : "等待主机", bleIntervalUs.load() / 1000.0f,
                 !imuInitialized ? "未找到芯片(自动重试)" : (gyro.calibrated() ? "正常" : "等待放稳校准"), u.x, u.y,
                 u.z);
+  Serial.printf("[蓝牙链路] 实现=%s 配对认证=%s 模式=%d 失败码=%d 主机订阅写入=%lu 描述符开关=%d\n",
+                Fw::kBleStack, bleAuthenticated ? "通过" : "未通过", bleAuthMode.load(), bleAuthReason.load(),
+                (unsigned long)subscriptionWriteCount.load(), mouseCccd ? (int)mouseCccd->getNotifications() : -1);
   Serial.printf("[状态] 触摸 原始=%lu 基线=%.0f 噪声=%.1f 门限=+%.0f/+%.0f 状态=%s 读一次=%luus\n",
                 (unsigned long)touch.lastRaw(), touch.baseline(), touch.noise(), touch.pressOffset(),
                 touch.releaseOffset(), touch.touched() ? "触摸" : "未触摸", (unsigned long)touchReadUs);
