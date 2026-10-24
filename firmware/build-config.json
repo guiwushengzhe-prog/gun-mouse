@@ -1,6 +1,6 @@
 {
   "board": "TENSTAR two-row 9-pin ESP32-S3 SuperMini, ESP32-S3FH4R2",
-  "arduino_core": "esp32:esp32@3.3.2",
+  "arduino_core": "esp32:esp32@3.3.12",
   "package_url": "https://espressif.github.io/arduino-esp32/package_esp32_index.json",
   "fqbn": "esp32:esp32:esp32s3:FlashSize=4M,PartitionScheme=no_ota,FlashMode=qio,PSRAM=enabled,CDCOnBoot=cdc,USBMode=hwcdc,UploadSpeed=921600,CPUFreq=160",
   "flash_mb": 4,

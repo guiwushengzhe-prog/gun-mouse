@@ -1,34 +1,34 @@
 {
   "board": "TENSTAR two-row 9-pin ESP32-S3 SuperMini, ESP32-S3FH4R2",
-  "arduino_core": "esp32:esp32@3.3.2",
+  "arduino_core": "esp32:esp32@3.3.12",
   "fqbn": "esp32:esp32:esp32s3:FlashSize=4M,PartitionScheme=no_ota,FlashMode=qio,PSRAM=enabled,CDCOnBoot=cdc,USBMode=hwcdc,UploadSpeed=921600,CPUFreq=160",
   "arduino_cli": {
     "Application": "arduino-cli",
-    "VersionString": "1.3.1",
-    "Commit": "08ff7e2b",
+    "VersionString": "1.5.1",
+    "Commit": "01f3d4f2b",
     "Status": "",
-    "Date": "2025-08-28T13:51:45Z"
+    "Date": "2026-06-05T10:22:12Z"
   },
-  "compile_seconds": 6.7,
+  "compile_seconds": 55.1,
   "host_logic_tests": "passed",
   "host_test_source_sha256": "65c96129b7732c490ffa075954d7b89b7b0014825f972de635f9a6e16e4c09eb",
-  "carrier_config_sha256": "730ba00d1d0590381b81cf3021c8e8dff3583758a3b714f3035dd419f2aa9f00",
-  "build_config_sha256": "4445d2372de111a9a6f11cb23b1212c4e6c166b1fa003d8e6f7fc92d51fd82e5",
+  "carrier_config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
+  "build_config_sha256": "07e6f2e3558f04450a1fb72b12962cab1daa794ff1c103ac9e73d3360f8ed69e",
   "source_sha256": {
-    "board_pins.h": "3acb4aa6156fd840901f68c047c294f8188d3d62a4c8913e53987c1fb47cc73e",
+    "board_pins.h": "5326fe9401acca96f3023fb9a4db14c342ce4b89287c529e41b34114260e6db5",
     "control_core.h": "e2ff4ba55f38e497852859415f9b857339e350d569d86693deda8892787daabb",
-    "gun_mouse_supermini.ino": "a3ec9f71eeb3ce3097876d7874254e5f31cfdc1bb623be5342270a14f0f0ea25",
+    "gun_mouse_supermini.ino": "c36ab34f5cba50c4764653eac179360bb9c006af057e7ed0ce60245d50e8591a",
     "imu_logic.h": "8ea88f5bd49f71b920c5762c706864e043a952f335b823214cb3d94ef9628450",
     "input_logic.h": "3797c4fb12889e637c7327d763267c2761b69cfd43942f3ae01ed5cbdbf2762c"
   },
   "artifacts": {
     "gun_mouse_supermini.ino.bin": {
-      "bytes": 717072,
-      "sha256": "0c9f7f9a0027fd17785abed8732e0a673aef29786316f74172761b045a9b566c"
+      "bytes": 674128,
+      "sha256": "b663203882ac9a8695a5664397e1bcec433094fb34b8ceaa4033536220e20a5d"
     },
     "gun_mouse_supermini.ino.bootloader.bin": {
-      "bytes": 20224,
-      "sha256": "939725836a1e5e60f024f94762423729f843568236799ca0095db6fd5299e490"
+      "bytes": 19968,
+      "sha256": "66cf6c060fc857c8ea6d6812aab8e9b27448431846426218b6fb81526b31e564"
     },
     "gun_mouse_supermini.ino.partitions.bin": {
       "bytes": 3072,
@@ -36,7 +36,7 @@
     },
     "gun_mouse_supermini.ino.merged.bin": {
       "bytes": 4194304,
-      "sha256": "701018e608f6b5f824fb70be51297f59c2b76f72a74719ed6e61878840d10b3d"
+      "sha256": "4d6123262f0313ed40d6463b1b880eaaecd03a06d969afc98ce36f4da043d840"
     }
   },
   "flash_address_merged": "0x0",

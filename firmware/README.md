@@ -1,6 +1,6 @@
 # SuperMini 固件
 
-本轮源码已取消低电自动休眠和外部供电识别，保留电压估算电量。**仓库现有 `bin/` 与 `build-manifest.json` 尚未按本轮配置重新构建，不可直接作为本轮电路板的固件刷入。** 本次通过47项电脑逻辑检查，并用系统已有3.3.12核心编译了主源文件；整套库的编译及最终链接未完成。该临时检查不替换工程锁定的3.3.2，也不更新正式二进制文件。
+本轮源码已取消低电自动休眠和外部供电识别，保留电压估算电量，并支持保存摇杆停用状态。编译环境统一为本机已安装的官方3.3.12核心，已完成整套库的编译和最终链接，并通过47项电脑逻辑检查。`bin/` 与 `build-manifest.json` 随本次完整构建更新；实物上传和运行情况单独记录，电脑检查不代表整机验收。
 
 适配 **TENSTAR 两侧各 9 针、芯片标记 ESP32-S3FH4R2 的 ESP32-S3 SuperMini**：4MB Flash、2MB QSPI PSRAM；不要按某些商品文案的 8MB 或按 ESP32-C3 SuperMini 烧录。惯性模块为 GY-601N1 / LSM6DSV16X，3.3V 供电，I2C 地址 0x6A。IMU 中断脚不接，固件轮询。
 
@@ -35,7 +35,7 @@ GPIO9 保留电池开关后的 **BAT_SW / SuperMini B+ 节点** 电压读取，�
 
 ## 可复现编译
 
-需要 Python 3.9+、[Arduino CLI](https://arduino.github.io/arduino-cli/latest/installation/) 和用于纯逻辑检查的 `g++`。官方 ESP32 Arduino 核心锁定为 **3.3.2**，所有 Arduino 库来自该核心，不需要第三方鼠标/IMU库。固件已适配该版本的 BLE 连接参数与 GAP 回调接口。
+需要 Python 3.9+、[Arduino CLI](https://arduino.github.io/arduino-cli/latest/installation/) 和用于纯逻辑检查的 `g++`。官方 ESP32 Arduino 核心锁定为 **3.3.12**，所有 Arduino 库来自该核心，不需要第三方鼠标/IMU库。固件已适配该版本的 BLE 连接参数与 GAP 回调接口。
 
 在仓库根目录运行（Linux、macOS、Windows PowerShell 均使用同一个 Python 脚本）：
 
@@ -58,9 +58,12 @@ python firmware/build_supermini_firmware.py --host-only
 ## 首次烧录与验收
 
 1. 首次烧录先断开电池，连接 SuperMini 自身 USB-C 数据线。在 Arduino IDE 按上面的参数选择板型并打开 `gun_mouse_supermini/gun_mouse_supermini.ino`，或用 Arduino CLI 编译后上传。若未枚举，按住 BOOT 再按 RESET，松开 BOOT 进入 ROM 下载模式；端口以实际枚举为准。
+
+   手动进入下载模式后，原生串口的普通自动复位可能仍停留在下载模式。上传校验通过但没有程序回复时，可按复位键或使用烧录工具的 `--after watchdog-reset` 完成整机复位，再读取状态；参见[乐鑫官方排障说明](https://docs.espressif.com/projects/esptool/en/latest/esp32s3/troubleshooting.html#leaving-download-mode-in-usb-serial-jtag-mode)。
+
 2. 串口 115200 输入 `status`，确认摇杆中心、传感器 ID/校准和 BAT_SW 节点读数。电池开关关闭且USB供电时，B+可能读到空载充电器电压，不能把它当电池电量。静置约3秒完成体感校准，`cal`可重做。
 3. 蓝牙搜索 **GunMouse SuperMini**。不触摸时晃动不会移动，但三键和摇杆仍可操作；触摸后体感移动，松开不会补发积压。重连后检查没有按键卡住。
-4. `jcenter` 取摇杆中位，`jdir` 按串口提示推向光标右、上方向，`jsave` 保存端点。装壳后用 `status` 看触摸读数，`tp <百分比>` / `tr <百分比>` 调整阈值，`sens <计数/度>` 调灵敏度。
+4. 摇杆暂时拆除时，输入 `joy 0` 停用两路轴输入及中键，设置自动保存，重新上电仍保持停用。装回后让摇杆回中，输入 `joy 1` 恢复并取中；`jcenter` 重新取摇杆中位，`jdir` 按串口提示推向光标右、上方向，`jsave` 保存端点。原有参数重置命令不会改变这个独立保存的摇杆安装状态。装壳后用 `status` 看触摸读数，`tp <百分比>` / `tr <百分比>` 调整阈值，`sens <计数/度>` 调灵敏度。
 5. 实板验证单电池、USB供电、插拔过渡、低电压无线峰值下的3.3伏电压、估算电量以及触摸抗误触。本次编译和电脑逻辑测试不代替这些实物检查。
 
 Arduino CLI 上传示例（先用脚本完成编译；端口替换成实际 `/dev/ttyACM0` 或 `COM5`）：

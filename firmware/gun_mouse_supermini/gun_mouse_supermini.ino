@@ -89,6 +89,7 @@ uint32_t imuRetryMs = 0;
 uint32_t imuLastGoodUs = 0;
 uint64_t imuSequence = 0;
 
+bool joystickEnabled = true;
 bool joyAvailable = false;
 int joyRawX = 0, joyRawY = 0;
 float joyOutX = 0, joyOutY = 0;
@@ -364,6 +365,15 @@ int readAdcAvg(int pin, int n) {
 }
 
 void calibrateJoystickCenter() {
+  lastJoyUs = 0;
+  joyOutX = joyOutY = 0;
+  sender.clearJoystick();
+  if (!joystickEnabled) {
+    joyAvailable = false;
+    joyRawX = joyRawY = 0;
+    Serial.println("[摇杆] 已停用，装回后输入 joy 1 恢复");
+    return;
+  }
   const int cx = readAdcAvg(Pins::JOY_X, 32);
   const int cy = readAdcAvg(Pins::JOY_Y, 32);
   joyAvailable = cx >= Fw::kJoyCenterMin && cx <= Fw::kJoyCenterMax && cy >= Fw::kJoyCenterMin &&
@@ -415,7 +425,7 @@ void serviceButtons(uint32_t nowUs) {
   uint8_t mask = 0;
   if (trigDebounce.update(digitalRead(Pins::TRIG) == LOW, nowUs)) mask |= 0x01;   // 机械扳机 = 左键
   if (rightDebounce.update(digitalRead(Pins::BTN_R) == LOW, nowUs)) mask |= 0x02; // 右键
-  if (middleDebounce.update(digitalRead(Pins::JOY_SW) == LOW, nowUs)) mask |= 0x04; // 摇杆按下 = 中键
+  if (middleDebounce.update(joystickEnabled && digitalRead(Pins::JOY_SW) == LOW, nowUs)) mask |= 0x04; // 摇杆按下 = 中键
   buttonMask = mask;
 }
 
@@ -460,7 +470,8 @@ void printStatus() {
                 (unsigned long)touch.lastRaw(), touch.baseline(), touch.noise(), touch.pressOffset(),
                 touch.releaseOffset(), touch.touched() ? "触摸" : "未触摸", (unsigned long)touchReadUs);
   Serial.printf("[状态] 按键 左(扳机)=%d 右=%d 中=%d | 摇杆 %s ADC=(%d,%d) 中心=(%d,%d) 端点X=[%d,%d] Y=[%d,%d] 输出=(%+.2f,%+.2f)\n",
-                buttonMask & 1, (buttonMask >> 1) & 1, (buttonMask >> 2) & 1, joyAvailable ? "正常" : "暂停", joyRawX,
+                buttonMask & 1, (buttonMask >> 1) & 1, (buttonMask >> 2) & 1,
+                !joystickEnabled ? "已停用" : (joyAvailable ? "正常" : "暂停"), joyRawX,
                 joyRawY, joyCalX.center, joyCalY.center, joyCalX.min, joyCalX.max, joyCalY.min, joyCalY.max, joyOutX,
                 joyOutY);
   Serial.printf("[状态] BAT_SW/B+=%.0fmV(仅BAT开关ON代表电池；电量为电压估算，充电时可能偏高) | 灵敏度=%.1f计数/度 反向X=%d Y=%d | 摇杆速度=%.0f 交换=%d 反向X=%d Y=%d\n",
@@ -471,12 +482,17 @@ void printStatus() {
 void printHelp() {
   Serial.println(
       "命令：status 状态 | log 开关每秒5次状态 | cal 重新校准陀螺仪 | sens <计数/度> | invx / invy 体感反向\n"
-      "      jcenter 摇杆重新取中 | jdir 摇杆方向向导 | jspeed <计数/秒> | jsave 保存摇杆端点\n"
+      "      joy 0/1 停用/启用摇杆及中键（自动保存） | jcenter 摇杆重新取中 | jdir 摇杆方向向导\n"
+      "      jspeed <计数/秒> | jsave 保存摇杆端点\n"
       "      tp <百分比> 触摸按下门限 | tr <百分比> 触摸松开门限 | reset 恢复默认设置 | help");
 }
 
 // 摇杆方向向导：依次推向“光标向右”和“光标向上”的方向，自动确定交换与反向。
 void joystickDirectionWizard() {
+  if (!joystickEnabled) {
+    Serial.println("[摇杆] 已停用，装回后输入 joy 1 恢复");
+    return;
+  }
   settings.joy_swap = settings.joy_invert_x = settings.joy_invert_y = 0;
   auto capture = [](const char* what, float& ax, float& ay) {
     Serial.printf("[摇杆] 请把摇杆推到底并保持在“%s”的方向（5 秒内）…\n", what);
@@ -530,6 +546,11 @@ void handleSerial() {
     else if (c2 == "sens" && n == 2 && value > 0 && value < 1000) { settings.counts_per_deg = value; }
     else if (c2 == "invx") settings.invert_x ^= 1;
     else if (c2 == "invy") settings.invert_y ^= 1;
+    else if (c2 == "joy" && n == 2 && (value == 0 || value == 1)) {
+      joystickEnabled = value == 1;
+      prefs.putBool("joystick", joystickEnabled);
+      calibrateJoystickCenter();
+    }
     else if (c2 == "jcenter") calibrateJoystickCenter();
     else if (c2 == "jdir") joystickDirectionWizard();
     else if (c2 == "jspeed" && n == 2 && value > 0 && value < 20000) settings.joy_speed = value;
@@ -562,6 +583,7 @@ void setup() {
   analogSetPinAttenuation(Pins::VBAT_ADC, ADC_11db);
   prefs.begin("gunmouse", false);
   loadSettings();
+  joystickEnabled = prefs.getBool("joystick", true);
   applySettings();
   Wire.begin(Pins::SDA, Pins::SCL, Fw::kI2cHz);
   Wire.setTimeOut(5);
