@@ -25,16 +25,21 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
+#if defined(CONFIG_NIMBLE_ENABLED)
+#include <services/gatt/ble_svc_gatt.h>
+#endif
 
 #include "board_pins.h"
 #include "control_core.h"
 #include "imu_logic.h"
 #include "input_logic.h"
+#include "direction_calibration.h"
+#include "ble_maintenance.h"
 
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件2-握姿补偿";
+constexpr char kVersion[] = "枪型飞鼠 固件3.1-蓝牙升级与轨迹校准";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -87,6 +92,12 @@ void loadSettings() {
 ControlCore core;
 ReportSender sender;
 GyroPipeline gyro;
+HorizontalCalibration horizontalCalibration;
+BleMaintenance maintenance;
+float horizontalCoupling = 0;
+uint8_t horizontalCalibrationState = 0;  // 0未开始、1采集中、2成功、3动作不充分。
+uint32_t horizontalCalibrationStartedMs = 0;
+uint32_t lastDiagnosticMs = 0;
 TouchDetector touch;
 Debouncer trigDebounce, rightDebounce, middleDebounce;
 JoystickAxisCal joyCalX, joyCalY;
@@ -129,6 +140,7 @@ std::atomic<bool> subscriptionWrittenThisConnection{false};
 std::atomic<uint32_t> subscriptionWriteCount{0};
 std::atomic<int> bleAuthMode{-1};
 std::atomic<int> bleAuthReason{-1};
+std::atomic<bool> serviceSchemaNotified{false};
 portMUX_TYPE authenticatedPeerMux = portMUX_INITIALIZER_UNLOCKED;
 char subscriptionKey[14] = {};
 std::atomic<uint32_t> bleRevision{0};
@@ -223,6 +235,7 @@ class MouseSecurityCallbacks : public BLESecurityCallbacks {
     bleAuthReason = status;
     bleAuthenticated = status == 0 && desc && desc->sec_state.encrypted && desc->sec_state.bonded;
     if (desc) bleIntervalUs = (uint32_t)desc->conn_itvl * 1250UL;
+    if (bleAuthenticated && !serviceSchemaNotified.exchange(true)) ble_svc_gatt_changed(1, 0xffff);
   }
 };
 #endif
@@ -276,6 +289,7 @@ void serviceSubscriptionState() {
 
 void initBle() {
   BLEDevice::init(Fw::kBleName);
+  BLEDevice::setMTU(247);
 #if defined(CONFIG_BLUEDROID_ENABLED)
   BLEDevice::setCustomGapHandler(onGapEvent);  // 保留实际连接间隔跟踪，不把请求值当作主机已接受值
 #endif
@@ -290,7 +304,12 @@ void initBle() {
   mouseCccd = static_cast<BLE2902*>(mouseInput->getDescriptorByUUID((uint16_t)0x2902));
   if (mouseCccd) mouseCccd->setCallbacks(new MouseSubscriptionCallbacks());
   hid->reportMap((uint8_t*)kMouseDescriptor, sizeof(kMouseDescriptor));
-  hid->startServices();
+  // 保持原鼠标服务的注册顺序和句柄，再把管理服务追加到后面。
+  hid->deviceInfo()->start();
+  hid->hidService()->start();
+  hid->batteryService()->start();
+  maintenance.begin(bleServer, &bleAuthenticated);
+  bleServer->start();
   BLESecurity* security = new BLESecurity();
   security->setAuthenticationMode(ESP_LE_AUTH_BOND);
   security->setCapability(ESP_IO_CAP_NONE);
@@ -406,6 +425,10 @@ bool serviceImu(uint32_t nowUs, float& dx, float& dy) {
   ++imuSequence;
   const bool wasCalibrated = gyro.calibrated();
   const bool produced = gyro.process(s, sampleUs, dx, dy);
+  if (produced && horizontalCalibrationState == 1) {
+    const Vec3 r = gyro.uncorrectedRates();
+    horizontalCalibration.observe(r.x, r.y, 1.0f / GyroPipeline::kOdrHz);
+  }
   if (!wasCalibrated && gyro.calibrated()) {
     const Vec3 b = gyro.bias(), n = gyro.noise(), u = gyro.up();
     Serial.printf("[校准] 零偏 %+.4f %+.4f %+.4f °/s，噪声 %.4f %.4f %.4f，竖直方向(芯片) %+.2f %+.2f %+.2f\n",
@@ -510,6 +533,7 @@ void applySettings() {
   gs.counts_per_deg = settings.counts_per_deg;
   gs.invert_x = settings.invert_x;
   gs.invert_y = settings.invert_y;
+  gs.horizontal_coupling = horizontalCoupling;
   gyro.setSettings(gs);
   TouchDetector::Settings ts = touch.settings();
   ts.press_ratio = settings.touch_press;
@@ -523,7 +547,10 @@ void printStatus() {
                 bleConnected ? "已连接" : "等待连接", mouseSubscribed ? "已启用" : "等待主机", bleIntervalUs.load() / 1000.0f,
                 !imuInitialized ? "未找到芯片(自动重试)" : (gyro.calibrated() ? "正常" : "等待放稳校准"), u.x, u.y,
                 u.z);
-  Serial.println("[体感方向] 左右=重力竖直轴 上下=握姿水平轴（相对旧版已镜像）");
+  Serial.printf("[体感方向] 上下保留镜像 左右串轴校正=%+.5f（约%+.1f度） 校准状态=%u\n",
+                horizontalCoupling, std::atan(horizontalCoupling) * 180.0f / 3.14159265f,
+                (unsigned)horizontalCalibrationState);
+  Serial.printf("[无线升级] 当前分区=%s 蓝牙升级入口已启用\n", esp_ota_get_running_partition()->label);
   Serial.printf("[蓝牙链路] 实现=%s 配对认证=%s 模式=%d 失败码=%d 主机订阅写入=%lu 描述符开关=%d\n",
                 Fw::kBleStack, bleAuthenticated ? "通过" : "未通过", bleAuthMode.load(), bleAuthReason.load(),
                 (unsigned long)subscriptionWriteCount.load(), mouseCccd ? (int)mouseCccd->getNotifications() : -1);
@@ -545,7 +572,38 @@ void printHelp() {
       "命令：status 状态 | log 开关每秒5次状态 | cal 重新校准陀螺仪 | sens <计数/度> | invx / invy 体感反向\n"
       "      joy 0/1 停用/启用摇杆及中键（自动保存） | jcenter 摇杆重新取中 | jdir 摇杆方向向导\n"
       "      jspeed <计数/秒> | jsave 保存摇杆端点\n"
-      "      tp <百分比> 触摸按下门限 | tr <百分比> 触摸松开门限 | reset 恢复默认设置 | help");
+      "      tp <百分比> 触摸按下门限 | tr <百分比> 触摸松开门限 | tcal 握持未触摸时重新取基线\n"
+      "      hcal 正常握持左右往返6秒校准串轴 | hcross <系数> 设置横向串轴 | reset 恢复默认设置 | help");
+}
+
+void serviceHorizontalCalibration() {
+  if (horizontalCalibrationState != 1 || (uint32_t)(millis() - horizontalCalibrationStartedMs) < 6000) return;
+  float result = horizontalCoupling;
+  if (horizontalCalibration.finish(result)) {
+    horizontalCoupling = result;
+    prefs.putFloat("hcross", horizontalCoupling);
+    applySettings();
+    horizontalCalibrationState = 2;
+    Serial.printf("[左右校准] 已保存串轴系数%+.5f，上下映射保留\n", horizontalCoupling);
+  } else {
+    horizontalCalibrationState = 3;
+    Serial.println("[左右校准] 动作不足或不是一致的左右往返，保留之前设置");
+  }
+}
+
+void publishMaintenanceDiagnostic() {
+  if ((uint32_t)(millis() - lastDiagnosticMs) < 50) return;
+  lastDiagnosticMs = millis();
+  const Vec3 up = gyro.up();
+  char text[300];
+  snprintf(text, sizeof(text),
+           "{\"fw\":3,\"build\":\"3.1\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
+           (unsigned)settings.invert_x, (unsigned)settings.invert_y,
+           (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
+           (unsigned)touch.ready(), (unsigned long)touch.lastRaw(), touch.baseline(), touch.noise(),
+           settings.touch_press, settings.touch_release, up.x, up.y, up.z);
+  maintenance.setDiagnostic(text);
 }
 
 // 摇杆方向向导：依次推向“光标向右”和“光标向上”的方向，自动确定交换与反向。
@@ -583,22 +641,11 @@ void joystickDirectionWizard() {
                 settings.joy_invert_y);
 }
 
-void handleSerial() {
-  static char line[64];
-  static int len = 0;
-  while (Serial.available()) {
-    const char c = (char)Serial.read();
-    if (c != '\n' && c != '\r') {
-      if (len < (int)sizeof(line) - 1) line[len++] = c;
-      continue;
-    }
-    if (!len) continue;
-    line[len] = 0;
-    len = 0;
+void executeCommand(const char* line) {
     char cmd[16] = {0};
     float value = NAN;
     const int n = sscanf(line, "%15s %f", cmd, &value);
-    if (n < 1) continue;
+    if (n < 1) return;
     const String c2(cmd);
     if (c2 == "status") printStatus();
     else if (c2 == "help") printHelp();
@@ -607,6 +654,21 @@ void handleSerial() {
     else if (c2 == "sens" && n == 2 && value > 0 && value < 1000) { settings.counts_per_deg = value; }
     else if (c2 == "invx") settings.invert_x ^= 1;
     else if (c2 == "invy") settings.invert_y ^= 1;
+    else if (c2 == "tcal") {
+      touch.begin(micros());
+      Serial.println("[触摸校准] 保持正常握持但别碰触摸片，约0.4秒后基线就绪");
+    }
+    else if (c2 == "hcal") {
+      if (!gyro.calibrated()) { Serial.println("[左右校准] 请先放稳完成陀螺仪校准"); return; }
+      horizontalCalibration.begin();
+      horizontalCalibrationState = 1;
+      horizontalCalibrationStartedMs = millis();
+      Serial.println("[左右校准] 按正常握姿水平左右来回转6秒，期间只暂停体感位移");
+    }
+    else if (c2 == "hcross" && n == 2 && std::isfinite(value) && std::fabs(value) <= 2) {
+      horizontalCoupling = value;
+      prefs.putFloat("hcross", horizontalCoupling);
+    }
     else if (c2 == "joy" && n == 2 && (value == 0 || value == 1)) {
       joystickEnabled = value == 1;
       prefs.putBool("joystick", joystickEnabled);
@@ -621,12 +683,32 @@ void handleSerial() {
     }
     else if (c2 == "tp" && n == 2 && value > 0.1f && value < 50) settings.touch_press = value / 100.0f;
     else if (c2 == "tr" && n == 2 && value > 0.05f && value < 50) settings.touch_release = value / 100.0f;
-    else if (c2 == "reset") { settings = StoredSettings{}; Serial.println("[设置] 已恢复默认"); }
-    else { Serial.printf("[命令] 无法识别：%s（输入 help）\n", line); continue; }
+    else if (c2 == "reset") {
+      settings = StoredSettings{};
+      horizontalCoupling = 0;
+      prefs.putFloat("hcross", 0);
+      Serial.println("[设置] 已恢复默认");
+    }
+    else { Serial.printf("[命令] 无法识别：%s（输入 help）\n", line); return; }
     if (settings.touch_release >= settings.touch_press) settings.touch_release = settings.touch_press * 0.6f;
     applySettings();
-    saveSettings();
+    if (c2 != "status" && c2 != "help" && c2 != "log") saveSettings();
     if (c2 != "status" && c2 != "help" && c2 != "log") printStatus();
+}
+
+void handleSerial() {
+  static char line[64];
+  static int len = 0;
+  while (Serial.available()) {
+    const char c = (char)Serial.read();
+    if (c != '\n' && c != '\r') {
+      if (len < (int)sizeof(line) - 1) line[len++] = c;
+      continue;
+    }
+    if (!len) continue;
+    line[len] = 0;
+    len = 0;
+    executeCommand(line);
   }
 }
 
@@ -644,6 +726,8 @@ void setup() {
   analogSetPinAttenuation(Pins::VBAT_ADC, ADC_11db);
   prefs.begin("gunmouse", false);
   loadSettings();
+  horizontalCoupling = prefs.getFloat("hcross", 0);
+  if (!std::isfinite(horizontalCoupling) || std::fabs(horizontalCoupling) > 2) horizontalCoupling = 0;
   joystickEnabled = prefs.getBool("joystick", true);
   applySettings();
   Wire.begin(Pins::SDA, Pins::SCL, Fw::kI2cHz);
@@ -660,6 +744,8 @@ void setup() {
 
 void loop() {
   handleSerial();
+  maintenance.service(bleConnected && bleAuthenticated, executeCommand);
+  serviceHorizontalCalibration();
   serviceSubscriptionState();
   const uint32_t now = micros();
 
@@ -682,9 +768,11 @@ void loop() {
   const bool linkReady = bleConnected && bleAuthenticated && mouseSubscribed &&
                          (uint32_t)(millis() - connectedSinceMs) >= Fw::kConnectSettleMs;
   const bool imuReady = imuInitialized && gyro.calibrated();
-  core.setInputs(linkReady, touch.touched(), imuReady, buttonMask, imuSequence);
+  const bool updating = maintenance.active();
+  core.setInputs(linkReady, touch.touched() && horizontalCalibrationState != 1 && !updating,
+                 imuReady, updating ? 0 : buttonMask, imuSequence);
   if (imuMoved) core.offerImu(imuSequence, imuDx, imuDy);
-  if (joyMoved) core.offerJoystick(joyDx, joyDy);
+  if (joyMoved && !updating) core.offerJoystick(joyDx, joyDy);
   sender.absorb(core.takeReport());
 
   // 连接就绪后 100ms、300ms 各重发一次当前按键状态，防止主机刚开始接收时漏掉。
@@ -703,6 +791,7 @@ void loop() {
   if (sender.prepare(sendNow, reportPeriodUs(), report) && sendReport(report)) sender.commit(sendNow);
 
   servicePower();
+  publishMaintenanceDiagnostic();
   if (logEnabled && (uint32_t)(millis() - lastLogMs) >= 200) {
     lastLogMs = millis();
     printStatus();

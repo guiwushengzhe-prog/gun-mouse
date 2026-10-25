@@ -46,6 +46,7 @@ class GyroPipeline {
     float counts_per_deg = 64.0f;  // 首轮默认，实际速度优先在电脑/游戏里调。
     bool invert_x = false;
     bool invert_y = false;
+    float horizontal_coupling = 0;
   };
 
   void setSettings(const Settings& s) { s_ = s; }
@@ -63,6 +64,7 @@ class GyroPipeline {
   Vec3 bias() const { return bias_; }
   Vec3 noise() const { return noise_; }
   Vec3 up() const { return up_; }
+  Vec3 uncorrectedRates() const { return uncorrected_; }
 
   // 返回 true 表示本样本给出了鼠标位移（未经触摸门控）。
   bool process(const ImuSample& s, uint32_t sample_us, float& dx, float& dy) {
@@ -93,6 +95,8 @@ class GyroPipeline {
     lp_y_ += alpha * (-pitch - lp_y_);  // 相对旧版上下镜像
     float rx = deadzone(lp_x_);
     float ry = deadzone(lp_y_);
+    uncorrected_ = {rx, ry, 0};
+    ry -= s_.horizontal_coupling * rx;
     if (s_.invert_x) rx = -rx;
     if (s_.invert_y) ry = -ry;
     dx = rx * dt * s_.counts_per_deg;
@@ -204,6 +208,7 @@ class GyroPipeline {
   Vec3 bias_{0, 0, 0};
   Vec3 noise_{0, 0, 0};
   Vec3 up_{1, 0, 0};
+  Vec3 uncorrected_{0, 0, 0};
   int still_count_ = 0;
   float lp_x_ = 0, lp_y_ = 0;
   bool has_last_ = false;

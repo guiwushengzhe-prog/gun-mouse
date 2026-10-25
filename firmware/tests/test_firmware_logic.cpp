@@ -8,6 +8,7 @@
 #include "control_core.h"
 #include "imu_logic.h"
 #include "input_logic.h"
+#include "direction_calibration.h"
 
 using namespace GunMouse;
 
@@ -180,6 +181,94 @@ int testJoystick() {
   return 0;
 }
 
+int testTouchStartupAndGrip() {
+  TouchDetector t;
+  t.begin(0);
+  uint32_t now = 0;
+  for (int i = 0; i < 250; ++i) {
+    now += 2000;
+    t.update(i < 5 ? 2000000 : 30000 + i % 3 * 5, now);
+  }
+  CHECK(t.ready() && std::fabs(t.baseline() - 30005) < 15 && t.noise() < 20);
+  for (int i = 0; i < 4; ++i) { now += 2000; t.update(33000, now); }
+  CHECK(t.touched());  // 首秒即可识别，启动大读数不再污染数十秒。
+  now += 2000;
+  CHECK(!t.update(30000, now));
+  now += 2000;
+  t.update(2000000, now);
+  now += 2000;
+  CHECK(!t.update(30000, now));  // 单个毛刺不算触摸。
+
+  // 使用本轮正常握持未触摸与真实触摸的实测范围，验证8%/5%设置及松开。
+  TouchDetector held;
+  auto settings = held.settings();
+  settings.press_ratio = .08f;
+  settings.release_ratio = .05f;
+  held.setSettings(settings);
+  held.begin(0);
+  now = 0;
+  for (int i = 0; i < 250; ++i) { now += 2000; held.update(31881, now); }
+  bool falseTouch = false;
+  for (int i = 0; i < 1000; ++i) {
+    now += 2000;
+    falseTouch |= held.update(32788 + i % 181, now);
+  }
+  CHECK(!falseTouch);
+  for (int i = 0; i < 20; ++i) { now += 2000; held.update(42107 + i * 50, now); }
+  CHECK(held.touched());
+  now += 2000;
+  CHECK(!held.update(32968, now));
+  return 0;
+}
+
+int testHorizontalCalibration() {
+  for (float slope : {-.57735f, 0.0f, .57735f}) {
+    HorizontalCalibration c;
+    c.begin();
+    for (int i = 0; i < 240; ++i) {
+      const float x = i < 120 ? 30 : -30;
+      c.observe(x, slope * x + (i % 2 ? .1f : -.1f), .002f);
+    }
+    float result = 99;
+    CHECK(c.finish(result) && std::fabs(result - slope) < .001f);
+  }
+  HorizontalCalibration oneWay;
+  for (int i = 0; i < 240; ++i) oneWay.observe(30, 15, .002f);
+  float result = 99;
+  CHECK(!oneWay.finish(result) && result == 99);
+  HorizontalCalibration vertical;
+  for (int i = 0; i < 240; ++i) vertical.observe(0, 30, .002f);
+  CHECK(!vertical.finish(result));
+  HorizontalCalibration inconsistent;
+  for (int i = 0; i < 240; ++i) inconsistent.observe(i < 120 ? 30 : -30, i % 2 ? 100 : -100, .002f);
+  CHECK(!inconsistent.finish(result));
+
+  GyroPipeline g;
+  auto settings = g.settings();
+  settings.horizontal_coupling = .57735f;
+  g.setSettings(settings);
+  g.startCalibration();
+  uint32_t now = 0;
+  float dx, dy, sx = 0, sy = 0;
+  for (int i = 0; i < 2880; ++i) { now += 1042; g.process({0, 0, 0, 1, 0, 0}, now, dx, dy); }
+  for (int i = 0; i < 32; ++i) {
+    now += 1042;
+    g.process({-30, 0, -30 * .57735f, 1, 0, 0}, now, dx, dy);
+    sx += dx; sy += dy;
+  }
+  CHECK(sx > 50 && std::fabs(sy) < .15f);
+  g.startCalibration();
+  for (int i = 0; i < 2880; ++i) { now += 1042; g.process({0, 0, 0, 1, 0, 0}, now, dx, dy); }
+  sx = sy = 0;
+  for (int i = 0; i < 32; ++i) {
+    now += 1042;
+    g.process({0, 0, 20, 1, 0, 0}, now, dx, dy);
+    sx += dx; sy += dy;
+  }
+  CHECK(std::fabs(sx) < .01f && sy < -35);  // 纯上下动作保留。
+  return 0;
+}
+
 int testGyro() {
   GyroPipeline g;
   g.startCalibration();
@@ -300,7 +389,8 @@ int testBatteryUsb() {
 }
 
 int main() {
-  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testJoystick() || testGyroPose() || testGyro() || testBatteryUsb()) return 1;
+  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testTouchStartupAndGrip() ||
+      testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testBatteryUsb()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;
 }

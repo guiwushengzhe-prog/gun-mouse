@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <cstdint>
+#include <algorithm>
 
 #include "control_core.h"
 
@@ -231,7 +232,7 @@ class TouchDetector {
     float press_ratio = 0.020f;    // 首轮初值，整机装壳后按实测调整。
     float release_ratio = 0.012f;
     float noise_sigmas = 8.0f;
-    uint32_t press_confirm_us = 3000;
+    uint32_t press_confirm_us = 6000;
     float baseline_tau_s = 6.0f;
     uint32_t startup_us = 400000;
     uint32_t rebaseline_us = 1500000;  // 读数长期低于基线（开机时正好在摸）后重建。
@@ -240,8 +241,8 @@ class TouchDetector {
   void begin(uint32_t now_us) {
     start_us_ = now_us;
     started_ = false;
-    sum_ = sum_sq_ = 0;
     count_ = 0;
+    baseline_ = noise_ = 0;
     touched_ = candidate_ = false;
     below_ = false;
   }
@@ -255,13 +256,18 @@ class TouchDetector {
       return false;
     }
     if (!started_) {
-      sum_ += raw;
-      sum_sq_ += (double)raw * raw;
+      startup_raw_[count_ % kStartupWindow] = raw;
       ++count_;
       if ((uint32_t)(now_us - start_us_) >= s_.startup_us && count_ >= 8) {
-        baseline_ = (float)(sum_ / count_);
-        const double var = sum_sq_ / count_ - (sum_ / count_) * (sum_ / count_);
-        noise_ = (float)std::sqrt(var > 0 ? var : 0);
+        // 只取最近窗口的中位数及绝对偏差中位数，丢弃启动初期的极大瞬态读数。
+        const uint32_t n = count_ < kStartupWindow ? count_ : kStartupWindow;
+        float values[kStartupWindow];
+        for (uint32_t i = 0; i < n; ++i) values[i] = (float)startup_raw_[i];
+        std::sort(values, values + n);
+        baseline_ = values[n / 2];
+        for (uint32_t i = 0; i < n; ++i) values[i] = std::fabs(values[i] - baseline_);
+        std::sort(values, values + n);
+        noise_ = std::fmax(1.0f, values[n / 2] * 1.4826f);
         started_ = true;
         last_us_ = now_us;
       }
@@ -326,7 +332,8 @@ class TouchDetector {
   bool below_ = false;
   uint32_t start_us_ = 0, last_us_ = 0, candidate_us_ = 0, below_us_ = 0;
   uint32_t last_raw_ = 0;
-  double sum_ = 0, sum_sq_ = 0;
+  static constexpr uint32_t kStartupWindow = 32;
+  uint32_t startup_raw_[kStartupWindow] = {};
   uint32_t count_ = 0;
   float baseline_ = 0;
   float noise_ = 0;
