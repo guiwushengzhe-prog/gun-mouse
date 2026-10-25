@@ -9,22 +9,22 @@
     "Status": "",
     "Date": "2026-06-05T10:22:12Z"
   },
-  "compile_seconds": 60.7,
+  "compile_seconds": 54.2,
   "host_logic_tests": "passed",
-  "host_test_source_sha256": "65c96129b7732c490ffa075954d7b89b7b0014825f972de635f9a6e16e4c09eb",
+  "host_test_source_sha256": "f3162768f72901932323c3bde49d44e20f58c8857b9f3cdf562f7b40a82cdbca",
   "carrier_config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
   "build_config_sha256": "07e6f2e3558f04450a1fb72b12962cab1daa794ff1c103ac9e73d3360f8ed69e",
   "source_sha256": {
     "board_pins.h": "5326fe9401acca96f3023fb9a4db14c342ce4b89287c529e41b34114260e6db5",
     "control_core.h": "e2ff4ba55f38e497852859415f9b857339e350d569d86693deda8892787daabb",
-    "gun_mouse_supermini.ino": "43f6ddc5b1fbe6546aa0bec54827c3d5742f541865e91539e75e2e9d900ba700",
-    "imu_logic.h": "8ea88f5bd49f71b920c5762c706864e043a952f335b823214cb3d94ef9628450",
+    "gun_mouse_supermini.ino": "40aeb0a56a068e35799f7131adca9f94ff3bc5202c1d9387a1c024a970d156e1",
+    "imu_logic.h": "5ee0a8ef48de040ee624229152cd386e7d59d566e8e560a55ab388726c85509f",
     "input_logic.h": "3797c4fb12889e637c7327d763267c2761b69cfd43942f3ae01ed5cbdbf2762c"
   },
   "artifacts": {
     "gun_mouse_supermini.ino.bin": {
-      "bytes": 676208,
-      "sha256": "b02d39b4324c3edec68a6b243d4b46f553a56efee3feecedfa78f36c19684099"
+      "bytes": 676384,
+      "sha256": "fee145745d70e18e0ab2ca50cb411407c8eb7d7e7c3e27222e0e1039dbb20a35"
     },
     "gun_mouse_supermini.ino.bootloader.bin": {
       "bytes": 19968,
@@ -36,7 +36,7 @@
     },
     "gun_mouse_supermini.ino.merged.bin": {
       "bytes": 4194304,
-      "sha256": "07d52455a4fbb47320f0c3a90ef1084d53741028c10526aba4e91df619acb1a5"
+      "sha256": "78af3537891bc9f0c4780905c172619619a8268f3eddde3c19784af6796ac738"
     }
   },
   "flash_address_merged": "0x0",

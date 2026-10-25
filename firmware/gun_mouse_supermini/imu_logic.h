@@ -6,9 +6,10 @@
 // 陀螺仪处理链（纯逻辑，可在电脑上检查）：开机静置零偏校准 → 静止时追踪温漂 → 低通 →
 // 轴映射 → 极小死区 → 按时间积分成鼠标计数。参数沿用旧固件在同型号芯片上实测过的值。
 //
-// 轴映射：芯片贴在主板元件面，元件面朝整机 +Y（左），所以芯片 Z 轴 = 整机左向轴，绕它转动就是俯仰。
-// 偏航取“绕重力竖直方向的转动”（由加速度计低通得到），不依赖芯片 X/Y 在板上的朝向，
-// 侧倾握持时左右转动仍对应屏幕水平移动。
+// 装配映射沿用原版竖握时的关系：芯片 +X 向上、+Z 为俯仰轴，+Y 为指向轴。
+// 左右取绕重力竖直方向的角速度；上下取竖直方向与指向轴叉乘得到的水平轴，补偿侧倾握持。
+// 重力方向由陀螺仪预测并用加速度缓慢校正，不再在侧倾时切回固定轴。
+// 上下按2026-10-25实物反馈相对旧版镜像；设置中的反向开关仍可叠加。
 namespace GunMouse {
 
 struct ImuSample {
@@ -22,6 +23,9 @@ struct Vec3 {
 
 inline float dot3(const Vec3& a, const Vec3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 inline float norm3(const Vec3& a) { return std::sqrt(dot3(a, a)); }
+inline Vec3 cross3(const Vec3& a, const Vec3& b) {
+  return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
+}
 
 class GyroPipeline {
  public:
@@ -77,13 +81,16 @@ class GyroPipeline {
     Vec3 g{s.gx - bias_.x, s.gy - bias_.y, s.gz - bias_.z};
     const Vec3 a{s.ax, s.ay, s.az};
     trackBiasWhenStill(g, a, dt);
-    trackUp(a, dt);
+    trackUp(g, a, dt);
 
-    float yaw = dot3(g, yawAxis());  // 绕竖直方向的角速度
-    float pitch = g.z;              // 绕整机左向轴
+    const float yaw = dot3(g, up_);
+    // up × 指向轴(0,1,0)。接近指向竖直时平滑减弱，避免归一化零向量或突然翻向。
+    const Vec3 pitch_axis{-up_.z, 0, up_.x};
+    const float length = norm3(pitch_axis);
+    const float pitch = dot3(g, pitch_axis) / (length > .15f ? length : .15f);
     const float alpha = dt / (1.0f / (2.0f * 3.14159265f * kLowpassHz) + dt);
     lp_x_ += alpha * (-yaw - lp_x_);   // 向右转 = 绕竖直轴负方向 = 鼠标 +X
-    lp_y_ += alpha * (pitch - lp_y_);  // 抬头 = 绕左向轴负方向 = 鼠标 -Y（向上）
+    lp_y_ += alpha * (-pitch - lp_y_);  // 相对旧版上下镜像
     float rx = deadzone(lp_x_);
     float ry = deadzone(lp_y_);
     if (s_.invert_x) rx = -rx;
@@ -161,7 +168,16 @@ class GyroPipeline {
     g = {0, 0, 0};
   }
 
-  void trackUp(const Vec3& a, float dt) {
+  void trackUp(const Vec3& g, const Vec3& a, float dt) {
+    // 世界竖直在芯片坐标中随芯片反向转动：du/dt = up × 角速度。
+    // 即使加速度含明显平移分量而被拒绝，仍持续进行陀螺仪预测。
+    const Vec3 change = cross3(up_, g);
+    const float step = dt * (3.14159265f / 180.0f);
+    const Vec3 predicted{up_.x + change.x * step, up_.y + change.y * step, up_.z + change.z * step};
+    const float predicted_mag = norm3(predicted);
+    if (predicted_mag > 1e-3f) {
+      up_ = {predicted.x / predicted_mag, predicted.y / predicted_mag, predicted.z / predicted_mag};
+    }
     const float mag = norm3(a);
     if (std::fabs(mag - 1.0f) > 0.15f) return;  // 剧烈加减速时不更新竖直方向
     setUp(a, dt / (kUpTimeConstant + dt));
@@ -174,14 +190,6 @@ class GyroPipeline {
     up_ = {up_.x + weight * (n.x - up_.x), up_.y + weight * (n.y - up_.y), up_.z + weight * (n.z - up_.z)};
     const float m = norm3(up_);
     if (m > 1e-3f) up_ = {up_.x / m, up_.y / m, up_.z / m};
-    // 记住最近一次“竖握”时的竖直方向，平放（芯片 Z 朝上下）时用它，避免偏航与俯仰混成同一轴。
-    const float xy = std::sqrt(up_.x * up_.x + up_.y * up_.y);
-    if (xy > 0.6f) body_up_ = {up_.x / xy, up_.y / xy, 0};
-  }
-
-  Vec3 yawAxis() const {
-    const float xy = std::sqrt(up_.x * up_.x + up_.y * up_.y);
-    return xy > 0.6f ? up_ : body_up_;
   }
 
   float deadzone(float v) const {
@@ -196,7 +204,6 @@ class GyroPipeline {
   Vec3 bias_{0, 0, 0};
   Vec3 noise_{0, 0, 0};
   Vec3 up_{1, 0, 0};
-  Vec3 body_up_{1, 0, 0};
   int still_count_ = 0;
   float lp_x_ = 0, lp_y_ = 0;
   bool has_last_ = false;

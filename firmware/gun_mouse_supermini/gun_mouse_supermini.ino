@@ -34,7 +34,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "30g SuperMini 实验固件 1";
+constexpr char kVersion[] = "枪型飞鼠 固件2-握姿补偿";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -523,6 +523,7 @@ void printStatus() {
                 bleConnected ? "已连接" : "等待连接", mouseSubscribed ? "已启用" : "等待主机", bleIntervalUs.load() / 1000.0f,
                 !imuInitialized ? "未找到芯片(自动重试)" : (gyro.calibrated() ? "正常" : "等待放稳校准"), u.x, u.y,
                 u.z);
+  Serial.println("[体感方向] 左右=重力竖直轴 上下=握姿水平轴（相对旧版已镜像）");
   Serial.printf("[蓝牙链路] 实现=%s 配对认证=%s 模式=%d 失败码=%d 主机订阅写入=%lu 描述符开关=%d\n",
                 Fw::kBleStack, bleAuthenticated ? "通过" : "未通过", bleAuthMode.load(), bleAuthReason.load(),
                 (unsigned long)subscriptionWriteCount.load(), mouseCccd ? (int)mouseCccd->getNotifications() : -1);

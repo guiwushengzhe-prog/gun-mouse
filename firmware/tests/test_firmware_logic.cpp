@@ -192,10 +192,10 @@ int testGyro() {
   float sx = 0, sy = 0;
   for (int i = 0; i < 960; ++i) { t += 1042; g.process({0.5f - 30, -0.3f, 0.2f, 1, 0, 0}, t, dx, dy); sx += dx; sy += dy; }
   CHECK(sx > 64 * 30 * 0.9f && std::fabs(sy) < 5);
-  // 抬头（绕整机左向轴 = 芯片 Z 负转）：鼠标向上（dy 为负）。
+  // 芯片Z负转：按本轮要求相对旧版镜像，dy由负变正。
   sx = sy = 0;
   for (int i = 0; i < 960; ++i) { t += 1042; g.process({0.5f, -0.3f, 0.2f - 20, 1, 0, 0}, t, dx, dy); sx += dx; sy += dy; }
-  CHECK(sy < -64 * 20 * 0.9f && std::fabs(sx) < 5);
+  CHECK(sy > 64 * 20 * 0.9f && std::fabs(sx) < 5);
   // 时间停顿不放大位移。
   t += 500000;
   g.process({0.5f - 30, -0.3f, 0.2f, 1, 0, 0}, t, dx, dy);
@@ -212,6 +212,82 @@ int testGyro() {
   return 0;
 }
 
+int testGyroPose() {
+  const float rad = 3.14159265f / 180.0f;
+  auto calibrate = [](GyroPipeline& g, const Vec3& up, uint32_t& t) {
+    g.startCalibration();
+    float dx, dy;
+    for (int i = 0; i < GyroPipeline::kCalibrationSamples; ++i) {
+      t += 1042;
+      g.process({0, 0, 0, up.x, up.y, up.z}, t, dx, dy);
+    }
+  };
+  // 同一个水平右转动作，在不同侧倾角度下不应串入上下或丢失水平速度。
+  // 53度附近覆盖旧版 xy=0.6 的突然切轴位置；90度覆盖芯片Z朝上的姿态。
+  for (float angle : {0.0f, 30.0f, 53.0f, 53.3f, 60.0f, 90.0f, 120.0f, 180.0f, -90.0f}) {
+    const Vec3 up{std::cos(angle * rad), 0, std::sin(angle * rad)};
+    GyroPipeline g;
+    uint32_t t = 0;
+    calibrate(g, up, t);
+    CHECK(g.calibrated());
+    float sx = 0, sy = 0, dx, dy;
+    for (int i = 0; i < 64; ++i) {
+      t += 1042;
+      g.process({-30 * up.x, -30 * up.y, -30 * up.z, up.x, up.y, up.z}, t, dx, dy);
+      sx += dx; sy += dy;
+    }
+    CHECK(sx > 64 * 30 * 0.060f && std::fabs(sy) < 0.5f);
+
+    // 上下沿随握姿改变的水平轴，且按本轮要求相对旧版镜像。
+    GyroPipeline pitch;
+    t = 0;
+    calibrate(pitch, up, t);
+    const Vec3 left{-up.z, 0, up.x};
+    sx = sy = 0;
+    for (int i = 1; i <= 64; ++i) {
+      t += 1042;
+      const float tilt = 20 * i * .001042f * rad;
+      const Vec3 a{up.x * std::cos(tilt), -std::sin(tilt), up.z * std::cos(tilt)};
+      pitch.process({20 * left.x, 20 * left.y, 20 * left.z, a.x, a.y, a.z}, t, dx, dy);
+      sx += dx; sy += dy;
+    }
+    CHECK(sy < -64 * 20 * 0.060f && std::fabs(sx) < 0.5f);
+  }
+  // 快速侧倾90度时，重力方向必须跟上；有额外线性加速度时也要保留陀螺仪预测。
+  for (float accelMagnitude : {1.0f, 1.3f}) {
+    GyroPipeline g;
+    uint32_t t = 0;
+    calibrate(g, {1, 0, 0}, t);
+    float sx = 0, sy = 0, dx, dy;
+    for (int i = 1; i <= 960; ++i) {
+      t += 1042;
+      const float roll = 90 * i * .001042f * rad;
+      g.process({0, 90, 0, accelMagnitude * std::cos(roll), 0,
+                 accelMagnitude * std::sin(roll)}, t, dx, dy);
+      sx += dx; sy += dy;
+    }
+    CHECK(g.up().z > .999f && std::fabs(g.up().x) < .005f);
+    CHECK(std::fabs(sx) < .01f && std::fabs(sy) < .01f);
+    sx = sy = 0;
+    const Vec3 up = g.up();
+    for (int i = 0; i < 64; ++i) {
+      t += 1042;
+      g.process({-30 * up.x, -30 * up.y, -30 * up.z, up.x, up.y, up.z}, t, dx, dy);
+      sx += dx; sy += dy;
+    }
+    CHECK(sx > 64 * 30 * 0.060f && std::fabs(sy) < .5f);
+  }
+  // 指向轴接近竖直时，水平俯仰轴无法唯一确定，输出应平滑减弱且保持有限。
+  GyroPipeline vertical;
+  uint32_t t = 0;
+  calibrate(vertical, {0, 1, 0}, t);
+  float dx, dy;
+  t += 1042;
+  vertical.process({0, -30, 0, 0, 1, 0}, t, dx, dy);
+  CHECK(std::isfinite(dx) && std::isfinite(dy) && dx > 0 && std::fabs(dy) < .001f);
+  return 0;
+}
+
 int testBatteryUsb() {
   CHECK(batteryPercentFromMillivolts(4200) == 100 && batteryPercentFromMillivolts(3200) == 0);
   CHECK(batteryPercentFromMillivolts(3850) > 45 && batteryPercentFromMillivolts(3850) < 62);
@@ -224,7 +300,7 @@ int testBatteryUsb() {
 }
 
 int main() {
-  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testJoystick() || testGyro() || testBatteryUsb()) return 1;
+  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testJoystick() || testGyroPose() || testGyro() || testBatteryUsb()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;
 }
