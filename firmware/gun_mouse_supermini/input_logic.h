@@ -228,6 +228,7 @@ class ReportSender {
 // 门限取“相对基线比例”和“噪声倍数”中较大者；松开立即生效，按下需稳定 press_confirm_us。
 class TouchDetector {
  public:
+  static constexpr uint32_t kMaxSampleGapUs = 20000;
   struct Settings {
     float press_ratio = 0.020f;    // 首轮初值，整机装壳后按实测调整。
     float release_ratio = 0.012f;
@@ -245,14 +246,25 @@ class TouchDetector {
     baseline_ = noise_ = 0;
     touched_ = candidate_ = false;
     below_ = false;
+    has_last_ = false;
+    last_us_ = now_us;
+    last_raw_ = 0;
   }
   void setSettings(const Settings& s) { s_ = s; }
   const Settings& settings() const { return s_; }
 
   bool update(uint32_t raw, uint32_t now_us) {
     last_raw_ = raw;
+    const uint32_t elapsed = now_us - last_us_;
+    const bool interrupted = has_last_ && elapsed > kMaxSampleGapUs;
+    last_us_ = now_us;
+    has_last_ = true;
+    if (interrupted || raw == 0) {
+      // 间隔过长或读数失败后重新确认；缺失的样本不能算作持续接触或持续松开。
+      touched_ = candidate_ = below_ = false;
+      if (!started_) { count_ = 0; start_us_ = now_us; }
+    }
     if (raw == 0) {  // 读数失败按未触摸处理。
-      touched_ = candidate_ = false;
       return false;
     }
     if (!started_) {
@@ -273,8 +285,7 @@ class TouchDetector {
       }
       return false;
     }
-    const float dt = (float)(uint32_t)(now_us - last_us_) * 1e-6f;
-    last_us_ = now_us;
+    const float dt = interrupted ? 0 : (float)elapsed * 1e-6f;
     const float press_offset = pressOffset();
     const float release_offset = releaseOffset();
     const float delta = (float)raw - baseline_;
@@ -330,6 +341,7 @@ class TouchDetector {
   bool touched_ = false;
   bool candidate_ = false;
   bool below_ = false;
+  bool has_last_ = false;
   uint32_t start_us_ = 0, last_us_ = 0, candidate_us_ = 0, below_us_ = 0;
   uint32_t last_raw_ = 0;
   static constexpr uint32_t kStartupWindow = 32;

@@ -1,0 +1,217 @@
+{
+  "日期": "2026-10-25",
+  "任务": "用户要求飞鼠固件中无需其配合的部分自主优化并执行",
+  "版本": "3.2-采样恢复与升级核验",
+  "修复": [
+    "触摸采样中断超过20毫秒或读数失败后，清除旧确认状态；重新连续采样6毫秒才按下",
+    "低读数自动重建基线不再跨越采样中断累计；启动采样中断后重启有效窗口",
+    "惯性采样中断超过10毫秒丢弃旧低通余量，不将停顿作为移动；当前加速度可信时重建竖直方向",
+    "升级文件检查官方应用描述及飞鼠标识，重启后核对实际程序构建校验值而非仅分区变化"
+  ],
+  "修改前复现": [
+    "新触摸中断检查在原版失败",
+    "新惯性中断检查在原版失败"
+  ],
+  "实板核对中修复": "首次3.2更新后，官方核心格式化接口仅返回9位构建校验值，完整核验按预期拒绝。改为直接读取应用描述完整32字节并格式化64位后重新编译、完整无线传输和核验；没有放宽核验条件。",
+  "检查": {
+    "固件逻辑通过项数": 113,
+    "电脑工具通过用例数": 8,
+    "完整编译秒数": 78.1
+  },
+  "构建": {
+    "board": "TENSTAR two-row 9-pin ESP32-S3 SuperMini, ESP32-S3FH4R2",
+    "arduino_core": "esp32:esp32@3.3.12",
+    "fqbn": "esp32:esp32:esp32s3:FlashSize=4M,PartitionScheme=default,FlashMode=qio,PSRAM=enabled,CDCOnBoot=cdc,USBMode=hwcdc,UploadSpeed=921600,CPUFreq=160",
+    "arduino_cli": {
+      "Application": "arduino-cli",
+      "VersionString": "1.5.1",
+      "Commit": "01f3d4f2b",
+      "Status": "",
+      "Date": "2026-06-05T10:22:12Z"
+    },
+    "compile_seconds": 78.1,
+    "host_logic_tests": "passed",
+    "host_test_source_sha256": "e9f78455e7791877b304f6bec2783fccd4e2b324fccb97296629fdbb87c5f4ae",
+    "carrier_config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
+    "build_config_sha256": "054989d42b89bc7ef61ad54b3bba67848c4d09820f7a5f63535d6debe3a459f4",
+    "source_sha256": {
+      "ble_maintenance.h": "acd5e7c8460eeff42ec5ee48c93b003ca58ad18a773e3b364a3cf4ab11e8f96b",
+      "board_pins.h": "5326fe9401acca96f3023fb9a4db14c342ce4b89287c529e41b34114260e6db5",
+      "control_core.h": "e2ff4ba55f38e497852859415f9b857339e350d569d86693deda8892787daabb",
+      "direction_calibration.h": "3b51d7627e8a775901fbb020f3485a3d33bf0efcae2c5c592de199440afe5a8b",
+      "gun_mouse_supermini.ino": "fc7e28558f053c0871b468c1c751a3fe822902dfec36d74832323700970b153a",
+      "imu_logic.h": "1c8a8b809b4f95f2062713fc8e6d563a70d680d2fd664d9f622e26c3d07cc2dd",
+      "input_logic.h": "9d052083aae7c7b6bac94e0542ee854d08bcf7f2c6e842c41e6b026838f93e65"
+    },
+    "artifacts": {
+      "gun_mouse_supermini.ino.bin": {
+        "bytes": 693024,
+        "sha256": "982162a98bb3875e3c5be45817949e53da51f2cfa90874502c9c9052db407e22"
+      },
+      "gun_mouse_supermini.ino.bootloader.bin": {
+        "bytes": 19968,
+        "sha256": "66cf6c060fc857c8ea6d6812aab8e9b27448431846426218b6fb81526b31e564"
+      },
+      "gun_mouse_supermini.ino.partitions.bin": {
+        "bytes": 3072,
+        "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+      },
+      "gun_mouse_supermini.ino.merged.bin": {
+        "bytes": 4194304,
+        "sha256": "18100eae2213ff99e1e1cbcc8f3cad926a917b6bb65e3e8e420656c5098183c2"
+      }
+    },
+    "flash_address_merged": "0x0",
+    "hardware_verified": false,
+    "limits": "Compiled and host-tested only. Real board power, touch, ADC and BLE tests are pending."
+  },
+  "蓝牙实板更新": {
+    "设备": "90:DA:72:73:98:25",
+    "文件": "F:\\项目\\枪型飞鼠\\firmware\\bin\\gun_mouse_supermini.ino.bin",
+    "字节数": 693024,
+    "SHA256": "982162a98bb3875e3c5be45817949e53da51f2cfa90874502c9c9052db407e22",
+    "程序构建SHA256": "0f893e8477c8b67d6c62f080dcaf12fa848b15fc15bee8f0d14726c9a8b33273",
+    "蓝牙库版本": "3.0.2",
+    "成功": true,
+    "更新前": {
+      "project": "gunmouse",
+      "slot": "app1",
+      "ota": 0,
+      "received": 0,
+      "total": 0,
+      "error": 0,
+      "elf": "3c987af0b",
+      "diag": {
+        "fw": 3,
+        "build": "3.2",
+        "invx": 0,
+        "invy": 0,
+        "hcal": 0,
+        "cross": -0.13558,
+        "touch": 0,
+        "ready": 1,
+        "raw": 32985,
+        "base": 33012.5,
+        "noise": 31.5,
+        "tp": 0.08,
+        "tr": 0.05,
+        "up": [
+          0.001,
+          -0.009,
+          1.0
+        ]
+      }
+    },
+    "写入校验": {
+      "project": "gunmouse",
+      "slot": "app1",
+      "ota": 2,
+      "received": 693024,
+      "total": 693024,
+      "error": 0,
+      "elf": "3c987af0b",
+      "diag": {
+        "fw": 3,
+        "build": "3.2",
+        "invx": 0,
+        "invy": 0,
+        "hcal": 0,
+        "cross": -0.13558,
+        "touch": 0,
+        "ready": 1,
+        "raw": 33437,
+        "base": 33021.3,
+        "noise": 40.9,
+        "tp": 0.08,
+        "tr": 0.05,
+        "up": [
+          -0.003,
+          -0.006,
+          1.0
+        ]
+      }
+    },
+    "更新后": {
+      "project": "gunmouse",
+      "slot": "app0",
+      "ota": 0,
+      "received": 0,
+      "total": 0,
+      "error": 0,
+      "elf": "0f893e8477c8b67d6c62f080dcaf12fa848b15fc15bee8f0d14726c9a8b33273",
+      "diag": {
+        "fw": 3,
+        "build": "3.2",
+        "invx": 0,
+        "invy": 0,
+        "hcal": 0,
+        "cross": -0.13558,
+        "touch": 0,
+        "ready": 1,
+        "raw": 33024,
+        "base": 33001.3,
+        "noise": 44.7,
+        "tp": 0.08,
+        "tr": 0.05,
+        "up": [
+          0.001,
+          -0.01,
+          1.0
+        ]
+      }
+    },
+    "秒数": 149.3
+  },
+  "后续读取": {
+    "project": "gunmouse",
+    "slot": "app0",
+    "ota": 0,
+    "received": 0,
+    "total": 0,
+    "error": 0,
+    "elf": "0f893e8477c8b67d6c62f080dcaf12fa848b15fc15bee8f0d14726c9a8b33273",
+    "diag": {
+      "fw": 3,
+      "build": "3.2",
+      "invx": 0,
+      "invy": 0,
+      "hcal": 0,
+      "cross": -0.13558,
+      "touch": 0,
+      "ready": 1,
+      "raw": 32998,
+      "base": 33020.8,
+      "noise": 35.0,
+      "tp": 0.08,
+      "tr": 0.05,
+      "up": [
+        0.013,
+        -0.01,
+        1.0
+      ]
+    }
+  },
+  "原有参数逐项保持": {
+    "cross": true,
+    "tp": true,
+    "tr": true,
+    "invx": true,
+    "invy": true
+  },
+  "串口核对": {
+    "采样轮数": 5,
+    "鼠标订阅认证正常": true,
+    "惯性模块正常": true,
+    "摇杆仍停用": true
+  },
+  "已下单文件逐项校验保持": [
+    "release/2026-10-18-最终版/三维打印/主体底座.stl",
+    "release/2026-10-18-最终版/三维打印/摇杆支座.stl",
+    "release/2026-10-18-最终版/枪型飞鼠_最终版_上传打印.zip",
+    "release/2026-10-18-最终版/枪型飞鼠_最终版_上传打板.zip",
+    "pcb/嘉立创最终复绘/枪型飞鼠最终原生复绘.eprj2",
+    "release/2026-10-18-最终版/电路板/嘉立创原生重绘/枪型飞鼠_最终原生复绘.epro2"
+  ],
+  "实测边界": "完成实际蓝牙传输、完整文件核验、重启后程序构建身份和原参数核对；串口仅观察当前运行状态，未要求用户做动作，不把它当作弱触、误触、方向手感或单电池供电验收。",
+  "原始日志": ".logs/装配排查/2026-10-25-自主优化，3.1应用备份仅保留在该忽略目录"
+}

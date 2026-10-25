@@ -221,6 +221,57 @@ int testTouchStartupAndGrip() {
   return 0;
 }
 
+int testTouchInterruptedSampling() {
+  TouchDetector t;
+  auto settings = t.settings();
+  settings.press_ratio = .08f;
+  settings.release_ratio = .05f;
+  t.setSettings(settings);
+  t.begin(0);
+  uint32_t now = 0;
+  for (int i = 0; i < 250; ++i) { now += 2000; t.update(33000, now); }
+  now += 2000;
+  CHECK(!t.update(39000, now));
+  now += 100000;
+  CHECK(!t.update(39000, now));  // 没有采样的100毫秒不能充当稳定触摸。
+  for (int i = 0; i < 3; ++i) { now += 2000; t.update(39000, now); }
+  CHECK(t.touched());
+  now += 100000;
+  CHECK(!t.update(39000, now));  // 已触摸时中断，也要从新样本重新确认。
+  for (int i = 0; i < 3; ++i) { now += 2000; t.update(39000, now); }
+  CHECK(t.touched());
+  now += 2000;
+  CHECK(!t.update(0, now));
+  now += 2000;
+  CHECK(!t.update(39000, now));
+  for (int i = 0; i < 3; ++i) { now += 2000; t.update(39000, now); }
+  CHECK(t.touched());
+
+  // 开机握住后松开：重建基线也必须有连续低读数，不能跨越采样中断。
+  TouchDetector released;
+  released.setSettings(settings);
+  released.begin(0);
+  now = 0;
+  for (int i = 0; i < 250; ++i) { now += 2000; released.update(43000, now); }
+  for (int i = 0; i < 50; ++i) { now += 2000; released.update(33000, now); }
+  now += 1500000;
+  released.update(33000, now);
+  CHECK(released.baseline() > 42000);
+  for (int i = 0; i < 800; ++i) { now += 2000; released.update(33000, now); }
+  CHECK(std::fabs(released.baseline() - 33000) < 100);
+
+  TouchDetector startup;
+  startup.begin(0);
+  now = 0;
+  for (int i = 0; i < 100; ++i) { now += 2000; startup.update(43000, now); }
+  now += 1000000;
+  startup.update(33000, now);
+  CHECK(!startup.ready());
+  for (int i = 0; i < 205; ++i) { now += 2000; startup.update(33000, now); }
+  CHECK(startup.ready() && std::fabs(startup.baseline() - 33000) < 1);
+  return 0;
+}
+
 int testHorizontalCalibration() {
   for (float slope : {-.57735f, 0.0f, .57735f}) {
     HorizontalCalibration c;
@@ -377,6 +428,32 @@ int testGyroPose() {
   return 0;
 }
 
+int testGyroInterruptedSampling() {
+  GyroPipeline g;
+  g.startCalibration();
+  uint32_t now = 0;
+  float dx, dy;
+  for (int i = 0; i < 2880; ++i) { now += 1042; g.process({0, 0, 0, 1, 0, 0}, now, dx, dy); }
+  for (int i = 0; i < 40; ++i) { now += 1042; g.process({-30, 0, 0, 1, 0, 0}, now, dx, dy); }
+  CHECK(dx > 1);
+  now += 100000;
+  CHECK(!g.process({0, 0, 0, 1, 0, 0}, now, dx, dy) && dx == 0 && dy == 0);
+  float total = 0;
+  for (int i = 0; i < 20; ++i) {
+    now += 1042;
+    g.process({0, 0, 0, 1, 0, 0}, now, dx, dy);
+    total += std::fabs(dx) + std::fabs(dy);
+  }
+  CHECK(total == 0);  // 中断前低通余量不应在恢复后移动光标。
+  now += 100000;
+  g.process({0, 0, 0, 0, 0, 1}, now, dx, dy);
+  CHECK(g.up().z > .999f);
+  now += 1042;
+  g.process({0, 0, -30, 0, 0, 1}, now, dx, dy);
+  CHECK(dx > .5f && std::fabs(dy) < .001f);
+  return 0;
+}
+
 int testBatteryUsb() {
   CHECK(batteryPercentFromMillivolts(4200) == 100 && batteryPercentFromMillivolts(3200) == 0);
   CHECK(batteryPercentFromMillivolts(3850) > 45 && batteryPercentFromMillivolts(3850) < 62);
@@ -389,8 +466,8 @@ int testBatteryUsb() {
 }
 
 int main() {
-  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testTouchStartupAndGrip() ||
-      testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testBatteryUsb()) return 1;
+  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
+      testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testGyroInterruptedSampling() || testBatteryUsb()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;
 }

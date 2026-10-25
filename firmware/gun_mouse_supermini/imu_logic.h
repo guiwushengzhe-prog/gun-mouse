@@ -78,7 +78,16 @@ class GyroPipeline {
       return false;
     }
     float dt = gap * 1e-6f;
-    if (dt < 0.0003f || dt > 0.010f) dt = 1.0f / kOdrHz;  // 时间异常保护，不把停顿乘进位移。
+    if (dt > 0.010f) {
+      // 采样中断后丢弃旧低通余量；可靠的当前加速度重建竖直方向，不补发未知时段的移动。
+      lp_x_ = lp_y_ = 0;
+      uncorrected_ = {0, 0, 0};
+      still_count_ = 0;
+      const Vec3 a{s.ax, s.ay, s.az};
+      if (std::fabs(norm3(a) - 1.0f) <= .15f) setUp(a, 1.0f);
+      return false;
+    }
+    if (dt < 0.0003f) dt = 1.0f / kOdrHz;
 
     Vec3 g{s.gx - bias_.x, s.gy - bias_.y, s.gz - bias_.z};
     const Vec3 a{s.ax, s.ay, s.az};

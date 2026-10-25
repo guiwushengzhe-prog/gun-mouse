@@ -39,7 +39,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.1-蓝牙升级与轨迹校准";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2-采样恢复与升级核验";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -597,7 +597,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.1\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),

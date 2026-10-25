@@ -52,10 +52,21 @@ async def send(client, text):
     await client.write_gatt_char(CONTROL, text.encode("ascii"), response=True)
 
 
+def image_elf_hash(payload):
+    if (len(payload) < 288 or payload[0] != 0xE9
+            or struct.unpack_from("<H", payload, 12)[0] != 9
+            or struct.unpack_from("<I", payload, 32)[0] != 0xABCD5432):
+        raise ValueError("需要ESP32-S3应用文件，不能使用完整合并镜像或其他板型的文件")
+    # 官方应用描述位于24字节镜像头和8字节首段头之后；构建校验值在描述内偏移144。
+    identity = payload[176:208]
+    if b"GunMouse SuperMini\0" not in payload or identity in (bytes(32), b"\xff" * 32):
+        raise ValueError("应用文件缺少飞鼠标识或有效的程序构建校验值")
+    return identity.hex()
+
+
 def image_payload(path):
     payload = path.read_bytes()
-    if len(payload) < 128 or payload[0] != 0xE9 or struct.unpack_from("<H", payload, 12)[0] != 9:
-        raise ValueError("需要ESP32-S3应用文件，不能使用完整合并镜像或其他板型的文件")
+    image_elf_hash(payload)
     if len(payload) > 0x140000:
         raise ValueError("应用文件超过当前无线升级分区容量")
     digest = hashlib.sha256(payload).hexdigest()
@@ -68,10 +79,18 @@ def image_payload(path):
     return payload, digest
 
 
+def verify_running_image(before, after, expected_hash):
+    if after["slot"] == before["slot"]:
+        raise RuntimeError("重启后仍在旧分区，尚不能确认无线升级成功")
+    if after.get("elf") != expected_hash:
+        raise RuntimeError("重启后的程序构建校验值与发送文件不一致，尚不能确认无线升级成功")
+
+
 async def upload(address, path, *, abort_after=None):
     payload, digest = image_payload(path)
+    expected_hash = image_elf_hash(payload)
     report = {"设备": address, "文件": str(path), "字节数": len(payload), "SHA256": digest,
-              "蓝牙库版本": importlib.metadata.version("bleak"), "成功": False}
+              "程序构建SHA256": expected_hash, "蓝牙库版本": importlib.metadata.version("bleak"), "成功": False}
     started = time.monotonic()
     async with connection(address) as client:
         before = await status(client)
@@ -119,8 +138,7 @@ async def upload(address, path, *, abort_after=None):
         try:
             async with connection(address) as client:
                 after = await wait_for(client, lambda s: s["diag"].get("fw", 0) >= 3, timeout=10)
-                if after["slot"] == before["slot"]:
-                    raise RuntimeError("重启后仍在旧分区，尚不能确认无线升级成功")
+                verify_running_image(before, after, expected_hash)
                 report["更新后"] = after
                 report["成功"] = True
                 report["秒数"] = round(time.monotonic() - started, 2)

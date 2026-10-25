@@ -4,6 +4,7 @@
 #include <BLEServer.h>
 #include <BLECharacteristic.h>
 #include <Update.h>
+#include <esp_app_desc.h>
 #include <esp_ota_ops.h>
 #include <freertos/queue.h>
 #include <atomic>
@@ -23,6 +24,15 @@ class BleMaintenance {
 
   void begin(BLEServer* server, std::atomic<bool>* authenticated) {
     authenticated_ = authenticated;
+    // 当前官方核心的格式化接口只保留9个字符；直接读取描述中的完整32字节。
+    const volatile uint8_t* digest = esp_app_get_description()->app_elf_sha256;
+    constexpr char hex[] = "0123456789abcdef";
+    for (size_t i = 0; i < 32; ++i) {
+      const uint8_t byte = digest[i];
+      elf_sha256_[i * 2] = hex[byte >> 4];
+      elf_sha256_[i * 2 + 1] = hex[byte & 15];
+    }
+    elf_sha256_[64] = 0;
     queue_ = xQueueCreate(12, sizeof(Packet));
     BLEService* service = server->createService(kService);
     const uint32_t write = BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_WRITE_ENC;
@@ -141,10 +151,10 @@ class BleMaintenance {
     const auto running = esp_ota_get_running_partition();
     snprintf(text, sizeof(text),
              "{\"project\":\"gunmouse\",\"slot\":\"%s\",\"ota\":%u,\"received\":%lu,"
-             "\"total\":%lu,\"error\":%u,\"diag\":%s}",
+             "\"total\":%lu,\"error\":%u,\"elf\":\"%s\",\"diag\":%s}",
              running ? running->label : "?", (unsigned)phase_.load(),
              (unsigned long)received_.load(), (unsigned long)total_.load(),
-             (unsigned)error_.load(), diagnostic);
+             (unsigned)error_.load(), elf_sha256_, diagnostic);
     characteristic->setValue(text);
   }
 
@@ -164,6 +174,7 @@ class BleMaintenance {
   uint32_t last_data_ms_ = 0, reboot_ms_ = 0;
   portMUX_TYPE mux_ = portMUX_INITIALIZER_UNLOCKED;
   char diagnostic_[300] = "{}";
+  char elf_sha256_[65] = {};
 };
 
 }  // namespace GunMouse

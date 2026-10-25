@@ -9,24 +9,24 @@
     "Status": "",
     "Date": "2026-06-05T10:22:12Z"
   },
-  "compile_seconds": 57.5,
+  "compile_seconds": 78.1,
   "host_logic_tests": "passed",
-  "host_test_source_sha256": "8364c7d2f9892dff0f4b9a05a5b596726e0a17b947ec915c361f0a7b9dcb677b",
+  "host_test_source_sha256": "e9f78455e7791877b304f6bec2783fccd4e2b324fccb97296629fdbb87c5f4ae",
   "carrier_config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
   "build_config_sha256": "054989d42b89bc7ef61ad54b3bba67848c4d09820f7a5f63535d6debe3a459f4",
   "source_sha256": {
-    "ble_maintenance.h": "15f881dd15b1e8cbcf67d3bac81fdd75a9e08334c31c2d993e4bc49eb4bcf4c8",
+    "ble_maintenance.h": "acd5e7c8460eeff42ec5ee48c93b003ca58ad18a773e3b364a3cf4ab11e8f96b",
     "board_pins.h": "5326fe9401acca96f3023fb9a4db14c342ce4b89287c529e41b34114260e6db5",
     "control_core.h": "e2ff4ba55f38e497852859415f9b857339e350d569d86693deda8892787daabb",
     "direction_calibration.h": "3b51d7627e8a775901fbb020f3485a3d33bf0efcae2c5c592de199440afe5a8b",
-    "gun_mouse_supermini.ino": "9eb65ae25fba36a10d7c6801dff8134cd56ce3c3b44f13d0dc5b5f0eb398cf92",
-    "imu_logic.h": "065bde1fba32499ad81f84c8f731d842e1a634c6184429fe1cdaca6ef83dde25",
-    "input_logic.h": "62f96a6805e2851c5e199ca22ab0f10ca188a99f9bc50f0e1fb4f938ae50aca3"
+    "gun_mouse_supermini.ino": "fc7e28558f053c0871b468c1c751a3fe822902dfec36d74832323700970b153a",
+    "imu_logic.h": "1c8a8b809b4f95f2062713fc8e6d563a70d680d2fd664d9f622e26c3d07cc2dd",
+    "input_logic.h": "9d052083aae7c7b6bac94e0542ee854d08bcf7f2c6e842c41e6b026838f93e65"
   },
   "artifacts": {
     "gun_mouse_supermini.ino.bin": {
-      "bytes": 692672,
-      "sha256": "83f9555b059061d4709d712e0dab7d4dcc3ab46c0b9f2f310dba9ae493209066"
+      "bytes": 693024,
+      "sha256": "982162a98bb3875e3c5be45817949e53da51f2cfa90874502c9c9052db407e22"
     },
     "gun_mouse_supermini.ino.bootloader.bin": {
       "bytes": 19968,
@@ -38,7 +38,7 @@
     },
     "gun_mouse_supermini.ino.merged.bin": {
       "bytes": 4194304,
-      "sha256": "347ff9b25b2d30186d61cf6596ad69b6fbf0ca76be34dff028a13171a0021bcb"
+      "sha256": "18100eae2213ff99e1e1cbcc8f3cad926a917b6bb65e3e8e420656c5098183c2"
     }
   },
   "flash_address_merged": "0x0",
