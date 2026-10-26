@@ -120,6 +120,23 @@ int testDebounce() {
   return 0;
 }
 
+int testButtonOverflow() {
+  ButtonQueue queue;
+  for (int i = 1; i <= 18; ++i) queue.observe(i & 1);
+  CHECK(queue.size() == ButtonQueue::kCapacity && queue.overflowCount() == 2);
+  uint8_t final = 1;
+  while (!queue.empty()) { final = queue.front(); queue.pop(); }
+  CHECK(final == 0);  // 队列满时仍恢复松开，但中途点击可能合并，必须留下可见计数。
+  queue.reset(0);
+  CHECK(queue.overflowCount() == 2);
+  queue.observe(1);
+  queue.observe(0);
+  CHECK(queue.size() == 2 && queue.front() == 1);
+  queue.pop();
+  CHECK(queue.front() == 0 && queue.overflowCount() == 2);
+  return 0;
+}
+
 int testRejectedSend() {
   ControlCore core;
   ReportSender sender;
@@ -478,9 +495,11 @@ int testDeviceStatus() {
   state.center_x = 1999; state.center_y = 2111;
   state.joy_speed = 19999; state.sensitivity = 999;
   state.center_revision = state.command_sequence = UINT32_MAX;
-  state.command = "jcenter";
+  state.command = "xxxxxxxxxxxxxxx";
   state.runtime = {UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX,
-                   UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, INT32_MIN};
+                   UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, INT32_MIN};
+  state.buttons = {true, 7, 7, UINT16_MAX, UINT16_MAX, UINT16_MAX, UINT16_MAX,
+                   UINT16_MAX, UINT16_MAX};
   for (int mv : {3300, 4100, 5070}) {
     state.node_mv = mv;
     CHECK(formatDeviceStatus(state, buffer, sizeof(buffer)));
@@ -492,13 +511,14 @@ int testDeviceStatus() {
   CHECK(std::strstr(buffer, "\"gap_us\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"i2c\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"err\":-2147483648") != nullptr);
+  CHECK(std::strstr(buffer, "\"btn\":[1,7,65535,65535,65535,65535,65535,65535,7]") != nullptr);
   char small[24];
   CHECK(!formatDeviceStatus(state, small, sizeof(small)) && small[0] == 0);
   return 0;
 }
 
 int main() {
-  if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
+  if (testSender() || testRejectedSend() || testDebounce() || testButtonOverflow() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
       testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testGyroInterruptedSampling() || testBatteryUsb() || testDeviceStatus()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;

@@ -49,6 +49,7 @@ class ButtonQueue {
     if (mask == last_) return;
     last_ = mask;
     if (count_ == kCapacity) {  // 满时合并到最后一项，最终状态仍正确。
+      ++overflow_count_;
       items_[(head_ + count_ - 1) % kCapacity] = mask;
       return;
     }
@@ -70,12 +71,14 @@ class ButtonQueue {
     --count_;
   }
   int size() const { return count_; }
+  uint16_t overflowCount() const { return overflow_count_; }
 
  private:
   uint8_t items_[kCapacity] = {};
   int head_ = 0;
   int count_ = 0;
   uint8_t last_ = 0;
+  uint16_t overflow_count_ = 0;  // 生命周期累计，按65536循环；清队列不抹掉诊断证据。
 };
 
 // 一路位移：保留小数余量；积压限幅，避免恢复后突然冲出一大段。
@@ -200,6 +203,7 @@ class ReportSender {
 
   bool connected() const { return connected_; }
   int queued() const { return queue_.size(); }
+  uint16_t buttonOverflows() const { return queue_.overflowCount(); }
   const MotionChannel& gyro() const { return gyro_; }
   const MotionChannel& joystick() const { return joy_; }
 

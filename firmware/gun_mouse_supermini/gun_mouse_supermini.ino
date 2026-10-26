@@ -40,7 +40,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2.3-蓝牙受阻重试调度";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2.4-扳机事件回报";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -123,6 +123,9 @@ uint32_t runtimeStartedMs = 0, lastLoopUs = 0;
 uint32_t lastTouchUs = 0;
 uint32_t touchReadUs = 0;
 uint8_t buttonMask = 0;
+bool rawLeft = false;
+uint8_t acceptedButtons = 0;
+uint16_t leftPresses = 0, leftReleases = 0, acceptedLeftPresses = 0, acceptedLeftReleases = 0;
 
 float vbatMv = NAN;
 uint32_t lastPowerMs = 0;
@@ -352,7 +355,14 @@ bool sendReport(const HidReport& r) {
   mouseInput->notify();
   const bool accepted = mouseNotifyAccepted.load();
   lastRejected = !accepted;
-  if (accepted) ++runtimeCurrent.reports;
+  if (accepted) {
+    ++runtimeCurrent.reports;
+    if ((r.buttons ^ acceptedButtons) & 1) {
+      if (r.buttons & 1) ++acceptedLeftPresses;
+      else ++acceptedLeftReleases;
+    }
+    acceptedButtons = r.buttons;
+  }
   else {
     ++runtimeCurrent.rejected;
     runtimeCurrent.notify_error = mouseNotifyError.load();
@@ -530,7 +540,6 @@ void serviceTouch(uint32_t nowUs) {
   const uint32_t t0 = micros();
   const uint32_t raw = touchRead(Pins::TOUCH);
   touchReadUs = micros() - t0;
-  if (touchReadUs > runtimeCurrent.touch_us) runtimeCurrent.touch_us = touchReadUs;
   const bool wasTouched = touch.touched();
   touch.update(raw, micros());
   if (wasTouched != touch.touched()) ++runtimeCurrent.touch_edges;
@@ -538,9 +547,14 @@ void serviceTouch(uint32_t nowUs) {
 
 void serviceButtons(uint32_t nowUs) {
   uint8_t mask = 0;
-  if (trigDebounce.update(digitalRead(Pins::TRIG) == LOW, nowUs)) mask |= 0x01;   // 机械扳机 = 左键
+  rawLeft = digitalRead(Pins::TRIG) == LOW;
+  if (trigDebounce.update(rawLeft, nowUs)) mask |= 0x01;   // 机械扳机 = 左键
   if (rightDebounce.update(digitalRead(Pins::BTN_R) == LOW, nowUs)) mask |= 0x02; // 右键
   if (middleDebounce.update(joystickEnabled && digitalRead(Pins::JOY_SW) == LOW, nowUs)) mask |= 0x04; // 摇杆按下 = 中键
+  if ((mask ^ buttonMask) & 1) {
+    if (mask & 1) ++leftPresses;
+    else ++leftReleases;
+  }
   buttonMask = mask;
 }
 
@@ -632,7 +646,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2.3\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2.4\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
@@ -661,6 +675,14 @@ void publishDeviceDetails() {
   snapshot.command = lastAcceptedCommand;
   snapshot.runtime = runtimeLast;
   snapshot.runtime.link_us = bleIntervalUs.load();
+  snapshot.buttons.raw_left = rawLeft;
+  snapshot.buttons.observed = buttonMask;
+  snapshot.buttons.accepted = acceptedButtons;
+  snapshot.buttons.presses = leftPresses; snapshot.buttons.releases = leftReleases;
+  snapshot.buttons.accepted_presses = acceptedLeftPresses;
+  snapshot.buttons.accepted_releases = acceptedLeftReleases;
+  snapshot.buttons.queued = sender.queued();
+  snapshot.buttons.overflows = sender.buttonOverflows();
   char text[512];
   if (formatDeviceStatus(snapshot, text, sizeof(text))) maintenance.setDetails(text);
   else maintenance.setDetails("{\"project\":\"gunmouse\",\"error\":\"report_overflow\"}");
