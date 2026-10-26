@@ -1,0 +1,38 @@
+body { margin: 0; color: #152137; background: #f3f6fc; font-family: system-ui, sans-serif; }
+main { max-width: 1060px; margin: auto; padding: 40px 24px; }
+header { margin-bottom: 28px; }
+header p { color: #657085; line-height: 1.7; }
+.heading-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.heading-row h2 { margin: 0; }
+.badge { padding: 5px 12px; border-radius: 20px; background: #edf0f5; color: #657085; font-size: 14px; }
+.badge.connected { color: #166c44; background: #e1f5e9; }
+.metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 24px 0; }
+.metrics div { padding: 18px 14px; background: #f3f6fc; border-radius: 12px; }
+.metrics span { display: block; color: #657085; font-size: 14px; }
+.metrics strong { display: block; font-size: 27px; margin-top: 8px; font-variant-numeric: tabular-nums; }
+.status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.status-grid dd { overflow-wrap: anywhere; }
+.control-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+fieldset:disabled .panel { opacity: .65; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+label { display: block; color: #43516a; line-height: 1.6; }
+input, select { box-sizing: border-box; max-width: 100%; border: 1px solid #cbd5e5; border-radius: 10px; background: #fff; padding: 10px 12px; font: inherit; }
+input { width: 160px; }
+label input { display: block; margin-top: 6px; }
+input:focus-visible, select:focus-visible { outline: 3px solid #2f65df; outline-offset: 3px; }
+.form-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.presets .button { padding: 8px 12px; }
+#saved-devices { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+#saved-devices[hidden] { display: none; }
+.error { color: #a53636 !important; }
+.success { color: #207346 !important; }
+#operation-log { padding-left: 22px; line-height: 1.8; color: #657085; font-size: 14px; }
+.button:disabled { cursor: default; }
+@media (max-width: 700px) {
+  main { padding: 24px 14px; }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .status-grid, .control-grid { grid-template-columns: minmax(0, 1fr); }
+  .status-grid div { gap: 12px; }
+  .metrics strong { font-size: 24px; }
+}

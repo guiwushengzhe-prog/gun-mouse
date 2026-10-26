@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>枪型飞鼠控制 · 私人管理</title>
+  <link rel="stylesheet" href="/portal.css">
+  <link rel="stylesheet" href="/ota-admin/ota.css?v=20261014-wireless-console-v19">
+  <link rel="stylesheet" href="/ota-admin/gunmouse.css?v=20261026-1">
+  <script type="module" src="/ota-admin/gunmouse.js?v=20261026-1"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <a class="back" href="/ota-admin/">← 返回单片机管理</a>
+      <h1>枪型飞鼠控制</h1>
+      <p>通过这台电脑的蓝牙，连接你身边的飞鼠。设置保存在飞鼠中，关闭网页后仍保留。</p>
+    </header>
+
+    <section class="panel" aria-labelledby="connection-title">
+      <div class="heading-row"><h2 id="connection-title">连接飞鼠</h2><span id="connection-badge" class="badge">未连接</span></div>
+      <p class="note">先在 Windows 中配对“GunMouse SuperMini”，再用 Edge 或 Chrome 打开本页。首次连接需要在浏览器弹窗中选择飞鼠。</p>
+      <div class="actions">
+        <button class="button" id="connect" type="button">选择并连接飞鼠</button>
+        <span id="saved-devices" hidden><select id="saved-device" aria-label="已授权的飞鼠"></select><button class="button secondary" id="reconnect" type="button">重连已授权飞鼠</button></span>
+        <button class="button secondary" id="disconnect" type="button" disabled>断开</button>
+        <button class="button secondary" id="refresh-status" type="button" disabled>刷新状态</button>
+      </div>
+      <p id="connection-message" role="status" aria-live="polite">尚未连接设备。</p>
+      <p class="note">如果列表找不到已配对的飞鼠，可让飞鼠关机再开机后重试。此页控制当前电脑附近的设备；飞鼠尚未直接联网，离开蓝牙范围后无法远程控制。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="status-title">
+      <div class="heading-row"><h2 id="status-title">实时状态</h2><span id="updated-at" class="note">等待设备回报</span></div>
+      <div class="metrics">
+        <div><span>触摸原始读数</span><strong data-value="raw">—</strong></div>
+        <div><span>未触摸基线</span><strong data-value="base">—</strong></div>
+        <div><span>实际开启门限</span><strong data-value="press">—</strong></div>
+        <div><span>实际关闭门限</span><strong data-value="release">—</strong></div>
+      </div>
+      <dl class="status-grid">
+        <div><dt>设备固件</dt><dd data-value="build">—</dd></div>
+        <div><dt>触摸状态</dt><dd data-value="touch">—</dd></div>
+        <div><dt>左右反向</dt><dd data-value="invx">—</dd></div>
+        <div><dt>上下反向</dt><dd data-value="invy">—</dd></div>
+        <div><dt>触摸比例</dt><dd data-value="ratios">—</dd></div>
+        <div><dt>左右校正</dt><dd data-value="cross">—</dd></div>
+        <div><dt>摇杆开关</dt><dd data-value="joy">—</dd></div>
+        <div><dt>充电状态</dt><dd>当前硬件未提供充电状态反馈</dd></div>
+      </dl>
+      <p class="note">连接期间每秒刷新。实际触摸门限同时考虑基线比例和噪声保护，因此可能高于设定比例。断开后读数会清空。</p>
+    </section>
+
+    <fieldset id="controls" disabled>
+      <legend class="visually-hidden">飞鼠设置</legend>
+      <div class="control-grid">
+        <section class="panel" aria-labelledby="joy-title">
+          <h2 id="joy-title">摇杆</h2>
+          <p class="note">接线核对正确后，松开摇杆让它回中，再启用。启用会自动取中心；摇杆按下为鼠标中键。</p>
+          <div class="actions">
+            <button class="button" type="button" data-command="joy 1">启用摇杆</button>
+            <button class="button secondary" type="button" data-command="joy 0">停用摇杆</button>
+            <button class="button secondary" type="button" data-command="jcenter">重新取中心</button>
+          </div>
+          <form id="speed-form">
+            <label for="joy-speed">摇杆推满速度（每秒计数）</label>
+            <div class="form-row"><input id="joy-speed" type="number" min="1" max="19999" step="1" placeholder="例如 1200" required><button class="button secondary" type="submit">设置速度</button></div>
+          </form>
+        </section>
+
+        <section class="panel" aria-labelledby="direction-title">
+          <h2 id="direction-title">体感方向与灵敏度</h2>
+          <p class="note">只调整陀螺仪带动光标的方向，摇杆方向保持原设置。</p>
+          <div class="actions">
+            <button class="button secondary" type="button" data-command="invx">切换左右反向</button>
+            <button class="button secondary" type="button" data-command="invy">切换上下反向</button>
+          </div>
+          <form id="sensitivity-form">
+            <label for="sensitivity">体感灵敏度（每度计数）</label>
+            <div class="form-row"><input id="sensitivity" type="number" min="1" max="999" step="1" placeholder="例如 64" required><button class="button secondary" type="submit">设置灵敏度</button></div>
+          </form>
+          <div class="actions presets" aria-label="灵敏度常用值">
+            <button class="button secondary" type="button" data-command="sens 32">较慢 · 32</button>
+            <button class="button secondary" type="button" data-command="sens 64">常用 · 64</button>
+            <button class="button secondary" type="button" data-command="sens 96">较快 · 96</button>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel" aria-labelledby="touch-title">
+        <h2 id="touch-title">触摸开关</h2>
+        <p class="note">触摸只决定体感能否移动。开启比例应高于关闭比例；提高比例会更难触发。此处显示设备正在使用的比例，不自动替换已有设置。</p>
+        <form id="touch-form">
+          <div class="form-row">
+            <label>开启比例（%）<input id="touch-press" type="number" min="0.11" max="49.99" step="0.01" required></label>
+            <label>关闭比例（%）<input id="touch-release" type="number" min="0.06" max="49.98" step="0.01" required></label>
+            <button class="button" type="submit">保存触摸门限</button>
+          </div>
+        </form>
+        <div class="actions"><button class="button secondary" type="button" data-command="tcal">重取未触摸基线</button></div>
+        <p class="note">重取基线前正常握住设备，手指离开铜箔和裸露感应导线，保持约半秒。当前使用铜箔检测。</p>
+      </section>
+
+      <section class="panel" aria-labelledby="calibration-title">
+        <h2 id="calibration-title">校准</h2>
+        <div class="actions"><button class="button secondary" type="button" data-command="cal">重新校准陀螺仪</button></div>
+        <p class="note">先将飞鼠放稳，再点击校准，保持静止约 3 秒。这里只校准传感器零点，保留已保存的左右方向校正。</p>
+      </section>
+    </fieldset>
+
+    <section class="panel" aria-labelledby="result-title">
+      <h2 id="result-title">本次操作</h2>
+      <p id="operation-message" role="status" aria-live="polite">连接后可操作。3.2 固件不回报摇杆开关、速度和灵敏度，发送这些命令后仍需实际试用确认。</p>
+      <ol id="operation-log"></ol>
+    </section>
+    <footer>沿用主站登录 · <a href="/ota-admin/">单片机管理</a></footer>
+  </main>
+</body>
+</html>
