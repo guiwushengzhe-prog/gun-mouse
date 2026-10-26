@@ -497,7 +497,9 @@ int testDeviceStatus() {
   state.center_revision = state.command_sequence = UINT32_MAX;
   state.command = "xxxxxxxxxxxxxxx";
   state.runtime = {UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX,
-                   UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, INT32_MIN};
+                   UINT32_MAX, UINT32_MAX, UINT32_MAX, INT32_MIN};
+  state.uptime_ms = UINT32_MAX;
+  state.reset_reason = UINT8_MAX;
   state.buttons = {true, 7, 7, UINT16_MAX, UINT16_MAX, UINT16_MAX, UINT16_MAX,
                    UINT16_MAX, UINT16_MAX};
   for (int mv : {3300, 4100, 5070}) {
@@ -512,6 +514,7 @@ int testDeviceStatus() {
   CHECK(std::strstr(buffer, "\"i2c\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"err\":-2147483648") != nullptr);
   CHECK(std::strstr(buffer, "\"btn\":[1,7,65535,65535,65535,65535,65535,65535,7]") != nullptr);
+  CHECK(std::strstr(buffer, "\"boot\":[4294967295,255]") != nullptr);
   char small[24];
   CHECK(!formatDeviceStatus(state, small, sizeof(small)) && small[0] == 0);
   return 0;

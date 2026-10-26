@@ -14,6 +14,7 @@
 #include <Preferences.h>
 #include <Wire.h>
 #include <atomic>
+#include <esp_system.h>
 
 #if !ARDUINO_USB_CDC_ON_BOOT || !ARDUINO_USB_MODE
 #error "Use native USB hardware CDC: CDCOnBoot=cdc,USBMode=hwcdc"
@@ -40,7 +41,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2.4-扳机事件回报";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2.5-启动原因回报";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -119,6 +120,7 @@ char lastAcceptedCommand[16] = {};
 uint32_t lastDetailsMs = 0, lastPublishedSequence = UINT32_MAX;
 RuntimeStatus runtimeCurrent, runtimeLast;
 uint32_t runtimeStartedMs = 0, lastLoopUs = 0;
+esp_reset_reason_t startupReason = ESP_RST_UNKNOWN;
 
 uint32_t lastTouchUs = 0;
 uint32_t touchReadUs = 0;
@@ -540,9 +542,7 @@ void serviceTouch(uint32_t nowUs) {
   const uint32_t t0 = micros();
   const uint32_t raw = touchRead(Pins::TOUCH);
   touchReadUs = micros() - t0;
-  const bool wasTouched = touch.touched();
   touch.update(raw, micros());
-  if (wasTouched != touch.touched()) ++runtimeCurrent.touch_edges;
 }
 
 void serviceButtons(uint32_t nowUs) {
@@ -592,6 +592,7 @@ void applySettings() {
 
 void printStatus() {
   const Vec3 u = gyro.up();
+  Serial.printf("[启动原因] 代码=%u 运行=%lums\n", (unsigned)startupReason, (unsigned long)millis());
   Serial.printf("[状态] %s | 蓝牙=%s 报告订阅=%s 间隔=%.2fms | 陀螺仪=%s 竖直(芯片)=%+.2f %+.2f %+.2f\n", Fw::kVersion,
                 bleConnected ? "已连接" : "等待连接", mouseSubscribed ? "已启用" : "等待主机", bleIntervalUs.load() / 1000.0f,
                 !imuInitialized ? "未找到芯片(自动重试)" : (gyro.calibrated() ? "正常" : "等待放稳校准"), u.x, u.y,
@@ -646,7 +647,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2.4\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2.5\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
@@ -673,6 +674,8 @@ void publishDeviceDetails() {
   snapshot.node_mv = std::isfinite(vbatMv) ? (int)std::lround(vbatMv) : -1;
   snapshot.command_sequence = commandSequence;
   snapshot.command = lastAcceptedCommand;
+  snapshot.uptime_ms = millis();
+  snapshot.reset_reason = (uint8_t)startupReason;
   snapshot.runtime = runtimeLast;
   snapshot.runtime.link_us = bleIntervalUs.load();
   snapshot.buttons.raw_left = rawLeft;
@@ -798,6 +801,7 @@ void handleSerial() {
 
 // ============================================================ 主流程
 void setup() {
+  startupReason = esp_reset_reason();
   setCpuFrequencyMhz(160);
   Serial.begin(115200);
   Serial.setTxTimeoutMs(0);  // 没接电脑时不阻塞
