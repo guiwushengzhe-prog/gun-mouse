@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/portal.css">
   <link rel="stylesheet" href="/ota-admin/ota.css?v=20261014-wireless-console-v19">
   <link rel="stylesheet" href="/ota-admin/gunmouse.css?v=20261026-1">
-  <script type="module" src="/ota-admin/gunmouse.js?v=20261026-2"></script>
+  <script type="module" src="/ota-admin/gunmouse.js?v=20261026-3"></script>
 </head>
 <body>
   <main>
@@ -96,7 +96,7 @@
 
       <section class="panel" aria-labelledby="touch-title">
         <h2 id="touch-title">触摸开关</h2>
-        <p class="note">触摸只决定体感能否移动。开启比例应高于关闭比例；提高比例会更难触发。此处显示设备正在使用的比例，不自动替换已有设置。</p>
+        <p class="note">触摸控制模式下，触摸决定体感能否移动；常开模式免触摸。开启比例应高于关闭比例；提高比例会更难触发。此处显示设备正在使用的比例，不自动替换已有设置。</p>
         <form id="touch-form">
           <div class="form-row">
             <label>开启比例（%）<input id="touch-press" type="number" min="0.11" max="49.99" step="0.01" required></label>

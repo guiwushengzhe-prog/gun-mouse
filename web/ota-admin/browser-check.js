@@ -60,6 +60,18 @@ async (page) => {
   check(await page.locator('[data-value="press"]').textContent() === '39547', '实际开启门限包含噪声保护');
   check((await page.locator('[data-value="joy"]').textContent()) === '已停用', '摇杆开关来自设备回报');
   check((await page.locator('[data-value="charge"]').textContent()).includes('未知'), '高电压采样没有伪装成正在充电');
+  await page.evaluate(() => { window.mockGunMouse.details.always = 1; });
+  await page.getByRole('button', { name: '刷新状态', exact: true }).click();
+  await page.waitForFunction(() => document.querySelector('[data-value="touch"]').textContent.includes('常开模式'));
+  check((await page.locator('[data-value="imu"]').textContent()) === '常开，正常', '未触摸时常开模式仍正确显示体感状态');
+  await page.evaluate(() => { window.mockGunMouse.details.imu_ready = 0; });
+  await page.getByRole('button', { name: '刷新状态', exact: true }).click();
+  await page.waitForFunction(() => document.querySelector('[data-value="imu"]').textContent.includes('等待校准'));
+  check((await page.locator('[data-value="imu"]').textContent()).includes('尚未就绪'), '常开模式不把未校准显示为正常');
+  await page.evaluate(() => { window.mockGunMouse.details.always = 0; window.mockGunMouse.details.imu_ready = 1; });
+  await page.getByRole('button', { name: '刷新状态', exact: true }).click();
+  await page.waitForFunction(() => document.querySelector('[data-value="touch"]').textContent.includes('未触摸，体感关闭'));
+  check((await page.locator('[data-value="imu"]').textContent()) === '正常', '切回触摸控制时恢复触摸开关显示');
   await page.getByRole('button', { name: '停用摇杆', exact: true }).click();
   await page.waitForFunction(() => document.getElementById('operation-message').textContent.includes('设备回报确认'));
   check(await page.evaluate(() => window.mockGunMouse.writes.at(-1)) === 'CMD joy 0', '摇杆命令通过真实网页发送路径编码');

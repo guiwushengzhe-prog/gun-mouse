@@ -29,6 +29,7 @@ struct DeviceStatus {
   uint32_t uptime_ms = 0;
   uint8_t reset_reason = 0;
   bool middle = false, imu_ready = false;
+  bool imu_always = false;
   int node_mv = -1;  // 开关后的电池连接点采样；不是充电判据。
   const char* command = "";  // 主循环认可的命令名称，不含用户原始文本。
   RuntimeStatus runtime;
@@ -44,7 +45,7 @@ inline bool formatDeviceStatus(const DeviceStatus& s, char* out, size_t capacity
       "\"power\":{\"mv\":%d,\"charge\":-1},\"sens\":%.2f,\"imu_ready\":%u,\"seq\":%lu,\"cmd\":\"%s\","
       "\"perf\":{\"ms\":%lu,\"loop_us\":%lu,\"gap_us\":%lu,\"imu\":%lu,\"i2c\":%lu,\"sent\":%lu,\"fail\":%lu,"
       "\"link_us\":%lu,\"err\":%d},"
-      "\"btn\":[%u,%u,%u,%u,%u,%u,%u,%u,%u],\"boot\":[%lu,%u]}",
+      "\"btn\":[%u,%u,%u,%u,%u,%u,%u,%u,%u],\"boot\":[%lu,%u],\"always\":%u}",
       (unsigned)s.joy_enabled, (unsigned)s.joy_ready, s.raw_x, s.raw_y, s.center_x, s.center_y,
       s.joy_speed, (unsigned long)s.center_revision, (unsigned)s.middle, s.node_mv,
       s.sensitivity, (unsigned)s.imu_ready, (unsigned long)s.command_sequence, s.command,
@@ -56,7 +57,7 @@ inline bool formatDeviceStatus(const DeviceStatus& s, char* out, size_t capacity
       (unsigned)s.buttons.presses, (unsigned)s.buttons.releases,
       (unsigned)s.buttons.accepted_presses, (unsigned)s.buttons.accepted_releases,
       (unsigned)s.buttons.queued, (unsigned)s.buttons.overflows, (unsigned)s.buttons.accepted,
-      (unsigned long)s.uptime_ms, (unsigned)s.reset_reason);
+      (unsigned long)s.uptime_ms, (unsigned)s.reset_reason, (unsigned)s.imu_always);
   if (length < 0 || (size_t)length >= capacity) { out[0] = 0; return false; }
   return true;
 }

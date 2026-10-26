@@ -40,6 +40,33 @@ class Debouncer {
   uint32_t release_start_us_ = 0;
 };
 
+// 仅在开机时两键已按下才识别；持续确认一次，全部松开前屏蔽组合动作。
+class StartupModeChord {
+ public:
+  static constexpr uint32_t kHoldUs = 1500000;
+  void begin(bool both_pressed, uint32_t now_us) {
+    armed_ = suppressed_ = both_pressed;
+    started_us_ = now_us;
+  }
+  bool update(bool left, bool right, uint32_t now_us) {
+    if (!suppressed_) return false;
+    if (!left || !right) armed_ = false;
+    const bool activate = armed_ && (uint32_t)(now_us - started_us_) >= kHoldUs;
+    if (activate) armed_ = false;
+    return activate;
+  }
+  uint8_t filterButtons(uint8_t debounced_mask) {
+    if (!suppressed_) return debounced_mask;
+    // 原始输入松开后，去抖器还可能保持几毫秒；这段余量也属于组合动作。
+    if ((debounced_mask & 0x03) == 0) armed_ = suppressed_ = false;
+    return debounced_mask & ~0x03;
+  }
+  bool suppressButtons() const { return suppressed_; }
+ private:
+  bool armed_ = false, suppressed_ = false;
+  uint32_t started_us_ = 0;
+};
+
 // 按键状态变化队列：两次发送之间的完整点击不会被吞掉；断线时整体丢弃。
 class ButtonQueue {
  public:

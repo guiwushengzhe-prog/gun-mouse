@@ -259,6 +259,8 @@ def show_status(result):
     print(f"左右串轴校正：{d.get('cross')}；触摸门限：{100*d.get('tp', 0):.2f}% / {100*d.get('tr', 0):.2f}%")
     if 'details' in result:
         extra = result['details']
+        if 'always' in extra:
+            print(f"体感模式：{'常开，免触摸' if extra['always'] else '触摸控制'}（断电保存）")
         joystick = extra['joy']
         print(f"摇杆：{'启用' if joystick['enabled'] else '停用'}；中心有效：{bool(joystick['ready'])}；原始值：{joystick['raw']}；中心：{joystick['center']}；速度：{joystick['speed']}")
         print(f"体感灵敏度：{extra['sens']}；电池连接点采样：{extra['power']['mv']}毫伏；充电状态：未知（硬件未接入反馈）")

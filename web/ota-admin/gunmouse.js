@@ -59,7 +59,7 @@ function render(value) {
   const values = {
     raw: d.raw, base: Math.round(d.base), press: thresholds.press, release: thresholds.release,
     build: `${d.build ?? d.fw} · ${value.slot}`,
-    touch: !d.ready ? '基线准备中' : d.touch ? '已触摸' : '未触摸，体感关闭',
+    touch: value.details?.always ? '常开模式，体感不依赖触摸' : !d.ready ? '基线准备中' : d.touch ? '已触摸' : '未触摸，体感关闭',
     invx: d.invx ? '开启' : '关闭', invy: d.invy ? '开启' : '关闭',
     ratios: `开启 ${(d.tp * 100).toFixed(2)}% / 关闭 ${(d.tr * 100).toFixed(2)}%`,
     cross: d.cross,
@@ -68,7 +68,7 @@ function render(value) {
     'joy-center': value.details ? value.details.joy.center.join(' / ') : '—',
     'joy-speed': Number.isFinite(d.jspeed) ? `${d.jspeed} 计数/秒` : '—',
     sensitivity: Number.isFinite(d.sens) ? `${d.sens} 计数/度` : '—',
-    imu: Object.hasOwn(d, 'imu_ready') ? (d.imu_ready ? '正常' : '尚未就绪，请放稳等待校准') : '—',
+    imu: Object.hasOwn(d, 'imu_ready') ? (d.imu_ready ? (value.details?.always ? '常开，正常' : '正常') : '尚未就绪，请放稳等待校准') : '—',
     charge: chargingText(value.details?.power),
     voltage: !value.details || value.details.power.mv < 0 ? '等待采样' : `${(value.details.power.mv / 1000).toFixed(3)} 伏${value.details.power.mv > 4400 ? '（采样偏高，不能作电池实测值）' : ''}`,
   };

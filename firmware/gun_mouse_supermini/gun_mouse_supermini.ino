@@ -1,7 +1,7 @@
 // 30g 开放骨架 / SuperMini 插件载板实验固件。
 //
 // 交互规则（docs/固件接口与交互契约-V1.md）：
-// - 触摸扳机只决定是否允许体感移动；机械扳机=左键，右键、摇杆按下=中键、摇杆移动都与触摸无关。
+// - 触摸控制模式需接触触摸片；常开模式跳过触摸门控。机械扳机=左键，右键独立。
 // - 松开触摸立即丢弃未发送的体感位移；重新触摸从新样本开始，不补发离开期间的积压。
 // - 惯性芯片未就绪只停体感，不影响按键和摇杆；断线不累计，重连首帧全释放。
 // - 插拔 USB 不暂停、不恢复鼠标；仅按电池节点电压估算电量，不识别外部供电或充电状态。
@@ -41,7 +41,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2.5-启动原因回报";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2.6-开机组合切换常开";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -102,6 +102,8 @@ uint32_t horizontalCalibrationStartedMs = 0;
 uint32_t lastDiagnosticMs = 0;
 TouchDetector touch;
 Debouncer trigDebounce, rightDebounce, middleDebounce;
+StartupModeChord startupModeChord;
+bool imuAlwaysOn = false;
 JoystickAxisCal joyCalX, joyCalY;
 
 bool imuInitialized = false;
@@ -125,6 +127,7 @@ esp_reset_reason_t startupReason = ESP_RST_UNKNOWN;
 uint32_t lastTouchUs = 0;
 uint32_t touchReadUs = 0;
 uint8_t buttonMask = 0;
+uint8_t physicalButtonMask = 0;
 bool rawLeft = false;
 uint8_t acceptedButtons = 0;
 uint16_t leftPresses = 0, leftReleases = 0, acceptedLeftPresses = 0, acceptedLeftReleases = 0;
@@ -536,6 +539,16 @@ bool serviceJoystick(uint32_t nowUs, float& mx, float& my) {
 }
 
 // ============================================================ 触摸与按键
+bool setImuAlwaysOn(bool enabled) {
+  if (enabled != imuAlwaysOn && prefs.putBool("imu_always", enabled) != 1) {
+    Serial.println("[体感模式] 保存失败，保持当前模式");
+    return false;
+  }
+  imuAlwaysOn = enabled;
+  Serial.printf("[体感模式] %s，断电保存\n", enabled ? "常开，免触摸" : "触摸控制");
+  return true;
+}
+
 void serviceTouch(uint32_t nowUs) {
   if ((uint32_t)(nowUs - lastTouchUs) < Fw::kTouchPeriodUs) return;
   lastTouchUs = nowUs;
@@ -548,14 +561,20 @@ void serviceTouch(uint32_t nowUs) {
 void serviceButtons(uint32_t nowUs) {
   uint8_t mask = 0;
   rawLeft = digitalRead(Pins::TRIG) == LOW;
+  const bool rawRight = digitalRead(Pins::BTN_R) == LOW;
+  if (startupModeChord.update(rawLeft, rawRight, nowUs) && setImuAlwaysOn(!imuAlwaysOn)) {
+    snprintf(lastAcceptedCommand, sizeof(lastAcceptedCommand), "imu");
+    ++commandSequence;
+  }
   if (trigDebounce.update(rawLeft, nowUs)) mask |= 0x01;   // 机械扳机 = 左键
-  if (rightDebounce.update(digitalRead(Pins::BTN_R) == LOW, nowUs)) mask |= 0x02; // 右键
+  if (rightDebounce.update(rawRight, nowUs)) mask |= 0x02; // 右键
   if (middleDebounce.update(joystickEnabled && digitalRead(Pins::JOY_SW) == LOW, nowUs)) mask |= 0x04; // 摇杆按下 = 中键
-  if ((mask ^ buttonMask) & 1) {
+  if ((mask ^ physicalButtonMask) & 1) {
     if (mask & 1) ++leftPresses;
     else ++leftReleases;
   }
-  buttonMask = mask;
+  physicalButtonMask = mask;
+  buttonMask = startupModeChord.filterButtons(mask);
 }
 
 // ============================================================ 电源
@@ -593,6 +612,7 @@ void applySettings() {
 void printStatus() {
   const Vec3 u = gyro.up();
   Serial.printf("[启动原因] 代码=%u 运行=%lums\n", (unsigned)startupReason, (unsigned long)millis());
+  Serial.printf("[体感模式] %s（断电保存）\n", imuAlwaysOn ? "常开，免触摸" : "触摸控制");
   Serial.printf("[状态] %s | 蓝牙=%s 报告订阅=%s 间隔=%.2fms | 陀螺仪=%s 竖直(芯片)=%+.2f %+.2f %+.2f\n", Fw::kVersion,
                 bleConnected ? "已连接" : "等待连接", mouseSubscribed ? "已启用" : "等待主机", bleIntervalUs.load() / 1000.0f,
                 !imuInitialized ? "未找到芯片(自动重试)" : (gyro.calibrated() ? "正常" : "等待放稳校准"), u.x, u.y,
@@ -621,6 +641,7 @@ void printHelp() {
   Serial.println(
       "命令：status 状态 | log 开关每秒5次状态 | cal 重新校准陀螺仪 | sens <计数/度> | invx / invy 体感反向\n"
       "      joy 0/1 停用/启用摇杆及中键（自动保存） | jcenter 摇杆重新取中 | jdir 摇杆方向向导\n"
+      "      imu 0/1 触摸控制/常开（断电保存）；按住扳机+右键重启并保持约2秒切换\n"
       "      jspeed <计数/秒> | jsave 保存摇杆端点\n"
       "      tp <百分比> 触摸按下门限 | tr <百分比> 触摸松开门限 | tcal 握持未触摸时重新取基线\n"
       "      hcal 正常握持左右往返6秒校准串轴 | hcross <系数> 设置横向串轴 | reset 恢复默认设置 | help");
@@ -647,7 +668,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2.5\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2.6\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
@@ -671,6 +692,7 @@ void publishDeviceDetails() {
   snapshot.center_revision = joyCenterRevision;
   snapshot.middle = (buttonMask & 4) != 0;
   snapshot.imu_ready = imuInitialized && gyro.calibrated();
+  snapshot.imu_always = imuAlwaysOn;
   snapshot.node_mv = std::isfinite(vbatMv) ? (int)std::lround(vbatMv) : -1;
   snapshot.command_sequence = commandSequence;
   snapshot.command = lastAcceptedCommand;
@@ -679,7 +701,7 @@ void publishDeviceDetails() {
   snapshot.runtime = runtimeLast;
   snapshot.runtime.link_us = bleIntervalUs.load();
   snapshot.buttons.raw_left = rawLeft;
-  snapshot.buttons.observed = buttonMask;
+  snapshot.buttons.observed = physicalButtonMask;
   snapshot.buttons.accepted = acceptedButtons;
   snapshot.buttons.presses = leftPresses; snapshot.buttons.releases = leftReleases;
   snapshot.buttons.accepted_presses = acceptedLeftPresses;
@@ -759,6 +781,9 @@ void executeCommand(const char* line) {
       prefs.putBool("joystick", joystickEnabled);
       calibrateJoystickCenter();
     }
+    else if (c2 == "imu" && n == 2 && (value == 0 || value == 1)) {
+      if (!setImuAlwaysOn(value == 1)) return;
+    }
     else if (c2 == "jcenter") calibrateJoystickCenter();
     else if (c2 == "jdir") joystickDirectionWizard();
     else if (c2 == "jspeed" && n == 2 && value > 0 && value < 20000) settings.joy_speed = value;
@@ -769,6 +794,7 @@ void executeCommand(const char* line) {
     else if (c2 == "tp" && n == 2 && value > 0.1f && value < 50) settings.touch_press = value / 100.0f;
     else if (c2 == "tr" && n == 2 && value > 0.05f && value < 50) settings.touch_release = value / 100.0f;
     else if (c2 == "reset") {
+      if (!setImuAlwaysOn(false)) return;
       settings = StoredSettings{};
       horizontalCoupling = 0;
       prefs.putFloat("hcross", 0);
@@ -777,7 +803,7 @@ void executeCommand(const char* line) {
     else { Serial.printf("[命令] 无法识别：%s（输入 help）\n", line); return; }
     if (settings.touch_release >= settings.touch_press) settings.touch_release = settings.touch_press * 0.6f;
     applySettings();
-    if (c2 != "status" && c2 != "help" && c2 != "log") saveSettings();
+    if (c2 != "status" && c2 != "help" && c2 != "log" && c2 != "imu") saveSettings();
     snprintf(lastAcceptedCommand, sizeof(lastAcceptedCommand), "%s", cmd);
     ++commandSequence;
     if (c2 != "status" && c2 != "help" && c2 != "log") printStatus();
@@ -808,6 +834,7 @@ void setup() {
   pinMode(Pins::TRIG, INPUT_PULLUP);  // 扳机保留外部上拉；右键和摇杆按键使用内部上拉
   pinMode(Pins::BTN_R, INPUT_PULLUP);
   pinMode(Pins::JOY_SW, INPUT_PULLUP);
+  startupModeChord.begin(digitalRead(Pins::TRIG) == LOW && digitalRead(Pins::BTN_R) == LOW, micros());
   analogReadResolution(12);
   analogSetPinAttenuation(Pins::JOY_X, ADC_11db);
   analogSetPinAttenuation(Pins::JOY_Y, ADC_11db);
@@ -817,11 +844,12 @@ void setup() {
   horizontalCoupling = prefs.getFloat("hcross", 0);
   if (!std::isfinite(horizontalCoupling) || std::fabs(horizontalCoupling) > 2) horizontalCoupling = 0;
   joystickEnabled = prefs.getBool("joystick", true);
+  imuAlwaysOn = prefs.getBool("imu_always", false);
   applySettings();
   Wire.begin(Pins::SDA, Pins::SCL, Fw::kI2cHz);
   Wire.setTimeOut(5);
   delay(50);
-  Serial.printf("\n[启动] %s，体感需触摸扳机才移动；插拔 USB 不影响鼠标\n", Fw::kVersion);
+  Serial.printf("\n[启动] %s，体感模式=%s\n", Fw::kVersion, imuAlwaysOn ? "常开，免触摸" : "触摸控制");
   calibrateJoystickCenter();
   touch.begin(micros());
   imuRetryMs = millis() - Fw::kImuRetryMs;
@@ -870,7 +898,7 @@ void loop() {
                          (uint32_t)(millis() - connectedSinceMs) >= Fw::kConnectSettleMs;
   const bool imuReady = imuInitialized && gyro.calibrated();
   const bool updating = maintenance.active();
-  core.setInputs(linkReady, touch.touched() && horizontalCalibrationState != 1 && !updating,
+  core.setInputs(linkReady, (imuAlwaysOn || touch.touched()) && horizontalCalibrationState != 1 && !updating,
                  imuReady, updating ? 0 : buttonMask, imuSequence);
   if (imuMoved) core.offerImu(imuSequence, imuDx, imuDy);
   if (joyMoved && !updating) core.offerJoystick(joyDx, joyDy);

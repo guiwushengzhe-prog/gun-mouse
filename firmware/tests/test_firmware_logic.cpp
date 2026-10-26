@@ -137,6 +137,29 @@ int testButtonOverflow() {
   return 0;
 }
 
+int testStartupModeChord() {
+  StartupModeChord chord;
+  chord.begin(false, 0);
+  CHECK(!chord.update(true, true, 3000000) && !chord.suppressButtons());
+  chord.begin(true, 100);
+  CHECK(chord.suppressButtons() && !chord.update(true, true, 1500099));
+  CHECK(chord.update(true, true, 1500100));
+  CHECK(!chord.update(true, true, 5000000) && chord.suppressButtons());
+  CHECK(!chord.update(false, true, 5000001) && chord.suppressButtons());
+  CHECK(!chord.update(false, false, 5000002) && chord.suppressButtons());
+  CHECK(chord.filterButtons(3) == 0 && chord.suppressButtons());
+  CHECK(chord.filterButtons(2) == 0 && chord.suppressButtons());
+  CHECK(chord.filterButtons(0) == 0 && !chord.suppressButtons());
+  CHECK(!chord.update(true, true, 9000000));
+  CHECK(chord.filterButtons(1) == 1); // 后续普通左键不再被组合识别屏蔽。
+  chord.begin(true, 0);
+  CHECK(!chord.update(true, false, 1000));
+  CHECK(!chord.update(true, true, 3000000)); // 提前松开后不再重新计时触发。
+  chord.begin(true, UINT32_MAX - 1000);
+  CHECK(chord.update(true, true, 1498999)); // 时间计数回绕仍能确认。
+  return 0;
+}
+
 int testRejectedSend() {
   ControlCore core;
   ReportSender sender;
@@ -491,9 +514,10 @@ int testDeviceStatus() {
   CHECK(std::strstr(buffer, "\"enabled\":0,\"ready\":0") != nullptr);
   CHECK(std::strstr(buffer, "\"mv\":-1,\"charge\":-1") != nullptr);
   state.joy_enabled = state.joy_ready = true;
-  state.raw_x = 4095; state.raw_y = 0;
+  state.raw_x = state.raw_y = 4095;
   state.center_x = 1999; state.center_y = 2111;
-  state.joy_speed = 19999; state.sensitivity = 999;
+  state.joy_speed = 19999.998f; state.sensitivity = 999.999f;
+  state.imu_always = true;
   state.center_revision = state.command_sequence = UINT32_MAX;
   state.command = "xxxxxxxxxxxxxxx";
   state.runtime = {UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX,
@@ -508,20 +532,21 @@ int testDeviceStatus() {
     CHECK(std::strlen(buffer) < 512);
     CHECK(std::strstr(buffer, "\"charge\":-1") != nullptr); // 电压高也不能伪称充电或充满。
   }
-  CHECK(std::strstr(buffer, "\"raw\":[4095,0],\"center\":[1999,2111]") != nullptr);
+  CHECK(std::strstr(buffer, "\"raw\":[4095,4095],\"center\":[1999,2111]") != nullptr);
   CHECK(std::strstr(buffer, "\"rev\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"gap_us\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"i2c\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"err\":-2147483648") != nullptr);
   CHECK(std::strstr(buffer, "\"btn\":[1,7,65535,65535,65535,65535,65535,65535,7]") != nullptr);
   CHECK(std::strstr(buffer, "\"boot\":[4294967295,255]") != nullptr);
+  CHECK(std::strstr(buffer, "\"always\":1") != nullptr);
   char small[24];
   CHECK(!formatDeviceStatus(state, small, sizeof(small)) && small[0] == 0);
   return 0;
 }
 
 int main() {
-  if (testSender() || testRejectedSend() || testDebounce() || testButtonOverflow() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
+  if (testSender() || testRejectedSend() || testDebounce() || testButtonOverflow() || testStartupModeChord() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
       testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testGyroInterruptedSampling() || testBatteryUsb() || testDeviceStatus()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;
