@@ -480,7 +480,7 @@ int testDeviceStatus() {
   state.center_revision = state.command_sequence = UINT32_MAX;
   state.command = "jcenter";
   state.runtime = {UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX,
-                   UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX};
+                   UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, UINT32_MAX, INT32_MIN};
   for (int mv : {3300, 4100, 5070}) {
     state.node_mv = mv;
     CHECK(formatDeviceStatus(state, buffer, sizeof(buffer)));
@@ -491,6 +491,7 @@ int testDeviceStatus() {
   CHECK(std::strstr(buffer, "\"rev\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"gap_us\":4294967295") != nullptr);
   CHECK(std::strstr(buffer, "\"i2c\":4294967295") != nullptr);
+  CHECK(std::strstr(buffer, "\"err\":-2147483648") != nullptr);
   char small[24];
   CHECK(!formatDeviceStatus(state, small, sizeof(small)) && small[0] == 0);
   return 0;

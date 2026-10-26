@@ -40,7 +40,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2.2-卡顿采样回报";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2.3-蓝牙受阻重试调度";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -140,6 +140,7 @@ BLE2902* mouseCccd = nullptr;
 std::atomic<bool> bleConnected{false};
 std::atomic<bool> mouseSubscribed{false};
 std::atomic<bool> mouseNotifyAccepted{false};
+std::atomic<int> mouseNotifyError{0};
 std::atomic<bool> bleAuthenticated{false};
 std::atomic<bool> pairingExchangedKeys{false};
 std::atomic<bool> pendingSubscriptionSave{false};
@@ -218,9 +219,10 @@ class MouseSubscriptionCallbacks : public BLEDescriptorCallbacks {
 
 class MouseReportCallbacks : public BLECharacteristicCallbacks {
  public:
-  void onStatus(BLECharacteristic*, Status status, uint32_t) override {
+  void onStatus(BLECharacteristic*, Status status, uint32_t code) override {
     // ESP32 core 3.3.2 的 notify() 在调用栈内报告是否被 GATT 接收；不是主机应用层确认。
     mouseNotifyAccepted = status == SUCCESS_NOTIFY;
+    mouseNotifyError = status == SUCCESS_NOTIFY ? 0 : (code ? (int)code : -(int)status - 1);
   }
 #if defined(CONFIG_NIMBLE_ENABLED)
   void onSubscribe(BLECharacteristic*, ble_gap_conn_desc* desc, uint16_t value) override {
@@ -335,16 +337,26 @@ void initBle() {
 bool sendReport(const HidReport& r) {
   if (!bleConnected || !mouseSubscribed || mouseInput == nullptr) return false;
   static uint32_t lastAttemptUs = 0;
+  static bool lastRejected = false;
   const uint32_t nowUs = micros();
-  if (lastAttemptUs && (uint32_t)(nowUs - lastAttemptUs) < ReportSender::kNotifyGapUs) return false;
+  // 受阻后给链路至少一个连接事件排空缓冲；按键仍保留在发送队列中。
+  const uint32_t attemptGap = lastRejected
+                                 ? std::max(ReportSender::kNotifyGapUs, bleIntervalUs.load())
+                                 : ReportSender::kNotifyGapUs;
+  if (lastAttemptUs && (uint32_t)(nowUs - lastAttemptUs) < attemptGap) return false;
   lastAttemptUs = nowUs;
   uint8_t data[3] = {r.buttons, (uint8_t)r.dx, (uint8_t)r.dy};
   mouseInput->setValue(data, sizeof(data));
   mouseNotifyAccepted = false;
+  mouseNotifyError = 0;
   mouseInput->notify();
   const bool accepted = mouseNotifyAccepted.load();
+  lastRejected = !accepted;
   if (accepted) ++runtimeCurrent.reports;
-  else ++runtimeCurrent.rejected;
+  else {
+    ++runtimeCurrent.rejected;
+    runtimeCurrent.notify_error = mouseNotifyError.load();
+  }
   return accepted;  // GATT 拒绝时不提交，保留点击/释放队列和位移待重试
 }
 
@@ -620,7 +632,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2.2\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2.3\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),

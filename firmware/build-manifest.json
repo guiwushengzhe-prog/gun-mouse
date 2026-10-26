@@ -9,25 +9,25 @@
     "Status": "",
     "Date": "2026-06-05T10:22:12Z"
   },
-  "compile_seconds": 74.9,
+  "compile_seconds": 93.7,
   "host_logic_tests": "passed",
-  "host_test_source_sha256": "949a4cd816530d0544088a678638fa0d0560615ffad96a8fe7594f05e4abe1b7",
+  "host_test_source_sha256": "a46f09fe6d288f477ff6bc1920c3bb6ed3859804ef002b3d3dc34e6cff225543",
   "carrier_config_sha256": "34f17fc56fc645de271ccd670c77488e9d3b98c1bc3939ddbe72bca6f57a0e57",
   "build_config_sha256": "054989d42b89bc7ef61ad54b3bba67848c4d09820f7a5f63535d6debe3a459f4",
   "source_sha256": {
     "ble_maintenance.h": "c912d1b1ab978e828cd37f6b53c7b5e5b3f1315d487e6e8d42fe27330ae1d073",
     "board_pins.h": "c3c9baf20dec3d1f1ed64bc4de91ad540298c3514c2a825d51c3f711894a45b3",
     "control_core.h": "e2ff4ba55f38e497852859415f9b857339e350d569d86693deda8892787daabb",
-    "device_status.h": "1720395a1c78ef8601d92bb82f5c689385cc1ecab8db461d97354d6849467dd0",
+    "device_status.h": "90c9527e4e9b4016ab824b75e9e3de984811943d4e4482d67fd9797d24120c98",
     "direction_calibration.h": "3b51d7627e8a775901fbb020f3485a3d33bf0efcae2c5c592de199440afe5a8b",
-    "gun_mouse_supermini.ino": "eead546d43870564d9a51fa8298cc0ea906d4eb34d462d92553a51cbea7a8d1e",
+    "gun_mouse_supermini.ino": "7861fbc3ee562c7b91b100f94588e6343c70c8c00190276f2a02c1265ff0f609",
     "imu_logic.h": "1c8a8b809b4f95f2062713fc8e6d563a70d680d2fd664d9f622e26c3d07cc2dd",
     "input_logic.h": "9d052083aae7c7b6bac94e0542ee854d08bcf7f2c6e842c41e6b026838f93e65"
   },
   "artifacts": {
     "gun_mouse_supermini.ino.bin": {
-      "bytes": 695056,
-      "sha256": "c168069b918f67fc8cb3448c13b9a9ad4744e114bdd37cf2964baa0217795206"
+      "bytes": 695184,
+      "sha256": "cdafb7bffd8a1ec3155924613fb6781024b48cbfa42f879fd0ba4afd706e74f2"
     },
     "gun_mouse_supermini.ino.bootloader.bin": {
       "bytes": 19968,
@@ -39,7 +39,7 @@
     },
     "gun_mouse_supermini.ino.merged.bin": {
       "bytes": 4194304,
-      "sha256": "b5f941e0569cd9c6223b287139ef55b33370d335507215f91f48728333061b2e"
+      "sha256": "410f097ec084683ecedf837ed724ce9304d3d37368669a222e99a6b6a522271c"
     }
   },
   "flash_address_merged": "0x0",
