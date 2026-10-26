@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="私人单片机固件更新管理入口。">
+  <title>单片机在线更新 · 私人管理</title>
+  <link rel="stylesheet" href="/portal.css">
+  <link rel="stylesheet" href="/ota-admin/ota.css?v=20261014-wireless-console-v19">
+  <script src="/ota-admin/app.js?v=20261014-wireless-console-v19" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <a class="back" href="/">← 返回私人主站</a>
+      <h1>单片机在线更新</h1>
+      <p>统一查看已发布固件、陀螺仪和麦克风的设备汇报。不同设备使用各自的更新入口与版本编号。</p>
+    </header>
+
+    <section class="panel" data-product="gyro" aria-labelledby="gyro-title">
+      <h2 id="gyro-title">ESP32-S3 陀螺仪开发设备</h2>
+      <p data-field="state" role="status">正在读取发布信息…</p>
+      <dl>
+        <div><dt>发布版本</dt><dd data-field="version">—</dd></div>
+        <div><dt>文件大小</dt><dd data-field="size">—</dd></div>
+      </dl>
+      <div class="actions">
+        <a class="button" data-field="download" href="#" download hidden>下载已发布固件</a>
+      </div>
+      <p class="note">新版陀螺仪固件沿用本主站登录，不开放匿名下载；与麦克风使用各自的更新入口。</p>
+      <section class="device-feedback" aria-labelledby="gyro-feedback-title">
+        <h3 id="gyro-feedback-title">设备升级反馈</h3>
+        <p class="note" data-field="feedback-state" role="status">正在读取设备汇报…</p>
+        <div data-field="devices"></div>
+        <p class="note touch-debug-note">在设备卡片中可使用无线控制台：每秒读取一次摇杆偏移、按键与模式状态，以及 GPIO4 的触摸读数；第19版起可输入命令切换模式、校准和检查更新。诊断5分钟后自动停止，也可提前关闭；数据与命令记录只暂存在网站后台内存中。命令排队后须收到开发板回复，才确认实际执行。</p>
+      </section>
+      <details>
+        <summary>核对固件完整性</summary>
+        <code data-field="sha256">—</code>
+      </details>
+      <details>
+        <summary>陀螺仪更新入口</summary>
+        <a class="resource" href="/ota-admin/firmware/esp32s3-gyro-dev/latest.txt" target="_blank" rel="noopener">查看新版文本发布信息 latest.txt</a>
+      </details>
+      <details>
+        <summary>保留的旧版陀螺仪入口</summary>
+        <a class="resource" href="/motioncontrol-ota/esp32s3-gyro-dev/latest.txt" target="_blank" rel="noopener">查看旧版文本发布信息 latest.txt</a>
+        <p data-field="json-state">正在核对原有扩展发布信息…</p>
+        <a class="resource" href="/motioncontrol-ota/esp32s3-gyro-dev/latest.json" target="_blank" rel="noopener">查看旧版扩展发布信息 latest.json</a>
+      </details>
+    </section>
+
+    <section class="panel" data-product="mic" aria-labelledby="mic-title">
+      <h2 id="mic-title">ESP32-S3 无线麦克风与电脑模式网关</h2>
+      <p data-field="state" role="status">正在读取发布信息…</p>
+      <dl>
+        <div><dt>发布版本</dt><dd data-field="version">—</dd></div>
+        <div><dt>文件大小</dt><dd data-field="size">—</dd></div>
+      </dl>
+      <div class="actions">
+        <a class="button" data-field="download" href="#" download hidden>下载已发布固件</a>
+      </div>
+      <p class="note">独立的麦克风更新入口，沿用本主站登录。保留巴法网关和电脑声音的四声道同步；固件不开放匿名下载。</p>
+      <section class="device-feedback" aria-labelledby="mic-feedback-title">
+        <h3 id="mic-feedback-title">设备升级反馈</h3>
+        <p class="note" data-field="feedback-state" role="status">正在读取设备汇报…</p>
+        <div data-field="devices"></div>
+      </section>
+      <details>
+        <summary>核对固件完整性</summary>
+        <code data-field="sha256">—</code>
+      </details>
+      <details>
+        <summary>麦克风更新入口</summary>
+        <a class="resource" href="/ota-admin/firmware/esp32s3-pcmode-wifi-mic/latest.txt" target="_blank" rel="noopener">查看文本发布信息 latest.txt</a>
+      </details>
+    </section>
+
+    <section class="panel">
+      <h2>刷新状态</h2>
+      <p>设备状态每 15 秒自动刷新。只有设备安装新版、重新启动并恢复服务后，才确认升级成功。</p>
+      <div class="actions"><button class="button secondary" id="refresh" type="button">刷新</button></div>
+    </section>
+    <footer>独立的固件管理入口 · <a href="/">guiwu-aware.icu</a></footer>
+  </main>
+</body>
+</html>
