@@ -7,18 +7,26 @@ async (page) => {
     const state = {
       value: { project: 'gunmouse', slot: 'app0', ota: 0, diag: { build: '3.2', raw: 32719, base: 32739.2, noise: 851, tp: .08, tr: .05, touch: 0, ready: 1, invx: 0, invy: 0, cross: -.13558 } },
       writes: [], ignoreWrites: false,
+      details: { project: 'gunmouse', schema: 1, joy: { enabled: 0, ready: 0, raw: [0, 0], center: [2048, 2048], speed: 1200, rev: 1, middle: 0 }, power: { mv: 5070, charge: -1 }, sens: 64, imu_ready: 1, seq: 0, cmd: '' },
     };
     const target = new EventTarget();
     target.name = 'GunMouse SuperMini';
     target.id = 'simulated-device';
     const status = { readValue: async () => new DataView(new TextEncoder().encode(JSON.stringify(state.value)).buffer) };
+    const details = { readValue: async () => new DataView(new TextEncoder().encode(JSON.stringify(state.details)).buffer) };
     const control = { writeValueWithResponse: async bytes => {
       const text = new TextDecoder().decode(bytes);
       state.writes.push(text);
       if (state.ignoreWrites) return;
       const [name, value] = text.slice(4).split(' ');
       const d = state.value.diag;
+      state.details.seq = (state.details.seq + 1) >>> 0;
+      state.details.cmd = name;
       if (name === 'invx' || name === 'invy') d[name] ^= 1;
+      if (name === 'joy') state.details.joy.enabled = Number(value);
+      if (name === 'jspeed') state.details.joy.speed = Number(value);
+      if (name === 'sens') state.details.sens = Number(value);
+      if (name === 'jcenter') state.details.joy.rev++;
       if (name === 'tp' || name === 'tr') {
         d[name] = Number(value) / 100;
         if (d.tr >= d.tp) d.tr = d.tp * .6;
@@ -29,7 +37,7 @@ async (page) => {
       connect: async () => { target.gatt.connected = true; return target.gatt; },
       getPrimaryService: async uuid => {
         if (uuid !== 'a38b0001-62da-4c13-9f07-908d8b921571') throw new Error('服务标识不匹配');
-        return { getCharacteristic: async id => id.includes('0002-') ? control : status };
+        return { getCharacteristic: async id => id.includes('0002-') ? control : id.includes('0005-') ? details : status };
       },
       disconnect: () => { target.gatt.connected = false; target.dispatchEvent(new Event('gattserverdisconnected')); },
     };
@@ -50,12 +58,20 @@ async (page) => {
   await page.getByRole('button', { name: '选择并连接飞鼠' }).click();
   await page.waitForFunction(() => !document.getElementById('controls').disabled);
   check(await page.locator('[data-value="press"]').textContent() === '39547', '实际开启门限包含噪声保护');
-  check((await page.locator('[data-value="joy"]').textContent()).includes('未回报'), '3.2摇杆未知状态没有伪装成已启用');
+  check((await page.locator('[data-value="joy"]').textContent()) === '已停用', '摇杆开关来自设备回报');
+  check((await page.locator('[data-value="charge"]').textContent()).includes('未知'), '高电压采样没有伪装成正在充电');
   await page.getByRole('button', { name: '停用摇杆', exact: true }).click();
-  await page.waitForFunction(() => document.getElementById('operation-message').textContent.includes('请实际试用确认'));
-  check(await page.evaluate(() => window.mockGunMouse.writes.at(-1)) === 'CMD joy 0', '摇杆命令通过真实网页发送路径编码');
-  await page.getByRole('button', { name: '切换左右反向' }).click();
   await page.waitForFunction(() => document.getElementById('operation-message').textContent.includes('设备回报确认'));
+  check(await page.evaluate(() => window.mockGunMouse.writes.at(-1)) === 'CMD joy 0', '摇杆命令通过真实网页发送路径编码');
+  await page.locator('#joy-speed').fill('1600');
+  await page.getByRole('button', { name: '设置速度', exact: true }).click();
+  await page.waitForFunction(() => document.querySelector('[data-value="joy-speed"]').textContent.includes('1600'));
+  check((await page.locator('#operation-message').textContent()).includes('设备回报确认'), '摇杆速度设置有执行序号和数值回读');
+  await page.getByRole('button', { name: '较快 · 96', exact: true }).click();
+  await page.waitForFunction(() => document.querySelector('[data-value="sensitivity"]').textContent.includes('96'));
+  check((await page.locator('#operation-message').textContent()).includes('设备回报确认'), '灵敏度设置有执行序号和数值回读');
+  await page.getByRole('button', { name: '切换左右反向' }).click();
+  await page.waitForFunction(() => document.querySelector('[data-value="invx"]').textContent === '开启' && document.getElementById('operation-message').textContent.startsWith('左右反向'));
   check(await page.locator('[data-value="invx"]').textContent() === '开启', '方向切换须与设备回读一致');
   await page.locator('#touch-press').fill('4');
   await page.locator('#touch-release').fill('2');

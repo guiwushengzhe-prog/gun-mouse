@@ -3,12 +3,14 @@
 #include <cassert>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <vector>
 
 #include "control_core.h"
 #include "imu_logic.h"
 #include "input_logic.h"
 #include "direction_calibration.h"
+#include "device_status.h"
 
 using namespace GunMouse;
 
@@ -465,9 +467,34 @@ int testBatteryUsb() {
   return 0;
 }
 
+int testDeviceStatus() {
+  DeviceStatus state;
+  char buffer[512];
+  CHECK(formatDeviceStatus(state, buffer, sizeof(buffer)));
+  CHECK(std::strstr(buffer, "\"enabled\":0,\"ready\":0") != nullptr);
+  CHECK(std::strstr(buffer, "\"mv\":-1,\"charge\":-1") != nullptr);
+  state.joy_enabled = state.joy_ready = true;
+  state.raw_x = 4095; state.raw_y = 0;
+  state.center_x = 1999; state.center_y = 2111;
+  state.joy_speed = 19999; state.sensitivity = 999;
+  state.center_revision = state.command_sequence = UINT32_MAX;
+  state.command = "jcenter";
+  for (int mv : {3300, 4100, 5070}) {
+    state.node_mv = mv;
+    CHECK(formatDeviceStatus(state, buffer, sizeof(buffer)));
+    CHECK(std::strlen(buffer) < 512);
+    CHECK(std::strstr(buffer, "\"charge\":-1") != nullptr); // 电压高也不能伪称充电或充满。
+  }
+  CHECK(std::strstr(buffer, "\"raw\":[4095,0],\"center\":[1999,2111]") != nullptr);
+  CHECK(std::strstr(buffer, "\"rev\":4294967295") != nullptr);
+  char small[24];
+  CHECK(!formatDeviceStatus(state, small, sizeof(small)) && small[0] == 0);
+  return 0;
+}
+
 int main() {
   if (testSender() || testRejectedSend() || testDebounce() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
-      testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testGyroInterruptedSampling() || testBatteryUsb()) return 1;
+      testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testGyroInterruptedSampling() || testBatteryUsb() || testDeviceStatus()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
   return 0;
 }

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/portal.css">
   <link rel="stylesheet" href="/ota-admin/ota.css?v=20261014-wireless-console-v19">
   <link rel="stylesheet" href="/ota-admin/gunmouse.css?v=20261026-1">
-  <script type="module" src="/ota-admin/gunmouse.js?v=20261026-1"></script>
+  <script type="module" src="/ota-admin/gunmouse.js?v=20261026-2"></script>
 </head>
 <body>
   <main>
@@ -46,9 +46,16 @@
         <div><dt>触摸比例</dt><dd data-value="ratios">—</dd></div>
         <div><dt>左右校正</dt><dd data-value="cross">—</dd></div>
         <div><dt>摇杆开关</dt><dd data-value="joy">—</dd></div>
-        <div><dt>充电状态</dt><dd>当前硬件未提供充电状态反馈</dd></div>
+        <div><dt>摇杆原始值</dt><dd data-value="joy-raw">—</dd></div>
+        <div><dt>摇杆中心</dt><dd data-value="joy-center">—</dd></div>
+        <div><dt>摇杆速度</dt><dd data-value="joy-speed">—</dd></div>
+        <div><dt>体感灵敏度</dt><dd data-value="sensitivity">—</dd></div>
+        <div><dt>陀螺仪状态</dt><dd data-value="imu">—</dd></div>
+        <div><dt>电池连接点采样</dt><dd data-value="voltage">—</dd></div>
+        <div><dt>充电状态</dt><dd data-value="charge">—</dd></div>
       </dl>
       <p class="note">连接期间每秒刷新。实际触摸门限同时考虑基线比例和噪声保护，因此可能高于设定比例。断开后读数会清空。</p>
+      <p class="note">电池连接点是开关后的采样电压，不能代替电池两端的实测。现有载板没有接入充电状态反馈，因此回报“未知”，不按电压猜测充电或充满。</p>
     </section>
 
     <fieldset id="controls" disabled>
@@ -110,7 +117,7 @@
 
     <section class="panel" aria-labelledby="result-title">
       <h2 id="result-title">本次操作</h2>
-      <p id="operation-message" role="status" aria-live="polite">连接后可操作。3.2 固件不回报摇杆开关、速度和灵敏度，发送这些命令后仍需实际试用确认。</p>
+      <p id="operation-message" role="status" aria-live="polite">连接后可操作。状态回报固件会核对摇杆开关、速度、中心和体感灵敏度，并显示设备实际返回的结果。</p>
       <ol id="operation-log"></ol>
     </section>
     <footer>沿用主站登录 · <a href="/ota-admin/">单片机管理</a></footer>

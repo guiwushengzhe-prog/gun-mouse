@@ -19,6 +19,7 @@ SERVICE = "a38b0001-62da-4c13-9f07-908d8b921571"
 CONTROL = "a38b0002-62da-4c13-9f07-908d8b921571"
 DATA = "a38b0003-62da-4c13-9f07-908d8b921571"
 STATUS = "a38b0004-62da-4c13-9f07-908d8b921571"
+DETAILS = "a38b0005-62da-4c13-9f07-908d8b921571"
 DEFAULT_ADDRESS = "90:DA:72:73:98:25"
 
 
@@ -256,6 +257,11 @@ def show_status(result):
     print(f"当前运行分区：{result['slot']}；程序版本：{d.get('build', d.get('fw', '?'))}")
     print(f"触摸：{'已触摸' if d.get('touch') else '未触摸'}；原始读数：{d.get('raw')}；基线：{d.get('base')}")
     print(f"左右串轴校正：{d.get('cross')}；触摸门限：{100*d.get('tp', 0):.2f}% / {100*d.get('tr', 0):.2f}%")
+    if 'details' in result:
+        extra = result['details']
+        joystick = extra['joy']
+        print(f"摇杆：{'启用' if joystick['enabled'] else '停用'}；中心有效：{bool(joystick['ready'])}；原始值：{joystick['raw']}；中心：{joystick['center']}；速度：{joystick['speed']}")
+        print(f"体感灵敏度：{extra['sens']}；电池连接点采样：{extra['power']['mv']}毫伏；充电状态：未知（硬件未接入反馈）")
 
 
 async def run(args):
@@ -272,6 +278,8 @@ async def run(args):
             await send(client, "CMD " + args.command)
             await asyncio.sleep(.15)
         result = await status(client)
+        if client.services.get_characteristic(DETAILS) is not None:
+            result['details'] = json.loads((await client.read_gatt_char(DETAILS)).decode('utf-8'))
         show_status(result)
         return result
 

@@ -35,11 +35,12 @@
 #include "input_logic.h"
 #include "direction_calibration.h"
 #include "ble_maintenance.h"
+#include "device_status.h"
 
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2-采样恢复与升级核验";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2.1-摇杆与供电回报";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -112,6 +113,10 @@ bool joyAvailable = false;
 int joyRawX = 0, joyRawY = 0;
 float joyOutX = 0, joyOutY = 0;
 uint32_t lastJoyUs = 0;
+uint32_t joyCenterRevision = 0;
+uint32_t commandSequence = 0;
+char lastAcceptedCommand[16] = {};
+uint32_t lastDetailsMs = 0, lastPublishedSequence = UINT32_MAX;
 
 uint32_t lastTouchUs = 0;
 uint32_t touchReadUs = 0;
@@ -445,6 +450,7 @@ int readAdcAvg(int pin, int n) {
 }
 
 void calibrateJoystickCenter() {
+  ++joyCenterRevision;
   lastJoyUs = 0;
   joyOutX = joyOutY = 0;
   sender.clearJoystick();
@@ -456,6 +462,8 @@ void calibrateJoystickCenter() {
   }
   const int cx = readAdcAvg(Pins::JOY_X, 32);
   const int cy = readAdcAvg(Pins::JOY_Y, 32);
+  joyRawX = cx;
+  joyRawY = cy;
   joyAvailable = cx >= Fw::kJoyCenterMin && cx <= Fw::kJoyCenterMax && cy >= Fw::kJoyCenterMin &&
                  cy <= Fw::kJoyCenterMax;
   joyCalX = {cx, settings.joy_min_x, settings.joy_max_x};
@@ -597,13 +605,36 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2.1\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
            (unsigned)touch.ready(), (unsigned long)touch.lastRaw(), touch.baseline(), touch.noise(),
            settings.touch_press, settings.touch_release, up.x, up.y, up.z);
   maintenance.setDiagnostic(text);
+}
+
+void publishDeviceDetails() {
+  const uint32_t now = millis();
+  if ((uint32_t)(now - lastDetailsMs) < 200 && commandSequence == lastPublishedSequence) return;
+  lastDetailsMs = now;
+  lastPublishedSequence = commandSequence;
+  DeviceStatus snapshot;
+  snapshot.joy_enabled = joystickEnabled;
+  snapshot.joy_ready = joyAvailable;
+  snapshot.raw_x = joyRawX; snapshot.raw_y = joyRawY;
+  snapshot.center_x = joyCalX.center; snapshot.center_y = joyCalY.center;
+  snapshot.joy_speed = settings.joy_speed;
+  snapshot.sensitivity = settings.counts_per_deg;
+  snapshot.center_revision = joyCenterRevision;
+  snapshot.middle = (buttonMask & 4) != 0;
+  snapshot.imu_ready = imuInitialized && gyro.calibrated();
+  snapshot.node_mv = std::isfinite(vbatMv) ? (int)std::lround(vbatMv) : -1;
+  snapshot.command_sequence = commandSequence;
+  snapshot.command = lastAcceptedCommand;
+  char text[512];
+  if (formatDeviceStatus(snapshot, text, sizeof(text))) maintenance.setDetails(text);
+  else maintenance.setDetails("{\"project\":\"gunmouse\",\"error\":\"report_overflow\"}");
 }
 
 // 摇杆方向向导：依次推向“光标向右”和“光标向上”的方向，自动确定交换与反向。
@@ -693,6 +724,8 @@ void executeCommand(const char* line) {
     if (settings.touch_release >= settings.touch_press) settings.touch_release = settings.touch_press * 0.6f;
     applySettings();
     if (c2 != "status" && c2 != "help" && c2 != "log") saveSettings();
+    snprintf(lastAcceptedCommand, sizeof(lastAcceptedCommand), "%s", cmd);
+    ++commandSequence;
     if (c2 != "status" && c2 != "help" && c2 != "log") printStatus();
 }
 
@@ -792,6 +825,7 @@ void loop() {
 
   servicePower();
   publishMaintenanceDiagnostic();
+  publishDeviceDetails();
   if (logEnabled && (uint32_t)(millis() - lastLogMs) >= 200) {
     lastLogMs = millis();
     printStatus();

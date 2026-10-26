@@ -1,9 +1,10 @@
-import { SERVICE, CONTROL, STATUS, validateStatus, touchThresholds, numberCommand, touchCommands, expectedChange, matches } from './gunmouse-core.mjs?v=20261026-1';
+import { SERVICE, CONTROL, STATUS, DETAILS, validateStatus, mergeDetails, chargingText, touchThresholds, numberCommand, touchCommands, expectedChange, matches } from './gunmouse-core.mjs?v=20261026-2';
 
 const byId = id => document.getElementById(id);
 const bluetooth = navigator.bluetooth;
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 let device = null, control = null, statusCharacteristic = null, latest = null;
+let detailsCharacteristic = null;
 let busy = false, timer = null, io = Promise.resolve();
 let savedDevices = [];
 const labels = { 'joy 1': '启用摇杆', 'joy 0': '停用摇杆', jcenter: '摇杆取中心', invx: '左右反向', invy: '上下反向', tcal: '重取未触摸基线', cal: '陀螺仪校准' };
@@ -43,7 +44,7 @@ function clearStatus() {
   clearTimeout(timer);
   timer = null;
   latest = null;
-  control = statusCharacteristic = null;
+  control = statusCharacteristic = detailsCharacteristic = null;
   document.querySelectorAll('[data-value]').forEach(node => { node.textContent = '—'; });
   byId('updated-at').textContent = '等待设备回报';
   byId('connection-badge').textContent = '未连接';
@@ -62,7 +63,14 @@ function render(value) {
     invx: d.invx ? '开启' : '关闭', invy: d.invy ? '开启' : '关闭',
     ratios: `开启 ${(d.tp * 100).toFixed(2)}% / 关闭 ${(d.tr * 100).toFixed(2)}%`,
     cross: d.cross,
-    joy: Object.hasOwn(d, 'joy') ? (d.joy ? '已启用' : '已停用') : '此固件未回报，请实际试用确认',
+    joy: Object.hasOwn(d, 'joy') ? (!d.joy ? '已停用' : d.jok === 0 ? '已启用，中心异常，暂停输出' : '已启用') : '请更新固件以读取摇杆状态',
+    'joy-raw': value.details ? (d.joy ? value.details.joy.raw.join(' / ') : '停用，未采样') : '—',
+    'joy-center': value.details ? value.details.joy.center.join(' / ') : '—',
+    'joy-speed': Number.isFinite(d.jspeed) ? `${d.jspeed} 计数/秒` : '—',
+    sensitivity: Number.isFinite(d.sens) ? `${d.sens} 计数/度` : '—',
+    imu: Object.hasOwn(d, 'imu_ready') ? (d.imu_ready ? '正常' : '尚未就绪，请放稳等待校准') : '—',
+    charge: chargingText(value.details?.power),
+    voltage: !value.details || value.details.power.mv < 0 ? '等待采样' : `${(value.details.power.mv / 1000).toFixed(3)} 伏${value.details.power.mv > 4400 ? '（采样偏高，不能作电池实测值）' : ''}`,
   };
   for (const [name, text] of Object.entries(values)) document.querySelector(`[data-value="${name}"]`).textContent = text;
   byId('updated-at').textContent = `刚读取：${new Date().toLocaleTimeString('zh-CN')}`;
@@ -77,7 +85,12 @@ async function readStatus() {
   let value;
   try { value = JSON.parse(new TextDecoder().decode(data)); }
   catch { throw new Error('设备状态不完整，请重新连接后刷新。'); }
-  render(validateStatus(value));
+  validateStatus(value);
+  if (detailsCharacteristic) {
+    const details = await detailsCharacteristic.readValue();
+    mergeDetails(value, JSON.parse(new TextDecoder().decode(details)));
+  }
+  render(value);
   return value;
 }
 
@@ -134,9 +147,13 @@ async function connect(selected = null) {
     const service = await server.getPrimaryService(SERVICE);
     control = await service.getCharacteristic(CONTROL);
     statusCharacteristic = await service.getCharacteristic(STATUS);
+    try { detailsCharacteristic = await service.getCharacteristic(DETAILS); }
+    catch (error) { if (error.name !== 'NotFoundError') throw error; detailsCharacteristic = null; }
     await sequential(readStatus);
     byId('touch-press').value = (latest.diag.tp * 100).toFixed(2);
     byId('touch-release').value = (latest.diag.tr * 100).toFixed(2);
+    if (Number.isFinite(latest.diag.sens)) byId('sensitivity').value = latest.diag.sens;
+    if (Number.isFinite(latest.diag.jspeed)) byId('joy-speed').value = latest.diag.jspeed;
     connectionMessage('已连接飞鼠，状态来自设备实时回报。');
     polling();
     await loadSavedDevices();
@@ -187,13 +204,16 @@ async function commandAction(command) {
     await send(command);
     if (expected) {
       await confirm(expected);
-      resultMessage(`${labels[command]}：已由设备回报确认。`);
+      const label = labels[command] ?? command.replace('sens ', '体感灵敏度 ').replace('jspeed ', '摇杆速度 ');
+      if (command === 'cal') resultMessage('校准命令已由设备确认，请放稳约 3 秒；完成情况见陀螺仪状态。');
+      else if (command === 'joy 1' && latest.diag.jok === 0) resultMessage('启用设置已保存，但中心偏离正常范围，摇杆暂不输出，请检查接线后重新取中心。', true);
+      else resultMessage(`${label}：已由设备回报确认。`);
     } else if (command === 'tcal') {
       resultMessage('基线重取命令已送达，请保持未触摸约半秒，再查看基线和触摸状态。');
     } else if (command === 'cal') {
       resultMessage('校准命令已送达，请放稳约 3 秒；当前蓝牙状态未回报陀螺仪校准完成标志。');
     } else {
-      resultMessage(`${labels[command] ?? command.replace('sens ', '体感灵敏度 ').replace('jspeed ', '摇杆速度 ')}：命令已送达；此固件不回报该设置，请实际试用确认。`);
+      resultMessage(`${labels[command] ?? command.replace('sens ', '体感灵敏度 ').replace('jspeed ', '摇杆速度 ')}：命令已送达，旧固件尚不能核对结果，请更新状态回报固件。`);
     }
   });
 }

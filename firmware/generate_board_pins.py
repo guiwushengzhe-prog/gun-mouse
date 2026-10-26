@@ -50,7 +50,7 @@ def main():
         if not TARGET.exists() or TARGET.read_text(encoding="utf-8") != content:
             raise SystemExit("board_pins.h is stale; run generate_board_pins.py")
     else:
-        TARGET.write_text(content, encoding="utf-8")
+        TARGET.write_bytes(content.encode("utf-8"))
     print(f"Pin map {'verified' if args.check else 'generated'}: {TARGET}")
 
 

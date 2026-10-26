@@ -20,6 +20,7 @@ class BleMaintenance {
   static constexpr char kControl[] = "a38b0002-62da-4c13-9f07-908d8b921571";
   static constexpr char kData[] = "a38b0003-62da-4c13-9f07-908d8b921571";
   static constexpr char kStatus[] = "a38b0004-62da-4c13-9f07-908d8b921571";
+  static constexpr char kDetails[] = "a38b0005-62da-4c13-9f07-908d8b921571";
   enum Phase : uint8_t { Idle, Receiving, Complete, Failed };
 
   void begin(BLEServer* server, std::atomic<bool>* authenticated) {
@@ -40,14 +41,18 @@ class BleMaintenance {
     auto data = service->createCharacteristic(kData, write);
     auto status = service->createCharacteristic(kStatus,
         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_READ_ENC);
+    auto details = service->createCharacteristic(kDetails,
+        BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_READ_ENC);
 #if defined(CONFIG_BLUEDROID_ENABLED)
     control->setAccessPermissions(ESP_GATT_PERM_WRITE_ENCRYPTED);
     data->setAccessPermissions(ESP_GATT_PERM_WRITE_ENCRYPTED);
     status->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
+    details->setAccessPermissions(ESP_GATT_PERM_READ_ENCRYPTED);
 #endif
     control->setCallbacks(new Callbacks(*this, false));
     data->setCallbacks(new Callbacks(*this, true));
     status->setCallbacks(new Callbacks(*this, false));
+    details->setCallbacks(new Callbacks(*this, false, true));
     service->start();
   }
 
@@ -55,6 +60,12 @@ class BleMaintenance {
   void setDiagnostic(const char* text) {
     portENTER_CRITICAL(&mux_);
     snprintf(diagnostic_, sizeof(diagnostic_), "%s", text);
+    portEXIT_CRITICAL(&mux_);
+  }
+
+  void setDetails(const char* text) {
+    portENTER_CRITICAL(&mux_);
+    snprintf(details_, sizeof(details_), "%s", text);
     portEXIT_CRITICAL(&mux_);
   }
 
@@ -118,12 +129,17 @@ class BleMaintenance {
   struct Packet { bool data; uint16_t length; uint8_t bytes[245]; };
   class Callbacks : public BLECharacteristicCallbacks {
    public:
-    Callbacks(BleMaintenance& owner, bool data) : owner_(owner), data_(data) {}
+    Callbacks(BleMaintenance& owner, bool data, bool details = false)
+        : owner_(owner), data_(data), details_(details) {}
     void onWrite(BLECharacteristic* characteristic) override { owner_.enqueue(characteristic, data_); }
-    void onRead(BLECharacteristic* characteristic) override { owner_.read(characteristic); }
+    void onRead(BLECharacteristic* characteristic) override {
+      if (details_) owner_.readDetails(characteristic);
+      else owner_.read(characteristic);
+    }
    private:
     BleMaintenance& owner_;
     bool data_;
+    bool details_;
   };
 
   void enqueue(BLECharacteristic* characteristic, bool data) {
@@ -158,6 +174,18 @@ class BleMaintenance {
     characteristic->setValue(text);
   }
 
+  void readDetails(BLECharacteristic* characteristic) {
+    if (!authenticated_ || !authenticated_->load()) {
+      characteristic->setValue("{\"error\":\"authentication\"}");
+      return;
+    }
+    char text[sizeof(details_)];
+    portENTER_CRITICAL(&mux_);
+    memcpy(text, details_, sizeof(text));
+    portEXIT_CRITICAL(&mux_);
+    characteristic->setValue(text);
+  }
+
   void fail(uint8_t error) {
     if (active()) Update.abort();
     error_ = error;
@@ -174,6 +202,7 @@ class BleMaintenance {
   uint32_t last_data_ms_ = 0, reboot_ms_ = 0;
   portMUX_TYPE mux_ = portMUX_INITIALIZER_UNLOCKED;
   char diagnostic_[300] = "{}";
+  char details_[512] = "{}";
   char elf_sha256_[65] = {};
 };
 
