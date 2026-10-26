@@ -40,7 +40,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2.1-摇杆与供电回报";
+constexpr char kVersion[] = "枪型飞鼠 固件3.2.2-卡顿采样回报";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -117,6 +117,8 @@ uint32_t joyCenterRevision = 0;
 uint32_t commandSequence = 0;
 char lastAcceptedCommand[16] = {};
 uint32_t lastDetailsMs = 0, lastPublishedSequence = UINT32_MAX;
+RuntimeStatus runtimeCurrent, runtimeLast;
+uint32_t runtimeStartedMs = 0, lastLoopUs = 0;
 
 uint32_t lastTouchUs = 0;
 uint32_t touchReadUs = 0;
@@ -340,7 +342,10 @@ bool sendReport(const HidReport& r) {
   mouseInput->setValue(data, sizeof(data));
   mouseNotifyAccepted = false;
   mouseInput->notify();
-  return mouseNotifyAccepted.load();  // GATT 拒绝时不提交，保留点击/释放队列和位移待重试
+  const bool accepted = mouseNotifyAccepted.load();
+  if (accepted) ++runtimeCurrent.reports;
+  else ++runtimeCurrent.rejected;
+  return accepted;  // GATT 拒绝时不提交，保留点击/释放队列和位移待重试
 }
 
 uint32_t reportPeriodUs() {
@@ -414,7 +419,11 @@ bool serviceImu(uint32_t nowUs, float& dx, float& dy) {
   }
   uint8_t status = 0;
   uint8_t d[12];
-  if (!readRegs(REG_STATUS, &status, 1) || !(status & 0x02) || !readRegs(REG_OUTX_L_G, d, sizeof(d))) {
+  const bool statusRead = readRegs(REG_STATUS, &status, 1);
+  const bool dataReady = statusRead && (status & 0x02);
+  const bool sampleRead = dataReady && readRegs(REG_OUTX_L_G, d, sizeof(d));
+  if (!statusRead || (dataReady && !sampleRead)) ++runtimeCurrent.imu_errors;
+  if (!sampleRead) {
     if ((uint32_t)(nowUs - imuLastGoodUs) > Fw::kImuNoDataUs) {
       imuInitialized = false;
       imuRetryMs = millis();
@@ -423,6 +432,9 @@ bool serviceImu(uint32_t nowUs, float& dx, float& dy) {
     return false;
   }
   const uint32_t sampleUs = micros();
+  const uint32_t sampleGap = sampleUs - imuLastGoodUs;
+  if (sampleGap > runtimeCurrent.imu_gap_max_us) runtimeCurrent.imu_gap_max_us = sampleGap;
+  ++runtimeCurrent.imu_samples;
   imuLastGoodUs = sampleUs;
   auto v = [&](int i) { return (int16_t)((uint16_t)d[i + 1] << 8 | d[i]); };
   const ImuSample s{v(0) * kGyroScale, v(2) * kGyroScale, v(4) * kGyroScale,
@@ -506,7 +518,10 @@ void serviceTouch(uint32_t nowUs) {
   const uint32_t t0 = micros();
   const uint32_t raw = touchRead(Pins::TOUCH);
   touchReadUs = micros() - t0;
+  if (touchReadUs > runtimeCurrent.touch_us) runtimeCurrent.touch_us = touchReadUs;
+  const bool wasTouched = touch.touched();
   touch.update(raw, micros());
+  if (wasTouched != touch.touched()) ++runtimeCurrent.touch_edges;
 }
 
 void serviceButtons(uint32_t nowUs) {
@@ -605,7 +620,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2.1\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.2.2\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
@@ -632,6 +647,8 @@ void publishDeviceDetails() {
   snapshot.node_mv = std::isfinite(vbatMv) ? (int)std::lround(vbatMv) : -1;
   snapshot.command_sequence = commandSequence;
   snapshot.command = lastAcceptedCommand;
+  snapshot.runtime = runtimeLast;
+  snapshot.runtime.link_us = bleIntervalUs.load();
   char text[512];
   if (formatDeviceStatus(snapshot, text, sizeof(text))) maintenance.setDetails(text);
   else maintenance.setDetails("{\"project\":\"gunmouse\",\"error\":\"report_overflow\"}");
@@ -776,6 +793,19 @@ void setup() {
 }
 
 void loop() {
+  const uint32_t loopUs = micros();
+  if (lastLoopUs) {
+    const uint32_t gap = loopUs - lastLoopUs;
+    if (gap > runtimeCurrent.loop_max_us) runtimeCurrent.loop_max_us = gap;
+  }
+  lastLoopUs = loopUs;
+  const uint32_t runtimeMs = millis();
+  if ((uint32_t)(runtimeMs - runtimeStartedMs) >= 1000) {
+    runtimeCurrent.window_ms = runtimeMs - runtimeStartedMs;
+    runtimeLast = runtimeCurrent;
+    runtimeCurrent = RuntimeStatus{};
+    runtimeStartedMs = runtimeMs;
+  }
   handleSerial();
   maintenance.service(bleConnected && bleAuthenticated, executeCommand);
   serviceHorizontalCalibration();
