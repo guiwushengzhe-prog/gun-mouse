@@ -6,15 +6,16 @@
   <title>枪型飞鼠控制 · 私人管理</title>
   <link rel="stylesheet" href="/portal.css">
   <link rel="stylesheet" href="/ota-admin/ota.css?v=20261014-wireless-console-v19">
-  <link rel="stylesheet" href="/ota-admin/gunmouse.css?v=20261026-1">
+  <link rel="stylesheet" href="/ota-admin/gunmouse.css?v=20261027-punch-1">
   <script type="module" src="/ota-admin/gunmouse.js?v=20261026-3"></script>
+  <script type="module" src="/ota-admin/gunmouse-punch.js?v=20261027-1"></script>
 </head>
 <body>
   <main>
     <header>
       <a class="back" href="/ota-admin/">← 返回单片机管理</a>
       <h1>枪型飞鼠控制</h1>
-      <p>通过这台电脑的蓝牙，连接你身边的飞鼠。设置保存在飞鼠中，关闭网页后仍保留。</p>
+      <p>通过这台电脑连接身边的飞鼠。方向和灵敏度保存在飞鼠中，甩拳设置与本机 MotionControl 共用，关闭网页后仍保留。</p>
     </header>
 
     <section class="panel" aria-labelledby="connection-title">
@@ -28,6 +29,27 @@
       </div>
       <p id="connection-message" role="status" aria-live="polite">尚未连接设备。</p>
       <p class="note">如果列表找不到已配对的飞鼠，可让飞鼠关机再开机后重试。此页控制当前电脑附近的设备；飞鼠尚未直接联网，离开蓝牙范围后无法远程控制。</p>
+    </section>
+
+    <section class="panel" id="punch-panel" aria-labelledby="punch-title">
+      <div class="heading-row"><h2 id="punch-title">甩拳模式</h2><span id="punch-badge" class="badge">未连接软件</span></div>
+      <p class="note">在这里调节，MotionControl 会同步使用。先打开本机软件，再点连接；不需要在上方重复连接蓝牙。</p>
+      <div class="actions"><button class="button" id="punch-connect" type="button">连接甩拳控制</button><a class="button secondary" href="http://127.0.0.1:8766/" target="_blank" rel="noopener">打开本机 MotionControl</a></div>
+      <p id="punch-message" role="status" aria-live="polite">连接后可调节。浏览器询问本地网络权限时，请允许访问这台电脑。</p>
+      <fieldset id="punch-controls" disabled>
+        <legend class="visually-hidden">甩拳设置</legend>
+        <form id="punch-form">
+          <label class="punch-switch"><input id="punch-enabled" type="checkbox">开启拳击模式</label>
+          <label for="punch-device">使用的飞鼠</label><select id="punch-device"><option value="">选择已配对飞鼠</option></select>
+          <div class="control-grid punch-ranges">
+            <label for="punch-strength">触发强度 <output id="punch-strength-value">—</output><input id="punch-strength" type="range" min="1300" max="3000" step="50" value="1800"><span class="note">调低更灵敏，调高更难触发</span></label>
+            <label for="punch-cooldown">冷却时间 <output id="punch-cooldown-value">—</output><input id="punch-cooldown" type="range" min="250" max="2000" step="50" value="500"><span class="note">同一次甩动与回弹不应重复计数</span></label>
+          </div>
+          <div class="actions"><button class="button" id="punch-save" type="submit">保存甩拳设置</button><button class="button secondary" id="punch-reset-count" type="button">本轮计数归零</button></div>
+        </form>
+      </fieldset>
+      <div class="metrics"><div><span>本轮识别</span><strong id="punch-count">—</strong></div><div><span>软件本次累计</span><strong id="punch-total">—</strong></div><div><span>最近强度</span><strong id="punch-last-strength">—</strong></div><div><span>软件状态</span><strong id="punch-state">未连接</strong></div></div>
+      <p class="note">强甩几次，再轻晃几下，观察本轮计数。归零只清本页显示，不改设备或软件累计。实际按键在 MotionControl 的“本游戏 → 飞鼠甩拳”选择键盘、鼠标或摇杆；未绑定或总输出关闭时不按键。</p>
     </section>
 
     <section class="panel" aria-labelledby="status-title">

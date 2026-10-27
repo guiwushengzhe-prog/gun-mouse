@@ -1,0 +1,5 @@
+# 放在现有主站静态页面处理段内；只覆盖飞鼠页面的连接目标。
+header /ota-admin/gunmouse.html {
+    Content-Security-Policy "default-src 'self'; connect-src 'self' http://127.0.0.1:8766; object-src 'none'; frame-ancestors 'none'; base-uri 'none'"
+    defer
+}

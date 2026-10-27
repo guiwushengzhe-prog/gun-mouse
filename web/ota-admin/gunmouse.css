@@ -29,6 +29,13 @@ input:focus-visible, select:focus-visible { outline: 3px solid #2f65df; outline-
 .success { color: #207346 !important; }
 #operation-log { padding-left: 22px; line-height: 1.8; color: #657085; font-size: 14px; }
 .button:disabled { cursor: default; }
+.punch-switch { display: flex; align-items: center; gap: 10px; margin: 18px 0; }
+.punch-switch input { width: 20px; height: 20px; margin: 0; }
+.punch-ranges { margin: 20px 0; }
+.punch-ranges input { width: 100%; padding: 0; }
+.punch-ranges output { float: right; font-variant-numeric: tabular-nums; }
+#punch-state { font-size: 20px; overflow-wrap: anywhere; }
+#punch-device { width: 100%; }
 @media (max-width: 700px) {
   main { padding: 24px 14px; }
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
