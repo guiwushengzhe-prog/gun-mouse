@@ -41,7 +41,7 @@
 using namespace GunMouse;
 
 namespace Fw {
-constexpr char kVersion[] = "枪型飞鼠 固件3.2.6-开机组合切换常开";
+constexpr char kVersion[] = "枪型飞鼠 固件3.3.0-独立甩拳事件";
 constexpr char kBleName[] = "GunMouse SuperMini";
 #if defined(CONFIG_NIMBLE_ENABLED)
 constexpr char kBleStack[] = "轻量";
@@ -94,6 +94,7 @@ void loadSettings() {
 ControlCore core;
 ReportSender sender;
 GyroPipeline gyro;
+PunchBle punchBle;
 HorizontalCalibration horizontalCalibration;
 BleMaintenance maintenance;
 float horizontalCoupling = 0;
@@ -325,7 +326,7 @@ void initBle() {
   hid->deviceInfo()->start();
   hid->hidService()->start();
   hid->batteryService()->start();
-  maintenance.begin(bleServer, &bleAuthenticated);
+  maintenance.begin(bleServer, &bleAuthenticated, punchBle);
   bleServer->start();
   BLESecurity* security = new BLESecurity();
   security->setAuthenticationMode(ESP_LE_AUTH_BOND);
@@ -469,6 +470,7 @@ bool serviceImu(uint32_t nowUs, float& dx, float& dy) {
   ++imuSequence;
   const bool wasCalibrated = gyro.calibrated();
   const bool produced = gyro.process(s, sampleUs, dx, dy);
+  punchBle.observe(s, gyro.bias(), sampleUs, produced);
   if (produced && horizontalCalibrationState == 1) {
     const Vec3 r = gyro.uncorrectedRates();
     horizontalCalibration.observe(r.x, r.y, 1.0f / GyroPipeline::kOdrHz);
@@ -668,7 +670,7 @@ void publishMaintenanceDiagnostic() {
   const Vec3 up = gyro.up();
   char text[300];
   snprintf(text, sizeof(text),
-           "{\"fw\":3,\"build\":\"3.2.6\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
+           "{\"fw\":3,\"build\":\"3.3.0\",\"invx\":%u,\"invy\":%u,\"hcal\":%u,\"cross\":%.5f,\"touch\":%u,\"ready\":%u,\"raw\":%lu,"
            "\"base\":%.1f,\"noise\":%.1f,\"tp\":%.4f,\"tr\":%.4f,\"up\":[%.3f,%.3f,%.3f]}",
            (unsigned)settings.invert_x, (unsigned)settings.invert_y,
            (unsigned)horizontalCalibrationState, horizontalCoupling, (unsigned)touch.touched(),
@@ -918,6 +920,8 @@ void loop() {
   HidReport report;
   const uint32_t sendNow = micros();
   if (sender.prepare(sendNow, reportPeriodUs(), report) && sendReport(report)) sender.commit(sendNow);
+
+  punchBle.service(imuReady && !updating && horizontalCalibrationState != 1);
 
   servicePower();
   publishMaintenanceDiagnostic();

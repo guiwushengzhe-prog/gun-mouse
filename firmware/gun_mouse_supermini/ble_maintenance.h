@@ -10,6 +10,7 @@
 #include <atomic>
 #include <cctype>
 #include <cstring>
+#include "punch_ble.h"
 
 namespace GunMouse {
 
@@ -23,7 +24,7 @@ class BleMaintenance {
   static constexpr char kDetails[] = "a38b0005-62da-4c13-9f07-908d8b921571";
   enum Phase : uint8_t { Idle, Receiving, Complete, Failed };
 
-  void begin(BLEServer* server, std::atomic<bool>* authenticated) {
+  void begin(BLEServer* server, std::atomic<bool>* authenticated, PunchBle& punch) {
     authenticated_ = authenticated;
     // 当前官方核心的格式化接口只保留9个字符；直接读取描述中的完整32字节。
     const volatile uint8_t* digest = esp_app_get_description()->app_elf_sha256;
@@ -53,6 +54,7 @@ class BleMaintenance {
     data->setCallbacks(new Callbacks(*this, true));
     status->setCallbacks(new Callbacks(*this, false));
     details->setCallbacks(new Callbacks(*this, false, true));
+    punch.begin(service, authenticated);
     service->start();
   }
 

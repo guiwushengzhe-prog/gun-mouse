@@ -11,6 +11,7 @@
 #include "input_logic.h"
 #include "direction_calibration.h"
 #include "device_status.h"
+#include "punch_logic.h"
 
 using namespace GunMouse;
 
@@ -545,7 +546,39 @@ int testDeviceStatus() {
   return 0;
 }
 
+static int testPunch() {
+  PunchDetector p;
+  uint32_t now = 0;
+  auto samples = [&](int count, float rate, float acceleration, bool ready=true) {
+    int hits=0; for(int i=0;i<count;++i) { now+=2400; hits+=p.observe(now,rate,acceleration,ready); }
+    return hits;
+  };
+  p.configure(true,1800,500);
+  CHECK(samples(100,200,2.3f)==0);  // 刚开启须先回稳
+  CHECK(samples(80,0,1)==0);
+  CHECK(samples(400,180,1.2f)==0);  // 普通转动不算拳
+  CHECK(samples(1,200,2.3f)==0);    // 单点冲击不算拳
+  CHECK(samples(3,0,1)==0);
+  CHECK(samples(12,200,2.3f)==1);
+  CHECK(samples(300,220,2.3f)==0);  // 持续晃动、回弹及过冷却均不得重复
+  CHECK(samples(80,0,1)==0);
+  CHECK(samples(12,200,2.3f)==1);
+  CHECK(samples(100,0,1,false)==0);
+  CHECK(samples(12,200,2.3f)==0);   // 断采样恢复须重新回稳
+  CHECK(samples(80,0,1)==0);
+  now+=100000;
+  CHECK(samples(12,200,2.3f)==0);   // 长间隔不能算持续发力
+  CHECK(samples(80,0,1)==0);
+  CHECK(samples(12,200,2.3f)==1);
+  p.configure(false,1800,500);
+  CHECK(samples(100,0,1)==0 && samples(12,200,2.3f)==0);
+  p.configure(true,2500,500);
+  CHECK(samples(80,0,1)==0 && samples(50,200,2.3f)==0);
+  return 0;
+}
+
 int main() {
+  if (testPunch()) return 1;
   if (testSender() || testRejectedSend() || testDebounce() || testButtonOverflow() || testStartupModeChord() || testTouch() || testTouchStartupAndGrip() || testTouchInterruptedSampling() ||
       testJoystick() || testHorizontalCalibration() || testGyroPose() || testGyro() || testGyroInterruptedSampling() || testBatteryUsb() || testDeviceStatus()) return 1;
   std::printf("固件逻辑检查通过：%d 项（按键事件不丢、余量、触摸门控、断线重连、摇杆、陀螺仪方向与校准、电量）\n", checks);
