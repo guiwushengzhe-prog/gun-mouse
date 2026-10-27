@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/ota-admin/ota.css?v=20261014-wireless-console-v19">
   <link rel="stylesheet" href="/ota-admin/gunmouse.css?v=20261027-punch-1">
   <script type="module" src="/ota-admin/gunmouse.js?v=20261026-3"></script>
-  <script type="module" src="/ota-admin/gunmouse-punch.js?v=20261027-1"></script>
+  <script type="module" src="/ota-admin/gunmouse-punch.js?v=20261027-2"></script>
 </head>
 <body>
   <main>
@@ -48,7 +48,8 @@
           <div class="actions"><button class="button" id="punch-save" type="submit">保存甩拳设置</button><button class="button secondary" id="punch-reset-count" type="button">本轮计数归零</button></div>
         </form>
       </fieldset>
-      <div class="metrics"><div><span>本轮识别</span><strong id="punch-count">—</strong></div><div><span>软件本次累计</span><strong id="punch-total">—</strong></div><div><span>最近强度</span><strong id="punch-last-strength">—</strong></div><div><span>软件状态</span><strong id="punch-state">未连接</strong></div></div>
+      <div class="metrics"><div><span>本轮识别</span><strong id="punch-count">—</strong></div><div><span>软件本次累计</span><strong id="punch-total">—</strong></div><div><span>最近强度</span><strong id="punch-last-strength">—</strong></div><div><span>飞鼠状态</span><strong id="punch-state">未连接</strong></div></div>
+      <p id="punch-link-status" class="note" role="status" aria-live="polite">未连接本机软件，当前没有接收甩拳动作。</p>
       <p class="note">强甩几次，再轻晃几下，观察本轮计数。归零只清本页显示，不改设备或软件累计。实际按键在 MotionControl 的“本游戏 → 飞鼠甩拳”选择键盘、鼠标或摇杆；未绑定或总输出关闭时不按键。</p>
     </section>
 
